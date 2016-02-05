@@ -1,5 +1,7 @@
 import graph from "./graph";
+import readings from "./readings";
 
 export default {
-	graph: graph
+	graph: graph,
+	readings: readings
 };
