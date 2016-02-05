@@ -3,7 +3,6 @@ import React from "react";
 
 class Text extends React.Component {
 	render() {
-		console.log(this.props);
 		return (
 			<div className="text">
 				<ul>
@@ -15,7 +14,11 @@ class Text extends React.Component {
 						</li>
 					))}
 				</ul>
-				{this.props.text.readings.filter((r) => r.witnesses.indexOf(this.props.text.currentWitness) > -1).map((r) => r.text)}
+				<div className="reading">
+					{this.props.text.readings.filter((r) => r.witnesses.indexOf(this.props.text.currentWitness) > -1).map((r) => (
+						<span key={r.id} onClick={() => this.props.onSetActiveNode(r.id) }>{r.text}</span>
+					))}
+				</div>
 			</div>
 		);
 	}
@@ -23,6 +26,7 @@ class Text extends React.Component {
 
 Text.propTypes = {
 	onSelectWitness: React.PropTypes.func,
+	onSetActiveNode: React.PropTypes.func,
 	text: React.PropTypes.object
 };
 
