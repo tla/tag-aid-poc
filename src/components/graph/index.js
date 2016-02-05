@@ -10,6 +10,14 @@ class Graph extends React.Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log(this.props.graph.activeNode, nextProps.graph.activeNode)
+		if (this.props.graph.activeNode !== nextProps.graph.activeNode) {
+			console.log(this.ref.graph)
+		}
+	}
+
+
 	onWheel(ev) {
 		let nextLeft = this.state.left - ev.deltaY;
 
@@ -23,8 +31,9 @@ class Graph extends React.Component {
 			<div
 				className="graph"
 				onWheel={this.onWheel.bind(this)}
+				ref="graph"
 				style={{left: this.state.left + "px"}}>
-				<GraphSvg />
+				<GraphSvg {...this.props} />
 			</div>
 		);
 	}

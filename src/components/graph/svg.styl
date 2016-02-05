@@ -1,2 +1,23 @@
 svg
 	height 100%
+
+	g.node
+		fill white
+		stroke black
+
+		&:hover
+			cursor pointer
+
+			ellipse
+				fill lightblue
+
+	g.edge
+		&:not(.majority):hover
+			cursor pointer
+
+			text
+				fill red
+
+		path
+			fill none
+			stroke black
