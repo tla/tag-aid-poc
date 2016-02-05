@@ -20,15 +20,9 @@ const sortReadings = (readings) =>
 
 const getWitnesses = (readings) =>
 	Object.keys(readings)
-		.map(function(k) {
-			return readings[k].witnesses
-		})
-		.reduce(function(a,b) {
-			return a.concat(b);
-		})
-		.filter(function(x, idx, self) {
-			return self.indexOf(x) === idx;
-		});
+		.map((k) => readings[k].witnesses)
+		.reduce((a,b) => a.concat(b))
+		.filter((x, idx, self) => self.indexOf(x) === idx);
 
 // /*
 // 	Dit zou in een reducer kunnen.
@@ -39,17 +33,59 @@ const getWitnesses = (readings) =>
 // 		return prev.add(...rawReadings[curr].witnesses);
 // 	}, new Set())];
 
+let getHighlighted = (nodeId, state) => {
+	let reading = state.activeWitness.reading;
+	let index = reading.findIndex((r) => r.id === nodeId);
+
+	if (index === -1) {
+		return [];
+	}
+
+	return [
+		reading[index - 3],
+		reading[index - 2],
+		reading[index - 1],
+		reading[index],
+		reading[index + 1],
+		reading[index + 2],
+		reading[index + 3],
+	].filter((node) => node != null);
+}
+
+let readings = sortReadings(rawReadings);
+let witnesses = getWitnesses(rawReadings);
 
 let initialState = {
-	readings: sortReadings(rawReadings),
-	witnesses: getWitnesses(rawReadings),
-	currentWitness: null
+	activeNode: null,
+	activeWitness: {
+		name: witnesses[0],
+		reading: readings.filter((r) => r.witnesses.indexOf(witnesses[0]) > -1)
+	},
+	highlightedNodes: [],
+	readings: readings,
+	witnesses: witnesses,
 };
 
-export default function(state={...initialState, currentWitness: initialState.witnesses[0]}, action) {
+
+export default function(state=initialState, action) {
 	switch (action.type) {
-		case "SET_CURRENT_WITNESS":
-			state.currentWitness = action.witness;
+		case "SET_ACTIVE_NODE":
+			state = {...state, ...{
+				activeNode: action.nodeId,
+				highlightedNodes: getHighlighted(action.nodeId, state)
+			}};
+
+			break;
+
+		case "SET_ACTIVE_WITNESS":
+			state = {...state, ...{
+				activeWitness: {
+					name: action.witness,
+					reading: state.readings.filter((r) => r.witnesses.indexOf(action.witness) > -1)
+				},
+				highlightedNodes: getHighlighted(action.nodeId, state)
+			}};
+
 			break;
 	};
 

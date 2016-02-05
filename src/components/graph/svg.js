@@ -24,7 +24,7 @@ class Svg extends React.Component {
 			let witness = edgeGroup.querySelector("text").innerHTML;
 
 			if (witness != "majority") {
-				this.props.onSelectWitness(witness);
+				this.props.onSetActiveWitness(witness);
 			}
 		}
 	}

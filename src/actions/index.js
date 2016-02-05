@@ -6,9 +6,9 @@ export default {
 			type: "SET_ACTIVE_NODE",
 			nodeId: nodeId
 		}),
-	onSelectWitness: (witness) =>
+	onSetActiveWitness: (witness) =>
 		store.dispatch({
-			type: "SET_CURRENT_WITNESS",
+			type: "SET_ACTIVE_WITNESS",
 			witness: witness
 		})
 };

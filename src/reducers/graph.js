@@ -1,16 +1,16 @@
-let initialState = {
-	activeNode: null
-};
+// let initialState = {
+// 	activeNode: null
+// };
 
-export default function(state=initialState, action) {
-	switch (action.type) {
-		case "SET_ACTIVE_NODE":
-			state = {...state, ...{
-				activeNode: action.nodeId
-			}};
+// export default function(state=initialState, action) {
+// 	switch (action.type) {
+// 		case "SET_ACTIVE_NODE":
+// 			state = {...state, ...{
+// 				activeNode: action.nodeId
+// 			}};
 
-			break;
-	};
+// 			break;
+// 	};
 
-	return state;
-}
+// 	return state;
+// }

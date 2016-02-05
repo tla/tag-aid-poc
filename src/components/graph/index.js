@@ -1,3 +1,5 @@
+// TODO highlight the activeWitness (in the graph)
+
 import React from "react";
 import GraphSvg from "./svg";
 
@@ -11,17 +13,31 @@ class Graph extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.graph.activeNode !== nextProps.graph.activeNode) {
-			const node = this.refs.graph.querySelector(`g#${nextProps.graph.activeNode}`);
+		if (this.props.text.activeNode !== nextProps.text.activeNode) {
+			const node = this.refs.graph.querySelector(`g#${nextProps.text.activeNode}`);
 			const nodeBox = node.getBoundingClientRect();
 			const clientWidth = document.body.clientWidth;
 
 			this.setState({
 				left: this.state.left - nodeBox.left + clientWidth/2 - (nodeBox.width/2)
 			});
+
+			this.highlightNodes(nextProps.text.highlightedNodes);
 		}
 	}
 
+	highlightNodes(nodes) {
+		let nodeEls = this.refs.graph.querySelectorAll("g.node.highlight");
+
+		[].forEach.call(nodeEls, function(n) {
+			n.setAttribute("class", "node");
+		});
+
+		nodes.forEach((node) => {
+			let n = this.refs.graph.querySelector(`g#${node.id}`);
+			n.setAttribute("class", "node highlight");
+		})
+	}
 
 	onWheel(ev) {
 		let nextLeft = this.state.left - ev.deltaY;

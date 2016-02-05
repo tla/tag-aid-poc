@@ -1,34 +1,27 @@
 import React from "react";
+import cx from "classnames";
 
 class Text extends React.Component {
-
-	isVisibleNode(idx, activeIdx, currentReading, dist = 3) {
-		if(!activeIdx.length) { return false; }
-		if(activeIdx < dist) { return idx <= dist * 2; }
-		if(activeIdx > currentReading.length - dist - 1) { return idx >= currentReading.length - 1 - dist * 2; }
-		if(Math.abs(activeIdx - idx) <= dist) { return true; }
-		return false;
-	}
-
 	render() {
-		let currentReading = this.props.text.readings.filter((r) => r.witnesses.indexOf(this.props.text.currentWitness) > -1);
-		let activeNodeIdx = currentReading.map((r, i) => r.id === this.props.graph.activeNode ? i : -1).filter((idx) => idx > -1);
+		let witness = this.props.text.activeWitness;
 
 		return (
 			<div className="text">
 				<ul>
 					{this.props.text.witnesses.map((w) => (
-						<li className={w === this.props.text.currentWitness ? "selected" : ""}
+						<li className={w === witness.name ? "selected" : ""}
 							key={w}
-							onClick={() => this.props.onSelectWitness(w)}>
+							onClick={() => this.props.onSetActiveWitness(w)}>
 							{w}
 						</li>
 					))}
 				</ul>
 				<div className="reading">
-					{currentReading.map((r, idx) => (
+					{witness.reading.map((r, idx) => (
 						<span
-							className={this.isVisibleNode(idx, activeNodeIdx, currentReading) ? "visible" : ""}
+							className={cx({
+								visible: this.props.text.highlightedNodes.find((n) => n.id === r.id) != null
+							})}
 							key={r.id}
 							onClick={() => this.props.onSetActiveNode(r.id) }>
 							{r.text}
@@ -42,7 +35,7 @@ class Text extends React.Component {
 
 Text.propTypes = {
 	graph: React.PropTypes.object,
-	onSelectWitness: React.PropTypes.func,
+	onSetActiveWitness: React.PropTypes.func,
 	onSetActiveNode: React.PropTypes.func,
 	text: React.PropTypes.object
 };
