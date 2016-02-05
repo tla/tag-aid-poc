@@ -32,7 +32,7 @@ const getWitnesses = (readings) =>
 
 // /*
 // 	Dit zou in een reducer kunnen.
-// 	Ik zeg niet dat het leesbaarder is.
+// 	Ik zeg niet dat het leesbaarder is. ;)
 // */
 // const getWitnesses = (readings) =>
 // 	[...Object.keys(rawReadings).reduce((prev, curr) => {

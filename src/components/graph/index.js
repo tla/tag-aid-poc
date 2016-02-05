@@ -11,9 +11,14 @@ class Graph extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(this.props.graph.activeNode, nextProps.graph.activeNode)
 		if (this.props.graph.activeNode !== nextProps.graph.activeNode) {
-			console.log(this.ref.graph)
+			const node = this.refs.graph.querySelector(`g#${nextProps.graph.activeNode}`);
+			const nodeBox = node.getBoundingClientRect();
+			const clientWidth = document.body.clientWidth;
+
+			this.setState({
+				left: this.state.left - nodeBox.left + clientWidth/2 - (nodeBox.width/2)
+			});
 		}
 	}
 

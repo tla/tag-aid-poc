@@ -18,7 +18,7 @@ class Text extends React.Component {
 			<div className="text">
 				<ul>
 					{this.props.text.witnesses.map((w) => (
-						<li className={w === this.props.text.currentWitness ? "selected" : ""} 
+						<li className={w === this.props.text.currentWitness ? "selected" : ""}
 							key={w}
 							onClick={() => this.props.onSelectWitness(w)}>
 							{w}
@@ -29,7 +29,7 @@ class Text extends React.Component {
 					{currentReading.map((r, idx) => (
 						<span
 							className={this.isVisibleNode(idx, activeNodeIdx, currentReading) ? "visible" : ""}
-							key={r.id} 
+							key={r.id}
 							onClick={() => this.props.onSetActiveNode(r.id) }>
 							{r.text}
 						</span>
