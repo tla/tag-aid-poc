@@ -1,7 +1,18 @@
 .text
-	background-color blue
 	bottom 0
 	left 0
 	position absolute
 	right 0
 	top 50%
+	ul
+		list-style none
+		padding 0
+		li
+			display inline-block
+			padding 4px
+			border 1px solid black
+			cursor pointer
+			&.selected
+				background-color #aaf
+			&:hover
+				background-color #ddf
