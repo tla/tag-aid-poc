@@ -4,6 +4,7 @@ svg
 	g.node
 		fill white
 		stroke black
+		transition stroke 700ms
 
 		&:hover
 			cursor pointer
@@ -12,7 +13,11 @@ svg
 				fill lightblue
 
 		&.highlight
-			fill green
+			stroke green
+
+			&.active
+				fill lighten(green, 90%)
+				stroke darkgreen
 
 	g.edge
 		&:not(.majority):hover

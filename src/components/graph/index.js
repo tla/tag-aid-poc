@@ -33,9 +33,14 @@ class Graph extends React.Component {
 			n.setAttribute("class", "node");
 		});
 
-		nodes.forEach((node) => {
+		nodes.forEach((node, i) => {
 			let n = this.refs.graph.querySelector(`g#${node.id}`);
-			n.setAttribute("class", "node highlight");
+
+			let className = (i === 3) ?
+				"node highlight active" :
+				"node highlight";
+
+			n.setAttribute("class", className);
 		})
 	}
 

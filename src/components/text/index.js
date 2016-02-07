@@ -20,6 +20,7 @@ class Text extends React.Component {
 					{witness.reading.map((r, idx) => (
 						<span
 							className={cx({
+								active: (this.props.text.highlightedNodes.length > 3 && this.props.text.highlightedNodes[3].id === r.id),
 								visible: this.props.text.highlightedNodes.find((n) => n.id === r.id) != null
 							})}
 							key={r.id}

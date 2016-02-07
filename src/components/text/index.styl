@@ -4,6 +4,7 @@
 	position absolute
 	right 0
 	top 50%
+
 	.reading
 		margin-left 25%
 		width 50%
@@ -12,11 +13,17 @@
 		color #989898
 		height 100%
 		overflow-y auto
+
 		span
 			cursor pointer
+
 			&.visible
-				color #008a23
+				color lighten(green, 10%)
 				font-weight bold
+
+				&.active
+					color darkgreen
+
 			&:hover
 				background-color  #ddf
 
@@ -31,6 +38,7 @@
 		padding 0
 		float right
 		width 25%
+
 		li
 			margin 0 auto
 			border-radius 4px
@@ -40,7 +48,9 @@
 			width 60px
 			margin-bottom 6px
 			cursor pointer
+
 			&.selected
 				background-color #7a4dff
+
 			&:hover
 				background-color #aaf
