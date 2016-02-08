@@ -19859,7 +19859,7 @@ var Graph = (function (_React$Component) {
 
 				if (nodes.length) {
 					this.highlightNodes(nodes);
-					this.resizeGraph(nodes);
+					//				this.resizeGraph(nodes);
 					this.centerOnActiveNodes(nodes);
 				}
 			}
@@ -19903,12 +19903,12 @@ var Graph = (function (_React$Component) {
 	}, {
 		key: "centerOnActiveNodes",
 		value: function centerOnActiveNodes(nodes) {
-			var node = this.refs.graph.querySelector("g#" + nodes[0].id);
+			var node = this.refs.graph.querySelector("g#" + nodes[3].id);
 			var nodeBox = node.getBoundingClientRect();
 			var activeLeft = this.state.left * -1 + nodeBox.left;
 
 			this.setState({
-				left: activeLeft * -1
+				left: activeLeft * -1 + document.body.clientWidth / 2
 			});
 		}
 	}, {
