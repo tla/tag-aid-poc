@@ -1,0 +1,129 @@
+svg {
+  height: 100%;
+}
+svg g.node {
+  fill: #fff;
+  stroke: #000;
+  transition: stroke 700ms;
+}
+svg g.node:hover {
+  cursor: pointer;
+}
+svg g.node:hover ellipse {
+  fill: #add8e6;
+}
+svg g.node.highlight {
+  stroke: #008000;
+}
+svg g.node.highlight.active {
+  fill: #d9ffd9;
+  stroke: #006400;
+}
+svg g.edge:not(.majority):hover {
+  cursor: pointer;
+}
+svg g.edge:not(.majority):hover text {
+  fill: #f00;
+}
+svg g.edge path {
+  fill: none;
+  stroke: #000;
+}
+.graph {
+  background-color: #fff;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: left 350ms;
+}
+.text {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 60%;
+  background-color: #fff;
+  transition: top 200ms;
+}
+.text.top-aligned {
+  top: 10%;
+}
+.text .reading {
+  margin-left: 25%;
+  width: 50%;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  color: #989898;
+  height: 100%;
+  overflow-y: auto;
+}
+.text .reading span {
+  cursor: pointer;
+}
+.text .reading span.visible {
+  color: #00a600;
+  font-weight: bold;
+}
+.text .reading span.visible.active {
+  color: #006400;
+}
+.text .reading span:hover {
+  background-color: #ddf;
+}
+.text ul {
+  height: 100%;
+  overflow-y: auto;
+  font-family: sans-serif;
+  font-size: 0.8em;
+  color: #fff;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  float: right;
+  width: 25%;
+}
+.text ul li {
+  margin: 0 auto;
+  border-radius: 4px;
+  background-color: #7b9fd1;
+  display: block;
+  padding: 6px;
+  width: 60px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.text ul li.selected {
+  background-color: #7a4dff;
+}
+.text ul li:hover {
+  background-color: #aaf;
+}
+.heatmap {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  height: 10%;
+  transition: top 200ms;
+}
+.heatmap.top-aligned {
+  top: 0%;
+}
+.heatmap svg rect,
+.heatmap svg polygon {
+  fill: #c4c4c4;
+  stroke: rgba(196,196,196,0.5);
+  stroke-width: 0.2px;
+  cursor: pointer;
+}
+.heatmap svg rect:hover,
+.heatmap svg polygon:hover,
+.heatmap svg rect.highlighted,
+.heatmap svg polygon.highlighted {
+  fill: #00a600;
+  stroke: #00b900;
+}
