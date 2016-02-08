@@ -19,7 +19,7 @@ class Graph extends React.Component {
 
 			if (nodes.length) {
 				this.highlightNodes(nodes);
-				this.resizeGraph(nodes);
+//				this.resizeGraph(nodes);
 				this.centerOnActiveNodes(nodes);
 			}
 		}
@@ -60,12 +60,12 @@ class Graph extends React.Component {
 	}
 
 	centerOnActiveNodes(nodes) {
-		let node = this.refs.graph.querySelector(`g#${nodes[0].id}`);
+		let node = this.refs.graph.querySelector(`g#${nodes[3].id}`);
 		let nodeBox = node.getBoundingClientRect();
 		let activeLeft = this.state.left * -1 + nodeBox.left;
 
 		this.setState({
-			left: activeLeft * -1,
+			left: activeLeft * -1 + (document.body.clientWidth /2 ),
 		});
 	}
 
