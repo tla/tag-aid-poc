@@ -1,6 +1,5 @@
 import rawReadings from "../static/readings";
-
-const rankId = (x, rd) => parseInt(x.replace(/^n/, ""));
+import rawRanks from "../static/ranks";
 
 const sortReadings = (readings) =>
 	Object.keys(readings)
@@ -8,15 +7,11 @@ const sortReadings = (readings) =>
 			return {
 				id: k,
 				witnesses: readings[k].witnesses,
-				text: readings[k].text
+				text: readings[k].text,
+				rank: rawRanks[k]
 			};
-		})
-		.filter((x) =>
-			x.id !== "__START__" && x.id !== "__END__"
-		)
-		.sort((a, b) =>
-			rankId(a.id, readings) - rankId(b.id, readings)
-		);
+		}).filter((x) => x.id !== "__START__" && x.id !== "__END__")
+		.sort((a, b) => a.rank - b.rank);
 
 const getWitnesses = (readings) =>
 	Object.keys(readings)
@@ -68,6 +63,7 @@ let initialState = {
 
 
 export default function(state=initialState, action) {
+	console.log(state.readings);
 	switch (action.type) {
 		case "SET_ACTIVE_NODE":
 			state = {...state, ...{
