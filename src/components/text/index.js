@@ -11,7 +11,6 @@ class Text extends React.Component {
 		const nodeTop = textNode.getBoundingClientRect().top;
 		const textBoxTop = textBox.getBoundingClientRect().top;
 		textBox.scrollTop = nodeTop - textBoxTop;
-		console.log(nodeTop, textBoxTop);
 	}
 
 	render() {
