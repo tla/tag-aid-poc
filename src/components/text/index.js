@@ -15,6 +15,7 @@ class Text extends React.Component {
 
 	render() {
 		let witness = this.props.text.activeWitness;
+
 		return (
 			<div className={cx({text: true, "top-aligned": this.props.text.activeNode ? false: true})}>
 				<ul>

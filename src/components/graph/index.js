@@ -15,15 +15,13 @@ class Graph extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.text.activeNode !== nextProps.text.activeNode) {
-			const node = this.refs.graph.querySelector(`g#${nextProps.text.activeNode}`);
-			const nodeBox = node.getBoundingClientRect();
-			const clientWidth = document.body.clientWidth;
+			const nodes = nextProps.text.highlightedNodes;
 
-			this.setState({
-				left: this.state.left - nodeBox.left + clientWidth/2 - (nodeBox.width/2)
-			});
-
-			this.highlightNodes(nextProps.text.highlightedNodes);
+			if (nodes.length) {
+				this.highlightNodes(nodes);
+				this.resizeGraph(nodes);
+				this.centerOnActiveNodes(nodes);
+			}
 		}
 	}
 
@@ -45,6 +43,32 @@ class Graph extends React.Component {
 		})
 	}
 
+	resizeGraph(nodes) {
+		let activeLeftNode = this.refs.graph.querySelector(`g#${nodes[0].id}`);
+		let activeRightNode = this.refs.graph.querySelector(`g#${nodes[nodes.length - 1].id}`);
+
+		const activeLeft = this.state.left * -1 + activeLeftNode.getBoundingClientRect().left;
+		const activeRight = this.state.left * -1 + activeRightNode.getBoundingClientRect().left + activeRightNode.getBoundingClientRect().width;
+
+		let activeWidth = activeRight - activeLeft;
+		let activeCenter = activeLeft + activeWidth/2;
+		let ratio = document.body.clientWidth / activeWidth;
+		let svg = this.refs.graph.querySelector("svg");
+
+		svg.style.width = svg.getBoundingClientRect().width * ratio;
+		svg.style.height = "auto";
+	}
+
+	centerOnActiveNodes(nodes) {
+		let node = this.refs.graph.querySelector(`g#${nodes[0].id}`);
+		let nodeBox = node.getBoundingClientRect();
+		let activeLeft = this.state.left * -1 + nodeBox.left;
+
+		this.setState({
+			left: activeLeft * -1,
+		});
+	}
+
 	onWheel(ev) {
 		let nextLeft = this.state.left - ev.deltaY;
 
@@ -59,8 +83,9 @@ class Graph extends React.Component {
 				className={cx({graph: true, aligment: this.props.text.activeNode ? "normal": "top"})}
 				onWheel={this.onWheel.bind(this)}
 				ref="graph"
-
-				style={{left: this.state.left + "px"}}>
+				style={{
+					left: this.state.left + "px"
+				}}>
 				<GraphSvg {...this.props} />
 			</div>
 		);
