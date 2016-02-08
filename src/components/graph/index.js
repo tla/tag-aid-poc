@@ -2,6 +2,7 @@
 
 import React from "react";
 import GraphSvg from "./svg";
+import cx from "classnames";
 
 class Graph extends React.Component {
 	constructor(props) {
@@ -55,9 +56,10 @@ class Graph extends React.Component {
 	render() {
 		return (
 			<div
-				className="graph"
+				className={cx({graph: true, aligment: this.props.text.activeNode ? "normal": "top"})}
 				onWheel={this.onWheel.bind(this)}
 				ref="graph"
+
 				style={{left: this.state.left + "px"}}>
 				<GraphSvg {...this.props} />
 			</div>

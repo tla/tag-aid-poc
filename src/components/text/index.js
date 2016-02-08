@@ -16,7 +16,7 @@ class Text extends React.Component {
 	render() {
 		let witness = this.props.text.activeWitness;
 		return (
-			<div className="text">
+			<div className={cx({text: true, "top-aligned": this.props.text.activeNode ? false: true})}>
 				<ul>
 					{this.props.text.witnesses.map((w) => (
 						<li className={w === witness.name ? "selected" : ""}
