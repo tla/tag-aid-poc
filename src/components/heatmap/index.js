@@ -2,10 +2,14 @@ import React from "react";
 import cx from "classnames";
 
 class HeatMap extends React.Component {
+	onRankClick(rank) {
+		let found = this.props.text.activeWitness.reading.filter((reading) => reading.rank === rank);
+		if(found.length) { this.props.onSetActiveNode(found[0].id); }
+	}
+
 	render() {
 		let grouped = [], 
 			highlightedRanks = this.props.text.highlightedNodes.map((n) => n.rank);
-
 
 		for (let idx in this.props.text.readings) {
 			let rank = this.props.text.readings[idx].rank;
@@ -31,7 +35,10 @@ class HeatMap extends React.Component {
 				<svg style={{width: "100%"}} viewBox="0 0 500 21">
 					{grouped.map((realAmt, rank) => {
 						let amt = realAmt === 1 ? 1 : realAmt * 3;
-						return (<polygon className={cx({highlighted: highlightedRanks.indexOf(rank) > -1})} key={rank} points={`${500 / grouped.length * rank},16 ` +
+						return (<polygon className={cx({highlighted: highlightedRanks.indexOf(rank) > -1})} 
+							key={rank}
+							onClick={this.onRankClick.bind(this, rank)}
+							points={`${500 / grouped.length * rank},16 ` +
 							`${(500 / grouped.length * rank) + (500 / grouped.length)},16 ` + 
 							`${(500 / grouped.length * rank) + ((500 / grouped.length) / 2)},${16 - (amt)}`} />);
 					})}
