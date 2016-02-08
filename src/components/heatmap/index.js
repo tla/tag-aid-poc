@@ -13,17 +13,24 @@ class HeatMap extends React.Component {
 		}
 
 		let hl1 = highlightedRanks.length ?
-			<rect className="highlighted" height="5" width="1" x={500 / grouped.length * highlightedRanks[0]} y="16" /> : 
-			null;
+			<polygon className="highlighted" points={
+				`${500 / grouped.length * highlightedRanks[0] - 3},18.5 ` +
+				`${500 / grouped.length * highlightedRanks[0]},16 ` +
+				`${500 / grouped.length * highlightedRanks[0]},21`} />
+			: null;
+
 		let hl2 = highlightedRanks.length ?
-			<rect className="highlighted" height="5" width="1" x={500 / grouped.length * highlightedRanks[highlightedRanks.length-1]} y="16" /> : 
-			null;
+			<polygon className="highlighted" points={
+				`${500 / grouped.length * highlightedRanks[highlightedRanks.length - 1] + 3},18.5 ` +
+				`${500 / grouped.length * highlightedRanks[highlightedRanks.length - 1]},16 ` +
+				`${500 / grouped.length * highlightedRanks[highlightedRanks.length - 1]},21`} />
+			: null;
 
 		return (
 			<div className={cx({heatmap: true, "top-aligned": this.props.text.activeNode ? false: true})}>
 				<svg style={{width: "100%"}} viewBox="0 0 500 21">
 					{grouped.map((realAmt, rank) => {
-						let amt = realAmt === 1 ? 1 : realAmt * 4;
+						let amt = realAmt === 1 ? 1 : realAmt * 3;
 						return (<polygon className={cx({highlighted: highlightedRanks.indexOf(rank) > -1})} key={rank} points={`${500 / grouped.length * rank},16 ` +
 							`${(500 / grouped.length * rank) + (500 / grouped.length)},16 ` + 
 							`${(500 / grouped.length * rank) + ((500 / grouped.length) / 2)},${16 - (amt)}`} />);
