@@ -19,6 +19,7 @@ const getWitnesses = (readings) =>
 		.reduce((a,b) => a.concat(b))
 		.filter((x, idx, self) => self.indexOf(x) === idx);
 
+
 // /*
 // 	Dit zou in een reducer kunnen.
 // 	Ik zeg niet dat het leesbaarder is. ;)
@@ -48,13 +49,30 @@ let getHighlighted = (nodeId, state) => {
 }
 
 let readings = sortReadings(rawReadings);
-let witnesses = getWitnesses(rawReadings);
+let witnesses = ["Majority", ...getWitnesses(rawReadings)];
+
+const majorityReading = readings.reduce((prev, curr) => {
+	// Look up a word in the 'prev' array with the same rank as 'curr'
+	let sameRankIndex = prev.findIndex((r) => r.rank === curr.rank);
+
+	// If a word with the same rank isn't found, add 'curr' to 'prev'
+	if (sameRankIndex === -1) {
+		prev.push(curr);
+	// If a word is found, use/add the one with the most witnesses (the majority)
+	} else {
+		if (curr.witnesses.length > prev[sameRankIndex].witnesses.length) {
+			prev[sameRankIndex] = curr;
+		}
+	}
+
+	return prev;
+}, []);
 
 let initialState = {
 	activeNode: null,
 	activeWitness: {
-		name: witnesses[0],
-		reading: readings.filter((r) => r.witnesses.indexOf(witnesses[0]) > -1)
+		name: "Majority",
+		reading: majorityReading
 	},
 	highlightedNodes: [],
 	readings: readings,
@@ -76,9 +94,16 @@ export default function(state=initialState, action) {
 			state = {...state, ...{
 				activeWitness: {
 					name: action.witness,
-					reading: state.readings.filter((r) => r.witnesses.indexOf(action.witness) > -1)
-				},
-				highlightedNodes: getHighlighted(action.nodeId, state)
+					reading: (action.witness === "Majority") ?
+						majorityReading :
+						state.readings.filter((r) => r.witnesses.indexOf(action.witness) > -1)
+				}
+			}};
+
+			// Can't put this in the previous statement, because the updated
+			// state is needed for getHighlighted.
+			state = {...state, ...{
+				highlightedNodes: getHighlighted(state.activeNode, state)
 			}};
 
 			break;
