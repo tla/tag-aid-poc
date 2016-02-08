@@ -2,9 +2,11 @@ import React from "react";
 import cx from "classnames";
 
 class HeatMap extends React.Component {
-	onRankClick(rank) {
-		let found = this.props.text.activeWitness.reading.filter((reading) => reading.rank === rank);
-		if(found.length) { this.props.onSetActiveNode(found[0].id); }
+	onRankClick(rankIdx) {
+		for(let rank = rankIdx; rank > 0; rank--) {
+			let found = this.props.text.activeWitness.reading.filter((reading) => reading.rank === rank);
+			if(found.length) { return this.props.onSetActiveNode(found[0].id); }
+		}
 	}
 
 	render() {
