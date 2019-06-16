@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import store from "./store";
-import actions from "./actions";
 import App from "./components";
 
 document.addEventListener("DOMContentLoaded", () => {
-	store.subscribe(() =>
-		ReactDOM.render(<App {...store.getState()} {...actions} />, document.getElementById("app"))
-	);
-
-	ReactDOM.render(<App {...store.getState()} {...actions} />, document.getElementById("app"));
+	// Fetch the section list
+	const sectlist = process.env.PUBLIC_URL + '/data/sections.json';
+	fetch(sectlist)
+	.then(r => r.json())
+	.then(data => ReactDOM.render(<App sectionList={data} />, document.getElementById("root")))
+	.catch(console.error.bind(console));
 });

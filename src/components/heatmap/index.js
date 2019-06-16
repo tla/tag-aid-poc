@@ -1,17 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import cx from "classnames";
 
 class HeatMap extends React.Component {
 	onRankClick(rankIdx) {
 		for(let rank = rankIdx; rank > 0; rank--) {
-			let found = this.props.text.activeWitness.reading.filter((reading) => reading.rank === rank);
+			let found = this.props.activeWitness.readings.filter((reading) => reading.rank === rank);
 			if(found.length) { return this.props.onSetActiveNode(found[0].id); }
 		}
 	}
 
 	render() {
-		let grouped = [], 
-			highlightedRanks = this.props.text.highlightedNodes.map((n) => n.rank);
+		let grouped = [],
+			highlightedRanks = this.props.highlightedNodes.map((n) => n.rank);
 
 		for (let idx in this.props.text.readings) {
 			let rank = this.props.text.readings[idx].rank;
@@ -33,15 +34,15 @@ class HeatMap extends React.Component {
 			: null;
 
 		return (
-			<div className={cx({heatmap: true, "top-aligned": this.props.text.activeNode ? false: true})}>
+			<div className={cx({heatmap: true, "top-aligned": this.props.activeNode ? false: true})}>
 				<svg style={{width: "100%"}} viewBox="0 0 500 21">
 					{grouped.map((realAmt, rank) => {
 						let amt = realAmt === 1 ? 1 : realAmt * 3;
-						return (<polygon className={cx({highlighted: highlightedRanks.indexOf(rank) > -1})} 
+						return (<polygon className={cx({highlighted: highlightedRanks.indexOf(rank) > -1})}
 							key={rank}
 							onClick={this.onRankClick.bind(this, rank)}
 							points={`${500 / grouped.length * rank},16 ` +
-							`${(500 / grouped.length * rank) + (500 / grouped.length)},16 ` + 
+							`${(500 / grouped.length * rank) + (500 / grouped.length)},16 ` +
 							`${(500 / grouped.length * rank) + ((500 / grouped.length) / 2)},${16 - (amt)}`} />);
 					})}
 					{hl1}
@@ -53,10 +54,11 @@ class HeatMap extends React.Component {
 }
 
 HeatMap.propTypes = {
-	graph: React.PropTypes.object,
-	onSetActiveNode: React.PropTypes.func,
-	onSetActiveWitness: React.PropTypes.func,
-	text: React.PropTypes.object
+	text: PropTypes.object,
+  activeNode: PropTypes.string,
+  activeWitness: PropTypes.object,
+  onSetActiveNode: PropTypes.func,
+	highlightedNodes: PropTypes.array
 };
 
 export default HeatMap;

@@ -1,0 +1,62 @@
+.text {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 60%;
+  background-color: #fff;
+  transition: top 200ms;
+}
+.text.top-aligned {
+  top: 20%;
+}
+.text .reading {
+  margin-left: 25%;
+  width: 50%;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  color: #989898;
+  height: 100%;
+  overflow-y: auto;
+}
+.text .reading span {
+  cursor: pointer;
+}
+.text .reading span.visible {
+  color: #00a600;
+  font-weight: bold;
+}
+.text .reading span.visible.active {
+  color: #006400;
+}
+.text .reading span:hover {
+  background-color: #ddf;
+}
+.text ul {
+  height: 100%;
+  overflow-y: auto;
+  font-family: sans-serif;
+  font-size: 0.8em;
+  color: #fff;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  float: right;
+  width: 25%;
+}
+.text ul li {
+  margin: 0 auto;
+  border-radius: 4px;
+  background-color: #7b9fd1;
+  display: block;
+  padding: 6px;
+  width: 60px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.text ul li.selected {
+  background-color: #7a4dff;
+}
+.text ul li:hover {
+  background-color: #aaf;
+}

@@ -1,0 +1,8 @@
+@import "./graph/index.css";
+@import "./text/index.css";
+@import "./heatmap/index.css";
+
+.picker {
+  top: 0;
+  position: absolute;
+}
