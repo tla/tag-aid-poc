@@ -6,3 +6,19 @@
   top: 0;
   position: absolute;
 }
+
+.sidebar {
+  float: left;
+}
+
+.section-list {
+  padding: .2em;
+  background: #eee;
+}
+
+.legend {
+  margin-bottom: 3em;
+  padding: .2em;
+  background: #eee;
+  height: 10em;
+}

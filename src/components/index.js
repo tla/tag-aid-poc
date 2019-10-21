@@ -17,9 +17,13 @@ class App extends React.Component {
 		};
 	}
 
-	// Re-load all text and witness data when the section changes.
-	selectSection = evt => {
+	onSelectSection = evt => {
 		const section = evt.target.value;
+		this.selectSection(section);
+	}
+
+	// Re-load all text and witness data when the section changes.
+	selectSection(section) {
 		const rdglisturl = process.env.PUBLIC_URL + '/data/'
 			+ section + '/readings.json';
 		fetch(rdglisturl)
@@ -104,11 +108,11 @@ class App extends React.Component {
 		}
 	}
 
-	render() {
+	renderViz() {
 		return (
 			<div className="app">
 				<div className="picker">
-				  <select onChange={this.selectSection}>
+				  <select onChange={this.onSelectSection}>
 						<option key="0" value="">Select a section...</option>
 						{this.props.sectionList.map(
 							s => <option key={s.id} value={s.id} >{s.name}</option>)}
@@ -127,6 +131,63 @@ class App extends React.Component {
 					onSetActiveNode={this.handleSetActiveNode}
 					highlightedNodes={this.state.highlightedNodes}
 				/>
+				<TextPane
+					text={this.state.text}
+					activeNode={this.state.activeNode}
+					activeWitness={this.state.activeWitness}
+					onSetActiveNode={this.handleSetActiveNode}
+					onSetActiveWitness={this.handleSetActiveWitness}
+					highlightedNodes={this.state.highlightedNodes}
+				/>
+			</div>
+		);
+	}
+
+	renderSectionPicker() {
+		return (
+			<div className="picker">
+				<select onChange={this.onSelectSection}>
+					<option key="0" value="">Select a section...</option>
+					{this.props.sectionList.map(
+						s => <option key={s.id} value={s.id} >{s.name}</option>)}
+				</select>
+			</div>
+		)
+	}
+
+	renderLegend() {
+		return (
+			<div className="legend">
+				<h2>Legend</h2>
+			</div>
+		)
+	}
+
+	renderSectionList() {
+		const sections = this.props.sectionList.map( s => 
+			<li onClick={this.onSelectSection} key={s.id} value={s.id} >{s.name}</li>
+		)
+
+		return (
+			<div className='section-list'>
+				<h2>Index</h2>
+				<ul>
+					{ sections }
+				</ul>
+			</div>
+		);
+	}
+
+	render() {
+		return (
+			<div className="app">
+				<h1>The Critical Edition and Translation</h1>
+				<p>Short abstract</p>
+				<div className="sidebar">
+					{ this.renderLegend() }
+					{ this.renderSectionList() }
+				</div>
+				<h2>{this.state.section ? this.state.section : ""}</h2>
 				<TextPane
 					text={this.state.text}
 					activeNode={this.state.activeNode}
