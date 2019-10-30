@@ -1,13 +1,15 @@
 {
-  "name": "tag-aid-live",
+  "name": "ChronicleME",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "html-react-parser": "^0.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.1",
     "react-svg": "^10.0.8"
   },

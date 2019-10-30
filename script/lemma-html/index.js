@@ -19,8 +19,19 @@ class LemmaHTML {
     //     svg.write(dotresult.stdout)
   }
 
-  lemmaToHTML( witReadings, annos ) {
+  lemmaToHTML( titles, witReadings, annos ) {
     let textElements = [], annotationElements = []
+
+    let enTitle = "", hyTitle = ""
+    for( const title of titles ) {
+      const {properties} = title 
+      if( properties.language === 'en') {
+        enTitle = properties.text
+      } 
+      if( properties.language === 'hy' ) {
+        hyTitle = properties.text
+      }
+    }
 
     // index the annos by beginning reading ID 
     const annoMap = {}
@@ -52,9 +63,9 @@ class LemmaHTML {
       textElements.push( `<span id='text-${rdg.id}' key=${rdg.id}>${rdgtext}</span>`)
     }
 
-    const text = `<p>${textElements.join('')}</p>`
-    const translation = `<p>${annotationElements.join(' ')}</p>`
-    return { text, translation }
+    const text = `<div><h3>${hyTitle}</h3><p>${textElements.join('')}</p></div>`
+    const translation = `<div><h3>${enTitle}</h3><p>${annotationElements.join(' ')}</p></div>`
+    return { title: enTitle, text, translation }
   }
 
   getWitnessReadings(sigil, rdglist) {
@@ -67,37 +78,30 @@ class LemmaHTML {
 			sigil: sigil,
 			readings: witReadings
 		};
-	}
-
-  async collectSectionData( options, section, outdir, auth ) {
-    const sectiondir = `${outdir}/${section.id}`
-
-    if( !fs.existsSync(sectiondir) ) {
-      fs.mkdirSync(sectiondir)
-    }
-
+  }
+  
+  async collectSectionData( options, section, auth ) {
     const baseURL = `${options.repository}/tradition/${options.tradition_id}/section/${section.id}`
-    this.collectSectionDOT(baseURL,sectiondir,auth)
 
     const r = await axios.get(`${baseURL}/readings`, {auth})
     const readings = r.data
     const lemmaReadings = this.getWitnessReadings("Lemma text", readings)
 
-    const annoResponse = await axios.get( `${baseURL}/annotations`, {auth, params: {label: 'TRANSLATION'}})
-    const annos = annoResponse.data
+    const titleResponse = await axios.get( `${baseURL}/annotations`, {auth, params: {label: 'TITLE'}})
+    const titles = titleResponse.data
 
-    const docs = this.lemmaToHTML( lemmaReadings.readings, annos )
+    const translationResponse = await axios.get( `${baseURL}/annotations`, {auth, params: {label: 'TRANSLATION'}})
+    const translations = translationResponse.data
 
-    fs.writeFileSync( `${sectiondir}/lemmaText.html`, docs.text )
-    fs.writeFileSync( `${sectiondir}/translation.html`, docs.translation )
+    return this.lemmaToHTML( titles, lemmaReadings.readings, translations )
   }
   
   async collectTraditionData( options, auth ) {
+    const outdir = "public/data"
     const baseURL = `${options.repository}/tradition/${options.tradition_id}`
 
     const response = await axios.get(`${baseURL}/sections`, {auth} ) 
     const responseJSON = response.data
-    const outdir = `public/data` 
 
     const sectionList = []
     for( const sect of responseJSON ) {
@@ -105,14 +109,37 @@ class LemmaHTML {
       const r = await axios.get(url, { auth, params: {'final': 'true'} })
       const answer = r.data
 
+      const sectiondir = `${outdir}/${sect.id}`
+
+      if( !fs.existsSync(sectiondir) ) {
+        fs.mkdirSync(sectiondir)
+      }
+
+      this.collectSectionDOT(baseURL,sectiondir,auth)
+
+      const lemmaFile = `${sectiondir}/lemmaText.html`
+      const translationFile = `${sectiondir}/translation.html`
+
       if( answer.text ) {
+        const sectionData = await this.collectSectionData( options, sect, auth )
+        sect.displayName = sectionData.title
         sectionList.push(sect)
-        this.collectSectionData( options, sect, outdir, auth )
+
+        if( sectionData.text && sectionData.text.length > 0 ) {
+          fs.writeFileSync( lemmaFile, sectionData.text )    
+        }
+    
+        if( sectionData.translation && sectionData.translation.length > 0) {
+          fs.writeFileSync( translationFile, sectionData.translation )  
+        }    
+      } else {
+        if( fs.existsSync(lemmaFile)) fs.unlinkSync(lemmaFile);
+        if( fs.existsSync(translationFile)) fs.unlinkSync(translationFile);
       }
     }
 
     const sectFile = `${outdir}/sections.json`
-    fs.writeFileSync( sectFile, JSON.stringify(sectionlist) )
+    fs.writeFileSync( sectFile, JSON.stringify(sectionList) )
   }
 
   loadConfig() {
