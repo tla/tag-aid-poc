@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+
+const localUrl='http://localhost:3000/'
+
 export function useSectionList() {
   const [sectionList, setSectionList] = useState(null);
 
   useEffect(() => {
     if( sectionList ) return
-    const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
+    //const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
+    const sectionListURL = `${localUrl}data/sections.json`;
     const handleSectionList = data => setSectionList(data)
     axios.get(sectionListURL)
         .then( response => handleSectionList(response.data) )
@@ -54,7 +58,9 @@ export function useSection(sectionID) {
   useEffect(() => {
     if( section && sectionID === section.section ) return
 
-    const sectionURL = `${process.env.PUBLIC_URL}/data/${sectionID}`
+   // const sectionURL = `${process.env.PUBLIC_URL}/data/${sectionID}`
+  const publicUrl='http://157.245.255.111/'
+ const sectionURL = `${publicUrl}/data/${sectionID}`
     const readingsURL = `${sectionURL}/readings.json`
     const translationURL = `${sectionURL}/translation.html`
     const lemmaTextURL = `${sectionURL}/lemmaText.html`
