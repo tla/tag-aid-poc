@@ -59,13 +59,12 @@ export function useSection(sectionID) {
     if( section && sectionID === section.section ) return
 
    // const sectionURL = `${process.env.PUBLIC_URL}/data/${sectionID}`
-  const publicUrl='http://157.245.255.111/'
- const sectionURL = `${publicUrl}/data/${sectionID}`
-    const readingsURL = `${sectionURL}/readings.json`
-    const translationURL = `${sectionURL}/translation.html`
-    const lemmaTextURL = `${sectionURL}/lemmaText.html`
-  
-    const handleSection = data => setSection(data)
+      const publicUrl='http://localhost:3000'; //'http://157.245.255.111/'
+      const sectionURL = `${publicUrl}/data/${sectionID}`
+      const readingsURL = `${sectionURL}/readings.json`
+      const translationURL = `${sectionURL}/translation.html`
+      const lemmaTextURL = `${sectionURL}/lemmaText.html`
+      const handleSection = data => setSection(data)
 
     axios.all([
       axios.get(readingsURL),
