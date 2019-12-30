@@ -99,43 +99,42 @@ class LemmaHTML {
   async collectTraditionData( options, auth ) {
     const outdir = "public/data"
     const baseURL = `${options.repository}/tradition/${options.tradition_id}`
-
     const response = await axios.get(`${baseURL}/sections`, {auth} ) 
     const responseJSON = response.data
 
-    const sectionList = []
+    const sectionList = [];
     for( const sect of responseJSON ) {
-      const url = `${baseURL}/section/${sect.id}/lemmatext`      
-      const r = await axios.get(url, { auth, params: {'final': 'true'} })
-      const answer = r.data
+            const url = `${baseURL}/section/${sect.id}/lemmatext`      
+            const r = await axios.get(url, { auth, params: {'final': 'true'} })
+            const answer = r.data
+            const sectiondir = `${outdir}/${sect.id}`
+            if( !fs.existsSync(sectiondir) ) {
+                  fs.mkdirSync(sectiondir)
+            }
 
-      const sectiondir = `${outdir}/${sect.id}`
+            // create the SVG's
+            //this.collectSectionDOT(baseURL,sectiondir,auth)
+            
+            const lemmaFile = `${sectiondir}/lemmaText.html`
+            const translationFile = `${sectiondir}/translation.html`
+            if( answer.text ) {
+                  const sectionData = await this.collectSectionData( options, sect, auth )
+                  sect.displayName = sectionData.title
+                  sectionList.push(sect)
 
-      if( !fs.existsSync(sectiondir) ) {
-        fs.mkdirSync(sectiondir)
-      }
-
-      this.collectSectionDOT(baseURL,sectiondir,auth)
-
-      const lemmaFile = `${sectiondir}/lemmaText.html`
-      const translationFile = `${sectiondir}/translation.html`
-
-      if( answer.text ) {
-        const sectionData = await this.collectSectionData( options, sect, auth )
-        sect.displayName = sectionData.title
-        sectionList.push(sect)
-
-        if( sectionData.text && sectionData.text.length > 0 ) {
-          fs.writeFileSync( lemmaFile, sectionData.text )    
-        }
-    
-        if( sectionData.translation && sectionData.translation.length > 0) {
-          fs.writeFileSync( translationFile, sectionData.translation )  
-        }    
-      } else {
-        if( fs.existsSync(lemmaFile)) fs.unlinkSync(lemmaFile);
-        if( fs.existsSync(translationFile)) fs.unlinkSync(translationFile);
-      }
+                  if( sectionData.text && sectionData.text.length > 0 ) {
+                        fs.writeFileSync( lemmaFile, sectionData.text )    
+                  }
+      
+                  if( sectionData.translation && sectionData.translation.length > 0) {
+                        fs.writeFileSync( translationFile, sectionData.translation )  
+                  }    
+            } else {
+                  if( fs.existsSync(lemmaFile)) 
+                        fs.unlinkSync(lemmaFile);
+                  if( fs.existsSync(translationFile)) 
+                        fs.unlinkSync(translationFile);
+            }
     }
 
     const sectFile = `${outdir}/sections.json`
