@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import PropTypes from "prop-types";
+import PropTypes, { string, any } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from './../api'
 
@@ -10,15 +10,20 @@ const TextPane =(props) => {
       const [translation, setTranslation] = useState();
       const [readings,setReadings]=useState('');
 
-      const {sectionId, nodeId} = props;
+      const {sectionId, nodeId, onSelectNode} = props;
 
       const lemmaParserOptions =  {
             replace: function({attribs,children}) {
 
                   if( attribs && attribs.id  ){
                        if(attribs.id === `text-${nodeId}`)
-                       return <span style={{backgroundColor:'yellow'}}>{domToReact(children,lemmaParserOptions)}</span>
+                              return <span style={{backgroundColor:'yellow'}}>{domToReact(children,lemmaParserOptions)}</span>
+                        else {
+
+                              return <span onClick={()=>{handleTextClick(attribs.id)}}>{domToReact(children,lemmaParserOptions)}</span>
+                        }
                   }
+
                   
             }
       }
@@ -43,43 +48,18 @@ const TextPane =(props) => {
             </div>
           )
 
-
-
-
-	
-
-  // renderWitnessList() {
-
-  //   let witness = this.props.activeWitness ? this.props.activeWitness.sigil : '';
-	// 	let witnessList = this.props.text.witnesses.slice();
-	// 	if (witnessList.length) {
-	// 		witnessList.unshift('Lemma text');
-	// 	}
-
-  //   return (
-  //     <ul>
-  //         {witnessList.map((w) => (
-  //           <li className={w === witness ? "selected" : ""}
-  //             key={w}
-  //             onClick={() => this.props.onSetActiveWitness(w)}>
-  //             {w}
-  //           </li>
-  //         ))}
-  //     </ul>
-  //   );
-  // }
-
- 
+      function handleTextClick( textNodeId){
+            let trimmedId = textNodeId.substring(5)
+            console.log(trimmedId)
+            onSelectNode(trimmedId)
+      }
 
 }
 
 TextPane.propTypes = {
-	text: PropTypes.object,
-  activeNode: PropTypes.string,
-  activeWitness: PropTypes.object,
-  onSetActiveNode: PropTypes.func,
-	onSetActiveWitness: PropTypes.func,
-	highlightedNodes: PropTypes.array
+      sectionId:string,
+      nodeId:string,
+      onSelectNode:any,
 };
 
 export default TextPane;

@@ -31,7 +31,9 @@ const Layout = ( props)=>{
                                  {selectedSection &&
                                     <SvgGraph 
                                          onSelectNode={setSelectedNode}
-                                          src={`data/${selectedSection.id}/graph.svg`}
+                                         sectionId={selectedSection.id}
+                                         nodeId={selectedNode}
+                                         
                                     />
                                  }
                                   </div>
@@ -41,9 +43,8 @@ const Layout = ( props)=>{
                                           <TextPane 
                                                 sectionId={selectedSection.id}
                                                 nodeId={selectedNode}
-                                                // activeNode={section.activeNode}
+                                                onSelectNode={setSelectedNode}
                                                 // activeWitness={section.activeWitness}
-                                                // onSetActiveNode={()=>{}}
                                                 // onSetActiveWitness={()=>{}}
                                                 // highlightedNodes={[]}
                                           />
