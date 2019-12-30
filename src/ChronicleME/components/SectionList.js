@@ -15,7 +15,9 @@ const SectionList = ( props ) =>{
                                     return(
                                     <li key={s.id} value={s.id} 
                                          onClick={()=>{onSelect(s) }} >
-                                         {s.displayName}
+                                         {`Section Id:${s.id}`}
+                                         <br/>
+                                         <div style={{paddingLeft:'16px'}}><h4> {s.displayName.substring(0,13)}</h4></div>
                                     </li>
                                     )
                               })

@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch, Link } from 'react-router-dom'
 
 import { useSectionList } from './StemmaRestHooks'
 import CriticalEdition from './CriticalEdition'
-import HomePage from './HomePage'
+import HomePage from '../HomePage'
 
 function renderNavigation() {
     return (

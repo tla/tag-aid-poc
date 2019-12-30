@@ -1,15 +1,27 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import Parser from 'html-react-parser';
+import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from './../api'
-// import domToReact from 'html-react-parser/lib/dom-to-react';
+
 
 const TextPane =(props) => {
 
       const [lemmaText, setLemmaText] = useState();
       const [translation, setTranslation] = useState();
-      const [readings,setReadings]=useState();
-      const {sectionId} = props;
+      const [readings,setReadings]=useState('');
+
+      const {sectionId, nodeId} = props;
+
+      const lemmaParserOptions =  {
+            replace: function({attribs,children}) {
+
+                  if( attribs && attribs.id  ){
+                       if(attribs.id === `text-${nodeId}`)
+                       return <span style={{backgroundColor:'yellow'}}>{domToReact(children,lemmaParserOptions)}</span>
+                  }
+                  
+            }
+      }
 
       useEffect(()=>{
             DataApi.getSection(sectionId, (readings, translation,lemmaText)=>{
@@ -23,37 +35,18 @@ const TextPane =(props) => {
       return (
             <div className="text-pane">
               <div className="reading">
-                { lemmaText ? Parser(lemmaText,htmlToReactParserOptions) : null }
+                { lemmaText ? Parser(lemmaText,lemmaParserOptions)  : null }
               </div>
               <div className="translation">
-                { translation ? Parser(translation,htmlToReactParserOptions): null}
+                { translation ? Parser(translation): null}
               </div>
             </div>
           )
 
-	function htmlToReactParserOptions () {
-		var parserOptions =  {
-			 replace: function(domNode) {
-       
-				 switch (domNode.name) {
-        
-          // TODO make text interactive w/viz
-          // <span
-        //   className={cx({
-        //     active: this.props.activeNode === rdg.id,
-        //     visible: this.props.highlightedNodes.find(
-				// 			(n) => n.id === rdg.id) != null
-        //   })}
-          // onClick={() => this.props.onSetActiveNode(rdg.id) }>
 
-						default:
-							/* Otherwise, Just pass through */
-							return domNode;
-				 }
-			 }
-		 };
-		 return parserOptions;
-	}
+
+
+	
 
   // renderWitnessList() {
 
