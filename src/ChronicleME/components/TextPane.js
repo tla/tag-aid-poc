@@ -39,12 +39,12 @@ const TextPane =(props) => {
   
       return (
             <div className="text-pane">
-              <div className="reading">
-                { lemmaText ? Parser(lemmaText,lemmaParserOptions)  : null }
-              </div>
-              <div className="translation">
-                { translation ? Parser(translation): null}
-              </div>
+                  <div className="reading">
+                        { lemmaText ? Parser(lemmaText,lemmaParserOptions)  : '' }
+                  </div>
+                  <div className="translation">
+                        { translation ? Parser(translation): ''}
+                  </div>
             </div>
           )
 
