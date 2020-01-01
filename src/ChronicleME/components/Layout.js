@@ -5,17 +5,19 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
+import useWindowSize from './../utils/Viewport'
+
 
 const Layout = ( props)=>{
-
+      const viewport = useWindowSize();
       const {sections} = props;
       const [selectedSection, setSelectedSection] = useState();
       const [selectedNode, setSelectedNode]=useState();
       const [graphVisible, setGraphVisible] = useState(true)
 
-
+console.log('window height is ',viewport.height)
       return (
-            <Grid container spacing={1}>
+            <Grid container spacing={1} style={{maxHeight:`${viewport.height * .66}px`}}>
                   <Grid id="header"  item xs={12}>
                         <Header  />
                   </Grid>
@@ -29,6 +31,7 @@ const Layout = ( props)=>{
                               </Grid>
                               <Grid id="section list" item xs={12}>
                                     <SectionList
+                                          height={`${viewport.height * .70}px`}
                                           sectionId={selectedSection? selectedSection.id : null}
                                           list ={sections}
                                           onSelect = { handleSelectSection}

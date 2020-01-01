@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import PropTypes, { string, any } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
-import * as DataApi from './../api'
+import * as DataApi from '../utils/Api'
 
 
 const TextPane =(props) => {

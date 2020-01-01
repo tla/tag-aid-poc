@@ -7,11 +7,11 @@ import Paper from '@material-ui/core/Paper';
 
 const SectionList = ( props ) =>{
 
-      const {list, onSelect, sectionId } = props
+      const {list, onSelect, sectionId , height} = props
 
       return (
             
-            <Paper elevation={2} style={{padding:'12px',overflowY:'scroll'}}>
+            <Paper elevation={2} style={{padding:'12px',overflowY:'auto',height:height}}>
 			<Typography variant="h5">
                         {'Index'}
                   </Typography>

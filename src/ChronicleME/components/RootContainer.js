@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import  * as DataApi from './../api';
+import  * as DataApi from './../utils/Api';
 import Layout from './Layout'
 
 
