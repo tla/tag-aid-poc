@@ -3,11 +3,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 const Header = ( props)=>{
 
-      const [tabIndex, setTabIndex]=useState(4)
+      const [tabIndex, setTabIndex]=useState(0)
 
 return (
   <div id="header">
@@ -19,11 +19,11 @@ return (
                   </Typography>
                   <div >
                         <Tabs value={tabIndex} style={{float:'right'}} onChange={handleTabChange} >
-                              <Tab label="Home"  />
+                              <Tab label="Home"href="#/"  />
                               <Tab label="About"  />
                               <Tab label="Methods"  />
                               <Tab label="Manuscripts"  />
-                              <Tab label="Edition"  />
+                              <Tab label="Edition" href="#/Edition" />
                               <Tab label="Visualizations"  />
                         </Tabs>
                   </div>
@@ -33,8 +33,8 @@ return (
 )
 
 function handleTabChange(e, value){
-     
       setTabIndex(value)
+     
 }
 
 

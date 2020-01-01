@@ -17,16 +17,22 @@ const SectionList = ( props ) =>{
                   </Typography>
 			<List>
                         {
-                              list.map( s => {
+                           list ?   list.map( s => {
                                     return(
                                     <ListItem key={s.id} value={s.id} selected={s.id === sectionId}
                                          onClick={()=>{onSelect(s) }} >
-                                         {`Section Id:${s.id}`}
-                                         <br/>
-                                         <div style={{paddingLeft:'16px'}}><h4> {s.displayName.substring(0,13)}</h4></div>
+                                         
+                                         <div style={{display:'flex', flexDirection:'column'}}>
+                                          <Typography variant="body1">
+                                                      {s.displayName.substring(0,13)}
+                                                </Typography>
+                                                <Typography variant="subtitle2">
+                                                {`Section Id:${s.id}`}
+                                                </Typography>
+                                          </div>
                                     </ListItem>
                                     )
-                              })
+                              }) : ''
                         }
 			</List>
 		</Paper>
