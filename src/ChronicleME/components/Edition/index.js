@@ -11,7 +11,7 @@ const Edition = ( props)=>{
     
       const {sections , height } = props;
       const [selectedSection, setSelectedSection] = useState();
-      const [selectedNode, setSelectedNode]=useState();
+      const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true)
 
       return (
@@ -37,18 +37,15 @@ const Edition = ( props)=>{
                   </Grid>
                   
 
-
-
-
                   <Grid id="mainContent" item xs={9}>
                         <Grid container spacing={1}>
                               <Grid id="graphPane" item xs={12}>
                                     <div style={{overflowX:'auto'}}>
                                  {selectedSection && graphVisible &&
                                     <SvgGraph 
-                                         onSelectNode={setSelectedNode}
+                                         onSelectNode={handleSelectNode}
                                          sectionId={selectedSection.id}
-                                         nodeId={selectedNode}
+                                         selectedNode={selectedNodes}
                                          
                                     />
                                  }
@@ -58,33 +55,37 @@ const Edition = ( props)=>{
                                     {selectedSection &&
                                           <TextPane 
                                                 sectionId={selectedSection.id}
-                                                nodeId={selectedNode}
-                                                onSelectNode={setSelectedNode}
+                                                selectedNodes={selectedNodes}
+                                                onSelectNode={handleSelectNode}
+                                                onDeselectNode={handleDeselectNode}
                                                 // activeWitness={section.activeWitness}
                                                 // onSetActiveWitness={()=>{}}
-                                                // highlightedNodes={[]}
+
                                           />
                                     }
                                     
                               </Grid>
 
-
-
-
-
                         </Grid>
-
-
 
                   </Grid>
 
-
-
-
             </Grid>
-
-       
       )
+
+      function handleSelectNode( nodeId ){
+            console.log( 'selected',nodeId)
+            let copySelectedNodes = selectedNodes.slice();
+            copySelectedNodes.push(nodeId);
+            setSelectedNodes(copySelectedNodes);
+      }
+
+      function handleDeselectNode( nodeId){
+            let copySelectedNodes = selectedNodes.slice();
+            let index = copySelectedNodes.indexOf(nodeId)
+            copySelectedNodes.splice(index,1)
+            setSelectedNodes(copySelectedNodes);
+      }
 
       function handleSelectSection( section ){
             setSelectedSection(section);

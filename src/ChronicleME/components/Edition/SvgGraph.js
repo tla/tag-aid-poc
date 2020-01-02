@@ -5,19 +5,23 @@ import SVG from 'react-inlinesvg'
 
 const SvgGraph =(props)=>{
 
-      const {nodeId, sectionId, onSelectNode}=props;
+      const {selectedNodes, sectionId, onSelectNode}=props;
+      const svgRef = useRef(null);
 
-      const svgRef = useRef(null)
+      useEffect( ()=>{
+            if ( !selectedNodes )
+            return;
+            highlightNodes();
+      },[props.selectedNodes])
 
     
 
       return (
                <div   ref={svgRef}>
                   <SVG 
-                      
                         src= {`data/${sectionId}/graph.svg`}
                         onClick={handleClick}
-                        onLoad={highlightNodes}
+                        
                   />
                   </div>
             )
@@ -32,16 +36,20 @@ const SvgGraph =(props)=>{
       }
 
       function highlightNodes(src, hasCache) {
-            console.log('in highlight nodes')
             let test = svgRef.current;
-            let bunnies = test.querySelectorAll("g.node");
-            console.log('in highlight nodes')
-		// let nodeEls = svgRef.current.querySelectorAll("g.node");
-		// nodeEls.forEach( n=> {
-		// 	n.setAttribute("class", "node highlight active");
-		// });
-
-	}
+         
+            selectedNodes.forEach( n=>{
+                  let node = getGraphDOMNode(n)
+                  node.setAttribute("class", "node highlight active");
+            })
+       
+      }
+      
+      function getGraphDOMNode(nodeId){
+            const graphRef = svgRef.current;
+            let selector = `g#n${nodeId}`;
+            return graphRef.querySelector(selector);
+      }
 
 
  

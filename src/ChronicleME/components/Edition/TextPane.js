@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import PropTypes, { string, any } from "prop-types";
+import PropTypes, { string, any, array } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from '../../utils/Api'
 
@@ -9,22 +9,41 @@ const TextPane =(props) => {
       const [lemmaText, setLemmaText] = useState();
       const [translation, setTranslation] = useState();
       const [readings,setReadings]=useState('');
+      const {sectionId, selectedNodes, onSelectNode, onDeselectNode} = props;
+      const [parsedText, setParsedText] = useState();
 
-      const {sectionId, nodeId, onSelectNode} = props;
+      useEffect(()=>{
+            if(!lemmaText)
+            return;
+           let parsed =  Parser(lemmaText,lemmaParserOptions);
+           console.log('reparsing')
+            setParsedText(parsed);
+      },[props.selectedNodes])
 
       const lemmaParserOptions =  {
             replace: function({attribs,children}) {
 
                   if( attribs && attribs.id  ){
-                       if(attribs.id === `text-${nodeId}`)
-                              return <span style={{backgroundColor:'yellow'}}>{domToReact(children,lemmaParserOptions)}</span>
-                        else {
-
-                              return <span onClick={()=>{handleTextClick(attribs.id)}}>{domToReact(children,lemmaParserOptions)}</span>
-                        }
+                              let attribNodeId = attribs.id.substring(5);
+                           
+                              let selected = false;
+                               if( selectedNodes && selectedNodes.length > 0){
+                                    selected = selectedNodes.indexOf( attribNodeId ) === -1? false:true;
+                                    
+                               }
+                                    
+                      
+                              if(selected)
+                                          return <span style={{backgroundColor:'yellow'}} 
+                                                onClick={()=>{handleUnhighlight(attribs.id)}} 
+                                                >{domToReact(children,lemmaParserOptions)}</span>
+                                    else {
+                                          return <span onClick={()=>{handleHighlight(attribs.id)}}
+                                          // onMouseOver={()=>{handleHighlight(attribs.id)}}
+                                          >{domToReact(children,lemmaParserOptions)}</span>
+                              }
+                      
                   }
-
-                  
             }
       }
 
@@ -33,6 +52,8 @@ const TextPane =(props) => {
                   setLemmaText(lemmaText);
                   setTranslation(translation);
                   setReadings(readings);
+                 let parsed =  Parser(lemmaText,lemmaParserOptions);
+                 setParsedText(parsed);
             })
       },[props.sectionId])
 
@@ -40,7 +61,7 @@ const TextPane =(props) => {
       return (
             <div className="text-pane">
                   <div className="reading">
-                        { lemmaText ? Parser(lemmaText,lemmaParserOptions)  : '' }
+                        { parsedText }
                   </div>
                   <div className="translation">
                         { translation ? Parser(translation): ''}
@@ -48,17 +69,23 @@ const TextPane =(props) => {
             </div>
           )
 
-      function handleTextClick( textNodeId){
+      function handleHighlight( textNodeId){
             let trimmedId = textNodeId.substring(5)
             console.log(trimmedId)
             onSelectNode(trimmedId)
+      }
+
+      function handleUnhighlight(textNodeId){
+            let trimmedId = textNodeId.substring(5)
+            console.log('deselected', trimmedId)
+            onDeselectNode(trimmedId)
       }
 
 }
 
 TextPane.propTypes = {
       sectionId:string,
-      nodeId:string,
+      selectedNodes:array,
       onSelectNode:any,
 };
 

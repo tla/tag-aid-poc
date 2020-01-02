@@ -4,11 +4,11 @@ import Header from './Header'
 import Edition from './Edition/index'
 import useWindowSize from './../utils/Viewport';
 import HomePage from './HomePage'
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 const Layout = ( props)=>{
       const viewport = useWindowSize();
-      const {sections, history} = props;
+      const {sections} = props;
 
 
 console.log('window height is ',viewport.height)
@@ -16,7 +16,7 @@ console.log('window height is ',viewport.height)
            
             <Grid container spacing={1} >
                   <Grid id="header"  item xs={12}>
-                        <Header onSelectTab={handleSelectTab} />
+                        <Header  />
                   </Grid>
                   <Grid id="pages" item xs={12}>
                         <Switch>
@@ -32,10 +32,6 @@ console.log('window height is ',viewport.height)
            
        
       )
-
-            function handleSelectTab(){
-                  history.push('/Edition')
-            }
 
 }
 export default Layout
