@@ -5,12 +5,12 @@ import SVG from 'react-inlinesvg'
 
 const SvgGraph =(props)=>{
 
-      const {selectedNodes, sectionId, onSelectNode}=props;
+      const {selectedNodes, sectionId, onSelectNode, onDeselectNode}=props;
       const svgRef = useRef(null);
 
       useEffect( ()=>{
             if ( !selectedNodes )
-            return;
+                  return;
             highlightNodes();
       },[selectedNodes])
 
@@ -30,7 +30,11 @@ const SvgGraph =(props)=>{
             if (nodeGroup != null) {
                   const id = nodeGroup.parentNode.id;
                   let trimmedId = id.replace('n','')
-                  onSelectNode(trimmedId);
+                  let index = selectedNodes.indexOf(trimmedId);
+                  if (index === -1)
+                        onSelectNode(trimmedId);
+                  else
+                        onDeselectNode(trimmedId)
             }
       }
 

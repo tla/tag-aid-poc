@@ -43,10 +43,10 @@ const Edition = ( props)=>{
                                     <div style={{overflowX:'auto'}}>
                                  {selectedSection && graphVisible &&
                                     <SvgGraph 
-                                         onSelectNode={handleSelectNode}
                                          sectionId={selectedSection.id}
                                          selectedNodes={selectedNodes}
-                                         
+                                         onSelectNode={handleSelectNode}
+                                         onDeselectNode={handleDeselectNode}
                                     />
                                  }
                                   </div>
