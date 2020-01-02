@@ -45,7 +45,7 @@ const Edition = ( props)=>{
                                     <SvgGraph 
                                          onSelectNode={handleSelectNode}
                                          sectionId={selectedSection.id}
-                                         selectedNode={selectedNodes}
+                                         selectedNodes={selectedNodes}
                                          
                                     />
                                  }
@@ -74,7 +74,6 @@ const Edition = ( props)=>{
       )
 
       function handleSelectNode( nodeId ){
-            console.log( 'selected',nodeId)
             let copySelectedNodes = selectedNodes.slice();
             copySelectedNodes.push(nodeId);
             setSelectedNodes(copySelectedNodes);
