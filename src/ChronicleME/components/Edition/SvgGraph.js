@@ -35,12 +35,18 @@ const SvgGraph =(props)=>{
       }
 
       function highlightNodes() {
+            let nodeEls = svgRef.current.querySelectorAll("g.node.highlight");
+		nodeEls.forEach.call(nodeEls, function(n) {
+			n.setAttribute("class", "node");
+            });
+            
             if(!selectedNodes)
             return;
             selectedNodes.forEach( n=>{
-                  let node = getGraphDOMNode(n)
-                  if(node)
+                  let node = getGraphDOMNode(n);
+                  if(node){
                   node.setAttribute("class", "node highlight active");
+                  }
             })
        
       }
