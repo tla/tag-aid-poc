@@ -34,7 +34,9 @@ const SvgGraph =(props)=>{
             }
       }
 
-      function highlightNodes(src, hasCache) {
+      function highlightNodes() {
+            if(!selectedNodes)
+            return;
             selectedNodes.forEach( n=>{
                   let node = getGraphDOMNode(n)
                   if(node)

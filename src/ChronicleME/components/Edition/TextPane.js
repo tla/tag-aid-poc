@@ -16,7 +16,6 @@ const TextPane =(props) => {
             if(!lemmaText)
             return;
            let parsed =  Parser(lemmaText,lemmaParserOptions);
-           console.log('reparsing')
             setParsedText(parsed);
       },[props.selectedNodes])
 
@@ -27,12 +26,9 @@ const TextPane =(props) => {
                               let attribNodeId = attribs.id.substring(5);
                            
                               let selected = false;
-                               if( selectedNodes && selectedNodes.length > 0){
+                               if( selectedNodes && selectedNodes.length > 0)
                                     selected = selectedNodes.indexOf( attribNodeId ) === -1? false:true;
-                                    
-                               }
-                                    
-                      
+
                               if(selected)
                                           return <span style={{backgroundColor:'yellow'}} 
                                                 onClick={()=>{handleUnhighlight(attribs.id)}} 

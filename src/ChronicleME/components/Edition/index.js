@@ -88,6 +88,7 @@ const Edition = ( props)=>{
 
       function handleSelectSection( section ){
             setSelectedSection(section);
+            setSelectedNodes([])
       }
       function handleToggleGraph(){
             let toggled = !graphVisible;
