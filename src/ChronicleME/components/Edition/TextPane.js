@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import PropTypes, { string, any, array } from "prop-types";
+import { string, func, array } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from '../../utils/Api'
 
@@ -11,14 +11,6 @@ const TextPane =(props) => {
       const [readings,setReadings]=useState('');
       const {sectionId, selectedNodes, onSelectNode, onDeselectNode} = props;
       const [parsedText, setParsedText] = useState();
-
-      useEffect(()=>{
-            if(!lemmaText)
-            return;
-           let parsed =  Parser(lemmaText,lemmaParserOptions);
-            setParsedText(parsed);
-      },[props.selectedNodes])
-
       const lemmaParserOptions =  {
             replace: function({attribs,children}) {
 
@@ -42,6 +34,14 @@ const TextPane =(props) => {
                   }
             }
       }
+      useEffect(()=>{
+            if(!lemmaText)
+            return;
+           let parsed =  Parser(lemmaText,lemmaParserOptions);
+            setParsedText(parsed);
+      },[props.selectedNodes, lemmaText,lemmaParserOptions])
+
+    
 
       useEffect(()=>{
             DataApi.getSection(sectionId, (readings, translation,lemmaText)=>{
@@ -82,7 +82,7 @@ const TextPane =(props) => {
 TextPane.propTypes = {
       sectionId:string,
       selectedNodes:array,
-      onSelectNode:any,
+      onSelectNode:func
 };
 
 export default TextPane;

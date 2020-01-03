@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import { Grid } from '@material-ui/core';
 import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
@@ -9,7 +9,7 @@ import SvgGraph from './SvgGraph'
 
 const Edition = ( props)=>{
     
-      const {sections , height } = props;
+      const {sections , viewport } = props;
       const [selectedSection, setSelectedSection] = useState();
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true)
@@ -18,22 +18,23 @@ const Edition = ( props)=>{
             <Grid container spacing={1} >
                 
                   <Grid id="sideBar" item xs={3}>
-                        <Grid container spacing={2}>
-                              <Grid id="viewOptions" item xs={12}>
+                        
+                              <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                                     <ViewOptions
+                                    
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
                                     />
-                              </Grid>
-                              <Grid id="section list" item xs={12}>
+                              
+                              <div style={{height:'16px'}}></div>
                                     <SectionList
-                                          height={height}
+                                         s
                                           sectionId={selectedSection? selectedSection.id : null}
                                           list ={sections}
                                           onSelect = { handleSelectSection}
                                           />
-                              </Grid> 
-                        </Grid>
+                              </div>
+                       
                   </Grid>
                   
 
@@ -43,6 +44,7 @@ const Edition = ( props)=>{
                                     <div style={{overflowX:'auto'}}>
                                  {selectedSection && graphVisible &&
                                     <SvgGraph 
+                                          viewport={viewport}
                                          sectionId={selectedSection.id}
                                          selectedNodes={selectedNodes}
                                          onSelectNode={handleSelectNode}

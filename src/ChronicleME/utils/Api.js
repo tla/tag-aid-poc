@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const  localUrl='http://localhost:3000/'
+console.log('host is' ,window.location.hostname)
+let host = window.location.hostname==='localhost'?'localhost:3000':'157.245.255.111'
+const  localUrl=`http://${host}/`;
 //const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
 
 export const getSectionList = async ( onListReceived )=>{
@@ -19,7 +21,7 @@ export const getSection = async(sectionID, onSectionReceived )=>{
       const translationURL = `${sectionURL}/translation.html`
       const lemmaTextURL = `${sectionURL}/lemmaText.html`
 
-      const files = await axios.all([
+      await axios.all([
             axios.get(readingsURL),
             axios.get(translationURL),
             axios.get(lemmaTextURL)

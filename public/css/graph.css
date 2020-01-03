@@ -10,3 +10,10 @@
   top: 50px;
   transition: left 350ms;
 }
+
+.graphWindow {
+ 
+      position: relative;
+      transition: left 550ms;
+    }
+    

@@ -11,7 +11,7 @@ const SectionList = ( props ) =>{
 
       return (
             
-            <Paper elevation={2} style={{padding:'12px',overflowY:'auto',height:height}}>
+            <Paper elevation={2} style={{padding:'12px',overflowY:'auto',height:'100%'}}>
 			<Typography variant="h5">
                         {'Index'}
                   </Typography>

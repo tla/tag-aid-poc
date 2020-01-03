@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core';
 import Header from './Header'
 import Edition from './Edition/index'
@@ -15,13 +15,13 @@ console.log('window height is ',viewport.height)
       return (
            
             <Grid container spacing={1} >
-                  <Grid id="header"  item xs={12}>
+                  <Grid id="header"  item xs={12} style={{height:`${viewport.height*.12}px`}}>
                         <Header  />
                   </Grid>
                   <Grid id="pages" item xs={12}>
                         <Switch>
                               <Route path="/Edition" >
-                                    <Edition sections={sections}  height={`${viewport.height * .66}px`} />
+                                    <Edition style={{height:`${viewport.height*.80}px`}} sections={sections}  viewport={viewport} />
                               </Route>
                                <Route path="/" exact>
                                     <HomePage />
