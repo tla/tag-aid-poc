@@ -4,7 +4,7 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
-
+import { useParams} from 'react-router-dom'
 
 
 const Edition = ( props)=>{
@@ -12,8 +12,11 @@ const Edition = ( props)=>{
       const {sections , viewport } = props;
       const [selectedSection, setSelectedSection] = useState();
       const [selectedNodes, setSelectedNodes]=useState([]);
-      const [graphVisible, setGraphVisible] = useState(true)
+      const [graphVisible, setGraphVisible] = useState(true);
 
+    
+      let {sectionID} = useParams();
+    
       return (
             <Grid container spacing={1} >
                 
@@ -21,15 +24,13 @@ const Edition = ( props)=>{
                         
                               <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                                     <ViewOptions
-                                    
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
                                     />
                               
                               <div style={{height:'16px'}}></div>
                                     <SectionList
-                                         s
-                                          sectionId={selectedSection? selectedSection.id : null}
+                                          sectionId={sectionID}
                                           list ={sections}
                                           onSelect = { handleSelectSection}
                                           />
@@ -42,10 +43,10 @@ const Edition = ( props)=>{
                         <Grid container spacing={1}>
                               <Grid id="graphPane" item xs={12}>
                                     <div style={{overflowX:'auto'}}>
-                                 {selectedSection && graphVisible &&
+                                 {sectionID && graphVisible &&
                                     <SvgGraph 
                                           viewport={viewport}
-                                         sectionId={selectedSection.id}
+                                         sectionId={sectionID}
                                          selectedNodes={selectedNodes}
                                          onSelectNode={handleSelectNode}
                                          onDeselectNode={handleDeselectNode}
@@ -54,9 +55,9 @@ const Edition = ( props)=>{
                                   </div>
                               </Grid>
                               <Grid id="textPane" item xs={12}>
-                                    {selectedSection &&
+                                    {sectionID &&
                                           <TextPane 
-                                                sectionId={selectedSection.id}
+                                                sectionId={sectionID}
                                                 selectedNodes={selectedNodes}
                                                 onSelectNode={handleSelectNode}
                                                 onDeselectNode={handleDeselectNode}

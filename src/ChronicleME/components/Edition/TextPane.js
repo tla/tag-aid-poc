@@ -11,6 +11,9 @@ const TextPane =(props) => {
       const [readings,setReadings]=useState('');
       const {sectionId, selectedNodes, onSelectNode, onDeselectNode} = props;
       const [parsedText, setParsedText] = useState();
+
+      
+
       const lemmaParserOptions =  {
             replace: function({attribs,children}) {
 
@@ -35,11 +38,13 @@ const TextPane =(props) => {
             }
       }
       useEffect(()=>{
+
+            console.log('sectionId', sectionId)
             if(!lemmaText)
             return;
            let parsed =  Parser(lemmaText,lemmaParserOptions);
             setParsedText(parsed);
-      },[props.selectedNodes, lemmaText,lemmaParserOptions])
+      },[ props.selectedNodes, lemmaText,lemmaParserOptions])
 
     
 

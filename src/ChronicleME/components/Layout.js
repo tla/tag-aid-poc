@@ -4,12 +4,13 @@ import Header from './Header'
 import Edition from './Edition/index'
 import useWindowSize from './../utils/Viewport';
 import HomePage from './HomePage'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useParams } from 'react-router-dom'
 
 const Layout = ( props)=>{
       const viewport = useWindowSize();
       const {sections} = props;
 
+     
 
 console.log('window height is ',viewport.height)
       return (
@@ -20,9 +21,13 @@ console.log('window height is ',viewport.height)
                   </Grid>
                   <Grid id="pages" item xs={12}>
                         <Switch>
-                              <Route path="/Edition" >
+                              <Route path="/Edition/:sectionID" exact>
                                     <Edition style={{height:`${viewport.height*.80}px`}} sections={sections}  viewport={viewport} />
                               </Route>
+                              <Route path="/Edition" >
+                                    <Edition style={{height:`${viewport.height*.80}px`}}  sections={sections}  viewport={viewport} />
+                              </Route>
+                            
                                <Route path="/" exact>
                                     <HomePage />
                               </Route> 

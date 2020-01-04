@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 const SectionList = ( props ) =>{
 
       const {list, onSelect, sectionId , height} = props
+      
 
       return (
             
@@ -20,8 +21,8 @@ const SectionList = ( props ) =>{
                            list ?   list.map( s => {
                                     return(
                                     <ListItem key={s.id} value={s.id} selected={s.id === sectionId}
-                                         onClick={()=>{onSelect(s) }} >
-                                         
+                                       >
+                                         <a   href={`#/Edition/${s.id}`}>
                                          <div style={{display:'flex', flexDirection:'column'}}>
                                           <Typography variant="body1">
                                                       {s.displayName.substring(0,13)}
@@ -30,6 +31,7 @@ const SectionList = ( props ) =>{
                                                 {`Section Id:${s.id}`}
                                                 </Typography>
                                           </div>
+                                          </a>
                                     </ListItem>
                                     )
                               }) : ''

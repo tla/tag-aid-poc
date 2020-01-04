@@ -18,12 +18,12 @@ return (
                   </Typography>
                   <div >
                         <Tabs value={tabIndex} style={{float:'right'}} onChange={handleTabChange} >
-                              <Tab label="Home"href="#/"  />
-                              <Tab label="About"  />
-                              <Tab label="Methods"  />
-                              <Tab label="Manuscripts"  />
+                              <Tab label="Home"href="/"  />
+                              <Tab label="About" href="#/About" />
+                              <Tab label="Methods"  href="#/Methods"/>
+                              <Tab label="Manuscripts" href="#/Manuscripts" />
                               <Tab label="Edition" href="#/Edition" />
-                              <Tab label="Visualizations"  />
+                              <Tab label="Visualizations" href="#/Visualizations" />
                         </Tabs>
                   </div>
             </div>
