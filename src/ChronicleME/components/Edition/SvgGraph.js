@@ -68,7 +68,8 @@ const SvgGraph =(props)=>{
                   return;
             let nodeId = selectedNodes[0];
             let domNode = getGraphDOMNode(nodeId);
-            domNode.scrollIntoView({behavior:'smooth', inline:'center'});
+            if(domNode)
+                  domNode.scrollIntoView({behavior:'smooth', inline:'center'});
           
       }
       

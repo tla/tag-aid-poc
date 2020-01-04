@@ -21,56 +21,52 @@ const Edition = ( props)=>{
             <Grid container spacing={1} >
                 
                   <Grid id="sideBar" item xs={3}>
-                        
                               <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                                     <ViewOptions
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
                                     />
                               
-                              <div style={{height:'16px'}}></div>
+                                    <div style={{height:'16px'}}></div>
+
                                     <SectionList
                                           sectionId={sectionID}
                                           list ={sections}
                                           onSelect = { handleSelectSection}
-                                          />
+                                     />
                               </div>
-                       
                   </Grid>
                   
 
                   <Grid id="mainContent" item xs={9}>
-                        <Grid container spacing={1}>
-                              <Grid id="graphPane" item xs={12}>
-                                    <div style={{overflowX:'auto'}}>
-                                 {sectionID && graphVisible &&
-                                    <SvgGraph 
-                                          viewport={viewport}
-                                         sectionId={sectionID}
-                                         selectedNodes={selectedNodes}
-                                         onSelectNode={handleSelectNode}
-                                         onDeselectNode={handleDeselectNode}
-                                    />
-                                 }
-                                  </div>
-                              </Grid>
-                              <Grid id="textPane" item xs={12}>
-                                    {sectionID &&
-                                          <TextPane 
+                        <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
+                              {sectionID && graphVisible &&
+                                    <div style={{overflowX:'auto', overflowY:'auto',minHeight:`${viewport.height *.42}px`}}>
+                                          <SvgGraph 
+                                                viewport={viewport}
                                                 sectionId={sectionID}
                                                 selectedNodes={selectedNodes}
                                                 onSelectNode={handleSelectNode}
                                                 onDeselectNode={handleDeselectNode}
-                                                // activeWitness={section.activeWitness}
-                                                // onSetActiveWitness={()=>{}}
-
                                           />
-                                    }
-                                    
-                              </Grid>
+                                    </div>
+                              }
 
-                        </Grid>
-
+                                <div style={{height:'16px'}}></div>  
+                             
+                              {sectionID &&
+                              <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`}}>
+                                    <TextPane 
+                                          sectionId={sectionID}
+                                          selectedNodes={selectedNodes}
+                                          onSelectNode={handleSelectNode}
+                                          onDeselectNode={handleDeselectNode}
+                                          // activeWitness={section.activeWitness}
+                                          // onSetActiveWitness={()=>{}}
+                                    />
+                              </div>
+                              }
+                        </div>
                   </Grid>
 
             </Grid>
