@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 //import { ChronicleME } from "./ChronicleME";
-import RootContainer from './ChronicleME/components/RootContainer'
+import RootContainer from './components/RootContainer'
 
 document.addEventListener("DOMContentLoaded", () => {
       //ReactDOM.render(<ChronicleME/>, document.getElementById("root"));

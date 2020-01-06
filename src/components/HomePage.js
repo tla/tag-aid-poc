@@ -25,7 +25,7 @@ export default function HomePage() {
                
             </div> 
             <div style={{display:'flex', justifyContent:'center',margin:'24px 0px'}}>
-                        <img src="http://localhost:3000/images/edessa_line.png" style={{width:'70%'}}  />
+                        <img src="images/edessa_line.png" style={{width:'70%'}}  />
             </div>  
             <div style={{display:'flex',justifyContent:'center'}}>
                   <TextPane

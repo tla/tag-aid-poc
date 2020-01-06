@@ -1,6 +1,9 @@
 .text-pane {
-
   display: flex;
+}
+
+.horizontal-spacer {
+      width: 32px;
 }
 
 .text-pane .reading {

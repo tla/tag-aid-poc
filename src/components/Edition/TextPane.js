@@ -3,7 +3,7 @@ import { string, func, array } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from '../../utils/Api';
 import Typography from '@material-ui/core/Typography'
-
+import { Grid } from '@material-ui/core';
 
 const TextPane =(props) => {
 
@@ -61,18 +61,19 @@ const TextPane =(props) => {
 
   
       return (
-            <div className="text-pane">
-                  <div className="reading">
-                        { parsedText }
-                  </div>
-                  <div className="translation">
-                 
+            <Grid container spacing={6}>
+                  <Grid item xs={12} md={6}>
                         <Typography variant="body1">
-                        { translation ? Parser(translation): ''}
+                              { parsedText }
                         </Typography>
-                      </div> 
-                 
-            </div>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                        <Typography variant="body1">
+                              { translation ? Parser(translation): ''}
+                        </Typography>
+                  </Grid>
+            </Grid>
           )
 
       function handleHighlight( textNodeId){

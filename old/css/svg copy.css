@@ -1,0 +1,31 @@
+svg {
+  height: 100%;
+}
+svg g.node {
+  fill:#fff;
+  stroke: #000;
+  transition: stroke 700ms;
+}
+svg g.node:hover {
+  cursor: pointer;
+}
+svg g.node:hover ellipse {
+  fill: #add8e6;
+}
+svg g.node.highlight {
+  stroke: #008000;
+}
+svg g.node.highlight.active {
+  fill: #d9ffd9 ;
+  stroke: #006400;
+}
+svg g.edge:not(.majority):hover {
+  cursor: pointer;
+}
+svg g.edge:not(.majority):hover text {
+  fill: #f00;
+}
+svg g.edge path {
+  fill: none;
+  stroke: #000;
+}
