@@ -8,10 +8,11 @@ const Header = ( props)=>{
 const [tabIndex, setTabIndex]=useState("#/")
 
 useEffect(()=>{
-      console.log(window.location.hash)
-    setTabIndex(window.location.hash)
+      let pageName = window.location.hash.split("/")[1]
+      console.log('page name',pageName)
+      setTabIndex(`#/${pageName}`)
 
-},[window.location.hash])
+})
     
 
 return (
