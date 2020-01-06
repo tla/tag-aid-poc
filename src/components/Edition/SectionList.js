@@ -7,7 +7,7 @@ import { Link} from 'react-router-dom'
 
 const SectionList = ( props ) =>{
 
-      const {list, onSelect, sectionId , height} = props
+      const {list, sectionId } = props
       
 
       return (

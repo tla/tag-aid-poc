@@ -8,9 +8,7 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            if ( !props.selectedNodes )
-                  defaultStart()
-            else {
+            if ( props.selectedNodes ){
                   highlightNodes();
                   centerOnSelected();
             }
@@ -27,6 +25,7 @@ const SvgGraph =(props)=>{
                               <SVG 
                                     src= {`data/${sectionId}/graph.svg`}
                                     onClick={handleClick}
+                                    onLoad = { defaultStart }
                               />
                   </div>
             </div>
@@ -81,7 +80,7 @@ const SvgGraph =(props)=>{
             return found;
       }
 
-      function defaultStart(){
+      function defaultStart(src, cache){
             console.log("default start called")
             let startNode = getStartNode();
             if ( startNode){
