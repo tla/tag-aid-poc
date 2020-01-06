@@ -10,13 +10,11 @@ import { useParams} from 'react-router-dom'
 const Edition = ( props)=>{
     
       const {sections , viewport } = props;
-      const [selectedSection, setSelectedSection] = useState();
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
 
-    
-      let {sectionID} = useParams();
-    
+      let {sectionID} = useParams()
+  
       return (
             <Grid container spacing={1} >
                 
@@ -32,7 +30,7 @@ const Edition = ( props)=>{
                                     <SectionList
                                           sectionId={sectionID}
                                           list ={sections}
-                                          onSelect = { handleSelectSection}
+                                   
                                      />
                               </div>
                   </Grid>
@@ -55,7 +53,7 @@ const Edition = ( props)=>{
                                 <div style={{height:'16px'}}></div>  
                              
                               {sectionID &&
-                              <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`}}>
+                              <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`,padding:'0px 16px'}}>
                                     <TextPane 
                                           sectionId={sectionID}
                                           selectedNodes={selectedNodes}
@@ -85,10 +83,6 @@ const Edition = ( props)=>{
             setSelectedNodes(copySelectedNodes);
       }
 
-      function handleSelectSection( section ){
-            setSelectedSection(section);
-            setSelectedNodes([])
-      }
       function handleToggleGraph(){
             let toggled = !graphVisible;
             setGraphVisible(toggled)

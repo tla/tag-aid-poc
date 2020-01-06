@@ -22,7 +22,10 @@ svg  g.node.highlight.active ellipse{
       fill:#d9ffd9 ;
     
 }
-
+svg  g.node.highlight.start ellipse{
+      fill:#d1f30d ;
+    
+}
 svg g.edge:not(.majority):hover {
   cursor: pointer;
 }

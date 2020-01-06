@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
+import { Link} from 'react-router-dom'
 
 const SectionList = ( props ) =>{
 
@@ -22,16 +22,16 @@ const SectionList = ( props ) =>{
                                     return(
                                     <ListItem key={s.id} value={s.id} selected={s.id === sectionId}
                                        >
-                                         <a   href={`#/Edition/${s.id}`}>
-                                         <div style={{display:'flex', flexDirection:'column'}}>
-                                          <Typography variant="body1">
-                                                      {s.displayName.substring(0,13)}
-                                                </Typography>
-                                                <Typography variant="subtitle2">
-                                                {`Section Id:${s.id}`}
-                                                </Typography>
-                                          </div>
-                                          </a>
+                                         <Link   to={`${s.id}`} >
+                                                <div style={{display:'flex', flexDirection:'column'}}>
+                                                            <Typography variant="h6">
+                                                                  {s.displayName.substring(0,13)}
+                                                            </Typography>
+                                                            <Typography variant="subtitle2">
+                                                                  {`Section Id:${s.id}`}
+                                                            </Typography>
+                                                </div>
+                                          </Link>
                                     </ListItem>
                                     )
                               }) : ''

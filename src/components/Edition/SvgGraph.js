@@ -4,27 +4,25 @@ import SVG from 'react-inlinesvg'
 
 const SvgGraph =(props)=>{
 
-      const {selectedNodes, sectionId, onSelectNode, onDeselectNode, viewport}=props;
+      const {selectedNodes, sectionId, onSelectNode, onDeselectNode}=props;
       const svgRef = useRef(null);
-      const [left, setLeft] = useState();
-      const graphWindowStyle={
-            left:left
-      }
-
-      useEffect( ()=>{
-            if ( !selectedNodes )
-                  return;
-            highlightNodes();
-            centerOnSelected();
-      },[selectedNodes])
-
     
+      useEffect( ()=>{
+            if ( !props.selectedNodes )
+                  defaultStart()
+            else {
+                  highlightNodes();
+                  centerOnSelected();
+            }
+      })
+
+  
+
 
       return (
-            <div style={{position:'relative',backgroundColor:'green', padding:'16px',overflowX:'auto'}}>
+            <div style={{position:'relative', padding:'16px',overflowX:'auto'}}>
                   <div   
                         className='graphWindow'
-                        style={graphWindowStyle}
                         ref={svgRef}>
                               <SVG 
                                     src= {`data/${sectionId}/graph.svg`}
@@ -66,16 +64,40 @@ const SvgGraph =(props)=>{
       function centerOnSelected(){
             if(selectedNodes.length ===0)
                   return;
-            let nodeId = selectedNodes[0];
+            let lastIndex=selectedNodes.length-1;
+            let nodeId = selectedNodes[lastIndex]
             let domNode = getGraphDOMNode(nodeId);
             if(domNode)
-                  domNode.scrollIntoView({behavior:'smooth', inline:'center'});
+                  domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
+            else
+                 console.log('node not found')
           
       }
       
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;
             let selector = `g#n${nodeId}`;
+            let found =  graphRef.querySelector(selector);
+            return found;
+      }
+
+      function defaultStart(){
+            console.log("default start called")
+            let startNode = getStartNode();
+            if ( startNode){
+                  startNode.setAttribute("class", "node highlight start");
+                  startNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
+            }
+            else
+                 console.log("cant find start")
+          
+         
+      }
+
+      function getStartNode(){
+            let startId ="__START__"
+            const graphRef = svgRef.current;
+            let selector = `g#__START__`;
             let found =  graphRef.querySelector(selector);
             return found;
       }

@@ -22,7 +22,7 @@ return (
                                     <Tab label="About" href="#/About"  />
                                     <Tab label="Methods"  href="#/Methods"/>
                                     <Tab label="Manuscripts" href="#/Manuscripts"  />
-                                    <Tab label="Edition" href="#/Edition"  />
+                                    <Tab label="Edition" href="#/Edition/1019321"  />
                                     <Tab label="Visualizations" href="#/Visualizations"  />
                               </Tabs>
                   </div>

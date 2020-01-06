@@ -13,8 +13,6 @@ const TextPane =(props) => {
       const {sectionId, selectedNodes, onSelectNode, onDeselectNode} = props;
       const [parsedText, setParsedText] = useState();
 
-      
-
       const lemmaParserOptions =  {
             replace: function({attribs,children}) {
 
@@ -34,44 +32,40 @@ const TextPane =(props) => {
                                           // onMouseOver={()=>{handleHighlight(attribs.id)}}
                                           >{domToReact(children,lemmaParserOptions)}</span>
                               }
-                      
                   }
             }
       }
-      useEffect(()=>{
 
-            console.log('sectionId', sectionId)
+      useEffect(()=>{
             if(!lemmaText)
-            return;
+                  return;
            let parsed =  Parser(lemmaText,lemmaParserOptions);
             setParsedText(parsed);
       },[ props.selectedNodes, lemmaText,lemmaParserOptions])
-
-    
 
       useEffect(()=>{
             DataApi.getSection(sectionId, (readings, translation,lemmaText)=>{
                   setLemmaText(lemmaText);
                   setTranslation(translation);
                   setReadings(readings);
-                 let parsed =  Parser(lemmaText,lemmaParserOptions);
-                 setParsedText(parsed);
+                  let parsed =  Parser(lemmaText,lemmaParserOptions);
+                  setParsedText(parsed);
             })
       },[props.sectionId])
 
   
       return (
-            <Grid container spacing={6}>
+            <Grid container spacing={4}>
                   <Grid item xs={12} md={6}>
-                        <Typography variant="body1">
+                        <div>
                               { parsedText }
-                        </Typography>
+                        </div>
                   </Grid>
 
                   <Grid item xs={12} md={6}>
-                        <Typography variant="body1">
+                        <div>
                               { translation ? Parser(translation): ''}
-                        </Typography>
+                        </div>
                   </Grid>
             </Grid>
           )
