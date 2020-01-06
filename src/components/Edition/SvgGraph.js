@@ -81,7 +81,6 @@ const SvgGraph =(props)=>{
       }
 
       function defaultStart(src, cache){
-            console.log("default start called")
             let startNode = getStartNode();
             if ( startNode){
                   startNode.setAttribute("class", "node highlight start");
@@ -89,8 +88,6 @@ const SvgGraph =(props)=>{
             }
             else
                  console.log("cant find start")
-          
-         
       }
 
       function getStartNode(){

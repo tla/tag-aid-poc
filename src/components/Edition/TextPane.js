@@ -10,31 +10,40 @@ const TextPane =(props) => {
       const [lemmaText, setLemmaText] = useState();
       const [translation, setTranslation] = useState();
       const [readings,setReadings]=useState('');
-      const {sectionId, selectedNodes, onSelectNode, onDeselectNode} = props;
+      const {sectionId, onSelectNode, selectedNodes, onDeselectNode} = props;
       const [parsedText, setParsedText] = useState();
-
-      const lemmaParserOptions =  {
-            replace: function({attribs,children}) {
-
-                  if( attribs && attribs.id  ){
-                              let attribNodeId = attribs.id.substring(5);
-                           
-                              let selected = false;
-                               if( selectedNodes && selectedNodes.length > 0)
-                                    selected = selectedNodes.indexOf( attribNodeId ) === -1? false:true;
-
-                              if(selected)
-                                          return <span style={{backgroundColor:'yellow'}} 
-                                                onClick={()=>{handleUnhighlight(attribs.id)}} 
+      const [lemmaParserOptions, setLemmaParserOptions] = useState();
+      
+     
+      useEffect(()=>{
+            let parserOptions =  {
+                  replace: function({attribs,children}) {
+      
+                        if( attribs && attribs.id  ){
+                                    let attribNodeId = attribs.id.substring(5);
+                                 
+                                    let selected = false;
+                                     if( props.selectedNodes && props.selectedNodes.length > 0)
+                                          selected = props.selectedNodes.indexOf( attribNodeId ) === -1? false:true;
+      
+                                    if(selected)
+                                                return <span style={{backgroundColor:'yellow'}} 
+                                                      onClick={()=>{handleUnhighlight(attribs.id)}} 
+                                                      >{domToReact(children,lemmaParserOptions)}</span>
+                                          else {
+                                                return <span onClick={()=>{handleHighlight(attribs.id)}}
+                                                // onMouseOver={()=>{handleHighlight(attribs.id)}}
                                                 >{domToReact(children,lemmaParserOptions)}</span>
-                                    else {
-                                          return <span onClick={()=>{handleHighlight(attribs.id)}}
-                                          // onMouseOver={()=>{handleHighlight(attribs.id)}}
-                                          >{domToReact(children,lemmaParserOptions)}</span>
-                              }
+                                    }
+                        }
                   }
             }
-      }
+
+            setLemmaParserOptions(parserOptions)
+
+      },[props.selectedNodes])
+
+     
 
       useEffect(()=>{
             if(!lemmaText)
@@ -51,7 +60,7 @@ const TextPane =(props) => {
                   let parsed =  Parser(lemmaText,lemmaParserOptions);
                   setParsedText(parsed);
             })
-      },[props.sectionId])
+      },[props.sectionId,lemmaParserOptions])
 
   
       return (
