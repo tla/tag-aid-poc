@@ -1,11 +1,17 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 const Header = ( props)=>{
 
-const [tabIndex, setTabIndex]=useState(0)
+const [tabIndex, setTabIndex]=useState("#/")
+
+useEffect(()=>{
+      console.log(window.location.hash)
+    setTabIndex(window.location.hash)
+
+},[window.location.hash])
     
 
 return (
@@ -18,12 +24,12 @@ return (
                   <div style={{display:'flex', justifyContent:'flex-end',padding:'5px',fontSize:'16px'}}>
                               <Tabs value={tabIndex} style={{float:'right'}} onChange={handleTabChange} 
                               style={{color:'black'}}>
-                                    <Tab label="Home"href="/"  />
-                                    <Tab label="About" href="#/About"  />
-                                    <Tab label="Methods"  href="#/Methods"/>
-                                    <Tab label="Manuscripts" href="#/Manuscripts"  />
-                                    <Tab label="Edition" href="#/Edition/1019321"  />
-                                    <Tab label="Visualizations" href="#/Visualizations"  />
+                                    <Tab label="Home" href="/" value="#/" />
+                                    <Tab label="About" href="#/About"  value="#/About"  />
+                                    <Tab label="Methods"  href="#/Methods" value="#/Methods" />
+                                    <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
+                                    <Tab label="Edition" href="#/Edition/1019321"    value="#/Edition"   />
+                                    <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
                               </Tabs>
                   </div>
             </AppBar> 
