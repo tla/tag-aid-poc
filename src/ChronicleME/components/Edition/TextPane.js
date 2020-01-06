@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { string, func, array } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
-import * as DataApi from '../../utils/Api'
+import * as DataApi from '../../utils/Api';
+import Typography from '@material-ui/core/Typography'
 
 
 const TextPane =(props) => {
@@ -65,8 +66,12 @@ const TextPane =(props) => {
                         { parsedText }
                   </div>
                   <div className="translation">
+                 
+                        <Typography variant="body1">
                         { translation ? Parser(translation): ''}
-                  </div>
+                        </Typography>
+                      </div> 
+                 
             </div>
           )
 

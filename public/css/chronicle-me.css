@@ -1,6 +1,12 @@
 body {
     font-family: Baskerville, ArmBoloragir;
     background-color: rgb(255, 250, 245);
+    padding:0px,
+}
+
+#headerPanel {
+      background-image: url("../images/parchment.jpg");
+      padding-top: 48px;
 }
 
 h1,h2,h3 {
