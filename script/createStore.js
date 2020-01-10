@@ -2,8 +2,9 @@ const fs = require('fs')
 const axios = require('axios');
 const moment = require('moment')
      
-
-
+//https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
+// inspired by fast async await example - everything in paralell when possible - 
+// do add error handling please
 
 
 async function generateStore() { 
@@ -19,7 +20,7 @@ async function generateStore() {
       console.log('Done!', endTime.format('hh:mm:ss'))
 
       function loadConfig() {
-            const configJSON = fs.readFileSync(`script/lemma-html/lemma-html-config.json`, "utf8");
+            const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
             return JSON.parse(configJSON);
       }
 
@@ -56,33 +57,30 @@ async function generateStore() {
            
             if( lemmaTextFinal.text ) {
                  
-                  let allReadings = new Promise( (res, rej )=>{
+                  let allReadings = new Promise( (resolve )=>{
                         getReadings(sectionId)
                         .then( readings=>{
                               writeLemmaFile( readings, sectionId); 
                               writeWitnessFiles(readings, witnesses, sectionId);
-                              res();
+                              resolve();
                         })
 
                   });
 
-                  let englishTranslation = new Promise( (res, rej) =>{
+                  let englishTranslation = new Promise( (resolve) =>{
                         getTranslation(sectionId)
                         .then( translation=>{
-                              writeTranslationFile(sectionId,translation);
-                              res();
+                              writeTranslationFile(translation,sectionId);
+                              resolve();
                         })
 
                   });
 
-                  let titleArray = new Promise( (res, rej )=>{
+                  let titleArray = new Promise( (resolve) =>{ // demonstrating that this is the same as using new promise and resolve
                         getTitle(sectionId)
                         .then( titles =>{
-
                               const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
                               const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
-
-
 
                                let validSection = {
                                      sectionId: sectionId,
@@ -90,8 +88,8 @@ async function generateStore() {
                                      armenianTitle: armenianTitle
                                }
                                validSections.push(validSection);
-                              res();
-                        })
+                              resolve();
+                        });
 
                   });
 
@@ -142,6 +140,33 @@ async function generateStore() {
             return response.data;
       }
 
+      function readingToHTML( reading ){
+            let textElements = [] ;
+            if( reading.length === 0 )
+            return;
+            for (const entry of reading ) {
+                  const text = entry.normal_form ? entry.normal_form : entry.text
+                  textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
+            }
+            return  `${textElements.join('')}`
+      }
+
+      function translationToHTML( translation, sectionId ){
+            let textElements = [] ;
+            if( translation.length === 0 )
+            return;
+            if( translation.length > 1)
+                  console.log( 'there is more than one translation for this section', sectionId)
+            for (const entry of translation ) {
+                  const text = entry.properties.text;
+                  const beginTextNode = entry.links[0].type==="BEGIN" ? entry.links[0].target:entry.links[1].target;
+                  textElements.push( `<span id='text-${beginTextNode}' key=${beginTextNode}>${text}</span>`)
+            }
+            return  `${textElements.join('')}`
+
+
+      }
+
       function writeLemmaFile(readings,sectionId){
             const sectiondir = `${outdir}/${sectionId}`;
             const lemmaFilePath = `${sectiondir}/lemmaText.html`
@@ -166,15 +191,30 @@ async function generateStore() {
             })
       }
 
-      function readingToHTML( reading ){
-            let textElements = [] ;
-            if( reading.length === 0 )
-            return;
-            for (const entry of reading ) {
-                  const text = entry.normal_form ? entry.normal_form : entry.text
-                  textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
-            }
-            return  `${textElements.join('')}`
+      function writeTranslationFile( translation,sectionId){
+            if ( ! translation.length > 0 )
+                  return;
+            const sectiondir = `${outdir}/${sectionId}`;
+            const translationFilePath = `${sectiondir}/translation.html`;
+            const translationHTML = translationToHTML(translation, sectionId)
+            makeDirectory(sectiondir);
+            //console.log('writing translation file for section ', sectionId)
+            writeFile(translationFilePath,translationHTML)
+      };
+     
+
+    
+
+      function parseWitnessReading(sigil, readings) {
+            const filterCondition = sigil === 'Lemma text'
+                  ? (r) => r.is_lemma && !r.is_start && !r.is_end
+                  : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
+            const witReadings = readings.filter(filterCondition);
+            witReadings.sort((first, second) => first.rank - second.rank)
+            return {
+                  sigil: sigil,
+                  readings: witReadings
+            };
       }
 
       async function makeDirectory(sectiondir){
@@ -190,27 +230,7 @@ async function generateStore() {
             fs.writeFileSync( fileName, contents )  
       }
 
-      function parseWitnessReading(sigil, readings) {
-            const filterCondition = sigil === 'Lemma text'
-                  ? (r) => r.is_lemma && !r.is_start && !r.is_end
-                  : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
-            const witReadings = readings.filter(filterCondition);
-            witReadings.sort((first, second) => first.rank - second.rank)
-            return {
-                  sigil: sigil,
-                  readings: witReadings
-            };
-}
-
-      function writeTranslationFile(sectionId, translation){
-            if ( ! translation.length > 0 )
-                  return;
-            const sectiondir = `${outdir}/${sectionId}`;
-            const translationFilePath = `${sectiondir}/translation.html`;
-            makeDirectory(sectiondir);
-            //console.log('writing translation file for section ', sectionId)
-            writeFile(translationFilePath,translation)
-      };
+     
 
       function writeSectionFile( validSections ){
             const sectFile = `${outdir}/sections.json`

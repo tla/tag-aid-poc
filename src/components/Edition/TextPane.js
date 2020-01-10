@@ -53,10 +53,10 @@ const TextPane =(props) => {
       },[ props.selectedNodes, lemmaText,lemmaParserOptions])
 
       useEffect(()=>{
-            DataApi.getSection(sectionId, (readings, translation,lemmaText)=>{
+            DataApi.getSection(sectionId, (translation,lemmaText)=>{
                   setLemmaText(lemmaText);
                   setTranslation(translation);
-                  setReadings(readings);
+                 // setReadings(readings);
                   let parsed =  Parser(lemmaText,lemmaParserOptions);
                   setParsedText(parsed);
             })
@@ -66,14 +66,21 @@ const TextPane =(props) => {
       return (
             <Grid container spacing={4}>
                   <Grid item xs={12} md={6}>
-                        <div>
-                              { parsedText }
+                       <div style={{wordWrap:'break-word'}}>
+                             <Typography>
+                             { parsedText }
+                             </Typography>
+                       
                         </div>
+                             
+                      
                   </Grid>
 
                   <Grid item xs={12} md={6}>
                         <div>
+                        <Typography>
                               { translation ? Parser(translation): ''}
+                        </Typography>
                         </div>
                   </Grid>
             </Grid>
