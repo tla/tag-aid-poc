@@ -17,17 +17,15 @@ export const getSectionList = async ( onListReceived )=>{
 
 export const getSection = async(sectionID, onSectionReceived )=>{
       const sectionURL = `${localUrl}/data/${sectionID}`
-      const readingsURL = `${sectionURL}/readings.json`
       const translationURL = `${sectionURL}/translation.html`
       const lemmaTextURL = `${sectionURL}/lemmaText.html`
 
       await axios.all([
-            axios.get(readingsURL),
             axios.get(translationURL),
             axios.get(lemmaTextURL)
           ])
-      .then( axios.spread( (readings, translation, lemmaText)=>{
-            onSectionReceived(readings.data, translation.data, lemmaText.data)
+      .then( axios.spread( ( translation, lemmaText)=>{
+            onSectionReceived( translation.data, lemmaText.data)
       }))
 
 

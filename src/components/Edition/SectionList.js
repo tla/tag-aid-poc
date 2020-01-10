@@ -20,15 +20,15 @@ const SectionList = ( props ) =>{
                         {
                            list ?   list.map( s => {
                                     return(
-                                    <ListItem key={s.id} value={s.id} selected={s.id === sectionId}
+                                    <ListItem key={s.sectionId} value={s.sectionId} selected={s.sectionId === sectionId}
                                        >
-                                         <Link   to={`${s.id}`} >
+                                         <Link   to={`${s.sectionId}`} >
                                                 <div style={{display:'flex', flexDirection:'column'}}>
                                                             <Typography variant="h6">
-                                                                  {s.displayName.substring(0,13)}
+                                                                  {s.englishTitle.substring(0,13)}
                                                             </Typography>
                                                             <Typography variant="subtitle2">
-                                                                  {`Section Id:${s.id}`}
+                                                                  {`Section Id:${s.sectionId}`}
                                                             </Typography>
                                                 </div>
                                           </Link>
