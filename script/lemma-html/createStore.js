@@ -42,21 +42,21 @@ async function generateStore() {
 
        async function getSectionStore(sections, witnesses){
             const sectionPromises = [];
+            const validSections = [];
             sections.forEach( section =>{
-                  sectionData = getSectionData(section.id, witnesses);
+                  sectionData = getSectionData(section.id, witnesses, validSections);
                   sectionPromises.push(sectionData);
             });
             sectionStore = await Promise.all(sectionPromises);
+            writeSectionFile( validSections);
       }
 
-      async function getSectionData( sectionId, witnesses ){
+      async function getSectionData( sectionId, witnesses, validSections ){
             let lemmaTextFinal = await getLemmaText(sectionId);
            
             if( lemmaTextFinal.text ) {
-                  const validSections = [];
-
+                 
                   let allReadings = new Promise( (res, rej )=>{
-
                         getReadings(sectionId)
                         .then( readings=>{
                               writeLemmaFile( readings, sectionId); 
@@ -78,10 +78,16 @@ async function generateStore() {
                   let titleArray = new Promise( (res, rej )=>{
                         getTitle(sectionId)
                         .then( titles =>{
+
+                              const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
+                              const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
+
+
+
                                let validSection = {
                                      sectionId: sectionId,
-                                     englishTitle: titles[1].text,
-                                     armenianTitle: titles[0].text
+                                     englishTitle: englishTitle,
+                                     armenianTitle: armenianTitle
                                }
                                validSections.push(validSection);
                               res();
@@ -206,7 +212,7 @@ async function generateStore() {
             writeFile(translationFilePath,translation)
       };
 
-      function writeSectionList( validSections ){
+      function writeSectionFile( validSections ){
             const sectFile = `${outdir}/sections.json`
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
       }
