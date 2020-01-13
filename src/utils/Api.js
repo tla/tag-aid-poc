@@ -25,6 +25,16 @@ export const getWitnessList = async ( onListReceived )=>{
       }
 }
 
+export const getWitnessReading = async ( sectionId, sigil, onTextReceived )=>{
+      const readingURL = `${localUrl}data/${sectionId}/${sigil}.html`;
+      try{
+            const result = await axios.get(readingURL);
+            onTextReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
 export const getSection = async(sectionID, onSectionReceived )=>{
       const sectionURL = `${localUrl}/data/${sectionID}`
       const translationURL = `${sectionURL}/translation.html`
