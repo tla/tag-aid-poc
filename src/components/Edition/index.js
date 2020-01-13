@@ -9,7 +9,7 @@ import { useParams} from 'react-router-dom'
 
 const Edition = ( props)=>{
     
-      const {sections , viewport } = props;
+      const {sections , viewport , witnesses} = props;
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
 
@@ -26,6 +26,7 @@ const Edition = ( props)=>{
                   <Grid id="sideBar" item xs={3}>
                               <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                                     <ViewOptions
+                                          witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
                                     />

@@ -22,16 +22,18 @@ const SectionList = ( props ) =>{
                                     return(
                                     <ListItem key={s.sectionId} value={s.sectionId} selected={s.sectionId === sectionId}
                                        >
-                                         <Link   to={`${s.sectionId}`} >
+                                        
                                                 <div style={{display:'flex', flexDirection:'column'}}>
-                                                            <Typography variant="h6">
-                                                                  {s.englishTitle.substring(0,13)}
-                                                            </Typography>
-                                                            <Typography variant="subtitle2">
+                                                <Link   to={`${s.sectionId}`} >
+                                                                  <Typography variant="h6">
+                                                                        {s.englishTitle.substring(0,13)}
+                                                                  </Typography>
+                                                            </Link>
+                                                            <Typography variant="subtitle2" style={{marginLeft:'16px'}}>
                                                                   {`Section Id:${s.sectionId}`}
                                                             </Typography>
                                                 </div>
-                                          </Link>
+                                         
                                     </ListItem>
                                     )
                               }) : ''

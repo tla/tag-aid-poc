@@ -14,7 +14,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 const Layout = ( props)=>{
       const viewport = useWindowSize();
-      const {sections} = props;
+      const {sections, witnesses} = props;
 
       return (
            
@@ -26,10 +26,10 @@ const Layout = ( props)=>{
                   <Grid id="pages" item xs={12}>
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition style={{height:`${viewport.height*.80}px`}} sections={sections}  viewport={viewport} />
+                                    <Edition style={{height:`${viewport.height*.80}px`}} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition" >
-                                    <Edition style={{height:`${viewport.height*.80}px`}}  sections={sections}  viewport={viewport} />
+                                    <Edition style={{height:`${viewport.height*.80}px`}}  sections={sections}  viewport={viewport}  witnesses = { witnesses} />
                               </Route>
                             
                                <Route path="/" exact>

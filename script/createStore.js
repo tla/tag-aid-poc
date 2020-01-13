@@ -3,7 +3,7 @@ const axios = require('axios');
 const moment = require('moment')
      
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
-// inspired by fast async await example - everything in paralell when possible - 
+// inspired by fast async await example - everything in parallel when possible - 
 // do add error handling please
 
 
@@ -28,6 +28,7 @@ async function generateStore() {
             const sections = getSections();
             const witnesses =  getWitnesses();
             let lists = await Promise.all([sections, witnesses])
+            writeWitnessList(lists[1]);
             let sectionStore= await getSectionStore(lists[0], lists[1]);
       }
 
@@ -155,8 +156,7 @@ async function generateStore() {
             let textElements = [] ;
             if( translation.length === 0 )
             return;
-            if( translation.length > 1)
-                  console.log( 'there is more than one translation for this section', sectionId)
+
             for (const entry of translation ) {
                   const text = entry.properties.text;
                   const beginTextNode = entry.links[0].type==="BEGIN" ? entry.links[0].target:entry.links[1].target;
@@ -230,11 +230,14 @@ async function generateStore() {
             fs.writeFileSync( fileName, contents )  
       }
 
-     
-
       function writeSectionFile( validSections ){
             const sectFile = `${outdir}/sections.json`
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
+      }
+
+      function writeWitnessList( witnesses ) {
+            const sectFile = `${outdir}/witnesses.json`
+            fs.writeFileSync( sectFile, JSON.stringify(witnesses) )
       }
 
      
