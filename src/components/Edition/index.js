@@ -44,7 +44,7 @@ const Edition = ( props)=>{
                   <Grid id="mainContent" item xs={9}>
                         <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                               {sectionID && graphVisible &&
-                                    <div style={{overflowX:'auto', overflowY:'auto',minHeight:`${viewport.height *.42}px`}}>
+                                    <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.42}px`}}>
                                           <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
@@ -60,6 +60,7 @@ const Edition = ( props)=>{
                               {sectionID &&
                               <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`,padding:'0px 16px'}}>
                                     <TextPane 
+                                          sections = { sections}
                                           sectionId={sectionID}
                                           selectedNodes={selectedNodes}
                                           onSelectNode={handleSelectNode}

@@ -9,10 +9,23 @@ const TextPane =(props) => {
 
       const [lemmaText, setLemmaText] = useState();
       const [translation, setTranslation] = useState();
-      const [readings,setReadings]=useState('');
       const {sectionId, onSelectNode, selectedNodes, onDeselectNode} = props;
       const [parsedText, setParsedText] = useState();
       const [lemmaParserOptions, setLemmaParserOptions] = useState();
+      const [enTitle, setEnTitle] = useState();
+      const [arTitle, setArTitle] = useState();
+
+      useEffect(()=>{
+            if(!props.sections)
+            return;
+            const selectedSection = props.sections.find( s =>{
+                  return s.sectionId === sectionId;
+            });
+            if(selectedSection){
+                  setEnTitle(selectedSection.englishTitle);
+                  setArTitle(selectedSection.armenianTitle);
+            }
+      },[sectionId,props.sections])
       
      
       useEffect(()=>{
@@ -43,8 +56,6 @@ const TextPane =(props) => {
 
       },[props.selectedNodes])
 
-     
-
       useEffect(()=>{
             if(!lemmaText)
                   return;
@@ -66,22 +77,31 @@ const TextPane =(props) => {
       return (
             <Grid container spacing={4}>
                   <Grid item xs={12} md={6}>
-                       <div style={{wordWrap:'break-word'}}>
+                        <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
+                              {arTitle ? arTitle.split("(")[0]:''}
+                        </Typography>
+                        <Typography variant="body2" style={{textAlign:'center'}}>
+                              {arTitle? `(${arTitle.split("(")[1]}`:''}
+                        </Typography>
+                       <div style={{wordWrap:'break-word', marginTop:'16px'}}>
+                      
                              <Typography>
                              { parsedText }
                              </Typography>
-                       
                         </div>
-                             
-                      
                   </Grid>
 
                   <Grid item xs={12} md={6}>
-                        <div>
-                        <Typography>
+                  <Typography variant="h5" style={{textAlign:'center',marginBottom:'6px'}}>
+                              {enTitle ? enTitle.split("(")[0]:''}
+                        </Typography>
+                        <Typography variant="body2" style={{textAlign:'center'}}>
+                              {enTitle? `(${enTitle.split("(")[1]}`:''}
+                        </Typography>
+                        <Typography style={{ marginTop:'16px'}}>
                               { translation ? Parser(translation): ''}
                         </Typography>
-                        </div>
+                        
                   </Grid>
             </Grid>
           )

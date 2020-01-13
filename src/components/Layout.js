@@ -5,7 +5,7 @@ import Header from './Header'
 import Edition from './Edition/index'
 import useWindowSize from './../utils/Viewport';
 import HomePage from './HomePage'
-import { Route, Switch, useParams } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import ChronicleTheme from './Theme'
 import { ThemeProvider } from '@material-ui/core/styles';
 
@@ -33,7 +33,7 @@ const Layout = ( props)=>{
                               </Route>
                             
                                <Route path="/" exact>
-                                    <HomePage />
+                                    <HomePage sections={sections} />
                               </Route> 
                         </Switch>
                   </Grid>
