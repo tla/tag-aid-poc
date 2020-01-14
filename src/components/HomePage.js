@@ -1,6 +1,7 @@
 import React from 'react';
 import TextPane from './Edition/TextPane'
 import Typography from '@material-ui/core/Typography'
+import { Grid } from '@material-ui/core';
 
 
 const HomePage = (props)=> {
@@ -32,10 +33,30 @@ const HomePage = (props)=> {
                         <img src="images/edessa_line.png" style={{width:'70%'}}  alt="line graphic" />
             </div>  
             <div style={{display:'flex',justifyContent:'center'}}>
-                  <TextPane
-                    sectionId={'1019321'}
-                    sections={sections}
-                  />
+
+                                    <Grid container spacing={4}>
+                                          <Grid item xs={12} md={6}>
+                                                <TextPane 
+                                                      sections = { sections}
+                                                      sectionId={'1019321'}
+                                                      reading = {'Lemma Text'}
+                                                      selectedNodes= {[]}
+                                                      onSelectNode={()=>{}}
+                                                      onDeselectNode={()=>{}}
+                                                />
+                                          </Grid>
+
+                                          <Grid item xs={12} md={6}>
+                                                <TextPane 
+                                                      sections = { sections}
+                                                      sectionId={'1019321'}
+                                                      reading = { 'Translation'}
+                                                      selectedNodes= {[]}
+                                                      onSelectNode={()=>{}}
+                                                      onDeselectNode={()=>{}}
+                                                />
+                                          </Grid>
+                                    </Grid>
             </div>         
         </div>
     )
