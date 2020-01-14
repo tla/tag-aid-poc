@@ -14,7 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 
 const ViewOptions =(props)=>{
 
-      const {onToggleGraph, graphVisible, witnesses, leftText, rightText, onSelectLeftText, onSelectRightText} = props;
+      const {onToggleGraph, graphVisible, witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading} = props;
      
 
       return (
@@ -48,8 +48,8 @@ const ViewOptions =(props)=>{
                                                 <FormControl >
                                                       <InputLabel style={{fontSize:'16px', width:'120px'}}>Left Text Pane</InputLabel>
                                                             <Select style={{width:'130px'}}
-                                                                  value={leftText}
-                                                                  onChange={(e,v)=>{onSelectLeftText(e.target.value)} }
+                                                                  value={leftReading}
+                                                                  onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                             >
                                                                   {
                                                                         witnesses.map(witness=>{
@@ -65,8 +65,8 @@ const ViewOptions =(props)=>{
                                                 <FormControl >
                                                       <InputLabel style={{fontSize:'16px', width:'120px'}}>Right Text Pane </InputLabel>
                                                             <Select style={{width:'130px'}}
-                                                                  value={rightText}
-                                                                  onChange={(e,v)=>{onSelectRightText(e.target.value)}}
+                                                                  value={rightReading}
+                                                                  onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                             >
                                                                   {
                                                                         witnesses.map(witness=>{

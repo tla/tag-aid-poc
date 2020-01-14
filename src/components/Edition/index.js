@@ -12,8 +12,8 @@ const Edition = ( props)=>{
       const {sections , viewport , witnesses} = props;
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
-      const [leftText, setLeftText] = useState('Lemma Text');
-      const [rightText, setRightText] = useState('Translation');
+      const [leftReading, setLeftReading] = useState('Lemma Text');
+      const [rightReading, setRightReading] = useState('Translation');
 
       let {sectionID} = useParams()
 
@@ -31,10 +31,10 @@ const Edition = ( props)=>{
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
-                                          leftText = {leftText}
-                                          rightText = { rightText }
-                                          onSelectLeftText={setLeftText}
-                                          onSelectRightText={setRightText}
+                                          leftReading = {leftReading}
+                                          rightReading = { rightReading }
+                                          onSelectLeftReading={setLeftReading}
+                                          onSelectRightReading={setRightReading}
                                     />
                               
                                     <div style={{height:'16px'}}></div>
@@ -52,13 +52,13 @@ const Edition = ( props)=>{
                         <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                               {sectionID && graphVisible &&
                                     <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.42}px`}}>
-                                          <SvgGraph 
+                                           <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
                                                 selectedNodes={selectedNodes}
                                                 onSelectNode={handleSelectNode}
                                                 onDeselectNode={handleDeselectNode}
-                                          />
+                                          /> 
                                     </div>
                               }
 
@@ -72,7 +72,7 @@ const Edition = ( props)=>{
                                                 <TextPane 
                                                       sections = { sections}
                                                       sectionId={sectionID}
-                                                      text = {leftText}
+                                                      reading = {leftReading}
                                                       selectedNodes={selectedNodes}
                                                       onSelectNode={handleSelectNode}
                                                       onDeselectNode={handleDeselectNode}
@@ -83,7 +83,7 @@ const Edition = ( props)=>{
                                                 <TextPane 
                                                       sections = { sections}
                                                       sectionId={sectionID}
-                                                      text = { rightText}
+                                                      reading = { rightReading}
                                                       selectedNodes={selectedNodes}
                                                       onSelectNode={handleSelectNode}
                                                       onDeselectNode={handleDeselectNode}

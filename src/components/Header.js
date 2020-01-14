@@ -9,9 +9,7 @@ const [tabIndex, setTabIndex]=useState("#/")
 
 useEffect(()=>{
       let pageName = window.location.hash.split("/")[1]
-      console.log('page name',pageName)
       setTabIndex(`#/${pageName}`)
-
 })
     
 
