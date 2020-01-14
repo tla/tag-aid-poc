@@ -18,7 +18,7 @@ const SvgGraph =(props)=>{
 
 
       return (
-            <div style={{position:'relative', padding:'16px',overflowX:'auto'}}>
+            <div style={{position:'relative', padding:'16px'}}>
                   <div   
                         className='graphWindow'
                         ref={svgRef}>
