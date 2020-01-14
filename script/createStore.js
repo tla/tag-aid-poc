@@ -149,7 +149,7 @@ async function generateStore() {
                   const text = entry.normal_form ? entry.normal_form : entry.text
                   textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
             }
-            return  `${textElements.join('')}`
+            return  `${textElements.join(' ')}`
       }
 
       function translationToHTML( translation, sectionId ){
@@ -169,7 +169,7 @@ async function generateStore() {
 
       function writeLemmaFile(readings,sectionId){
             const sectiondir = `${outdir}/${sectionId}`;
-            const lemmaFilePath = `${sectiondir}/lemmaText.html`
+            const lemmaFilePath = `${sectiondir}/lemma.html`
             let rawLemma = parseWitnessReading("Lemma text", readings);
             let htmlLemma = readingToHTML(rawLemma.readings);
             makeDirectory(sectiondir)
@@ -184,7 +184,6 @@ async function generateStore() {
                   let htmlWitness = readingToHTML(witnessData.readings);
                   if(htmlWitness){
                         makeDirectory(sectiondir);
-                        //console.log('writing witness reading for sigil: ', witness.sigil)
                         writeFile(witnessFilePath,htmlWitness)
                   }
                
@@ -195,10 +194,9 @@ async function generateStore() {
             if ( ! translation.length > 0 )
                   return;
             const sectiondir = `${outdir}/${sectionId}`;
-            const translationFilePath = `${sectiondir}/translation.html`;
+            const translationFilePath = `${sectiondir}/en.html`;
             const translationHTML = translationToHTML(translation, sectionId)
             makeDirectory(sectiondir);
-            //console.log('writing translation file for section ', sectionId)
             writeFile(translationFilePath,translationHTML)
       };
      
@@ -236,6 +234,8 @@ async function generateStore() {
       }
 
       function writeWitnessList( witnesses ) {
+            witnesses.splice(0,0,{id:'lemma', sigil:'Lemma Text'});
+            witnesses.splice(1,0, {id:'en', sigil:'Translation'})
             const sectFile = `${outdir}/witnesses.json`
             fs.writeFileSync( sectFile, JSON.stringify(witnesses) )
       }

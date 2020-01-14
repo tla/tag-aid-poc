@@ -31,6 +31,8 @@ const Edition = ( props)=>{
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
+                                          leftText = {leftText}
+                                          rightText = { rightText }
                                           onSelectLeftText={setLeftText}
                                           onSelectRightText={setRightText}
                                     />
