@@ -47,12 +47,10 @@ const ViewOptions =(props)=>{
                                           <div style={{width:'130px',  }}>
                                                 <FormControl >
                                                       <InputLabel style={{fontSize:'16px', width:'120px'}}>Left Text Pane</InputLabel>
-                                                            <Select style={{width:'100%'}}
+                                                            <Select style={{width:'130px'}}
                                                                   value={leftText}
                                                                   onChange={(e,v)=>{onSelectLeftText(e.target.value)} }
                                                             >
-                                                                  <MenuItem key='lemma' value={'lemma'}>{'Lemma Text'}</MenuItem>
-                                                                  <MenuItem key='en' value={'en'}>{'Translation'}</MenuItem>
                                                                   {
                                                                         witnesses.map(witness=>{
                                                                               return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
@@ -61,16 +59,15 @@ const ViewOptions =(props)=>{
                                                             </Select>
                                                 </FormControl>
                                           </div>
+                                          <div style={{width:'16px'}}></div>
                                           
                                           <div style={{width:'130px'}}>
                                                 <FormControl >
                                                       <InputLabel style={{fontSize:'16px', width:'120px'}}>Right Text Pane </InputLabel>
-                                                            <Select style={{width:'100%'}}
+                                                            <Select style={{width:'130px'}}
                                                                   value={rightText}
                                                                   onChange={(e,v)=>{onSelectRightText(e.target.value)}}
                                                             >
-                                                                  <MenuItem key='lemma' value={'lemma'}>{'Lemma Text'}</MenuItem>
-                                                                  <MenuItem key='en' value={'en'}>{'Translation'}</MenuItem>
                                                                   {
                                                                         witnesses.map(witness=>{
                                                                               return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>

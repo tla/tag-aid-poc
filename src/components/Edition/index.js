@@ -12,8 +12,8 @@ const Edition = ( props)=>{
       const {sections , viewport , witnesses} = props;
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
-      const [leftText, setLeftText] = useState('lemma');
-      const [rightText, setRightText] = useState('en');
+      const [leftText, setLeftText] = useState('Lemma Text');
+      const [rightText, setRightText] = useState('Translation');
 
       let {sectionID} = useParams()
 
@@ -64,15 +64,30 @@ const Edition = ( props)=>{
                              
                               {sectionID &&
                               <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`,padding:'0px 16px'}}>
-                                    <TextPane 
-                                          sections = { sections}
-                                          sectionId={sectionID}
-                                          leftText = {leftText}
-                                          rightText = { rightText}
-                                          selectedNodes={selectedNodes}
-                                          onSelectNode={handleSelectNode}
-                                          onDeselectNode={handleDeselectNode}
-                                    />
+
+                                    <Grid container spacing={4}>
+                                          <Grid item xs={12} md={6}>
+                                                <TextPane 
+                                                      sections = { sections}
+                                                      sectionId={sectionID}
+                                                      text = {leftText}
+                                                      selectedNodes={selectedNodes}
+                                                      onSelectNode={handleSelectNode}
+                                                      onDeselectNode={handleDeselectNode}
+                                                />
+                                          </Grid>
+
+                                          <Grid item xs={12} md={6}>
+                                                <TextPane 
+                                                      sections = { sections}
+                                                      sectionId={sectionID}
+                                                      text = { rightText}
+                                                      selectedNodes={selectedNodes}
+                                                      onSelectNode={handleSelectNode}
+                                                      onDeselectNode={handleDeselectNode}
+                                                />
+                                          </Grid>
+                                    </Grid>
                               </div>
                               }
                         </div>

@@ -26,6 +26,8 @@ export const getWitnessList = async ( onListReceived )=>{
 }
 
 export const getReading = async ( sectionId, reading, onTextReceived )=>{
+      reading = reading === "Lemma Text" ? "lemma": reading;
+      reading = reading === "Translation"? "en":reading;
       const readingURL = `${localUrl}data/${sectionId}/${reading}.html`;
       try{
             const result = await axios.get(readingURL);
