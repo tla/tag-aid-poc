@@ -25,8 +25,8 @@ export const getWitnessList = async ( onListReceived )=>{
       }
 }
 
-export const getWitnessReading = async ( sectionId, sigil, onTextReceived )=>{
-      const readingURL = `${localUrl}data/${sectionId}/${sigil}.html`;
+export const getReading = async ( sectionId, reading, onTextReceived )=>{
+      const readingURL = `${localUrl}data/${sectionId}/${reading}.html`;
       try{
             const result = await axios.get(readingURL);
             onTextReceived(result.data)
@@ -35,24 +35,6 @@ export const getWitnessReading = async ( sectionId, sigil, onTextReceived )=>{
       }
 }
 
-export const getSection = async(sectionID, onSectionReceived )=>{
-      const sectionURL = `${localUrl}/data/${sectionID}`
-      const translationURL = `${sectionURL}/translation.html`
-      const lemmaTextURL = `${sectionURL}/lemmaText.html`
-
-      await axios.all([
-            axios.get(translationURL),
-            axios.get(lemmaTextURL)
-          ])
-      .then( axios.spread( ( translation, lemmaText)=>{
-            onSectionReceived( translation.data, lemmaText.data)
-      }))
-
-
-
-}
-           
-      
 
 
 

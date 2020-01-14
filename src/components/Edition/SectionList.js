@@ -20,18 +20,16 @@ const SectionList = ( props ) =>{
                         {
                            list ?   list.map( s => {
                                     return(
-                                    <ListItem key={s.sectionId} value={s.sectionId} selected={s.sectionId === sectionId}
-                                       >
-                                        
+                                    <ListItem key={s.sectionId} value={s.sectionId} selected={s.sectionId === sectionId} >
                                                 <div style={{display:'flex', flexDirection:'column'}}>
-                                                <Link   to={`${s.sectionId}`} >
-                                                                  <Typography variant="h6">
-                                                                        {s.englishTitle.substring(0,13)}
-                                                                  </Typography>
-                                                            </Link>
-                                                            <Typography variant="subtitle2" style={{marginLeft:'16px'}}>
-                                                                  {`Section Id:${s.sectionId}`}
+                                                      <Link   to={`${s.sectionId}`} >
+                                                            <Typography variant="h6">
+                                                                  {s.englishTitle.substring(0,13)}
                                                             </Typography>
+                                                      </Link>
+                                                      <Typography variant="subtitle2" style={{marginLeft:'0px'}}>
+                                                            {`Section Id:${s.sectionId}`}
+                                                      </Typography>
                                                 </div>
                                          
                                     </ListItem>

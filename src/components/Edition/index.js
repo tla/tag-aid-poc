@@ -12,6 +12,8 @@ const Edition = ( props)=>{
       const {sections , viewport , witnesses} = props;
       const [selectedNodes, setSelectedNodes]=useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
+      const [leftText, setLeftText] = useState('lemma');
+      const [rightText, setRightText] = useState('en');
 
       let {sectionID} = useParams()
 
@@ -29,6 +31,8 @@ const Edition = ( props)=>{
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
+                                          onSelectLeftText={setLeftText}
+                                          onSelectRightText={setRightText}
                                     />
                               
                                     <div style={{height:'16px'}}></div>
@@ -63,11 +67,11 @@ const Edition = ( props)=>{
                                     <TextPane 
                                           sections = { sections}
                                           sectionId={sectionID}
+                                          leftText = {leftText}
+                                          rightText = { rightText}
                                           selectedNodes={selectedNodes}
                                           onSelectNode={handleSelectNode}
                                           onDeselectNode={handleDeselectNode}
-                                          // activeWitness={section.activeWitness}
-                                          // onSetActiveWitness={()=>{}}
                                     />
                               </div>
                               }
