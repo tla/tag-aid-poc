@@ -270,6 +270,8 @@ async function generateStore() {
       function writeWitnessList( witnesses ) {
             witnesses.splice(0,0,{id:'lemma', sigil:'Lemma Text'});
             witnesses.splice(1,0, {id:'en', sigil:'Translation'})
+            const datadir = `${outdir}`;
+            makeDirectory(datadir)
             const sectFile = `${outdir}/witnesses.json`
             fs.writeFileSync( sectFile, JSON.stringify(witnesses) )
       }
