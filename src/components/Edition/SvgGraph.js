@@ -4,7 +4,7 @@ import SVG from 'react-inlinesvg'
 
 const SvgGraph =(props)=>{
 
-      const {selectedNodes, sectionId, onSelectNode, onDeselectNode}=props;
+      const {selectedNode, sectionId, onSelectNode, }=props;
       const svgRef = useRef(null);
     
       useEffect( ()=>{
@@ -13,9 +13,6 @@ const SvgGraph =(props)=>{
                   centerOnSelected();
             }
       })
-
-  
-
 
       return (
             <div style={{position:'relative', padding:'16px'}}>
@@ -36,11 +33,7 @@ const SvgGraph =(props)=>{
             if (nodeGroup != null) {
                   const id = nodeGroup.parentNode.id;
                   let trimmedId = id.replace('n','')
-                  let index = selectedNodes.indexOf(trimmedId);
-                  if (index === -1)
-                        onSelectNode(trimmedId);
-                  else
-                        onDeselectNode(trimmedId)
+                  onSelectNode(trimmedId);
             }
       }
 
@@ -50,22 +43,21 @@ const SvgGraph =(props)=>{
 			n.setAttribute("class", "node");
             });
             
-            if(!selectedNodes)
+            if(!selectedNode)
             return;
-            selectedNodes.forEach( n=>{
-                  let node = getGraphDOMNode(n);
-                  if(node){
-                  node.setAttribute("class", "node highlight active");
-                  }
-            })
+
+            let node = getGraphDOMNode(selectedNode);
+            if(node){
+            node.setAttribute("class", "node highlight active");
+            }
+          
       }
 
       function centerOnSelected(){
-            if(selectedNodes.length ===0)
+            if( ! selectedNode)
                   return;
-            let lastIndex=selectedNodes.length-1;
-            let nodeId = selectedNodes[lastIndex]
-            let domNode = getGraphDOMNode(nodeId);
+         
+            let domNode = getGraphDOMNode(selectedNode);
             if(domNode)
                   domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             else

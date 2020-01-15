@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 
 const TextPane =(props) => {
 
-      const {sectionId, reading, onSelectNode, selectedNodes, onDeselectNode} = props;
+      const {sectionId, reading, onSelectNode, selectedNode, selectedSentence, onSelectSentence} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
@@ -15,18 +15,33 @@ const TextPane =(props) => {
       
       const parserOptions = {
             replace: function({attribs,children}) {
-                  if( attribs && attribs.id  ){
+                  if( attribs && attribs.id ){
                               let attribNodeId = attribs.id.substring(5);
-                              let selected = props.selectedNodes ? props.selectedNodes.includes( attribNodeId ) : false;
-                              if(selected) {
-                                          return <span style={{backgroundColor:'yellow'}} 
-                                                onClick={()=>{handleUnhighlight(attribs.id)}} 
+// this can be further refactored - it was in transition... 
+                              if( reading === "Translation"){
+                                    let selected= props.selectedSentence ? props.selectedSentence.start === attribNodeId  : false;
+                                    if(selected) {
+                                                return <span style={{backgroundColor:'yellow'}} >
+                                                      {domToReact(children,parserOptions)}</span>
+                                    } else {
+                                                return <span onClick={()=>{console.log("selected"); handleHighlight(attribNodeId, attribs.key)}}
                                                 >{domToReact(children,parserOptions)}</span>
+                                    }
                               } else {
-                                          return <span onClick={()=>{console.log("selected"); handleHighlight(attribs.id)}}
-                                          // onMouseOver={()=>{handleHighlight(attribs.id)}}
-                                          >{domToReact(children,parserOptions)}</span>
+
+                                    let selected= props.selectedNode ? props.selectedNode === attribNodeId  : false;
+                                    let inSelectedSentence = props.selectedSentence? (parseInt(attribNodeId) >= parseInt(selectedSentence.start) && parseInt(attribNodeId)<= parseInt(selectedSentence.end) ) : false;
+                                    let textStyle={
+                                          color: selected? 'red':'black',
+                                          backgroundColor: inSelectedSentence? 'yellow':'transparent'
+                                    }
+                                   
+                                          return <span style={textStyle} onClick={()=>{console.log("selected"); handleSelected(attribs.id)}} >
+                                                {domToReact(children,parserOptions)}</span>
+                                 
+
                               }
+
                   }
             }
       }
@@ -60,7 +75,15 @@ const TextPane =(props) => {
           return;
             let parsed =  Parser(rawText, parserOptions);
             setTextHTML(parsed);
-      },[ props.selectedNodes])
+      },[ props.selectedNode])
+
+
+      useEffect(()=>{
+            if(! rawText )
+            return;
+              let parsed =  Parser(rawText, parserOptions);
+              setTextHTML(parsed);
+        },[ props.selectedSentence])
       
        
       return (
@@ -82,23 +105,21 @@ const TextPane =(props) => {
            </div>
           )
 
-      function handleHighlight( textNodeId){
+      function handleHighlight( startNodeId, endNodeId){
+            onSelectSentence(startNodeId, endNodeId)
+      }
+
+      function handleSelected( textNodeId){
             let trimmedId = textNodeId.substring(5)
-            console.log(trimmedId)
             onSelectNode(trimmedId)
       }
 
-      function handleUnhighlight(textNodeId){
-            let trimmedId = textNodeId.substring(5)
-            console.log('deselected', trimmedId)
-            onDeselectNode(trimmedId)
-      }
-
+      
 }
 
 TextPane.propTypes = {
       sectionId:string,
-      selectedNodes:array,
+      selectedNode:string,
       onSelectNode:func
 };
 

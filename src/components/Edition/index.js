@@ -10,7 +10,8 @@ import { useParams} from 'react-router-dom'
 const Edition = ( props)=>{
     
       const {sections , viewport , witnesses} = props;
-      const [selectedNodes, setSelectedNodes]=useState([]);
+      const [selectedNode, setSelectedNode]=useState();
+      const [selectedSentence, setSelectedSentence] = useState();
       const [graphVisible, setGraphVisible] = useState(true);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
@@ -18,7 +19,7 @@ const Edition = ( props)=>{
       let {sectionID} = useParams()
 
       useEffect(()=>{
-             setSelectedNodes([]);
+             setSelectedNode();
        },[sectionID])
  
   
@@ -55,9 +56,10 @@ const Edition = ( props)=>{
                                            <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
-                                                selectedNodes={selectedNodes}
+                                                selectedNode={selectedNode}
+                                                selectedSentence={selectedSentence}
                                                 onSelectNode={handleSelectNode}
-                                                onDeselectNode={handleDeselectNode}
+                                                onSelectSentence={handleSelectSentence}
                                           /> 
                                     </div>
                               }
@@ -73,9 +75,10 @@ const Edition = ( props)=>{
                                                       sections = { sections}
                                                       sectionId={sectionID}
                                                       reading = {leftReading}
-                                                      selectedNodes={selectedNodes}
+                                                      selectedNode={selectedNode}
+                                                      selectedSentence={selectedSentence}
                                                       onSelectNode={handleSelectNode}
-                                                      onDeselectNode={handleDeselectNode}
+                                                      onSelectSentence={handleSelectSentence}
                                                 />
                                           </Grid>
 
@@ -84,9 +87,10 @@ const Edition = ( props)=>{
                                                       sections = { sections}
                                                       sectionId={sectionID}
                                                       reading = { rightReading}
-                                                      selectedNodes={selectedNodes}
+                                                      selectedNode={selectedNode}
+                                                      selectedSentence={selectedSentence}
                                                       onSelectNode={handleSelectNode}
-                                                      onDeselectNode={handleDeselectNode}
+                                                      onSelectSentence={handleSelectSentence}
                                                 />
                                           </Grid>
                                     </Grid>
@@ -99,16 +103,11 @@ const Edition = ( props)=>{
       )
 
       function handleSelectNode( nodeId ){
-            let copySelectedNodes = selectedNodes.slice();
-            copySelectedNodes.push(nodeId);
-            setSelectedNodes(copySelectedNodes);
+            setSelectedNode(nodeId);
       }
 
-      function handleDeselectNode( nodeId){
-            let copySelectedNodes = selectedNodes.slice();
-            let index = copySelectedNodes.indexOf(nodeId)
-            copySelectedNodes.splice(index,1)
-            setSelectedNodes(copySelectedNodes);
+      function handleSelectSentence( startNodeId, endNodeId ){
+            setSelectedSentence({'start': startNodeId, 'end': endNodeId} );
       }
 
       function handleToggleGraph(){
