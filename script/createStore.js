@@ -145,14 +145,14 @@ async function generateStore() {
             let textElements = [] ;
             if( reading.length === 0 )
             return;
-            reading.sort( (a,b)=>{
-                  if(a.id < b.id )
-                        return 1;
-                  if(a.id > b.id )
-                        return -1;
-                  else
-                        return 0;
-            })
+            // reading.sort( (a,b)=>{
+            //       if(a.id < b.id )
+            //             return 1;
+            //       if(a.id > b.id )
+            //             return -1;
+            //       else
+            //             return 0;
+            // })
             for (const entry of reading ) {
                   const text = entry.normal_form ? entry.normal_form : entry.text
                   textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
@@ -230,7 +230,8 @@ async function generateStore() {
                   ? (r) => r.is_lemma && !r.is_start && !r.is_end
                   : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
             const witReadings = readings.filter(filterCondition);
-            witReadings.sort((first, second) => first.rank - second.rank)
+            witReadings.sort((first, second) => { if (first.rank < second.rank)
+                        return 1; if ( first.rank >second.rank ) return -1; else return 0; } );
             return {
                   sigil: sigil,
                   readings: witReadings
