@@ -145,6 +145,14 @@ async function generateStore() {
             let textElements = [] ;
             if( reading.length === 0 )
             return;
+            reading.sort( (a,b)=>{
+                  if(a.id < b.id )
+                        return 1;
+                  if(a.id > b.id )
+                        return -1;
+                  else
+                        return 0;
+            })
             for (const entry of reading ) {
                   const text = entry.normal_form ? entry.normal_form : entry.text
                   textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
@@ -157,7 +165,7 @@ async function generateStore() {
             if( translation.length === 0 )
             return;
 
-            // numbered backwards?
+            // numbered backwards
             translation.sort( (a,b)=>{
                   const aStartNode = a.links[0].type==="BEGIN" ? a.links[0].target : a.links[1].target;
                   const bStartNode = b.links[0].type==="BEGIN" ? b.links[0].target : b.links[1].target;
