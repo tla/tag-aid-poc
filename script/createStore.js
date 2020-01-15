@@ -157,10 +157,24 @@ async function generateStore() {
             if( translation.length === 0 )
             return;
 
+            // numbered backwards?
+            translation.sort( (a,b)=>{
+                  const aStartNode = a.links[0].type==="BEGIN" ? a.links[0].target : a.links[1].target;
+                  const bStartNode = b.links[0].type==="BEGIN" ? b.links[0].target : b.links[1].target;
+
+                  if(parseInt(aStartNode) < parseInt(bStartNode))
+                        return 1;
+                  if(parseInt(aStartNode) > parseInt(bStartNode))
+                        return -1;
+                  else
+                        return 0;
+            })
+
             for (const entry of translation ) {
                   const text = entry.properties.text;
                   const beginTextNode = entry.links[0].type==="BEGIN" ? entry.links[0].target:entry.links[1].target;
-                  textElements.push( `<span id='text-${beginTextNode}' key=${beginTextNode}>${text}</span>`)
+                  const endTextNode = entry.links[0].type==="END" ? entry.links[0].target:entry.links[1].target;
+                  textElements.push( `<span id='text-${beginTextNode}' key=${endTextNode}>${text}</span>`)
             }
             return  `${textElements.join('')}`
 
@@ -229,7 +243,19 @@ async function generateStore() {
       }
 
       function writeSectionFile( validSections ){
-            const sectFile = `${outdir}/sections.json`
+            const sectFile = `${outdir}/sections.json`;
+            // fyi - sectionIds have nothing to do with it, they are not sequential
+            validSections.sort( (a,b)=>{
+                  const aYear = a.englishTitle.substr(9,3);
+                  const bYear = b.englishTitle.substr(9,3)
+
+                  if(parseInt(aYear) > parseInt(bYear))
+                        return 1;
+                  if( parseInt(aYear) < parseInt(bYear))
+                        return -1;
+                  else
+                        return 0;
+            })
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
       }
 
