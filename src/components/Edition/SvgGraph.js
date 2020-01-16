@@ -4,12 +4,12 @@ import SVG from 'react-inlinesvg'
 
 const SvgGraph =(props)=>{
 
-      const {selectedNode, sectionId, onSelectNode, }=props;
+      const {highlightedNode, selectedSentence, sectionId, onSelectNode, }=props;
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            if ( props.selectedNodes ){
-                  highlightNodes();
+            if ( props.highlightedNode ){
+                  highlightNode();
                   centerOnSelected();
             }
       })
@@ -37,16 +37,16 @@ const SvgGraph =(props)=>{
             }
       }
 
-      function highlightNodes() {
+      function highlightNode() {
             let nodeEls = svgRef.current.querySelectorAll("g.node.highlight");
 		nodeEls.forEach.call(nodeEls, function(n) {
 			n.setAttribute("class", "node");
             });
             
-            if(!selectedNode)
+            if(!highlightedNode)
             return;
 
-            let node = getGraphDOMNode(selectedNode);
+            let node = getGraphDOMNode(highlightedNode);
             if(node){
             node.setAttribute("class", "node highlight active");
             }
@@ -54,10 +54,10 @@ const SvgGraph =(props)=>{
       }
 
       function centerOnSelected(){
-            if( ! selectedNode)
+            if( ! highlightedNode)
                   return;
          
-            let domNode = getGraphDOMNode(selectedNode);
+            let domNode = getGraphDOMNode(highlightedNode);
             if(domNode)
                   domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             else

@@ -56,7 +56,7 @@ const Edition = ( props)=>{
                                            <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
-                                                selectedNode={selectedNode}
+                                                highlightedNode={selectedNode}
                                                 selectedSentence={selectedSentence}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
