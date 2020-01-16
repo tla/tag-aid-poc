@@ -8,11 +8,19 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            if ( props.highlightedNode ){
+            if ( !props.highlightedNode )
+                  return 
                   highlightNode();
                   centerOnSelected();
-            }
-      })
+           
+      }, [props.highlightedNode])
+
+      useEffect( ()=>{
+            if  (! props.selectedSentence)
+            return
+                  highlightSentence();
+           
+      }, [props.selectedSentence, props.highlightedNode])
 
       return (
             <div style={{position:'relative', padding:'16px'}}>
@@ -38,19 +46,61 @@ const SvgGraph =(props)=>{
       }
 
       function highlightNode() {
-            let nodeEls = svgRef.current.querySelectorAll("g.node.highlight");
-		nodeEls.forEach.call(nodeEls, function(n) {
-			n.setAttribute("class", "node");
-            });
-            
-            if(!highlightedNode)
-            return;
 
+            let highlightedAndSelected = svgRef.current.querySelectorAll("g.node.highlight.active");
+            highlightedAndSelected.forEach( n =>{
+                  if( n.id.replace('n','') === highlightedNode)
+                        n.setAttribute("class", "node highlight active");
+                  else
+                        n.setAttribute("class", "node highlight");
+            })
+
+            // let nodeEls = svgRef.current.querySelectorAll("g.node.active");
+		// nodeEls.forEach(n => {
+		// 	n.setAttribute("class", "node");
+            // });
+ 
             let node = getGraphDOMNode(highlightedNode);
             if(node){
-            node.setAttribute("class", "node highlight active");
+                  node.setAttribute("class", "node active");
             }
           
+      }
+
+      function highlightSentence() {
+            let previousHighlight = svgRef.current.querySelectorAll("g.node.highlight");
+            previousHighlight.forEach(n => {
+                  if (n.id === "__START__" || n.id === "__END__" ) 
+                  return;
+			      n.setAttribute("class", "node");
+            });
+
+
+            let nodeEls = svgRef.current.querySelectorAll("g.node");
+            let nodesInSentence = []; // will use this to approximate the middle perhaps - going to start for now
+		nodeEls.forEach(n => {
+                  if (n.id === "__START__" || n.id === "__END__" ) 
+                  return;
+                  let inSentence = (parseInt(n.id.replace('n','')) >= parseInt(selectedSentence.start) && parseInt(n.id.replace('n','')) <= parseInt(selectedSentence.end) ) ;
+                  if( inSentence){
+                        if( n.id.replace('n','') === highlightedNode)
+                              n.setAttribute("class", "node highlight active");
+                        else 
+                              n.setAttribute("class", "node highlight");
+                        nodesInSentence.push(n)
+                  } else 
+			      n.setAttribute("class", "node");
+            });
+
+            if( nodesInSentence.length > 0 ){
+                  let sentenceStartId = nodesInSentence[0].id;
+                  let trimmed = sentenceStartId.replace('n','')
+                  let domNode = getGraphDOMNode(trimmed);
+                  if(domNode)
+                        domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
+            }
+          
+       
       }
 
       function centerOnSelected(){

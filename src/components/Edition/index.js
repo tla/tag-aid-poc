@@ -10,8 +10,8 @@ import { useParams} from 'react-router-dom'
 const Edition = ( props)=>{
     
       const {sections , viewport , witnesses} = props;
-      const [selectedNode, setSelectedNode]=useState();
-      const [selectedSentence, setSelectedSentence] = useState();
+      const [selectedNode, setSelectedNode]=useState(null);
+      const [selectedSentence, setSelectedSentence] = useState({});
       const [graphVisible, setGraphVisible] = useState(true);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
