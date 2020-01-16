@@ -144,10 +144,11 @@ async function generateStore() {
             for (let i=0; i< reading.length; i++ ) {
                   let entry = reading[i];
                   const text = entry.normal_form ? entry.normal_form : entry.text
-                  textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
                   if (i > 0 && !reading[i-1].join_next && ! entry.join_prior) {
                         textElements.push(' ')
                   }
+                  textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
+                
             }
             return  `${textElements.join('')}`
       }
