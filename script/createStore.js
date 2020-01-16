@@ -63,17 +63,12 @@ async function generateStore() {
                         .then( readings=>{
                               writeLemmaFile( readings, sectionId); 
                               writeWitnessFiles(readings, witnesses, sectionId);
-                              resolve();
-                        })
-
-                  });
-
-                  let englishTranslation = new Promise( (resolve) =>{
-                        getTranslation(sectionId)
-                        .then( translation=>{
-                              writeTranslationFile(translation,sectionId);
-                              resolve();
-                        })
+                                    getTranslation(sectionId)
+                                    .then( translation=>{
+                                          writeTranslationFile(translation,sectionId, readings);
+                                          resolve();
+                                    });
+                        });
 
                   });
 
@@ -94,7 +89,7 @@ async function generateStore() {
 
                   });
 
-                 return data =  await Promise.all( [allReadings,englishTranslation,titleArray] )
+                 return data =  await Promise.all( [allReadings,titleArray] )
                  // etc for person place and date - although this will just be used for text highlights
             }
       }
@@ -145,14 +140,7 @@ async function generateStore() {
             let textElements = [] ;
             if( reading.length === 0 )
             return;
-            // reading.sort( (a,b)=>{
-            //       if(a.id < b.id )
-            //             return 1;
-            //       if(a.id > b.id )
-            //             return -1;
-            //       else
-            //             return 0;
-            // })
+        
             for (const entry of reading ) {
                   const text = entry.normal_form ? entry.normal_form : entry.text
                   textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
@@ -160,31 +148,35 @@ async function generateStore() {
             return  `${textElements.join(' ')}`
       }
 
-      function translationToHTML( translation, sectionId ){
+      function translationToHTML( translation, sectionId , reading){
             let textElements = [] ;
             if( translation.length === 0 )
             return;
 
-            // numbered backwards
-            translation.sort( (a,b)=>{
-                  const aStartNode = a.links[0].type==="BEGIN" ? a.links[0].target : a.links[1].target;
-                  const bStartNode = b.links[0].type==="BEGIN" ? b.links[0].target : b.links[1].target;
-
-                  if(parseInt(aStartNode) < parseInt(bStartNode))
-                        return 1;
-                  if(parseInt(aStartNode) > parseInt(bStartNode))
-                        return -1;
-                  else
-                        return 0;
-            })
-
+            let translationHash = {};
             for (const entry of translation ) {
                   const text = entry.properties.text;
                   const beginTextNode = entry.links[0].type==="BEGIN" ? entry.links[0].target:entry.links[1].target;
                   const endTextNode = entry.links[0].type==="END" ? entry.links[0].target:entry.links[1].target;
-                  textElements.push( `<span id='text-${beginTextNode}' key=${endTextNode}>${text}</span>`)
+                  const textElement = `<span id='text-${beginTextNode}' key=${endTextNode}>${text}</span>`
+                  translationHash[beginTextNode] = textElement;
             }
-            return  `${textElements.join('')}`
+
+            reading.sort( (a,b)=>{ if (a.rank < b.rank)
+                  return -1; if ( a.rank >a.rank ) return 1; else return 0; 
+
+            })
+            reading.forEach( wordNode => {
+              
+                  if(translationHash[wordNode.id] ){
+                        console.log(`section:${wordNode.section} nodeid: ${wordNode.id} node rank: ${wordNode.rank}`)
+                        textElements.push(translationHash[wordNode.id])
+                  }
+                 
+            })
+
+           
+            return  `${textElements.join(' ')}`
 
 
       }
@@ -208,30 +200,26 @@ async function generateStore() {
                         makeDirectory(sectiondir);
                         writeFile(witnessFilePath,htmlWitness)
                   }
-               
             })
       }
 
-      function writeTranslationFile( translation,sectionId){
+      function writeTranslationFile( translation,sectionId, readings){
             if ( ! translation.length > 0 )
                   return;
             const sectiondir = `${outdir}/${sectionId}`;
             const translationFilePath = `${sectiondir}/en.html`;
-            const translationHTML = translationToHTML(translation, sectionId)
+            const translationHTML = translationToHTML(translation, sectionId, readings)
             makeDirectory(sectiondir);
-            writeFile(translationFilePath,translationHTML)
+            writeFile(translationFilePath, translationHTML)
       };
      
-
-    
-
       function parseWitnessReading(sigil, readings) {
             const filterCondition = sigil === 'Lemma text'
                   ? (r) => r.is_lemma && !r.is_start && !r.is_end
                   : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
             const witReadings = readings.filter(filterCondition);
             witReadings.sort((first, second) => { if (first.rank < second.rank)
-                        return 1; if ( first.rank >second.rank ) return -1; else return 0; } );
+                        return -1; if ( first.rank >second.rank ) return 1; else return 0; } );
             return {
                   sigil: sigil,
                   readings: witReadings
