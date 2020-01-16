@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react'
-
-import { Grid } from '@material-ui/core';
-import Header from './Header'
+import AboutPage from './About'
 import Edition from './Edition/index'
-import useWindowSize from './../utils/Viewport';
 import HomePage from './HomePage'
+import Header from './Header'
 import { Route, Switch } from 'react-router-dom'
+import useWindowSize from './../utils/Viewport';
+import { Grid } from '@material-ui/core';
 import ChronicleTheme from './Theme'
 import { ThemeProvider } from '@material-ui/core/styles';
 
@@ -30,6 +30,9 @@ const Layout = ( props)=>{
                               </Route>
                               <Route path="/Edition" >
                                     <Edition style={{height:`${viewport.height*.80}px`}}  sections={sections}  viewport={viewport}  witnesses = { witnesses} />
+                              </Route>
+                              <Route path="/About" >
+                                    <AboutPage /> 
                               </Route>
                             
                                <Route path="/" exact>

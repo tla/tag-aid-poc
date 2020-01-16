@@ -1,0 +1,65 @@
+body {
+      font-family: Baskerville, ArmBoloragir;
+      background-color: rgb(255, 250, 245);
+    }
+    
+    header {
+      background-image: url("parchment.jpg");
+    }
+    
+    a {
+      color: #550C18;
+    }
+    
+    a:hover {
+      color: #A4243B;
+    }
+    
+    code {
+      color: #212529;
+    }
+    
+    .framed {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #212529;
+    }
+    
+    .content .row {
+      padding-top: 20px;
+    }
+    
+    .divider img {
+      width: 95%;
+      margin: 20px;
+    }
+    
+    .btn-continue {
+      opacity: 0.5;
+    }
+    
+    .btn-primary {
+      background-color: rgb(92, 90, 137);
+      border-color: rgb(92, 90, 137);
+    }
+    
+    .btn-primary:hover {
+      background-color: rgb(131, 28, 35);
+      border-color: rgb(131, 28, 35);
+    }
+    
+    .card-text {
+      height: 72px;
+    }
+    
+    .footer {
+      border-top: 1px solid black;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+    
+    #banner-logo {
+      width: 80%;
+      margin: 50px;
+    }
+    
