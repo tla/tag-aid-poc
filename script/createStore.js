@@ -72,7 +72,7 @@ async function generateStore() {
 
                   });
 
-                  let titleArray = new Promise( (resolve) =>{ // demonstrating that this is the same as using new promise and resolve
+                  let titleArray = new Promise( (resolve) =>{ 
                         getTitle(sectionId)
                         .then( titles =>{
                               const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
@@ -83,13 +83,41 @@ async function generateStore() {
                                      englishTitle: englishTitle,
                                      armenianTitle: armenianTitle
                                }
-                               validSections.push(validSection);
+                              validSections.push(validSection);
                               resolve();
                         });
 
                   });
 
-                 return data =  await Promise.all( [allReadings,titleArray] )
+                  let personArray = new Promise( resolve =>{ 
+                        getPersons(sectionId)
+                        .then( persons =>{
+                              if(persons) 
+                                    writeAnnotationList(persons, sectionId, 'persons')
+                              resolve();
+                        })
+                  });
+
+                  let placeArray = new Promise( resolve =>{ 
+                        getPlaces(sectionId)
+                        .then( places =>{
+                              if(places) 
+                                    writeAnnotationList(places,sectionId, 'places')
+                              resolve();
+                        })
+                  });
+
+                  let dateArray = new Promise( resolve =>{ 
+                        getDates(sectionId)
+                        .then( dates =>{
+                              if(dates) 
+                                    writeAnnotationList(dates, sectionId, 'dates')
+                              resolve();
+                        })
+                  });
+
+                
+                 return data =  await Promise.all( [allReadings,titleArray,personArray,placeArray] )
                  // etc for person place and date - although this will just be used for text highlights
             }
       }
@@ -119,20 +147,31 @@ async function generateStore() {
       }
 
       async function getPersons( sectionId ){
-            const sectionURL = `${this.baseURL}/section/${sectionId}`;
-            const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'PERSON'}})
-            return response.data;
+            const annotationURL = `${baseURL}/section/${sectionId}/annotations`;
+            try{
+                  const response = await axios.get( `${annotationURL}`, {auth, params: {label: 'PERSONREF'}})
+                  return response.data;
+            }catch( error){
+                  console.log(`no person refs for section ${sectionId} `);
+                  return null
+            }
+           
       }
 
       async function getPlaces(sectionId){
-            const sectionURL = `${this.baseURL}/section/${sectionId}`;
-            const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'PLACE'}})
-            return response.data;
+            const annotationURL = `${baseURL}/section/${sectionId}/annotations`;
+            try {
+                  const response = await axios.get( `${annotationURL}`, {auth, params: {label: 'PLACEREF'}})
+                  return response.data;
+            }catch( error ) {
+                  console.log(`no place refs for section ${sectionId} `);
+                  return null
+            }
       }
 
       async function getDates(sectionId){
-            const sectionURL = `${this.baseURL}/section/${sectionId}`;
-            const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'DATE'}})
+            const annotationURL = `${baseURL}/section/${sectionId}/annotations`;
+            const response = await axios.get( `${annotationURL}`, {auth, params: {label: 'DATEREF'}})
             return response.data;
       }
 
@@ -167,23 +206,17 @@ async function generateStore() {
                   translationHash[beginTextNode] = textElement;
             }
 
-            reading.sort( (a,b)=>{ if (a.rank < b.rank)
-                  return -1; if ( a.rank >a.rank ) return 1; else return 0; 
-
-            })
+            reading.sort( (a,b)=>{ return a.rank - b.rank})
             reading.forEach( wordNode => {
               
                   if(translationHash[wordNode.id] ){
-                        console.log(`section:${wordNode.section} nodeid: ${wordNode.id} node rank: ${wordNode.rank}`)
+                      //  console.log(`section:${wordNode.section} nodeid: ${wordNode.id} node rank: ${wordNode.rank}`)
                         textElements.push(translationHash[wordNode.id])
                   }
                  
             })
 
-           
             return  `${textElements.join(' ')}`
-
-
       }
 
       function writeLemmaFile(readings,sectionId){
@@ -223,8 +256,7 @@ async function generateStore() {
                   ? (r) => r.is_lemma && !r.is_start && !r.is_end
                   : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
             const witReadings = readings.filter(filterCondition);
-            witReadings.sort((first, second) => { if (first.rank < second.rank)
-                        return -1; if ( first.rank >second.rank ) return 1; else return 0; } );
+            witReadings.sort((first, second) => { return first.rank - second.rank  })
             return {
                   sigil: sigil,
                   readings: witReadings
@@ -249,14 +281,8 @@ async function generateStore() {
             // fyi - sectionIds have nothing to do with it, they are not sequential
             validSections.sort( (a,b)=>{
                   const aYear = a.englishTitle.substr(9,3);
-                  const bYear = b.englishTitle.substr(9,3)
-
-                  if(parseInt(aYear) > parseInt(bYear))
-                        return 1;
-                  if( parseInt(aYear) < parseInt(bYear))
-                        return -1;
-                  else
-                        return 0;
+                  const bYear = b.englishTitle.substr(9,3);
+                  return ( parseInt(aYear) - parseInt(bYear))
             })
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
       }
@@ -268,6 +294,24 @@ async function generateStore() {
             makeDirectory(datadir)
             const sectFile = `${outdir}/witnesses.json`
             fs.writeFileSync( sectFile, JSON.stringify(witnesses) )
+      }
+
+      function writeAnnotationList( annotations, sectionId, fileName ){
+            const refs = [];
+            annotations.forEach( anno =>{
+                  const beginNodeId = anno.links[0].type==="BEGIN"? anno.links[0].target : anno.links[1].target;
+                  const endNodeId = anno.links[1].type==="BEGIN"? anno.links[1].target : anno.links[0].target;
+                  let ref = {
+                        annotationId: anno.id,
+                        begin: beginNodeId,
+                        end: endNodeId
+                  }
+                  refs.push(ref);
+            })
+            const sectiondir = `${outdir}/${sectionId}`;
+            makeDirectory(sectiondir)
+            const sectFile = `${sectiondir}/${fileName}.json`
+            fs.writeFileSync( sectFile, JSON.stringify(refs) )
       }
 
      
