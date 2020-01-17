@@ -14,7 +14,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 
 const ViewOptions =(props)=>{
 
-      const {onToggleGraph, graphVisible, witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading} = props;
+      const {onToggleGraph, graphVisible, 
+            witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
+            personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates} = props;
      
 
       return (
@@ -39,6 +41,45 @@ const ViewOptions =(props)=>{
                                           }
                                           labelPlacement='start'
                                           label="Display Graph"
+                                    />
+                              </div> 
+                              <div style={{height:'16px'}}></div>
+                              <div>
+                                    <FormControlLabel
+                                          control={
+                                                <Switch
+                                                      checked={personsVisible}
+                                                      onChange={onTogglePersons}
+                                                />
+                                          }
+                                          labelPlacement='start'
+                                          label="Highlight Persons"
+                                    />
+                              </div> 
+                              <div style={{height:'16px'}}></div>
+                              <div>
+                                    <FormControlLabel
+                                          control={
+                                                <Switch
+                                                      checked={placesVisible}
+                                                      onChange={onTogglePlaces}
+                                                />
+                                          }
+                                          labelPlacement='start'
+                                          label="Highlight Places"
+                                    />
+                              </div> 
+                              <div style={{height:'16px'}}></div>
+                              <div>
+                                    <FormControlLabel
+                                          control={
+                                                <Switch
+                                                      checked={datesVisible}
+                                                      onChange={onToggleDates}
+                                                />
+                                          }
+                                          labelPlacement='start'
+                                          label="Highlight Dates"
                                     />
                               </div> 
                               <div style={{height:'16px'}}></div>

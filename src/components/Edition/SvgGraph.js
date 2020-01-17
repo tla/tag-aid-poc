@@ -8,20 +8,9 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            if ( !props.highlightedNode )
-                  return 
-                  highlightNode();
-                  centerOnSelected();
-           
-      }, [props.highlightedNode])
-
-      useEffect( ()=>{
-            if  (! props.selectedSentence)
-            return
-                  highlightSentence();
-           
-      }, [props.selectedSentence, props.highlightedNode])
-
+            highlightAndSelect();
+      } )
+//[props.selectedSentence, props.highlightedNode]
       return (
             <div style={{position:'relative', padding:'16px'}}>
                   <div   
@@ -45,75 +34,40 @@ const SvgGraph =(props)=>{
             }
       }
 
-      function highlightNode() {
 
-            let highlightedAndSelected = svgRef.current.querySelectorAll("g.node.highlight.active");
-            highlightedAndSelected.forEach( n =>{
-                  if( n.id.replace('n','') === highlightedNode)
-                        n.setAttribute("class", "node highlight active");
-                  else
-                        n.setAttribute("class", "node highlight");
+
+      function highlightAndSelect() {
+            let allGraphNodes = svgRef.current.querySelectorAll("g.node");
+            allGraphNodes.forEach( n=>{
+                  if (n.id === "__START__" || n.id === "__END__" ) 
+                        return;
+                  let nodeId = n.id.replace('n','');
+                  // to do is look up the node's rank, we need to pass the readings in (a readings hash wouldnt be bad- or encode in the svg gen script)
+                  let classNames = "node";
+                  let inHighlightedSentence = false;
+                  if(selectedSentence)
+                        inHighlightedSentence = parseInt(nodeId) >= parseInt(selectedSentence.startId) && parseInt(nodeId )<= parseInt(selectedSentence.endId); // yes we can work with rank here too but for now
+                  let isSelectedNode = false;
+                  if(highlightedNode)
+                        isSelectedNode = nodeId === highlightedNode ;
+                  if( inHighlightedSentence )
+                        classNames += " highlight";
+                  if( isSelectedNode)
+                        classNames += " active";
+
+                  n.setAttribute("class", classNames)
+
             })
 
-            // let nodeEls = svgRef.current.querySelectorAll("g.node.active");
-		// nodeEls.forEach(n => {
-		// 	n.setAttribute("class", "node");
-            // });
- 
-            let node = getGraphDOMNode(highlightedNode);
-            if(node){
-                  node.setAttribute("class", "node active");
-            }
-          
-      }
-
-      function highlightSentence() {
-            let previousHighlight = svgRef.current.querySelectorAll("g.node.highlight");
-            previousHighlight.forEach(n => {
-                  if (n.id === "__START__" || n.id === "__END__" ) 
-                  return;
-			      n.setAttribute("class", "node");
-            });
-
-
-            let nodeEls = svgRef.current.querySelectorAll("g.node");
-            let nodesInSentence = []; // will use this to approximate the middle perhaps - going to start for now
-		nodeEls.forEach(n => {
-                  if (n.id === "__START__" || n.id === "__END__" ) 
-                  return;
-                  let inSentence = (parseInt(n.id.replace('n','')) >= parseInt(selectedSentence.start) && parseInt(n.id.replace('n','')) <= parseInt(selectedSentence.end) ) ;
-                  if( inSentence){
-                        if( n.id.replace('n','') === highlightedNode)
-                              n.setAttribute("class", "node highlight active");
-                        else 
-                              n.setAttribute("class", "node highlight");
-                        nodesInSentence.push(n)
-                  } else 
-			      n.setAttribute("class", "node");
-            });
-
-            if( nodesInSentence.length > 0 ){
-                  let sentenceStartId = nodesInSentence[0].id;
-                  let trimmed = sentenceStartId.replace('n','')
-                  let domNode = getGraphDOMNode(trimmed);
+            const zoomNode = highlightedNode? highlightedNode : selectedSentence? selectedSentence.startId : null;
+            if(zoomNode){
+                  let domNode = getGraphDOMNode(zoomNode);
                   if(domNode)
                         domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             }
           
-       
       }
 
-      function centerOnSelected(){
-            if( ! highlightedNode)
-                  return;
-         
-            let domNode = getGraphDOMNode(highlightedNode);
-            if(domNode)
-                  domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
-            else
-                 console.log('node not found')
-          
-      }
       
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;
@@ -133,7 +87,6 @@ const SvgGraph =(props)=>{
       }
 
       function getStartNode(){
-            let startId ="__START__"
             const graphRef = svgRef.current;
             let selector = `g#__START__`;
             let found =  graphRef.querySelector(selector);

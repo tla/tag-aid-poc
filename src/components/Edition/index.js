@@ -8,18 +8,23 @@ import { useParams} from 'react-router-dom'
 
 
 const Edition = ( props)=>{
-    
+      
+      let {sectionID} = useParams()
       const {sections , viewport , witnesses} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
+
       const [graphVisible, setGraphVisible] = useState(true);
+      const [personsVisible, setPersonsVisible] = useState(true);
+      const [placesVisible, setPlacesVisible] = useState(true);
+      const [datesVisible, setDatesVisible] = useState(true);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
 
-      let {sectionID} = useParams()
-
       useEffect(()=>{
-             setSelectedNode();
+            setSelectedSentence(null);
+             setSelectedNode(null);
+             
        },[sectionID])
  
   
@@ -32,6 +37,12 @@ const Edition = ( props)=>{
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
+                                          personsVisible = {personsVisible}
+                                          onTogglePersons = {handleTogglePersons}
+                                          placesVisible = {placesVisible}
+                                          onTogglePlaces = {handleTogglePlaces}
+                                          datesVisible = {datesVisible}
+                                          onToggleDates = {handleToggleDates}
                                           leftReading = {leftReading}
                                           rightReading = { rightReading }
                                           onSelectLeftReading={setLeftReading}
@@ -52,7 +63,7 @@ const Edition = ( props)=>{
                   <Grid id="mainContent" item xs={9}>
                         <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                               {sectionID && graphVisible &&
-                                    <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.42}px`}}>
+                                    <div style={{overflowX:'auto', overflowY:'auto'}}>
                                            <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
@@ -67,7 +78,7 @@ const Edition = ( props)=>{
                                 <div style={{height:'16px'}}></div>  
                              
                               {sectionID &&
-                              <div style={{overflowY:'auto',minHeight:`${viewport.height *.37}px`,padding:'0px 16px'}}>
+                              <div style={{overflowY:'auto',maxHeight:`${viewport.height *.35}px`,padding:'0px 16px'}}>
 
                                     <Grid container spacing={4}>
                                           <Grid item xs={12} md={6}>
@@ -106,13 +117,35 @@ const Edition = ( props)=>{
             setSelectedNode(nodeId);
       }
 
-      function handleSelectSentence( startNodeId, endNodeId ){
-            setSelectedSentence({'start': startNodeId, 'end': endNodeId} );
+      function handleSelectSentence( start, end ){
+            const startRank = start.split('-')[0]
+            const startNodeId = start.split('-')[1];
+            const endRank = end.split('-')[0]
+            const endNodeId = end.split('-')[1];
+            
+            setSelectedSentence({
+            'startRank': startRank,
+            'startId': startNodeId, 
+            endRank: endRank,
+            'endId': endNodeId,
+           } );
       }
 
       function handleToggleGraph(){
             let toggled = !graphVisible;
             setGraphVisible(toggled)
+      }
+      function handleTogglePersons(){
+            let toggled = !personsVisible;
+            setPersonsVisible(toggled)
+      }
+      function handleTogglePlaces(){
+            let toggled = !placesVisible;
+            setPlacesVisible(toggled)
+      }
+      function handleToggleDates(){
+            let toggled = !datesVisible;
+            setDatesVisible(toggled)
       }
 
 }

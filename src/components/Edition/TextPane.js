@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import { string, func, array } from "prop-types";
 import Parser , {domToReact} from 'html-react-parser';
 import * as DataApi from '../../utils/Api';
 import Typography from '@material-ui/core/Typography'
@@ -62,6 +61,7 @@ const TextPane =(props) => {
 
       //
       useEffect(()=>{
+            setRawText(null);
            DataApi.getReading(sectionId,props.reading, (html)=>{
                  setRawText(html);
                  let parsed = Parser(html, parserOptions)
@@ -71,12 +71,13 @@ const TextPane =(props) => {
 
 
       useEffect(()=>{
+            setTextHTML(null);
           if(! rawText )
           return;
             let parsed =  Parser(rawText, parserOptions);
             setTextHTML(parsed);
-      },[ selectedNode, selectedSentence, persons])
-
+      })
+//[ selectedNode, selectedSentence, persons]
       return (
            <div>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
@@ -107,11 +108,5 @@ const TextPane =(props) => {
 
       
 }
-
-TextPane.propTypes = {
-      sectionId:string,
-      selectedNode:string,
-      onSelectNode:func
-};
 
 export default TextPane;

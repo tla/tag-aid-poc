@@ -176,10 +176,9 @@ async function generateStore() {
       }
 
       function readingToHTML( reading ){
-            let textElements = [] ;
             if( reading.length === 0 )
             return;
-        
+            let textElements = [] ;
             for (let i=0; i< reading.length; i++ ) {
                   let entry = reading[i];
                   const text = entry.normal_form ? entry.normal_form : entry.text
@@ -187,7 +186,6 @@ async function generateStore() {
                         textElements.push(' ')
                   }
                   textElements.push( `<span id='${entry.id}' key=${entry.rank}>${text}</span>`)
-                
             }
             return  `${textElements.join('')}`
       }

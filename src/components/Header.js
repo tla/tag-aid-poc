@@ -15,8 +15,8 @@ useEffect(()=>{
 
 return (
       <div id="headerPanel" role="banner" >
-           <div style={{display:'flex', justifyContent:'center', marginBottom:'48px'}}>
-            <img id="banner-logo" src="images/edessa_logo.png" width="80%" alt="The Chronicle of Matthew of Edessa"/>
+           <div style={{display:'flex', justifyContent:'center', marginBottom:'4px'}}>
+            <img id="banner-logo" src="images/edessa_logo.png" width="60%" alt="The Chronicle of Matthew of Edessa"/>
             </div> 
             
             <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
