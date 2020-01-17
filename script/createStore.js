@@ -186,36 +186,38 @@ async function generateStore() {
                   if (i > 0 && !reading[i-1].join_next && ! entry.join_prior) {
                         textElements.push(' ')
                   }
-                  textElements.push( `<span id='text-${entry.id}' key=${entry.id}>${text}</span>`)
+                  textElements.push( `<span id='${entry.id}' key=${entry.rank}>${text}</span>`)
                 
             }
             return  `${textElements.join('')}`
       }
 
       function translationToHTML( translation, sectionId , reading){
-            let textElements = [] ;
             if( translation.length === 0 )
             return;
-
-            let translationHash = {};
+            let textElements = [] ;
+            const translationFragments = [];
             for (const entry of translation ) {
                   const text = entry.properties.text;
                   const beginTextNode = entry.links[0].type==="BEGIN" ? entry.links[0].target:entry.links[1].target;
                   const endTextNode = entry.links[0].type==="END" ? entry.links[0].target:entry.links[1].target;
-                  const textElement = `<span id='text-${beginTextNode}' key=${endTextNode}>${text}</span>`
-                  translationHash[beginTextNode] = textElement;
-            }
-
-            reading.sort( (a,b)=>{ return a.rank - b.rank})
-            reading.forEach( wordNode => {
-              
-                  if(translationHash[wordNode.id] ){
-                      //  console.log(`section:${wordNode.section} nodeid: ${wordNode.id} node rank: ${wordNode.rank}`)
-                        textElements.push(translationHash[wordNode.id])
+                  const startNode = reading.find(( r) =>   r.id === beginTextNode.toString());            
+                  const endNode = reading.find( (r) =>   r.id === endTextNode.toString()); // could also check for join_previous and next here
+                  const translationFragment = {
+                        text: text,
+                        start: beginTextNode ,
+                        startRank: startNode? startNode.rank:'',
+                        end: endTextNode,
+                        endRank: endNode? endNode.rank:'',
                   }
-                 
+                  translationFragments.push(translationFragment)
+            }
+            translationFragments.sort( (a,b)=>{return a.startRank - b.startRank});
+    
+            translationFragments.forEach( f => {
+                  const textElement = `<span id='${f.startRank}-${f.start}' key='${f.endRank}-${f.end}'>${f.text}</span>`;
+                  textElements.push(textElement)
             })
-
             return  `${textElements.join(' ')}`
       }
 
