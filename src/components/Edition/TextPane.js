@@ -31,7 +31,7 @@ const TextPane =(props) => {
                               } else {
 
                                     let selected= props.selectedNode ? props.selectedNode === nodeId : false;
-                                    let person = persons.find( p=>{return p.begin.toString() === nodeId.toString()})
+                                    let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
                                           color: selected? 'red':'black',

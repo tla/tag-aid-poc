@@ -5,7 +5,7 @@ import * as DataApi from '../../utils/Api';
 
 const SvgGraph =(props)=>{
 
-      const {highlightedNode, selectedSentence, sectionId, onSelectNode }=props;
+      const {highlightedNode, selectedSentence, sectionId, onSelectNode, persons }=props;
       const [nodeHash, setNodeHash] =useState();
       const svgRef = useRef(null);
     
@@ -73,16 +73,25 @@ const SvgGraph =(props)=>{
                   // to do is look up the node's rank, we need to pass the readings in (a readings hash wouldnt be bad- or encode in the svg gen script)
                   let classNames = "node";
                   let inHighlightedSentence = false;
+                  let isSelectedNode = false;
+                  let isPerson = false;
+
                   if(selectedSentence && nodeHash)
                         inHighlightedSentence = nodeHash[nodeId] >= selectedSentence.startRank && nodeHash[nodeId ]<= selectedSentence.endRank;
-                 else
-                        console.log('no node hash')
-                  
-                        let isSelectedNode = false;
+                  if(persons)
+                        isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()})
                   if(highlightedNode)
                         isSelectedNode = nodeId === highlightedNode ;
-                  if( inHighlightedSentence )
+
+
+                  if( isPerson ) {
+                        console.log('adding person class')
+                        classNames += " person";
+                  }else if( inHighlightedSentence ) {
                         classNames += " highlight";
+                  }
+                       
+                  
                   if( isSelectedNode)
                         classNames += " active";
 

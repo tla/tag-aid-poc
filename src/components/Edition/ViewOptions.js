@@ -57,7 +57,7 @@ const ViewOptions =(props)=>{
                                           label="Highlight Persons"
                                     />
                               </div> 
-                              <div style={{height:'16px'}}></div>
+                   
                               <div>
                                     <FormControlLabel
                                           control={
@@ -71,7 +71,7 @@ const ViewOptions =(props)=>{
                                           label="Highlight Places"
                                     />
                               </div> 
-                              <div style={{height:'16px'}}></div>
+                       
                               <div>
                                     <FormControlLabel
                                           control={
