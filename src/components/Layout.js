@@ -1,13 +1,14 @@
-import React, {Fragment} from 'react'
-import AboutPage from './About'
-import MethodsPage from './Methods'
-import Edition from './Edition/index'
-import HomePage from './HomePage'
-import Header from './Header'
-import { Route, Switch } from 'react-router-dom'
+import React, {Fragment} from 'react';
+import AboutPage from './About';
+import MethodsPage from './Methods';
+import ManuscriptPage from './Manuscript';
+import Edition from './Edition/index';
+import HomePage from './HomePage';
+import Header from './Header';
+import { Route, Switch } from 'react-router-dom';
 import useWindowSize from './../utils/Viewport';
 import { Grid } from '@material-ui/core';
-import ChronicleTheme from './Theme'
+import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 
@@ -37,6 +38,9 @@ const Layout = ( props)=>{
                               </Route>
                               <Route path="/Methods" >
                                     <MethodsPage /> 
+                              </Route>
+                              <Route path="/Manuscripts" >
+                                    <ManuscriptPage /> 
                               </Route>
                             
                                <Route path="/" exact>
