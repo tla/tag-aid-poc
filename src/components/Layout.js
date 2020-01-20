@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import AboutPage from './About'
+import MethodsPage from './Methods'
 import Edition from './Edition/index'
 import HomePage from './HomePage'
 import Header from './Header'
@@ -33,6 +34,9 @@ const Layout = ( props)=>{
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 
+                              </Route>
+                              <Route path="/Methods" >
+                                    <MethodsPage /> 
                               </Route>
                             
                                <Route path="/" exact>

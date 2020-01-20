@@ -4,23 +4,7 @@ const AboutPage = ( props )=>{
 
       return (
             <div className="container content">
-            {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                  <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                  </button>
-                  <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <div className="navbar-nav ml-auto justify-content-end">
-                              <a className="nav-item nav-link" href="index.html">Home</a>
-                              <a className="nav-item nav-link active" href="about.html">About</a>
-                              <a className="nav-item nav-link" href="methods.html">Methods</a>
-                              <a className="nav-item nav-link" href="manuscripts.html">Manuscripts</a>
-                              <a className="nav-item nav-link disabled" href="https://editions.byzantini.st/ChronicleME/edition.html">Edition</a>
-                              <a className="nav-item nav-link disabled" href="https://editions.byzantini.st/ChronicleME/visualizations.html">Visualizations</a>
-                        </div>
-                  </div>
-            </nav> */}
+       
 
             <div className="row">
                   <div className="col-md-auto">
