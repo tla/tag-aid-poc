@@ -1,16 +1,32 @@
-import React, { useEffect, useRef} from 'react'
-import SVG from 'react-inlinesvg'
+import React, { useEffect, useRef, useState} from 'react'
+import SVG from 'react-inlinesvg';
+import * as DataApi from '../../utils/Api';
 //import {ReactComponent as Sample} from './sample-graph.svg'// also works
 
 const SvgGraph =(props)=>{
 
-      const {highlightedNode, selectedSentence, sectionId, onSelectNode, }=props;
+      const {highlightedNode, selectedSentence, sectionId, onSelectNode }=props;
+      const [nodeHash, setNodeHash] =useState();
       const svgRef = useRef(null);
     
       useEffect( ()=>{
             highlightAndSelect();
       } )
 //[props.selectedSentence, props.highlightedNode]
+
+      useEffect(()=>{
+            let hash={};
+            setNodeHash(hash)
+            DataApi.getNodeLookup(props.sectionId, (nodelist)=>{
+                 nodelist.forEach( (node)=>{
+                        hash[node.id]=node.rank;
+                 });
+                 setNodeHash(hash)
+           });
+      },props.sectionId)
+
+
+
       return (
             <div style={{position:'relative', padding:'16px'}}>
                   <div   
@@ -45,9 +61,12 @@ const SvgGraph =(props)=>{
                   // to do is look up the node's rank, we need to pass the readings in (a readings hash wouldnt be bad- or encode in the svg gen script)
                   let classNames = "node";
                   let inHighlightedSentence = false;
-                  if(selectedSentence)
-                        inHighlightedSentence = parseInt(nodeId) >= parseInt(selectedSentence.startId) && parseInt(nodeId )<= parseInt(selectedSentence.endId); // yes we can work with rank here too but for now
-                  let isSelectedNode = false;
+                  if(selectedSentence && nodeHash)
+                        inHighlightedSentence = nodeHash[nodeId] >= selectedSentence.startRank && nodeHash[nodeId ]<= selectedSentence.endRank;
+                 else
+                        console.log('no node hash')
+                  
+                        let isSelectedNode = false;
                   if(highlightedNode)
                         isSelectedNode = nodeId === highlightedNode ;
                   if( inHighlightedSentence )
@@ -58,6 +77,10 @@ const SvgGraph =(props)=>{
                   n.setAttribute("class", classNames)
 
             })
+
+
+
+
 
             const zoomNode = highlightedNode? highlightedNode : selectedSentence? selectedSentence.startId : null;
             if(zoomNode){

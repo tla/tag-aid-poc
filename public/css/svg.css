@@ -12,16 +12,33 @@ svg g.node:hover {
 svg g.node:hover ellipse {
   fill: #add8e6;
 }
-svg g.node.highlight {
+/* svg g.node.highlight {
   stroke: #008000;
-}
-svg g.node.highlight.active {
-  stroke: #006400;
 }
 svg  g.node.highlight.active ellipse{
       fill:#d9ffd9 ;
     
 }
+svg g.node.highlight.active {
+  stroke: #006400;
+} */
+svg g.node.highlight {
+      stroke: black;
+}
+
+svg  g.node.highlight ellipse{
+      fill:yellow ;
+}
+
+svg g.node.active {
+      stroke: red;
+}
+
+svg  g.node.highlight.active ellipse{
+      stroke: red;
+      fill:yellow ;
+}
+
 svg  g.node.highlight.start ellipse{
       fill:#d1f30d ;
     

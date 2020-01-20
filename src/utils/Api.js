@@ -25,6 +25,16 @@ export const getWitnessList = async ( onListReceived )=>{
       }
 }
 
+export const getNodeLookup = async ( sectionId, onListReceived )=>{
+      const nodeListURL = `${localUrl}data/${sectionId}/readings.json`;
+      try{
+            const result = await axios.get(nodeListURL);
+            onListReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
 export const getReading = async ( sectionId, reading, onTextReceived )=>{
       reading = reading === "Lemma Text" ? "lemma": reading;
       reading = reading === "Translation"? "en":reading;

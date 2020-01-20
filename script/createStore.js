@@ -61,6 +61,7 @@ async function generateStore() {
                   let allReadings = new Promise( (resolve )=>{
                         getReadings(sectionId)
                         .then( readings=>{
+                              writeReadingLookup(readings, sectionId);
                               writeLemmaFile( readings, sectionId); 
                               writeWitnessFiles(readings, witnesses, sectionId);
                                     getTranslation(sectionId)
@@ -239,6 +240,18 @@ async function generateStore() {
                         writeFile(witnessFilePath,htmlWitness)
                   }
             })
+      }
+
+      function writeReadingLookup(readings, sectionId){
+            let id_rank = [];
+            const sectiondir = `${outdir}/${sectionId}`;
+            makeDirectory(sectiondir);
+            readings.forEach ( node =>{
+                  id_rank.push({id:node.id, rank:node.rank})
+            })
+            id_rank.sort( (a,b)=>{a.rank-b.rank});
+            const readingFilePath = `${sectiondir}/readings.json`;
+            fs.writeFileSync( readingFilePath, JSON.stringify(id_rank) )
       }
 
       function writeTranslationFile( translation,sectionId, readings){

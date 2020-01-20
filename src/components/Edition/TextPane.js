@@ -62,11 +62,11 @@ const TextPane =(props) => {
       //
       useEffect(()=>{
             setRawText(null);
-           DataApi.getReading(sectionId,props.reading, (html)=>{
-                 setRawText(html);
-                 let parsed = Parser(html, parserOptions)
-                 setTextHTML(parsed)
-           });
+            DataApi.getReading(sectionId,props.reading, (html)=>{
+                  setRawText(html);
+                  let parsed = Parser(html, parserOptions)
+                  setTextHTML(parsed)
+            });
       },[props.sectionId, props.reading])
 
 
