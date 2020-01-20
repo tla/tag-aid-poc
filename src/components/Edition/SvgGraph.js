@@ -23,9 +23,21 @@ const SvgGraph =(props)=>{
                  });
                  setNodeHash(hash)
            });
-      },props.sectionId)
+      },[props.sectionId])
 
+      useEffect( ()=>{
+            if(!props.selectedSentence)
+            return;
+            const zoomNode = props.selectedSentence.startId;
+            zoomToNode(zoomNode)
+      },[props.selectedSentence])
 
+      useEffect( ()=>{
+            if(! props.highlightedNode)
+            return;
+            const zoomNode = props.highlightedNode;
+            zoomToNode(zoomNode)
+      },[props.highlightedNode])
 
       return (
             <div style={{position:'relative', padding:'16px'}}>
@@ -78,17 +90,15 @@ const SvgGraph =(props)=>{
 
             })
 
+      }
 
-
-
-
-            const zoomNode = highlightedNode? highlightedNode : selectedSentence? selectedSentence.startId : null;
+      function zoomToNode(zoomNode){
+           
             if(zoomNode){
                   let domNode = getGraphDOMNode(zoomNode);
                   if(domNode)
                         domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             }
-          
       }
 
       

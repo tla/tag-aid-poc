@@ -38,7 +38,7 @@ To run the python script to generate the images use:
 ### Python3.8 generate_svgs.py -r "https://api.editions.byzantini.st/ChronicleME/stemmarest" -u "demo" -p "StemmarestDemo" -t 4aaf8973-7ac9-402a-8df9-19a2a050e364 -v
 
 
-Its important to use the new version of python ( not 2.7 ) which the Mac is defaulting to for whatever reason, 2.7 will not find the requests module, and wont be able to install it either because of an md5 complaint.  Python 3 behaves properly but must be specifically invoked
+Its important to use the new version of python - not 2.7 - which the Mac is defaulting to for whatever reason, 2.7 will not find the requests module, and wont be able to install it either because of an md5 complaint.  Python 3 behaves properly but must be specifically invoked
 
 This is not a particularly fast script allow at least 10 minutes.
 
