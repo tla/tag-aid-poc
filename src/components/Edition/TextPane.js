@@ -62,7 +62,7 @@ const TextPane =(props) => {
             }
       },[sectionId,props.sections])
 
-      //
+
       useEffect(()=>{
             setRawText(null);
             DataApi.getReading(sectionId,props.reading, (html)=>{

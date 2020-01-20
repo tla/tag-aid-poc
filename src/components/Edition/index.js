@@ -4,6 +4,7 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
+import HeatMap from './HeatMap';
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 
@@ -16,7 +17,7 @@ const Edition = ( props)=>{
       const [personList, setPersonList] = useState([]);
       const [placeList, setPlaceList] = useState([]);
       const [dateList, setDateList] = useState([]);
-
+      const [nodeHash, setNodeHash] =useState();
       const [graphVisible, setGraphVisible] = useState(true);
       const [personsVisible, setPersonsVisible] = useState(false);
       const [placesVisible, setPlacesVisible] = useState(false);
@@ -27,8 +28,18 @@ const Edition = ( props)=>{
       useEffect(()=>{
             setSelectedSentence(null);
              setSelectedNode(null);
-             
        },[sectionID])
+
+       useEffect(()=>{
+            let hash={};
+            setNodeHash(hash)
+            DataApi.getNodeLookup(props.sectionId, (nodelist)=>{
+                 nodelist.forEach( (node)=>{
+                        hash[node.id]=node.rank;
+                 });
+                 setNodeHash(hash)
+           });
+      },[sectionID])
 
        useEffect(()=>{
              if(personsVisible)
@@ -98,12 +109,21 @@ const Edition = ( props)=>{
                                                 sectionId={sectionID}
                                                 highlightedNode={selectedNode}
                                                 selectedSentence={selectedSentence}
+                                                nodeHash = {nodeHash}
                                                 persons={personList}
                                                 places = {placeList}
                                                 dates = { dateList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
                                           /> 
+                                          <HeatMap 
+                                                sectionId={sectionID}
+                                                nodeHash = {nodeHash}
+                                                activeNode = { selectedNode}
+                                                selectedSentence={selectedSentence}
+                                                activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
+                                                onSetActiveNode = {()=>{}}
+                                          />
                                     </div>
                               }
 

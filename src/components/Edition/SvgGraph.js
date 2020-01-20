@@ -6,8 +6,8 @@ import * as DataApi from '../../utils/Api';
 const SvgGraph =(props)=>{
 
       const {highlightedNode, selectedSentence, sectionId, onSelectNode, 
-            persons, places, dates }=props;
-      const [nodeHash, setNodeHash] =useState();
+            nodeHash, persons, places, dates }=props;
+    
       const svgRef = useRef(null);
     
       useEffect( ()=>{
@@ -15,16 +15,7 @@ const SvgGraph =(props)=>{
       } )
 //[props.selectedSentence, props.highlightedNode]
 
-      useEffect(()=>{
-            let hash={};
-            setNodeHash(hash)
-            DataApi.getNodeLookup(props.sectionId, (nodelist)=>{
-                 nodelist.forEach( (node)=>{
-                        hash[node.id]=node.rank;
-                 });
-                 setNodeHash(hash)
-           });
-      },[props.sectionId])
+   
 
       useEffect( ()=>{
             if(!props.selectedSentence)

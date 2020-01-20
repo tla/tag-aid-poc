@@ -28,10 +28,10 @@ const Layout = ( props)=>{
                   <Grid id="pages" item xs={12}>
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition style={{height:`${viewport.height*.80}px`}} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition style={{height:`${viewport.height*.90}px`}} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition" >
-                                    <Edition style={{height:`${viewport.height*.80}px`}}  sections={sections}  viewport={viewport}  witnesses = { witnesses} />
+                                    <Edition style={{height:`${viewport.height*.90}px`}}  sections={sections}  viewport={viewport}  witnesses = { witnesses} />
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 
