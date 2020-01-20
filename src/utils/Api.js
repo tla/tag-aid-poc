@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-console.log('host is' ,window.location.hostname)
 let host = window.location.hostname==='localhost'?'localhost:3000':'157.245.255.111'
 const  localUrl=`http://${host}/`;
 //const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
@@ -29,6 +28,16 @@ export const getNodeLookup = async ( sectionId, onListReceived )=>{
       const nodeListURL = `${localUrl}data/${sectionId}/readings.json`;
       try{
             const result = await axios.get(nodeListURL);
+            onListReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getPersons = async ( sectionId, onListReceived )=>{
+      const personListURL = `${localUrl}data/${sectionId}/persons.json`;
+      try{
+            const result = await axios.get(personListURL);
             onListReceived(result.data)
       } catch( error ) {
             console.log(error)

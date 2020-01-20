@@ -30,6 +30,14 @@ svg  g.node.highlight ellipse{
       fill:yellow ;
 }
 
+svg g.node.person ellipse{
+      fill:#22e7eea2;
+}
+
+svg g.node.person {
+      stroke: black;
+}
+
 svg g.node.active {
       stroke: red;
 }

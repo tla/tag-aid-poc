@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel'
-
+import Checkbox from '@material-ui/core/Checkbox';
 
 const ViewOptions =(props)=>{
 
@@ -47,9 +47,10 @@ const ViewOptions =(props)=>{
                               <div>
                                     <FormControlLabel
                                           control={
-                                                <Switch
+                                                <Checkbox
                                                       checked={personsVisible}
                                                       onChange={onTogglePersons}
+                                                      style={{color:'#22e7eea2'}}
                                                 />
                                           }
                                           labelPlacement='start'
@@ -60,9 +61,10 @@ const ViewOptions =(props)=>{
                               <div>
                                     <FormControlLabel
                                           control={
-                                                <Switch
+                                                <Checkbox
                                                       checked={placesVisible}
                                                       onChange={onTogglePlaces}
+                                                      style={{color:'#5D39BF'}}
                                                 />
                                           }
                                           labelPlacement='start'
@@ -73,9 +75,10 @@ const ViewOptions =(props)=>{
                               <div>
                                     <FormControlLabel
                                           control={
-                                                <Switch
+                                                <Checkbox
                                                       checked={datesVisible}
                                                       onChange={onToggleDates}
+                                                      style={{color:'#F526C0'}}
                                                 />
                                           }
                                           labelPlacement='start'

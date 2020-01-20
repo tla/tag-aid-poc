@@ -5,7 +5,7 @@ import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
 import { useParams} from 'react-router-dom'
-
+import * as DataApi from '../../utils/Api';
 
 const Edition = ( props)=>{
       
@@ -13,6 +13,7 @@ const Edition = ( props)=>{
       const {sections , viewport , witnesses} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
+      const [personList, setPersonList] = useState([]);
 
       const [graphVisible, setGraphVisible] = useState(true);
       const [personsVisible, setPersonsVisible] = useState(true);
@@ -26,6 +27,15 @@ const Edition = ( props)=>{
              setSelectedNode(null);
              
        },[sectionID])
+
+       useEffect(()=>{
+             if(personsVisible)
+            DataApi.getPersons(sectionID, (list)=>{
+                  setPersonList(list)
+            });
+            else
+                  setPersonList([])
+       },[personsVisible])
  
   
       return (
@@ -69,6 +79,7 @@ const Edition = ( props)=>{
                                                 sectionId={sectionID}
                                                 highlightedNode={selectedNode}
                                                 selectedSentence={selectedSentence}
+                                                persons={personList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
                                           /> 
@@ -85,6 +96,7 @@ const Edition = ( props)=>{
                                                 <TextPane 
                                                       sections = { sections}
                                                       sectionId={sectionID}
+                                                      persons={personList}
                                                       reading = {leftReading}
                                                       selectedNode={selectedNode}
                                                       selectedSentence={selectedSentence}
@@ -97,6 +109,7 @@ const Edition = ( props)=>{
                                                 <TextPane 
                                                       sections = { sections}
                                                       sectionId={sectionID}
+                                                      persons={personList}
                                                       reading = { rightReading}
                                                       selectedNode={selectedNode}
                                                       selectedSentence={selectedSentence}
