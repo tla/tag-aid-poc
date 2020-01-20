@@ -44,6 +44,27 @@ export const getPersons = async ( sectionId, onListReceived )=>{
       }
 }
 
+export const getPlaces = async ( sectionId, onListReceived )=>{
+      const placeListURL = `${localUrl}data/${sectionId}/places.json`;
+      try{
+            const result = await axios.get(placeListURL);
+            onListReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getDates = async ( sectionId, onListReceived )=>{
+      const dateListURL = `${localUrl}data/${sectionId}/dates.json`;
+      try{
+            const result = await axios.get(dateListURL);
+            onListReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+
 export const getReading = async ( sectionId, reading, onTextReceived )=>{
       reading = reading === "Lemma Text" ? "lemma": reading;
       reading = reading === "Translation"? "en":reading;

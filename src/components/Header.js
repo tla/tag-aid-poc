@@ -21,8 +21,7 @@ return (
             
             <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
                   <div style={{display:'flex', justifyContent:'flex-end',padding:'5px',fontSize:'16px'}}>
-                              <Tabs value={tabIndex} style={{float:'right'}} onChange={handleTabChange} 
-                              style={{color:'black'}}>
+                              <Tabs value={tabIndex} style={{float:'right', color:'black'}} onChange={handleTabChange} >
                                     <Tab label="Home" href="/" value="#/" />
                                     <Tab label="About" href="#/About"  value="#/About"  />
                                     <Tab label="Methods"  href="#/Methods" value="#/Methods" />

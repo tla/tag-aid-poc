@@ -5,7 +5,8 @@ import * as DataApi from '../../utils/Api';
 
 const SvgGraph =(props)=>{
 
-      const {highlightedNode, selectedSentence, sectionId, onSelectNode, persons }=props;
+      const {highlightedNode, selectedSentence, sectionId, onSelectNode, 
+            persons, places, dates }=props;
       const [nodeHash, setNodeHash] =useState();
       const svgRef = useRef(null);
     
@@ -75,19 +76,28 @@ const SvgGraph =(props)=>{
                   let inHighlightedSentence = false;
                   let isSelectedNode = false;
                   let isPerson = false;
+                  let isPlace = false;
+                  let isDate = false;
 
                   if(selectedSentence && nodeHash)
                         inHighlightedSentence = nodeHash[nodeId] >= selectedSentence.startRank && nodeHash[nodeId ]<= selectedSentence.endRank;
                   if(persons)
-                        isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()})
+                        isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()});
+                  if(places)
+                        isPlace = places.find(p=> { return p.begin.toString() === nodeId.toString()});
+                  if( dates )
+                        isDate = dates.find( d=> { return d.begin.toString() === nodeId.toString()})
                   if(highlightedNode)
                         isSelectedNode = nodeId === highlightedNode ;
 
 
                   if( isPerson ) {
-                        console.log('adding person class')
                         classNames += " person";
-                  }else if( inHighlightedSentence ) {
+                  } else if ( isPlace ){
+                        classNames += " place";
+                  } else if ( isDate ){
+                        classNames +=" date";
+                  } else if( inHighlightedSentence ) {
                         classNames += " highlight";
                   }
                        

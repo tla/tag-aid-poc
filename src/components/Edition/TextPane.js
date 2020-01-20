@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 const TextPane =(props) => {
 
       const {sectionId, reading, onSelectNode, selectedNode, selectedSentence, onSelectSentence,
-      persons} = props;
+      persons, places, dates} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
@@ -32,13 +32,15 @@ const TextPane =(props) => {
 
                                     let selected= props.selectedNode ? props.selectedNode === nodeId : false;
                                     let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
+                                    let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
+                                    let date = dates? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
                                           color: selected? 'red':'black',
-                                          backgroundColor: person ? '#22e7eea2' : inSelectedSentence ? 'yellow':'transparent'
+                                          backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':'transparent'
                                     }
                                    
-                                          return <span style={textStyle} onClick={()=>{console.log("selected"); handleSelected(nodeId)}} >
+                                          return <span style={textStyle} onClick={()=>{handleSelected(nodeId)}} >
                                                 {domToReact(children,parserOptions)}</span>
 
                               }
@@ -73,11 +75,21 @@ const TextPane =(props) => {
 
       useEffect(()=>{
             setTextHTML(null);
-          if(! rawText )
-          return;
+            if(! rawText )
+                  return;
             let parsed =  Parser(rawText, parserOptions);
             setTextHTML(parsed);
       })
+
+      useEffect(()=>{
+            setTextHTML(null);
+            if(! rawText )
+                  return;
+            let parsed =  Parser(rawText, parserOptions);
+            setTextHTML(parsed);
+      },[props.persons])
+
+
 //[ selectedNode, selectedSentence, persons]
       return (
            <div>

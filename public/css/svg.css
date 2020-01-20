@@ -38,6 +38,22 @@ svg g.node.person {
       stroke: black;
 }
 
+svg g.node.place ellipse{
+      fill:#756de2;
+}
+
+svg g.node.date {
+      stroke: black;
+}
+
+svg g.node.date ellipse{
+      fill:#F526C0;
+}
+
+svg g.node.place {
+      stroke: black;
+}
+
 svg g.node.active {
       stroke: red;
 }

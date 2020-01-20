@@ -18,10 +18,12 @@ const ViewOptions =(props)=>{
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
             personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates} = props;
      
+      const [isExpanded, setIsExpanded] = useState(true)
 
       return (
             <div>
-                  <ExpansionPanel>
+                  <ExpansionPanel  
+                        expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
@@ -39,12 +41,17 @@ const ViewOptions =(props)=>{
                                                       onChange={onToggleGraph}
                                                 />
                                           }
-                                          labelPlacement='start'
+                                          labelPlacement='end'
                                           label="Display Graph"
                                     />
                               </div> 
                               <div style={{height:'16px'}}></div>
+
                               <div>
+                                    <Typography varinat="h5">
+                                          {'Highlights'}
+                                    </Typography>
+                                    <div style={{display:'flex', flexDirection:'column'}}>
                                     <FormControlLabel
                                           control={
                                                 <Checkbox
@@ -53,26 +60,21 @@ const ViewOptions =(props)=>{
                                                       style={{color:'#22e7eea2'}}
                                                 />
                                           }
-                                          labelPlacement='start'
-                                          label="Highlight Persons"
+                                          labelPlacement='end'
+                                          label="Persons"
                                     />
-                              </div> 
-                   
-                              <div>
                                     <FormControlLabel
                                           control={
                                                 <Checkbox
                                                       checked={placesVisible}
                                                       onChange={onTogglePlaces}
-                                                      style={{color:'#5D39BF'}}
+                                                      style={{color:'#756de2'}}
                                                 />
                                           }
-                                          labelPlacement='start'
-                                          label="Highlight Places"
+                                          labelPlacement='end'
+                                          label="Places"
                                     />
-                              </div> 
-                       
-                              <div>
+                            
                                     <FormControlLabel
                                           control={
                                                 <Checkbox
@@ -81,34 +83,34 @@ const ViewOptions =(props)=>{
                                                       style={{color:'#F526C0'}}
                                                 />
                                           }
-                                          labelPlacement='start'
-                                          label="Highlight Dates"
+                                          labelPlacement='end'
+                                          label="Dates"
                                     />
+                                    </div>
                               </div> 
                               <div style={{height:'16px'}}></div>
 
-                              <div style={{display:'flex'}}>
-                                          <div style={{width:'130px',  }}>
+                              
+                              <div style={{width:'200px',  }}>
+                                    <FormControl >
+                                          <InputLabel style={{fontSize:'16px', width:'180px'}}>Left Text Pane</InputLabel>
+                                                <Select style={{width:'200px'}}
+                                                      value={leftReading}
+                                                      onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
+                                                >
+                                                      {
+                                                            witnesses.map(witness=>{
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
+                                                            })
+                                                      }
+                                                </Select>
+                                    </FormControl>
+                              </div>
+                              <div style={{height:'8px'}}></div>
+                              <div style={{width:'200px'}}>
                                                 <FormControl >
-                                                      <InputLabel style={{fontSize:'16px', width:'120px'}}>Left Text Pane</InputLabel>
-                                                            <Select style={{width:'130px'}}
-                                                                  value={leftReading}
-                                                                  onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
-                                                            >
-                                                                  {
-                                                                        witnesses.map(witness=>{
-                                                                              return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
-                                                                        })
-                                                                  }
-                                                            </Select>
-                                                </FormControl>
-                                          </div>
-                                          <div style={{width:'16px'}}></div>
-                                          
-                                          <div style={{width:'130px'}}>
-                                                <FormControl >
-                                                      <InputLabel style={{fontSize:'16px', width:'120px'}}>Right Text Pane </InputLabel>
-                                                            <Select style={{width:'130px'}}
+                                                      <InputLabel style={{fontSize:'16px', width:'180px'}}>Right Text Pane </InputLabel>
+                                                            <Select style={{width:'200px'}}
                                                                   value={rightReading}
                                                                   onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                             >
@@ -120,7 +122,7 @@ const ViewOptions =(props)=>{
                                                             </Select>
                                                 </FormControl>
                                           </div>
-                              </div>
+                           
 
                         </ExpansionPanelDetails>
                   </ExpansionPanel>

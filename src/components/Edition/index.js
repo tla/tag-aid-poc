@@ -14,11 +14,13 @@ const Edition = ( props)=>{
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [personList, setPersonList] = useState([]);
+      const [placeList, setPlaceList] = useState([]);
+      const [dateList, setDateList] = useState([]);
 
       const [graphVisible, setGraphVisible] = useState(true);
-      const [personsVisible, setPersonsVisible] = useState(true);
-      const [placesVisible, setPlacesVisible] = useState(true);
-      const [datesVisible, setDatesVisible] = useState(true);
+      const [personsVisible, setPersonsVisible] = useState(false);
+      const [placesVisible, setPlacesVisible] = useState(false);
+      const [datesVisible, setDatesVisible] = useState(false);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
 
@@ -37,6 +39,23 @@ const Edition = ( props)=>{
                   setPersonList([])
        },[personsVisible])
  
+       useEffect(()=>{
+            if(placesVisible)
+           DataApi.getPlaces(sectionID, (list)=>{
+                 setPlaceList(list)
+           });
+           else
+                 setPlaceList([])
+      },[placesVisible])
+
+      useEffect(()=>{
+            if(datesVisible)
+           DataApi.getDates(sectionID, (list)=>{
+                 setDateList(list)
+           });
+           else
+                 setDateList([])
+      },[datesVisible])
   
       return (
             <Grid container spacing={1} >
@@ -80,6 +99,8 @@ const Edition = ( props)=>{
                                                 highlightedNode={selectedNode}
                                                 selectedSentence={selectedSentence}
                                                 persons={personList}
+                                                places = {placeList}
+                                                dates = { dateList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
                                           /> 
@@ -97,6 +118,8 @@ const Edition = ( props)=>{
                                                       sections = { sections}
                                                       sectionId={sectionID}
                                                       persons={personList}
+                                                      places = {placeList}
+                                                      dates = { dateList}
                                                       reading = {leftReading}
                                                       selectedNode={selectedNode}
                                                       selectedSentence={selectedSentence}
@@ -110,6 +133,8 @@ const Edition = ( props)=>{
                                                       sections = { sections}
                                                       sectionId={sectionID}
                                                       persons={personList}
+                                                      places = {placeList}
+                                                      dates = { dateList}
                                                       reading = { rightReading}
                                                       selectedNode={selectedNode}
                                                       selectedSentence={selectedSentence}
