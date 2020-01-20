@@ -2,26 +2,30 @@ import React from 'react'
 
 const MethodsPage = ( props ) =>{
 
+const dejaVuStyle={
+      fontFamily: 'Menlo, Consolas, DejaVu Sans Mono monospace'
+}
+
 return (
-      <div class="container content">
+      <div className="container content">
     
-      <div class="row">
-        <div class="col-md-auto">
+      <div className="row">
+        <div className="col-md-auto">
           <h2>Methods of edition</h2>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-auto">
+      <div className="row">
+        <div className="col-md-auto">
           <h4>Digital workflow</h4>
           <p>This edition of the Chronicle has been conceived and implemented with a fully digital workflow. Our implementation relies on two innovative strands of development. The first is a graph-based computational model for critical editions of texts that survive in multiple manuscript copies; more about this model can be found <a href="http://dhuniwien.github.io/tradition_repo/">in its documentation</a>. The second strand of development is the use of a "continuous integration" system for management and curation of the textual data, whose stages are described here.</p>
           <hr />
           <h5>Manuscript transcription</h5>
           <p>We have obtained digital images of most of the extant manuscripts; although we do not, generally speaking, have the rights to publish these, we have been able to use them as the basis of our transcriptions.</p>
-          <img class="framed" src="images/tpen_interface.jpg" width="500" />
+          <img className="framed" src="images/tpen_interface.jpg" width="500" />
           <p>Transcription was done using <a href="http://t-pen.org/TPEN/">T-PEN</a>, a freely available online tool provided by the Center for Digital Theology at St. Louis University. Each line of text is associated with a region of a manuscript image; selected elements of the <a href="https://tei-c.org/">Text Encoding Initiative</a> were used to capture certain features of the text. (For more information on the transcription, see the "Guidelines for transcription" below.) </p>
           <hr />
           <h5>The continuous integration pipeline</h5>
-          <img class="framed" src="images/concourse_pipeline.png" width="100%" />
+          <img className="framed" src="images/concourse_pipeline.png" width="100%" />
           <h6><code>tpen-backup</code></h6>
           <p>Our pipeline process begins each day with export of the T-PEN data in its native Shared Canvas JSON format.</p>
           <h6><code>tpen2tei</code></h6>
@@ -40,29 +44,30 @@ return (
           <p>Annotation and translation TODO</p>
         </div>
       </div>
-      <div class="row divider">
-        <div class="col-md-12">
+      <div className="row divider">
+        <div className="col-md-12">
           <img src="images/edessa_line.png" />
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-auto">
+      <div className="row">
+        <div className="col-md-auto">
           <h4>Guidelines for transcription</h4>
           <h5 id="text-division">Text division</h5>
             <ul>
-              <li>Divisions are marked where they occur with the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;hi&gt;</code> tag.</li>
-              <li>A <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;milestone unit="section" n="YEAR"/&gt;</code> tag has been inserted at the beginning of each year-specific entry, where the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">n</code>
+              <li>Divisions are marked where they occur with the <code style={dejaVuStyle}>&lt;hi&gt;</code> tag.</li>
+              <li>A <code  style={dejaVuStyle}>&lt;milestone unit="section" n="YEAR"/&gt;</code> tag has been inserted at the beginning of each year-specific entry, where the 
+              <code  style={dejaVuStyle}>n</code>
                 attribute contains the number of the Armenian year in question. There are also some intra-year milestones when entries are particularly long and include self-contained sub-sections, such as for the letter of Tzimiskēs, the oration of
                 Barseł <i>vardapet</i>, or the confession of faith of Gagik Bagratuni.</li>
               <li>Some manuscripts contain their own section markers or numberings; these are represented as notes.</li>
             </ul>
             <h5 id="special-characters">Special characters</h5>
               <ul>
-                <li>Ideograms and ligatures that form a single glyph have been marked as such with a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;g&gt;</code> tag containing the characters that the glyph
+                <li>Ideograms and ligatures that form a single glyph have been marked as such with a <code  style={dejaVuStyle}>&lt;g&gt;</code> tag containing the characters that the glyph
                   would normalize to.</li>
                 <li>
                   <p>If an ideogram is followed by seemingly redundant characters (e.g. [erkir]իր), or if a ligature appears to stand for a different set of characters than usual (e.g. the պտ ligature in place of պետ), it is marked as follows:</p>
-                  <pre class="editor-colors lang-text"><div class="line"><span class="syntax--text syntax--plain"><span class="leading-whitespace">  </span><span class="syntax--meta syntax--paragraph syntax--text">&lt;g ref="երկիր"&gt;երկ&lt;/g&gt;իր</span></span></div></pre>
+                  <pre className="editor-colors lang-text"><div className="line"><span className="syntax--text syntax--plain"><span className="leading-whitespace">  </span><span className="syntax--meta syntax--paragraph syntax--text">&lt;g ref="երկիր"&gt;երկ&lt;/g&gt;իր</span></span></div></pre>
                 </li>
                 <li>
                   <p>All glyphs used in the transcription of a particular manuscript are defined in the TEI header for that manuscript.</p>
@@ -78,38 +83,40 @@ return (
                 </ul>
                 <h5 id="abbreviations">Abbreviations</h5>
                   <ul>
-                    <li>Abbreviations are marked with the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;abbr&gt;</code> tag. In general we have not supplied the expansion in the transcription; this is done as
+                    <li>Abbreviations are marked with the <code  style={dejaVuStyle}>&lt;abbr&gt;</code> tag. In general we have not supplied the expansion in the transcription; this is done as
                       part of the collation process.</li>
                     <li>The tag surrounds the letters marked in the abbreviation, rather than the whole word (unless the whole word is marked.) This is in many cases approximate at best.</li>
                     <li>We do not distinguish between different forms of abbreviation (e.g. line above vs. two hatch marks). Likewise, if there are two contiguous abbreviation marks in a word, they can be represented as a single abbreviation.</li>
                   </ul>
                   <h5 id="corrections">Corrections</h5>
                     <ul>
-                      <li>If the correction is a replacement, it goes into a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;subst&gt;&lt;del/&gt;&lt;add/&gt;&lt;/subst&gt;</code> construct.</li>
-                      <li>We note the mechanism used to do the correction in the <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">rend</code> attribute, placed on whichever element is appropriate.</li>
-                      <li>We note a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">place</code> for any added text, unless it is in a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;subst
+                      <li>If the correction is a replacement, it goes into a <code  style={dejaVuStyle}>&lt;subst&gt;&lt;del/&gt;&lt;add/&gt;&lt;/subst&gt;</code> construct.</li>
+                      <li>We note the mechanism used to do the correction in the <code  style={dejaVuStyle}>rend</code> attribute, placed on whichever element is appropriate.</li>
+                      <li>We note a <code style={dejaVuStyle}>place</code> for any added text, unless it is in a <code  style={dejaVuStyle}>&lt;subst
                           rend="overwrite"&gt;</code>.</li>
-                      <li>Missing capitals that were evidently meant to be rendered in colored ink are included by means of a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;supplied&gt;</code> tag.</li>
+                      <li>Missing capitals that were evidently meant to be rendered in colored ink are included by means of a <code  style={dejaVuStyle}>&lt;supplied&gt;</code> tag.</li>
                     </ul>
                     <h5 id="numbers">Numbers</h5>
                       <ul>
-                        <li>Numbers are tagged using a <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;num value="XX"&gt;</code> element, with the numerical value of the number as written.</li>
+                        <li>Numbers are tagged using a <code  style={dejaVuStyle}>&lt;num value="XX"&gt;</code> element, with the numerical value of the number as written.</li>
                         <li>Periods (i.e. Armenian semicolons) around numbers are assumed to be part of the number representation rather than separate punctuation.</li>
                         <li>If the number is marked with a line over it, the line is transcribed with the ՟ character.</li>
-                        <li>When a number is split with և, և ի, or similar, it has been wrapped in a single tag (e.g. դ՟ճ՟ և է՟ becomes <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;num value="407"&gt;դ՟ճ՟ և
+                        <li>When a number is split with և, և ի, or similar, it has been wrapped in a single tag (e.g. դ՟ճ՟ և է՟ becomes 
+                              <code  style={dejaVuStyle}>&lt;num value="407"&gt;դ՟ճ՟ և
                             է՟&lt;/num&gt;</code>.)</li>
-                        <li>If the number is declined explicitly, the declination goes outside the number tag <em>only</em> if it is the last part of the number. e.g. <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;num
-                            value="12"&gt;բ՟ժ՟&lt;/num&gt;աց</code> but <code style="font-family: Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;">&lt;num value="12000"&gt;բ՟ժ՟աց ռ՟&lt;/num&gt;</code>.</li>
+                        <li>If the number is declined explicitly, the declination goes outside the number tag <em>only</em> if it is the last part of the number. e.g. 
+                        <code  style={dejaVuStyle}>&lt;num
+                            value="12"&gt;բ՟ժ՟&lt;/num&gt;աց</code> but <code  style={dejaVuStyle}>&lt;num value="12000"&gt;բ՟ժ՟աց ռ՟&lt;/num&gt;</code>.</li>
                       </ul>
         </div>
       </div>
-      <div class="row divider">
-        <div class="col-md-12">
+      <div className="row divider">
+        <div className="col-md-12">
           <img src="images/edessa_line.png" />
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-auto">
+      <div className="row">
+        <div className="col-md-auto">
           <h4>Principles of text establishment</h4>
           <p>The following principles of original text comparison were applied while preparing the critical edition of the Chronicle of Matthew of Edessa.</p>
           <ul>
@@ -124,14 +131,14 @@ return (
         </div>
       </div>
    
-      <div class="row footer">
-        <div class="col-md-auto">
+      <div className="row footer">
+        <div className="col-md-auto">
           <img src="images/by-sa.png" width="100" alt="CC-BY-SA" />
         </div>
-        <div class="col-md-auto">
+        <div className="col-md-auto">
           <p>Created with the generous support of:</p>
         </div>
-        <div class="col-md-auto">
+        <div className="col-md-auto">
           <img src="images/SNF_RGB_E_POS.png" height="50px" />
           <img src="images/univie_logo.jpg" height="50px" />
         </div>
