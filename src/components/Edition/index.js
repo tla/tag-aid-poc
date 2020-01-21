@@ -4,7 +4,7 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
-import HeatMap from './HeatMap/index'
+import HeatMap from './HeatMap';
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 
@@ -31,11 +31,9 @@ const Edition = ( props)=>{
        },[sectionID])
 
        useEffect(()=>{
-             if(!sectionID)
-                  return;
             let hash={};
             setNodeHash(hash)
-            DataApi.getNodeLookup(sectionID, (nodelist)=>{
+            DataApi.getNodeLookup(props.sectionId, (nodelist)=>{
                  nodelist.forEach( (node)=>{
                         hash[node.id]=node.rank;
                  });
@@ -106,7 +104,7 @@ const Edition = ( props)=>{
                         <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                               {sectionID && graphVisible &&
                                     <div style={{overflowX:'auto', overflowY:'auto'}}>
-                                           {/* <SvgGraph 
+                                           <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
                                                 highlightedNode={selectedNode}
@@ -117,13 +115,13 @@ const Edition = ( props)=>{
                                                 dates = { dateList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
-                                          />  */}
+                                          /> 
                                           <HeatMap 
                                                 sectionId={sectionID}
                                                 nodeHash = {nodeHash}
                                                 activeNode = { selectedNode}
                                                 selectedSentence={selectedSentence}
-                                                activeWitness = { rightReading === "Translation" ?   leftReading === "Translation" ? '' : leftReading : rightReading }
+                                                activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
                                                 onSetActiveNode = {()=>{}}
                                           />
                                     </div>
