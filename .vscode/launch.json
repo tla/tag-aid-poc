@@ -5,14 +5,14 @@
       "version": "0.2.0",
       "configurations": [
             {
-            "name": "debug React in VS Code",
-            "type": "chrome",
-            "request": "launch",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/src",
-            "sourceMapPathOverrides": {
-                  "webpack:///src/*": "${webRoot}/*"
-                  }
+                  "name": "debug React in VS Code",
+                  "type": "chrome",
+                  "request": "launch",
+                  "url": "http://localhost:3000",
+                  "webRoot": "${workspaceFolder}/src",
+                  "sourceMapPathOverrides": {
+                        "webpack:///src/*": "${webRoot}/*"
+                        }
             },
             {
                   "name": "Python: Current File",
@@ -22,9 +22,9 @@
                   "console": "integratedTerminal"
             },
             {
-                  "name": "Node run createStore",
                   "type": "node",
                   "request": "launch",
+                  "name": "Launch Program",
                   "skipFiles": [
                         "<node_internals>/**"
                   ],
