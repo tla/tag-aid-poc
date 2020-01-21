@@ -15,11 +15,9 @@ const SvgGraph =(props)=>{
       } )
 //[props.selectedSentence, props.highlightedNode]
 
-   
-
       useEffect( ()=>{
             if(!props.selectedSentence)
-            return;
+                  return;
             const zoomNode = props.selectedSentence.startId;
             zoomToNode(zoomNode)
       },[props.selectedSentence])
@@ -53,8 +51,6 @@ const SvgGraph =(props)=>{
                   onSelectNode(trimmedId);
             }
       }
-
-
 
       function highlightAndSelect() {
             let allGraphNodes = svgRef.current.querySelectorAll("g.node");
@@ -102,15 +98,13 @@ const SvgGraph =(props)=>{
 
       }
 
-      function zoomToNode(zoomNode){
-           
+      function zoomToNode(zoomNode){    
             if(zoomNode){
                   let domNode = getGraphDOMNode(zoomNode);
                   if(domNode)
                         domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             }
       }
-
       
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;
@@ -125,8 +119,6 @@ const SvgGraph =(props)=>{
                   startNode.setAttribute("class", "node highlight start");
                   startNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
             }
-            else
-                 console.log("cant find start")
       }
 
       function getStartNode(){
@@ -135,9 +127,6 @@ const SvgGraph =(props)=>{
             let found =  graphRef.querySelector(selector);
             return found;
       }
-
-
- 
 
 
 }
