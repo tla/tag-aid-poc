@@ -71,7 +71,7 @@ const SvgGraph =(props)=>{
                   let isDate = false;
 
                   if(selectedSentence && nodeHash)
-                        inHighlightedSentence = nodeHash[nodeId] >= selectedSentence.startRank && nodeHash[nodeId ]<= selectedSentence.endRank;
+                        inHighlightedSentence = nodeHash[nodeId].rank >= selectedSentence.startRank && nodeHash[nodeId ].rank<= selectedSentence.endRank;
                   if(persons)
                         isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()});
                   if(places)

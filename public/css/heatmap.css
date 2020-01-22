@@ -1,15 +1,11 @@
-.heatmap {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  height: 10%;
-  transition: top 200ms;
+/* .heatmap {
+      width:600px;
+      position: relative;
+      height: 300px;
 }
 .heatmap.top-aligned {
   top: 10%;
-}
+} */
 .heatmap svg rect,
 .heatmap svg polygon {
   fill: #c4c4c4;

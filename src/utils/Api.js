@@ -34,6 +34,16 @@ export const getNodeLookup = async ( sectionId, onListReceived )=>{
       }
 }
 
+export const getRankReport = async ( sectionId, onListReceived )=>{
+      const rankReportURL = `${localUrl}data/${sectionId}/ranks.json`;
+      try{
+            const result = await axios.get(rankReportURL);
+            onListReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
 export const getPersons = async ( sectionId, onListReceived )=>{
       const personListURL = `${localUrl}data/${sectionId}/persons.json`;
       try{

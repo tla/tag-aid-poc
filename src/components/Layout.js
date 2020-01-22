@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import AboutPage from './About';
 import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
@@ -17,6 +17,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 const Layout = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses} = props;
+
+      useEffect(()=>{
+            console.log('no witnesses : ', witnesses.length)
+      },[witnesses])
 
       return (
            
