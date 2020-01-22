@@ -15,6 +15,9 @@ async function generateStore() {
       const auth = config.auth;
       const outdir = "public/data";
 
+     // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
+     // console.log('testing')
+
       await fetchData(baseURL,auth);
       const endTime= moment();
       console.log('Done!', endTime.format('hh:mm:ss'))
@@ -135,6 +138,12 @@ async function generateStore() {
             return response.data;
       }
 
+      async function getAllReadings(){
+            const allreadingsURL = `${baseURL}/readings`;
+            const response = await axios.get(allreadingsURL, {auth});
+            return response.data;
+      }
+
       async function getTranslation(sectionId){
             const sectionURL = `${baseURL}/section/${sectionId}`;
             const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'TRANSLATION'}})
@@ -243,26 +252,42 @@ async function generateStore() {
       }
 
       function writeReadingLookup(readings, sectionId){
-            let id_rank = [];
+            const id_rank = [];
+            readings.forEach ( node =>{
+                  id_rank.push({id:node.id, rank:node.rank, witnesses: node.witnesses.length})
+            })
+            id_rank.sort( (a,b)=>{
+                  if(a.rank > b.rank)
+                        return 1;
+                  if( a.rank < b.rank )
+                        return -1;
+                  else
+                        return 0;
+                });
+
             const sectiondir = `${outdir}/${sectionId}`;
             makeDirectory(sectiondir);
-            readings.forEach ( node =>{
-                  id_rank.push({id:node.id, rank:node.rank})
-            })
-            id_rank.sort( (a,b)=>{a.rank-b.rank});
             const readingFilePath = `${sectiondir}/readings.json`;
-            fs.writeFileSync( readingFilePath, JSON.stringify(id_rank) )
+            fs.writeFileSync( readingFilePath, JSON.stringify(id_rank) );
+            
+            writeReadingReport( id_rank, sectionId)
       }
 
-      function writeTranslationFile( translation,sectionId, readings){
-            if ( ! translation.length > 0 )
-                  return;
-            const sectiondir = `${outdir}/${sectionId}`;
-            const translationFilePath = `${sectiondir}/en.html`;
-            const translationHTML = translationToHTML(translation, sectionId, readings)
-            makeDirectory(sectiondir);
-            writeFile(translationFilePath, translationHTML)
-      };
+      // aggregates rank count for this section
+      // how many different nodes were associated with a rank = ordinal position in the text
+      function writeReadingReport(nodeHash, sectionId){
+            const highestRank = nodeHash.reduce( ( a, c) =>{ return (c.rank > a.rank) ? c : a})
+
+            const rankHash = [];
+           for( let i=0; i< highestRank.rank; i++){
+                  const nodesAtRank = nodeHash.filter( node=> node.rank === i)
+                  rankHash.push( {'rank': i, 'instances': nodesAtRank.length }) 
+           }
+           const sectiondir = `${outdir}/${sectionId}`;
+           makeDirectory(sectiondir);
+            const rankFilePath = `${sectiondir}/ranks.json`;
+            fs.writeFileSync( rankFilePath, JSON.stringify(rankHash) )
+      }
      
       function parseWitnessReading(sigil, readings) {
             const filterCondition = sigil === 'Lemma text'
@@ -276,18 +301,15 @@ async function generateStore() {
             };
       }
 
-      async function makeDirectory(sectiondir){
-            if( ! fs.existsSync('public') )
-                   fs.mkdirSync('public', {recursive:true});
-            if(!fs.existsSync('public/data'))
-                  fs.mkdirSync('public/data', {recursive:true});
-            if(!fs.existsSync(sectiondir))
-                  fs.mkdirSync(sectiondir, {recursive:true});
-      }
-
-      function writeFile(fileName, contents){
-            fs.writeFileSync( fileName, contents )  
-      }
+      function writeTranslationFile( translation,sectionId, readings){
+            if ( ! translation.length > 0 )
+                  return;
+            const sectiondir = `${outdir}/${sectionId}`;
+            const translationFilePath = `${sectiondir}/en.html`;
+            const translationHTML = translationToHTML(translation, sectionId, readings)
+            makeDirectory(sectiondir);
+            writeFile(translationFilePath, translationHTML)
+      };
 
       function writeSectionFile( validSections ){
             const sectFile = `${outdir}/sections.json`;
@@ -325,6 +347,19 @@ async function generateStore() {
             makeDirectory(sectiondir)
             const sectFile = `${sectiondir}/${fileName}.json`
             fs.writeFileSync( sectFile, JSON.stringify(refs) )
+      }
+
+      async function makeDirectory(sectiondir){
+            if( ! fs.existsSync('public') )
+                   fs.mkdirSync('public', {recursive:true});
+            if(!fs.existsSync('public/data'))
+                  fs.mkdirSync('public/data', {recursive:true});
+            if(!fs.existsSync(sectiondir))
+                  fs.mkdirSync(sectiondir, {recursive:true});
+      }
+
+      function writeFile(fileName, contents){
+            fs.writeFileSync( fileName, contents )  
       }
 
      

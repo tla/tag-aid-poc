@@ -1,1 +1,0 @@
-"{"n":"446","lit":"<num value=\"446\">.ն՟.խ՟զ՟.<\/num>","page":{"n":"013v"},"column":{"n":"2"},"line":{"xml:id":"l101667466","n":"12","resp":"#u1923"},"context":"text\/body\/ab"}"
