@@ -76,14 +76,10 @@ const HeatMap = (props)=> {
                        
                         <svg  width="700px" viewBox="0 0 100 31">
                         { 
-                                    // make a spike in the graph for each word - the more witnesses, the higher the spike
-                                    // it shows agreement, not disonance - which would be total witness/howmany there are on this node so if 3 outo of possible
-                                    // 10 thats 70 percent disonance - disonance is not as accurate as agreement I think
+                                    // make a spike in the graph for each word  -
+                                    // rank count corresponds to how many differnt nodes where at that position( aka rank )
 
-                                 
-                                 
-
-                                    rankReport.map((node, index) => { // index = rank this is the rankHash
+                                    rankReport.map((node) => { 
                                        
                                           const multiplyer = 100/rankReport.length ;
                                           let isHighlighted = false;
