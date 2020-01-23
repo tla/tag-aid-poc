@@ -7,12 +7,12 @@ import { Link} from 'react-router-dom'
 
 const SectionList = ( props ) =>{
 
-      const {list, sectionId } = props
+      const {list, sectionId, parentHeight } = props
       
 
       return (
             
-            <Paper elevation={2} style={{padding:'12px',overflowY:'auto',height:'100%'}}>
+            <Paper elevation={2} style={{padding:'12px',overflowY:'auto',height:parentHeight}}>
 			<Typography variant="h5">
                         {'Index'}
                   </Typography>

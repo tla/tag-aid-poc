@@ -7,12 +7,17 @@ import { NotificationEnhancedEncryption } from "material-ui/svg-icons";
 
 const HeatMap = (props)=> {
 
-      const { sectionId, activeWitness,  activeNode, selectedSentence, onSetActiveNode,  nodeHash, witnessCount} = props;
+      const { sectionId, 
+            activeWitness,  
+            selectedRank, 
+            selectedSentence, 
+            onSelectRank,  
+            nodeHash, 
+            witnessCount} = props;
       const [highlightList, setHighlightList] = useState([])
-      const [rankReport, setRankReport] = useState([]);
+      const [rankReport, setRankReport] = useState([]); // rank report fetches the data, onSectionChange and feeds the histogram;
       const [ranksCounted, setRanksCounted] = useState([]);
       const [renderCount, setRenderCount] = useState(0);
-
 
       // highlight list
       useEffect(()=>{
@@ -60,7 +65,6 @@ const HeatMap = (props)=> {
                   }
             setHighlightList(highlights)
       }, [selectedSentence])
-
     
 
       return (
@@ -78,8 +82,10 @@ const HeatMap = (props)=> {
                                        
                                           const multiplyer = 700/rankReport.length ;
                                           let isHighlighted = false;
-                                          // if( highlightList)                              
-                                          //       isHighlighted = highlightList.find( h => { return h.rank === index})
+                                           if( highlightList)                              
+                                                 isHighlighted = highlightList.find( h => { 
+                                                      // might need to look up in the highlight list 
+                                                      return h.rank === selectedRank})
                                           
                                           const left =   `${ (node.rank * multiplyer) - multiplyer},31 `;
                                           //console.log( 'left',left );
@@ -92,10 +98,9 @@ const HeatMap = (props)=> {
                                               
                                                 return (<polygon className={isHighlighted ? "highlighted" :""} 
                                                       key={node.rank}
-                                                      onClick={ ()=>{handleRankClick(node.rank) } }
+                                                      onClick={ onSelectRank} 
                                                       points={ 
                                                                   `${left} ${point} ${right}` 
-                                                            
                                                             } 
                                                       />);
                                           }
@@ -156,9 +161,7 @@ const HeatMap = (props)=> {
             
     
             
-            function handleRankClick(rank) {
-                  onSetActiveNode(rank)
-            }
+         
 
         
 }

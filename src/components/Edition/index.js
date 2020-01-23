@@ -27,6 +27,7 @@ const Edition = ( props)=>{
       const [datesVisible, setDatesVisible] = useState(false);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
+      const [isExpanded, setIsExpanded] = useState(true);
 
       useEffect(()=>{
             setSelectedSentence(null);
@@ -98,9 +99,9 @@ const Edition = ( props)=>{
                         <EditionHeader />
                   </Grid>
                 
-                  <Grid id="sideBar" item xs={2}>
+                  <Grid id="sideBar" item md={2}>
                               <div style={{display:'flex', flexDirection:'column', }}>
-                                    <ViewOptions
+                                    <ViewOptions style={{maxHeight:'400px'}}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
@@ -114,20 +115,22 @@ const Edition = ( props)=>{
                                           rightReading = { rightReading }
                                           onSelectLeftReading={setLeftReading}
                                           onSelectRightReading={setRightReading}
+                                          isExpanded = { isExpanded }
+                                          setIsExpanded = { setIsExpanded }
                                     />
                               
                                     <div style={{height:'16px'}}></div>
 
-                                    <SectionList
+                                    <SectionList 
+                                          parentHeight={isExpanded ? ` ${viewport.height - 480}px` : ` ${viewport.height - (viewport.height * .20)}px`}
                                           sectionId={sectionID}
                                           list ={sections}
-                                   
                                      />
                               </div>
                   </Grid>
                   
 
-                  <Grid id="mainContent" item xs={10}>
+                  <Grid id="mainContent" item xs={12} md={10}>
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
                                     <div>

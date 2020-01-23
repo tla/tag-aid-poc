@@ -16,9 +16,10 @@ const ViewOptions =(props)=>{
 
       const {onToggleGraph, graphVisible, 
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
-            personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates} = props;
+            personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates,
+      isExpanded, setIsExpanded} = props;
      
-      const [isExpanded, setIsExpanded] = useState(true)
+   
 
       return (
             <div>
@@ -93,8 +94,8 @@ const ViewOptions =(props)=>{
                               
                               <div style={{width:'200px',  }}>
                                     <FormControl >
-                                          <InputLabel style={{fontSize:'16px', width:'180px'}}>Left Text Pane</InputLabel>
-                                                <Select style={{width:'200px'}}
+                                          <InputLabel style={{fontSize:'16px', width:'94%'}}>Left Text Pane</InputLabel>
+                                                <Select 
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
@@ -107,10 +108,10 @@ const ViewOptions =(props)=>{
                                     </FormControl>
                               </div>
                               <div style={{height:'8px'}}></div>
-                              <div style={{width:'200px'}}>
+                              <div >
                                                 <FormControl >
-                                                      <InputLabel style={{fontSize:'16px', width:'180px'}}>Right Text Pane </InputLabel>
-                                                            <Select style={{width:'200px'}}
+                                                      <InputLabel style={{fontSize:'16px', width:'94%'}}>Right Text Pane </InputLabel>
+                                                            <Select 
                                                                   value={rightReading}
                                                                   onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                             >
