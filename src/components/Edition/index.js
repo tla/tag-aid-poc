@@ -95,7 +95,7 @@ const Edition = ( props)=>{
             
             <Grid container spacing={1} style={{height:`${viewport.height}px`}}>
 
-                  <Grid id="edition-header" xs="12" >
+                  <Grid id="edition-header" item xs={12} >
                         <EditionHeader />
                   </Grid>
                 
@@ -158,7 +158,7 @@ const Edition = ( props)=>{
                                                 activeNode = { selectedNode}
                                                 selectedSentence={selectedSentence}
                                                 activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
-                                                onSetActiveNode = {handleSelectRank}
+                                                onSelectRank = {handleSelectRank}
                                           />
                                     </div>
                               </div>
@@ -243,6 +243,7 @@ const Edition = ( props)=>{
             setDatesVisible(toggled)
       }
       function handleSelectRank(rank){
+            console.log( `you selected rank`, rank)
             setSelectedRank( rank)
       }
 

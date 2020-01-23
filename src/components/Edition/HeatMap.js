@@ -98,7 +98,7 @@ const HeatMap = (props)=> {
                                               
                                                 return (<polygon className={isHighlighted ? "highlighted" :""} 
                                                       key={node.rank}
-                                                      onClick={ onSelectRank} 
+                                                      onClick={ ()=>{onSelectRank(node.rank)}} 
                                                       points={ 
                                                                   `${left} ${point} ${right}` 
                                                             } 
