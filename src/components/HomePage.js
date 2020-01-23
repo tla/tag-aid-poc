@@ -1,14 +1,18 @@
-import React from 'react';
+import React , { Fragment} from 'react';
 import TextPane from './Edition/TextPane'
 import Typography from '@material-ui/core/Typography'
 import { Grid } from '@material-ui/core';
-
+import Header from './Header'
 
 const HomePage = (props)=> {
       const {sections} = props;
 
     return (
+
+      <Fragment>
+      <Header />
         <div id="home-page">
+            
             <div id="introduction">
             <div style={{height:'16px'}}></div>
                   <Typography variant="h6">
@@ -59,6 +63,7 @@ const HomePage = (props)=> {
                                     </Grid>
             </div>         
         </div>
+        </Fragment>
     )
 }
 export default HomePage

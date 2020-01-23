@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import * as DataApi from '../../../utils/Api';
+import * as DataApi from '../../utils/Api';
 import { NotificationEnhancedEncryption } from "material-ui/svg-icons";
 
 

@@ -1,8 +1,11 @@
-import React from 'react';
+import React , { Fragment} from 'react';
+import Header from './Header'
 
 const AboutPage = ( props )=>{
 
       return (
+            <Fragment>
+            <Header />
             <div className="container content">
        
 
@@ -117,6 +120,7 @@ const AboutPage = ( props )=>{
 
 
       </div>
+      </Fragment>
       )
 
 

@@ -25,17 +25,15 @@ const Layout = ( props)=>{
       return (
            
             <ThemeProvider  theme={ChronicleTheme}>
-                 <Fragment>
-                     <Header />
-                  
+
                   <Grid container spacing={1} style={{margin:'0px'}}>
                   <Grid id="pages" item xs={12}>
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition style={{height:`${viewport.height*.90}px`}} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition  sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition" >
-                                    <Edition style={{height:`${viewport.height*.90}px`}}  sections={sections}  viewport={viewport}  witnesses = { witnesses} />
+                                    <Edition   sections={sections}  viewport={viewport}  witnesses = { witnesses} />
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 
@@ -53,8 +51,7 @@ const Layout = ( props)=>{
                         </Switch>
                   </Grid>
             </Grid> 
-            </Fragment>
-       
+     
             </ThemeProvider>
       )
 

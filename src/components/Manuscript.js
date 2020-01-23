@@ -1,10 +1,14 @@
-import React from 'react';
+import React , { Fragment} from 'react';
+import Header from './Header';
 
 const ManuscriptPage = (props) => {
 
 
       return (
+            <Fragment>
+            <Header />
             <div class="container content">
+                 
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
@@ -360,7 +364,7 @@ const ManuscriptPage = (props) => {
 
 
             </div>
-
+            </Fragment>
       )
 
 

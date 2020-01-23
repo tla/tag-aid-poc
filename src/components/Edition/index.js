@@ -4,9 +4,10 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
-import HeatMap from './HeatMap/index'
+import HeatMap from './HeatMap'
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
+import EditionHeader from './EditionHeader'
 
 const Edition = ( props)=>{
       
@@ -90,10 +91,15 @@ const Edition = ( props)=>{
       },[datesVisible])
   
       return (
-            <Grid container spacing={1} >
+            
+            <Grid container spacing={1} style={{height:`${viewport.height}px`}}>
+
+                  <Grid id="edition-header" xs="12" >
+                        <EditionHeader />
+                  </Grid>
                 
-                  <Grid id="sideBar" item xs={3}>
-                              <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
+                  <Grid id="sideBar" item xs={2}>
+                              <div style={{display:'flex', flexDirection:'column', }}>
                                     <ViewOptions
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
@@ -121,10 +127,11 @@ const Edition = ( props)=>{
                   </Grid>
                   
 
-                  <Grid id="mainContent" item xs={9}>
-                        <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
+                  <Grid id="mainContent" item xs={10}>
+                        <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
-                                    <div style={{overflowX:'auto', overflowY:'auto'}}>
+                                    <div>
+                                    <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.40}px`}}>
                                            <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
@@ -138,7 +145,9 @@ const Edition = ( props)=>{
                                                 dates = { dateList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
-                                          />  
+                                          />
+                                    </div>
+                                     <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
                                           <HeatMap 
                                                 witnessCount = { witnesses.length}
                                                 sectionId={sectionID}
@@ -149,6 +158,7 @@ const Edition = ( props)=>{
                                                 onSetActiveNode = {handleSelectRank}
                                           />
                                     </div>
+                              </div>
                               }
 
                                 <div style={{height:'16px'}}></div>  

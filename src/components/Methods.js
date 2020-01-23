@@ -1,4 +1,5 @@
-import React from 'react'
+import React , { Fragment} from 'react';
+import Header from './Header';
 
 const MethodsPage = ( props ) =>{
 
@@ -7,6 +8,8 @@ const dejaVuStyle={
 }
 
 return (
+      <Fragment>
+      <Header />
       <div className="container content">
     
       <div className="row">
@@ -144,7 +147,7 @@ return (
         </div>
       </div>
     </div>
-  
+  </Fragment>
 )
 
 
