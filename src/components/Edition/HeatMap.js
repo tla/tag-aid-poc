@@ -64,25 +64,26 @@ const HeatMap = (props)=> {
     
 
       return (
-            <div style={{height:'330px'}}>
+            <div style={{height:'165px'}}>
             
                    <div className={cx({heatmap: true})}> 
                        
-                        <svg  width="700px" viewBox="0 0 100 31">
+                        <div style={{border:'1px dashed #331100'}}>
+                             <svg height="120px" width="1000px" viewBox="0 0 100 31">
                         { 
                                     // make a spike in the graph for each word  -
                                     // rank count corresponds to how many differnt nodes where at that position( aka rank )
 
                                     rankReport.map((node) => { 
                                        
-                                          const multiplyer = 100/rankReport.length ;
+                                          const multiplyer = 700/rankReport.length ;
                                           let isHighlighted = false;
                                           // if( highlightList)                              
                                           //       isHighlighted = highlightList.find( h => { return h.rank === index})
                                           
                                           const left =   `${ (node.rank * multiplyer) - multiplyer},31 `;
                                           //console.log( 'left',left );
-                                          const point = `${(node.rank * multiplyer) - (multiplyer/2)}, ${31 - parseInt(node.instances) } `;
+                                          const point = `${(node.rank * multiplyer) - (multiplyer/2)}, ${31 - (parseInt(node.instances) )} `;
                                          // console.log( point );
                                           const right = `${node.rank * multiplyer},31` 
                                          // console.log( right)
@@ -148,6 +149,7 @@ const HeatMap = (props)=> {
                                     : null
                               } 
                         </svg>
+                        </div>
                    </div> 
             </div>
             );
