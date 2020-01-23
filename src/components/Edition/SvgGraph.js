@@ -1,21 +1,19 @@
-import React, { useEffect, useRef, useState} from 'react'
+import React, { useEffect, useRef} from 'react'
 import SVG from 'react-inlinesvg';
-import * as DataApi from '../../utils/Api';
 //import {ReactComponent as Sample} from './sample-graph.svg'// also works
 
 const SvgGraph =(props)=>{
 
-      const {highlightedNode, selectedSentence, sectionId, onSelectNode, 
-            nodeHash, persons, places, dates }=props;
+      const {sectionId, highlightedNode, selectedSentence, selectedRank, onSelectNode, 
+            nodeHash, nodeList, persons, places, dates }=props;
     
       const svgRef = useRef(null);
     
       useEffect( ()=>{
             highlightAndSelect();
       } )
-//[props.selectedSentence, props.highlightedNode]
+//[props.selectedSentence, props.highlightedNode]  
 
-   
 
       useEffect( ()=>{
             if(!props.selectedSentence)
@@ -26,10 +24,25 @@ const SvgGraph =(props)=>{
 
       useEffect( ()=>{
             if(! props.highlightedNode)
-            return;
+                  return;
             const zoomNode = props.highlightedNode;
             zoomToNode(zoomNode)
       },[props.highlightedNode])
+
+      useEffect( ()=>{
+            if(! props.selectedRank)
+                  return;
+            
+            let nodesAtRank = nodeList.filter( n=> {return n.rank === selectedRank})
+            nodesAtRank.forEach( n=>{
+                  const zoomNode = getGraphDOMNode(n.id)
+                  if(zoomNode )
+                        {
+                              zoomToNode(n.id);
+                              return;
+                        }
+            })
+      },[props.selectedRank])
 
       return (
             <div style={{position:'relative', padding:'16px'}}>
@@ -62,6 +75,11 @@ const SvgGraph =(props)=>{
                   if (n.id === "__START__" || n.id === "__END__" ) 
                         return;
                   let nodeId = n.id.replace('n','');
+                  let rank;
+                  if (nodeHash[parseInt(nodeId)])
+                        rank = nodeHash[nodeId].rank;
+                  else
+                        console.log( 'unable to look up rank for', nodeId )
                   // to do is look up the node's rank, we need to pass the readings in (a readings hash wouldnt be bad- or encode in the svg gen script)
                   let classNames = "node";
                   let inHighlightedSentence = false;
@@ -69,9 +87,10 @@ const SvgGraph =(props)=>{
                   let isPerson = false;
                   let isPlace = false;
                   let isDate = false;
+                  let isRank = false;
 
-                  if(selectedSentence && nodeHash)
-                        inHighlightedSentence = nodeHash[nodeId].rank >= selectedSentence.startRank && nodeHash[nodeId ].rank<= selectedSentence.endRank;
+                  if(selectedSentence && nodeHash && rank)
+                        inHighlightedSentence = rank >= selectedSentence.startRank && rank<= selectedSentence.endRank;
                   if(persons)
                         isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()});
                   if(places)
@@ -80,6 +99,8 @@ const SvgGraph =(props)=>{
                         isDate = dates.find( d=> { return d.begin.toString() === nodeId.toString()})
                   if(highlightedNode)
                         isSelectedNode = nodeId === highlightedNode ;
+                  if(selectedRank && rank )
+                        isRank = rank === selectedRank
 
 
                   if( isPerson ) {
@@ -90,6 +111,8 @@ const SvgGraph =(props)=>{
                         classNames +=" date";
                   } else if( inHighlightedSentence ) {
                         classNames += " highlight";
+                  }else if( isRank ) {
+                        classNames += " disonance"
                   }
                        
                   

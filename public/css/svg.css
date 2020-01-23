@@ -64,9 +64,18 @@ svg  g.node.highlight.active ellipse{
 }
 
 svg  g.node.highlight.start ellipse{
-      fill:#d1f30d ;
-    
+      fill:#d1f30d ;  
 }
+
+svg g.node.disonance {
+      stroke: black;
+}
+
+svg  g.node.disonance ellipse{
+      fill: #00a600 ;
+}
+
+
 svg g.edge:not(.majority):hover {
   cursor: pointer;
 }

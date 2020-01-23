@@ -13,12 +13,6 @@ const HeatMap = (props)=> {
       const [ranksCounted, setRanksCounted] = useState([]);
       const [renderCount, setRenderCount] = useState(0);
 
-      // bogus just for testing
-      useEffect(()=>{
-            let count = renderCount;
-            count++
-            setRenderCount(count);
-      },[selectedSentence, activeNode])
 
       // highlight list
       useEffect(()=>{
@@ -87,14 +81,14 @@ const HeatMap = (props)=> {
                                           //       isHighlighted = highlightList.find( h => { return h.rank === index})
                                           
                                           const left =   `${ (node.rank * multiplyer) - multiplyer},31 `;
-                                          console.log( 'left',left );
+                                          //console.log( 'left',left );
                                           const point = `${(node.rank * multiplyer) - (multiplyer/2)}, ${31 - parseInt(node.instances) } `;
                                          // console.log( point );
                                           const right = `${node.rank * multiplyer},31` 
                                          // console.log( right)
 
                                           if( node.rank > 0 ){
-                                                console.log( 'rank ', node.rank)
+                                              
                                                 return (<polygon className={isHighlighted ? "highlighted" :""} 
                                                       key={node.rank}
                                                       onClick={ ()=>{handleRankClick(node.rank) } }
@@ -160,21 +154,11 @@ const HeatMap = (props)=> {
             
     
             
-            function handleRankClick(rankIdx) {
-                  for(let rank = rankIdx; rank > 0; rank--) {
-                        let found = this.props.activeWitness.readings.filter((reading) => reading.rank === rank);
-                        if(found.length) { return onSetActiveNode(found[0].id); }
-                  }
+            function handleRankClick(rank) {
+                  onSetActiveNode(rank)
             }
 
-            function countRanks( nodes ){
-                  let rankCounts = {};
-                  nodes.forEach( n=>{
-                        rankCounts[n.rank] = (rankCounts[n.rank] || 0 ) + 1 ;
-                  })
-                  setRanksCounted(rankCounts);
-            }
-	
+        
 }
 
 HeatMap.propTypes = {

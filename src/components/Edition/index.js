@@ -14,10 +14,12 @@ const Edition = ( props)=>{
       const {sections , viewport , witnesses} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
+      const [selectedRank, setSelectedRank] =  useState();
       const [personList, setPersonList] = useState([]);
       const [placeList, setPlaceList] = useState([]);
       const [dateList, setDateList] = useState([]);
       const [nodeHash, setNodeHash] =useState();
+      const [nodeArray, setNodeArray] = useState([]);
       const [graphVisible, setGraphVisible] = useState(true);
       const [personsVisible, setPersonsVisible] = useState(false);
       const [placesVisible, setPlacesVisible] = useState(false);
@@ -27,20 +29,36 @@ const Edition = ( props)=>{
 
       useEffect(()=>{
             setSelectedSentence(null);
-             setSelectedNode(null);
+            setSelectedNode(null);
        },[sectionID])
 
        useEffect(()=>{
             let hash={};
+            const list = [];
             setNodeHash(hash)
             DataApi.getNodeLookup(sectionID, (nodelist)=>{
+                  nodelist.sort( (a,b)=>{
+                        if( parseInt(a.id) > parseInt(b.id))
+                              return 1;
+                        if(parseInt(a.id) < parseInt(b.id))
+                              return -1
+                        else 
+                              return 0;
+                  })
                  nodelist.forEach( (node)=>{
-                        hash[node.id]={
+                       const value = 
+                       {
+                                    id: node.id,
                                     rank:node.rank,
                                     witnesses: node.witnesses
                         }
+                        hash[node.id]= value;
+                        list.push(value);
+                        
                  });
-                 setNodeHash(hash)
+                 setNodeHash(hash);
+                 setNodeArray(list);
+                 console.log( 'set node hash for section', sectionID)
            });
       },[sectionID])
 
@@ -107,18 +125,20 @@ const Edition = ( props)=>{
                         <div style={{display:'flex', flexDirection:'column', maxHeight:`${viewport.height *.85}px`}}>
                               {sectionID && graphVisible &&
                                     <div style={{overflowX:'auto', overflowY:'auto'}}>
-                                           {/* <SvgGraph 
+                                           <SvgGraph 
                                                 viewport={viewport}
                                                 sectionId={sectionID}
                                                 highlightedNode={selectedNode}
                                                 selectedSentence={selectedSentence}
+                                                selectedRank = {selectedRank}
                                                 nodeHash = {nodeHash}
+                                                nodeList = { nodeArray }
                                                 persons={personList}
                                                 places = {placeList}
                                                 dates = { dateList}
                                                 onSelectNode={handleSelectNode}
                                                 onSelectSentence={handleSelectSentence}
-                                          />  */}
+                                          />  
                                           <HeatMap 
                                                 witnessCount = { witnesses.length}
                                                 sectionId={sectionID}
@@ -126,7 +146,7 @@ const Edition = ( props)=>{
                                                 activeNode = { selectedNode}
                                                 selectedSentence={selectedSentence}
                                                 activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
-                                                onSetActiveNode = {()=>{}}
+                                                onSetActiveNode = {handleSelectRank}
                                           />
                                     </div>
                               }
@@ -208,6 +228,9 @@ const Edition = ( props)=>{
       function handleToggleDates(){
             let toggled = !datesVisible;
             setDatesVisible(toggled)
+      }
+      function handleSelectRank(rank){
+            setSelectedRank( rank)
       }
 
 }

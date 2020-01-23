@@ -302,8 +302,12 @@ async function generateStore() {
       }
 
       function writeTranslationFile( translation,sectionId, readings){
-            if ( ! translation.length > 0 )
+            if ( ! translation.length > 0 ){
+
+                  console.log('no translation for section', sectionId)
                   return;
+            }
+                 
             const sectiondir = `${outdir}/${sectionId}`;
             const translationFilePath = `${sectiondir}/en.html`;
             const translationHTML = translationToHTML(translation, sectionId, readings)
