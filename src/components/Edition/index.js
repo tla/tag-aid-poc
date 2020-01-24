@@ -162,7 +162,7 @@ const Edition = ( props)=>{
                                                             onSelectSentence={handleSelectSentence}
                                                       />
                                                 </div>
-                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
+                                                <div style={{overflowX:'auto'}}> 
                                                       <RankDisonance 
                                                             viewport = { viewport }
                                                             witnessCount = { witnesses.length}

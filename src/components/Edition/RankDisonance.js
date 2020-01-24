@@ -77,9 +77,9 @@ const RankDisonance = (props)=> {
     
 
       return (
-            <div style={{height:'165px'}}>
+            <div style={{height:'235px'}}>
                   <VictoryChart
-                  height={145}
+                  height={155}
                  width={viewport.width * .65}
                   scale={{ x: "linear", y: "linear" }}
                          theme={VictoryTheme.material}
