@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
-import {VictoryChart, VictoryLine, VictoryTheme,
+import {VictoryChart, VictoryBar, VictoryTheme,
 VictoryTooltip, VictorySelectionContainer} from 'victory'
 
 
@@ -14,7 +14,7 @@ const RankDisonance = (props)=> {
             selectedSentence, 
             onSelectRank,  
             nodeHash, 
-            witnessCount} = props;
+            viewport} = props;
       const [highlightList, setHighlightList] = useState([])
      // const [rankReport, setRankReport] = useState([]); // rank report fetches the data, onSectionChange and feeds the histogram;
       const [chartData, setChartData] = useState();
@@ -79,31 +79,53 @@ const RankDisonance = (props)=> {
       return (
             <div style={{height:'165px'}}>
                   <VictoryChart
-                  height={165}
-                  width={800}
+                  height={145}
+                  width={viewport.width * .65}
                   scale={{ x: "linear", y: "linear" }}
                          theme={VictoryTheme.material}
-                         containerComponent={<VictorySelectionContainer
-                              selectionDimension="x"
-                              onSelection={onSelectRank}
-                              selectionStyle={{
-                                    fill: "tomato", fillOpacity: 0.5,
-                                    stroke: "tomato", strokeWidth: 2
-                                  }}
-                         />}>
-                        <VictoryLine
+                        //  containerComponent={<VictorySelectionContainer
+                        //       selectionDimension="x"
+                        //       onClick={ () =>{ alert('clicked')}}
+                        //       selectionStyle={{
+                        //             fill: "tomato", fillOpacity: 0.5,
+                        //             stroke: "tomato", strokeWidth: 2
+                        //           }}
+                        //  />}
+                         
+                         
+                         >
+                        <VictoryBar
+                        
                               style={{
                                     data: { stroke: "#c43a31" },
                                     parent: { border: "1px solid #ccc"}
                               }}
                               data={chartData}
+                              labels={({ datum }) => datum.label}
+                             
+                              events={[{
+                                                childName:"all",
+                                                target: "data",
+                                                eventHandlers: {
+                                                onClick: (moe, curly, rank) => {
+                                                      onSelectRank(rank)
+                                                      return [
+                                                            {
+                                                            mutation: () => {
+                                                            return { style: { fill: "#00a600"} };
+                                                            }
+                                                            },
+                                                      ]
+                                                      }
+                                                }
+                                                 } ]}
                               labelComponent={
                                     <VictoryTooltip />
                               }
                               
                               >
 
-                        </VictoryLine>
+                        </VictoryBar>
 
                   </VictoryChart>
                   
@@ -125,7 +147,6 @@ const RankDisonance = (props)=> {
             }
             
          
-
         
 }
 

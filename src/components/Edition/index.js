@@ -100,7 +100,7 @@ const Edition = ( props)=>{
                         <EditionHeader />
                   </Grid>
                 
-                  <Grid id="sideBar" xs={0} md={2}>
+                  <Grid id="sideBar" item  md={2}>
                               <div style={{display:'flex', flexDirection:'column', }}>
                                     <ViewOptions style={{maxHeight:'400px'}}
                                           witnesses = {witnesses}
@@ -153,6 +153,7 @@ const Edition = ( props)=>{
                                     </div>
                                      <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
                                           <RankDisonance 
+                                                viewport = { viewport }
                                                 witnessCount = { witnesses.length}
                                                 sectionId={sectionID}
                                                 nodeHash = {nodeHash}
@@ -246,7 +247,7 @@ const Edition = ( props)=>{
       }
       function handleSelectRank(rank){
             console.log( `you selected rank`, rank)
-            setSelectedRank( rank)
+            setSelectedRank( parseInt(rank))
       }
 
 }
