@@ -80,7 +80,7 @@ const RankDisonance = (props)=> {
             <div style={{height:'165px'}}>
                   <VictoryChart
                   height={145}
-                  width={viewport.width * .65}
+                 width={viewport.width * .65}
                   scale={{ x: "linear", y: "linear" }}
                          theme={VictoryTheme.material}
                         //  containerComponent={<VictorySelectionContainer
@@ -100,6 +100,7 @@ const RankDisonance = (props)=> {
                                     data: { stroke: "#c43a31" },
                                     parent: { border: "1px solid #ccc"}
                               }}
+                              alignment = "start"
                               data={chartData}
                               labels={({ datum }) => datum.label}
                              

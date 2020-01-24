@@ -9,6 +9,8 @@ import RankDisonance from './RankDisonance'
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 import EditionHeader from './EditionHeader'
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
 
 const Edition = ( props)=>{
       
@@ -33,6 +35,7 @@ const Edition = ( props)=>{
       useEffect(()=>{
             setSelectedSentence(null);
             setSelectedNode(null);
+            setSelectedRank(null);
        },[sectionID])
 
        useEffect(()=>{
@@ -92,17 +95,24 @@ const Edition = ( props)=>{
                  setDateList([])
       },[datesVisible])
   
+      let textContainerStyle={
+            overflowY:'auto', 
+            height: graphVisible ? ` ${viewport.height - 480}px` : ` ${viewport.height - (viewport.height * .20)}px`,
+            padding:'0px 16px'
+      }
+
       return (
             
-            <Grid container spacing={1} style={{height:`${viewport.height}px`}}>
+            <Grid container={true} spacing={1} style={{height:`${viewport.height}px`}}>
 
-                  <Grid id="edition-header" item xs={12} >
+                   <Grid id="edition-header" item xs={12} >
                         <EditionHeader />
-                  </Grid>
+                  </Grid> 
                 
-                  <Grid id="sideBar" item  md={2}>
-                              <div style={{display:'flex', flexDirection:'column', }}>
-                                    <ViewOptions style={{maxHeight:'400px'}}
+                  <Hidden smDown>
+                        <Grid id="sideBar" md={2} >
+                               <div style={{display:'flex', flexDirection:'column', }}>
+                                     <ViewOptions style={{maxHeight:'400px'}}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
@@ -118,7 +128,7 @@ const Edition = ( props)=>{
                                           onSelectRightReading={setRightReading}
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
-                                    />
+                                    /> 
                               
                                     <div style={{height:'16px'}}></div>
 
@@ -127,50 +137,52 @@ const Edition = ( props)=>{
                                           sectionId={sectionID}
                                           list ={sections}
                                      />
-                              </div>
+                              </div> 
                   </Grid>
-                  
+                  </Hidden>  
 
-                  <Grid id="mainContent" item xs={12} md={10}>
+                  <Grid id="mainContent" item xs={12} md={10}> 
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
-                                    <div>
-                                    <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.40}px`}}>
-                                           <SvgGraph 
-                                                viewport={viewport}
-                                                sectionId={sectionID}
-                                                highlightedNode={selectedNode}
-                                                selectedSentence={selectedSentence}
-                                                selectedRank = {selectedRank}
-                                                nodeHash = {nodeHash}
-                                                nodeList = { nodeArray }
-                                                persons={personList}
-                                                places = {placeList}
-                                                dates = { dateList}
-                                                onSelectNode={handleSelectNode}
-                                                onSelectSentence={handleSelectSentence}
-                                          />
-                                    </div>
-                                     <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
-                                          <RankDisonance 
-                                                viewport = { viewport }
-                                                witnessCount = { witnesses.length}
-                                                sectionId={sectionID}
-                                                nodeHash = {nodeHash}
-                                                activeNode = { selectedNode}
-                                                selectedSentence={selectedSentence}
-                                                selectedRank = { selectedRank}
-                                                activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
-                                                onSelectRank = {handleSelectRank}
-                                          />
-                                    </div>
-                              </div>
+                                   
+                                         <div>
+                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.40}px`}}>
+                                                      <SvgGraph 
+                                                            viewport={viewport}
+                                                            sectionId={sectionID}
+                                                            highlightedNode={selectedNode}
+                                                            selectedSentence={selectedSentence}
+                                                            selectedRank = {selectedRank}
+                                                            nodeHash = {nodeHash}
+                                                            nodeList = { nodeArray }
+                                                            persons={personList}
+                                                            places = {placeList}
+                                                            dates = { dateList}
+                                                            onSelectNode={handleSelectNode}
+                                                            onSelectSentence={handleSelectSentence}
+                                                      />
+                                                </div>
+                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
+                                                      <RankDisonance 
+                                                            viewport = { viewport }
+                                                            witnessCount = { witnesses.length}
+                                                            sectionId={sectionID}
+                                                            nodeHash = {nodeHash}
+                                                            activeNode = { selectedNode}
+                                                            selectedSentence={selectedSentence}
+                                                            selectedRank = { selectedRank}
+                                                            activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
+                                                            onSelectRank = {handleSelectRank}
+                                                      />
+                                                </div>
+                                   </div>
+                                    
                               }
 
                                 <div style={{height:'16px'}}></div>  
                              
                               {sectionID &&
-                              <div style={{overflowY:'auto',maxHeight:`${viewport.height *.35}px`,padding:'0px 16px'}}>
+                              <div style={textContainerStyle}>
 
                                     <Grid container spacing={4}>
                                           <Grid item xs={12} md={6}>
@@ -246,9 +258,9 @@ const Edition = ( props)=>{
             setDatesVisible(toggled)
       }
       function handleSelectRank(rank){
-            console.log( `you selected rank`, rank)
+           
             setSelectedRank( parseInt(rank))
       }
 
 }
-export default Edition
+export default withWidth() (Edition)
