@@ -60,43 +60,38 @@ const HeatMap = (props)=> {
                   return;
             setHighlightList([]);
             const highlights=[];
-            for ( const n in nodeHash ){
+            if(selectedSentence){
+                  for ( const n in nodeHash ){
                         if( n.rank >= selectedSentence.startRank && n.rank <= selectedSentence.endRank ){
                               highlights.push({id:n.id, rank:n.rank})
                         }
                   }
-            setHighlightList(highlights)
+                  setHighlightList(highlights)
+            }
+            
       }, [selectedSentence])
     
 
       return (
             <div style={{height:'165px'}}>
-            
-                   <div className={cx({heatmap: true})}> 
-                       
-                        <div style={{border:'1px dashed #331100'}}>
+                   <div className={cx({heatmap: true})} > 
+                        <div style={{border:'1px dashed #331100',  }}>
                              <svg height="120px" width="1000px" viewBox="0 0 100 31">
                         { 
                                     // make a spike in the graph for each word  -
                                     // rank count corresponds to how many different nodes where at that position( aka rank )
-
+                                    // please replace with react-charting lib of some sort
                                     rankReport.map((node) => { 
                                           const multiplyer = 700/rankReport.length ;
                                           let isHighlighted = false;
-                                           if( selectedRank) {   
-                                                 console.log( `selected rank is ${selectedRank} comparing ${node.rank} with ${selectedRank}`)                     
+                                           if( selectedRank) {       
                                                  isHighlighted = parseInt(node.rank) === parseInt(selectedRank);
                                            }
                                           const spikeClassName = isHighlighted === true ? "highlighted" : "";
-                                          if(isHighlighted === true)
-                                                console.log( 'isHightlighted', isHighlighted)
                                           
                                           const left =   `${ (node.rank * multiplyer) - multiplyer},31 `;
-                                          //console.log( 'left',left );
                                           const point = `${(node.rank * multiplyer) - (multiplyer/2)}, ${31 - (parseInt(node.instances) )} `;
-                                         // console.log( point );
                                           const right = `${node.rank * multiplyer},31` 
-                                         // console.log( right)
 
                                           if( node.rank > 0 ){
                                                 return (<polygon className={spikeClassName} 
@@ -110,11 +105,6 @@ const HeatMap = (props)=> {
                                     }) 
                                   
                               }
-
-
-
-
-
                        
 {/* 
                               { 

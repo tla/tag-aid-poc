@@ -10,11 +10,9 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            console.log('calling highlightAndSelect')
+            
             highlightAndSelect();
-      },[selectedRank] )
-
-
+      },[selectedRank, selectedSentence, highlightedNode] )
 
       useEffect( ()=>{
             if(!props.selectedSentence)
@@ -90,8 +88,11 @@ const SvgGraph =(props)=>{
                   let isDate = false;
                   let isRank = false;
 
-                  if(selectedSentence && nodeHash && rank)
-                        inHighlightedSentence = rank >= selectedSentence.startRank && rank<= selectedSentence.endRank;
+                  if(selectedSentence && nodeHash && rank){
+console.log(` comparing rank ${rank} sentence from  ${selectedSentence.startRank} - ${selectedSentence.endRan}`)
+                        inHighlightedSentence = rank.toString() >= selectedSentence.startRank.toString() && rank<= selectedSentence.endRank.toString();
+                  }
+                       
                   if(persons)
                         isPerson = persons.find( p =>{return p.begin.toString() === nodeId.toString()});
                   if(places)
@@ -112,7 +113,9 @@ const SvgGraph =(props)=>{
                         classNames +=" date";
                   } else if( inHighlightedSentence ) {
                         classNames += " highlight";
-                  }else if( isRank ) {
+                  } 
+                  
+                  if( isRank ) {
                         classNames += " disonance"
                   }
                        
@@ -127,7 +130,6 @@ const SvgGraph =(props)=>{
       }
 
       function zoomToNode(zoomNode){
-           
             if(zoomNode){
                   let domNode = getGraphDOMNode(zoomNode);
                   if(domNode)
@@ -135,7 +137,6 @@ const SvgGraph =(props)=>{
             }
       }
 
-      
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;
             let selector = `g#n${nodeId}`;

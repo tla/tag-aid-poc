@@ -5,6 +5,7 @@ import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
 import HeatMap from './HeatMap'
+import RankDisonance from './RankDisonance'
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 import EditionHeader from './EditionHeader'
@@ -99,7 +100,7 @@ const Edition = ( props)=>{
                         <EditionHeader />
                   </Grid>
                 
-                  <Grid id="sideBar" item md={2}>
+                  <Grid id="sideBar" xs={0} md={2}>
                               <div style={{display:'flex', flexDirection:'column', }}>
                                     <ViewOptions style={{maxHeight:'400px'}}
                                           witnesses = {witnesses}
@@ -151,7 +152,7 @@ const Edition = ( props)=>{
                                           />
                                     </div>
                                      <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.20}px`}}> 
-                                          <HeatMap 
+                                          <RankDisonance 
                                                 witnessCount = { witnesses.length}
                                                 sectionId={sectionID}
                                                 nodeHash = {nodeHash}
