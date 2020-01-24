@@ -10,9 +10,10 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
+            console.log('calling highlightAndSelect')
             highlightAndSelect();
-      } )
-//[props.selectedSentence, props.highlightedNode]  
+      },[selectedRank] )
+
 
 
       useEffect( ()=>{
@@ -78,8 +79,8 @@ const SvgGraph =(props)=>{
                   let rank;
                   if (nodeHash[parseInt(nodeId)])
                         rank = nodeHash[nodeId].rank;
-                  else
-                        console.log( 'unable to look up rank for', nodeId )
+                 // else
+                       // console.log( 'unable to look up rank for', nodeId )
                   // to do is look up the node's rank, we need to pass the readings in (a readings hash wouldnt be bad- or encode in the svg gen script)
                   let classNames = "node";
                   let inHighlightedSentence = false;

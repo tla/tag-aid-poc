@@ -53,6 +53,8 @@ const HeatMap = (props)=> {
             });
       },[sectionId])
 
+
+      // sentence selected
       useEffect(()=>{
             if( ! nodeHash)
                   return;
@@ -76,16 +78,18 @@ const HeatMap = (props)=> {
                              <svg height="120px" width="1000px" viewBox="0 0 100 31">
                         { 
                                     // make a spike in the graph for each word  -
-                                    // rank count corresponds to how many differnt nodes where at that position( aka rank )
+                                    // rank count corresponds to how many different nodes where at that position( aka rank )
 
                                     rankReport.map((node) => { 
-                                       
                                           const multiplyer = 700/rankReport.length ;
                                           let isHighlighted = false;
-                                           if( highlightList)                              
-                                                 isHighlighted = highlightList.find( h => { 
-                                                      // might need to look up in the highlight list 
-                                                      return h.rank === selectedRank})
+                                           if( selectedRank) {   
+                                                 console.log( `selected rank is ${selectedRank} comparing ${node.rank} with ${selectedRank}`)                     
+                                                 isHighlighted = parseInt(node.rank) === parseInt(selectedRank);
+                                           }
+                                          const spikeClassName = isHighlighted === true ? "highlighted" : "";
+                                          if(isHighlighted === true)
+                                                console.log( 'isHightlighted', isHighlighted)
                                           
                                           const left =   `${ (node.rank * multiplyer) - multiplyer},31 `;
                                           //console.log( 'left',left );
@@ -95,8 +99,7 @@ const HeatMap = (props)=> {
                                          // console.log( right)
 
                                           if( node.rank > 0 ){
-                                              
-                                                return (<polygon className={isHighlighted ? "highlighted" :""} 
+                                                return (<polygon className={spikeClassName} 
                                                       key={node.rank}
                                                       onClick={ ()=>{onSelectRank(node.rank)}} 
                                                       points={ 

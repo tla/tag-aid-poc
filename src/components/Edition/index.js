@@ -157,6 +157,7 @@ const Edition = ( props)=>{
                                                 nodeHash = {nodeHash}
                                                 activeNode = { selectedNode}
                                                 selectedSentence={selectedSentence}
+                                                selectedRank = { selectedRank}
                                                 activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
                                                 onSelectRank = {handleSelectRank}
                                           />
