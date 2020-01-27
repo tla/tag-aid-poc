@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
-import {VictoryChart, VictoryBar, VictoryTheme,
+import {VictoryChart, VictoryBar, VictoryContainer, VictoryLine, VictoryTheme,
 VictoryTooltip, VictorySelectionContainer} from 'victory'
 
 
@@ -78,11 +78,12 @@ const RankDisonance = (props)=> {
 
       return (
             <div style={{height:'235px'}}>
-                  <VictoryChart
-                  height={155}
-                 width={viewport.width * .65}
-                  scale={{ x: "linear", y: "linear" }}
-                         theme={VictoryTheme.material}
+              {chartData &&    <VictoryChart
+                        height={255}
+              containerComponent={<VictoryContainer responsive={false} /> }
+                        width={chartData.length * 15 + 100}
+                        scale={{ x: "linear", y: "linear" }}
+                        theme={VictoryTheme.material}
                         //  containerComponent={<VictorySelectionContainer
                         //       selectionDimension="x"
                         //       onClick={ () =>{ alert('clicked')}}
@@ -100,26 +101,53 @@ const RankDisonance = (props)=> {
                                     data: { stroke: "#c43a31" },
                                     parent: { border: "1px solid #ccc"}
                               }}
+                              barWidth={15}
                               alignment = "start"
                               data={chartData}
                               labels={({ datum }) => datum.label}
-                             
-                              events={[{
-                                                childName:"all",
-                                                target: "data",
-                                                eventHandlers: {
-                                                onClick: (moe, curly, rank) => {
-                                                      onSelectRank(rank)
+                              events = {[
+                                    {
+                                          childName: "bar",
+                                          target: "data",
+                                          eventHandlers: {
+                                                onClick: ()=>{
                                                       return [
                                                             {
-                                                            mutation: () => {
-                                                            return { style: { fill: "#00a600"} };
-                                                            }
+                                                                  childName: "bar",
+                                                                  target: "data",
+                                                                  eventKey:[3],
+                                                                  mutation: () => {
+                                                                        return { style: { fill: "red"} };
+                                                                  }   
                                                             },
+                                                            {
+                                                                  mutation: () => {
+                                                                        return { style: { fill: "#00a600"} };
+                                                                  }// end mutation
+                                                            }// end second onclick handler
                                                       ]
-                                                      }
-                                                }
-                                                 } ]}
+                                                }// end onClick
+                                          }// end event handlers</VictoryChart>
+
+                                    }
+                              ]}
+                             
+                              // events={[{
+                              //                   childName:"bar",
+                              //                   target: "data",
+                              //                   eventHandlers: {
+                              //                   onClick: (moe, curly, rank) => {
+                              //                         onSelectRank(rank)
+                              //                         return [
+                              //                               {
+                              //                               mutation: () => {
+                              //                                     return { style: { fill: "#00a600"} };
+                              //                               }
+                              //                               },
+                              //                         ]
+                              //                         }
+                              //                   }
+                              //                    } ]}
                               labelComponent={
                                     <VictoryTooltip />
                               }
@@ -129,7 +157,7 @@ const RankDisonance = (props)=> {
                         </VictoryBar>
 
                   </VictoryChart>
-                  
+                  }
             </div>
             );
        
