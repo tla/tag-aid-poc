@@ -18,6 +18,11 @@ const RankDisonance = (props)=> {
       const [highlightList, setHighlightList] = useState([])
      // const [rankReport, setRankReport] = useState([]); // rank report fetches the data, onSectionChange and feeds the histogram;
       const [chartData, setChartData] = useState();
+      const [lastSelected, setLastSelected] = useState();
+
+      useEffect( ()=>{
+            setLastSelected(selectedRank)
+      }, [selectedRank])
 
       // highlight list
       useEffect(()=>{
@@ -57,7 +62,6 @@ const RankDisonance = (props)=> {
             });
       },[sectionId])
 
-
       // sentence selected
       useEffect(()=>{
             if( ! nodeHash)
@@ -80,7 +84,7 @@ const RankDisonance = (props)=> {
             <div style={{height:'235px'}}>
               {chartData &&    <VictoryChart
                         height={255}
-              containerComponent={<VictoryContainer responsive={false} /> }
+                        containerComponent={<VictoryContainer responsive={false} /> }
                         width={chartData.length * 15 + 100}
                         scale={{ x: "linear", y: "linear" }}
                         theme={VictoryTheme.material}
@@ -98,7 +102,7 @@ const RankDisonance = (props)=> {
                         <VictoryBar
                         
                               style={{
-                                    data: { stroke: "#c43a31" },
+                                    data: { stroke: "#c43a31" , fill:"#550C18"},
                                     parent: { border: "1px solid #ccc"}
                               }}
                               barWidth={15}
@@ -110,14 +114,15 @@ const RankDisonance = (props)=> {
                                           childName: "bar",
                                           target: "data",
                                           eventHandlers: {
-                                                onClick: ()=>{
+                                                onClick: (event, props, key)=>{
+                                                    
+                                                      onSelectRank(key)
                                                       return [
                                                             {
-                                                                  childName: "bar",
-                                                                  target: "data",
-                                                                  eventKey:[3],
+                                                                  
+                                                                  eventKey:[lastSelected],
                                                                   mutation: () => {
-                                                                        return { style: { fill: "red"} };
+                                                                        return { style: { fill: "#550C18"} };
                                                                   }   
                                                             },
                                                             {

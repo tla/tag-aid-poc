@@ -110,7 +110,7 @@ const Edition = ( props)=>{
                   </Grid> 
                 
                   <Hidden smDown>
-                        <Grid id="sideBar" md={2} >
+                        <Grid item id="sideBar" md={2} >
                                <div style={{display:'flex', flexDirection:'column', }}>
                                      <ViewOptions style={{maxHeight:'400px'}}
                                           witnesses = {witnesses}

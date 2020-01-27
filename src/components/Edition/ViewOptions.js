@@ -94,8 +94,8 @@ const ViewOptions =(props)=>{
                               
                               <div style={{width:'200px',  }}>
                                     <FormControl >
-                                          <InputLabel style={{fontSize:'16px', width:'94%'}}>Left Text Pane</InputLabel>
-                                                <Select 
+                                          <InputLabel style={{fontSize:'16px', }}>Left Text Pane</InputLabel>
+                                                <Select style={{width:'150px'}}
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
@@ -110,8 +110,8 @@ const ViewOptions =(props)=>{
                               <div style={{height:'8px'}}></div>
                               <div >
                                                 <FormControl >
-                                                      <InputLabel style={{fontSize:'16px', width:'94%'}}>Right Text Pane </InputLabel>
-                                                            <Select 
+                                                      <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
+                                                            <Select style={{width:'150px'}}
                                                                   value={rightReading}
                                                                   onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                             >
