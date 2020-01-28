@@ -22,11 +22,11 @@ const TextPane =(props) => {
                               if( reading === "Translation"){
                                     let selected= props.selectedSentence ? props.selectedSentence.startId === nodeId  : false;
                                     if(selected) {
-                                                return <span style={{backgroundColor:'yellow'}} >
+                                                return <span style={{backgroundColor:'yellow'}} onClick={()=>{ handleHighlight(attribs.id, attribs.key)}} >
                                                       {domToReact(children,parserOptions)}</span>
                                     } else {
-                                                return <span onClick={()=>{console.log("selected"); handleHighlight(attribs.id, attribs.key)}}
-                                                >{domToReact(children,parserOptions)}</span>
+                                                return <span onClick={()=>{ handleHighlight(attribs.id, attribs.key)}}>
+                                                      {domToReact(children,parserOptions)}</span>
                                     }
                               } else {
 

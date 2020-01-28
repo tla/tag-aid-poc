@@ -96,13 +96,12 @@ const RankDisonance = (props)=> {
             {
                   chartData &&    
                   <VictoryChart
-                  title="Rank Disonance"
+                        title="Rank Disonance"
                        height={150}
                        domainPadding={{ x: 20 }}
-                 padding={{ top: 3, bottom: 3, left: 60, right: 12 }}
+                        padding={{ top: 3, bottom: 3, left: 60, right: 12 }}
                         containerComponent={<VictoryContainer responsive={false} /> }
                         width={chartData.length * 15 + 100}
-                       domainPadding={{x:20}}
                         scale={{ x: "linear", y: "linear" }}
                         >
                                 <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
@@ -110,13 +109,16 @@ const RankDisonance = (props)=> {
                                           ></VictoryAxis>
                         <VictoryBar
                               style={{
-                                    data: { stroke: "#c43a31" , fill:"#550C18"},
+                                    data: { 
+                                                stroke: "#c43a31" , 
+                                                fill: ({datum})=>  getBarColor(datum) 
+                                          },
                                     parent: { border: "1px solid #ccc"},
                                    
                               }}
                              
                               
-                           barRatio={.8}
+                              barRatio={.8}
                               data={chartData}
                               labels={({ datum }) => datum.label}
                               events = {[
@@ -160,6 +162,17 @@ const RankDisonance = (props)=> {
             }
             </div>
             );
+
+            function getBarColor(datum){
+                  let color= "#550C18";
+                  if(selectedSentence){
+                        if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
+                              color="yellow"
+                  }
+                 
+
+                  return color;
+            }
        
             // to do let generator script do this
             function generateChartData( report ) {

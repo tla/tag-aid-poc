@@ -189,7 +189,7 @@ const Edition = ( props)=>{
                                 
                               {sectionID &&
                                     <div style={textContainerStyle}>
-                                          <Grid container xs={12} spacing={0}>
+                                          <Grid container  spacing={0}>
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
                                                             sections = { sections}
@@ -238,16 +238,25 @@ const Edition = ( props)=>{
       }
 
       function handleSelectSentence( start, end ){
+            
+
+
             const startRank = start.split('-')[0]
             const startNodeId = start.split('-')[1];
             const endRank = end.split('-')[0]
             const endNodeId = end.split('-')[1];
+
+            if(selectedSentence){
+                  if(selectedSentence.startId === startNodeId);
+                        setSelectedSentence(null);
+                        return;
+            }
             
             setSelectedSentence({
-            'startRank': startRank,
-            'startId': startNodeId, 
-            endRank: endRank,
-            'endId': endNodeId,
+                  'startRank': startRank,
+                  'startId': startNodeId, 
+                  endRank: endRank,
+                  'endId': endNodeId,
            } );
       }
 

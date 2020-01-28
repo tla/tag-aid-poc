@@ -89,7 +89,6 @@ const SvgGraph =(props)=>{
                   let isRank = false;
 
                   if(selectedSentence && nodeHash && rank){
-console.log(` comparing rank ${rank} sentence from  ${selectedSentence.startRank} - ${selectedSentence.endRan}`)
                         inHighlightedSentence = rank.toString() >= selectedSentence.startRank.toString() && rank<= selectedSentence.endRank.toString();
                   }
                        
