@@ -97,19 +97,20 @@ const Edition = ( props)=>{
   
       let textContainerStyle={
             overflowY:'auto', 
-            height: graphVisible ? ` ${viewport.height - 480}px` : ` ${viewport.height - (viewport.height * .20)}px`,
-            padding:'0px 16px'
+         
+            height: graphVisible ? `${viewport.height * .30}px`:`${viewport.height - 170}px`,
+    
       }
 
       return (
             
-            <Grid container={true} spacing={1} >
+            <Grid container={true} spacing={0} >
 
-                  <Grid id="edition-header" item xs={12} >
+                   <Grid id="edition-header" item xs={12} >
                         <EditionHeader />
-                  </Grid> 
-  
-                        <Hidden smDown>
+                  </Grid>  
+   
+                  <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
                                <div >
                                      <ViewOptions 
@@ -134,8 +135,7 @@ const Edition = ( props)=>{
                                     <div style={{height:'16px'}}></div>
 
                                   <SectionList 
-                                 
-                                          parentHeight={isExpanded ? ` ${viewport.height - 620}px` : ` ${viewport.height -216}px`}
+                                         parentHeight={isExpanded ? ` ${viewport.height - 630}px` : ` ${viewport.height -216}px`}
                                           sectionId={sectionID}
                                           list ={sections}
                                      />  
@@ -147,62 +147,65 @@ const Edition = ( props)=>{
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
                                    
-                                         <div>
-                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.30}px`}}>
-                                                      <SvgGraph 
-                                                            viewport={viewport}
-                                                            sectionId={sectionID}
-                                                            highlightedNode={selectedNode}
-                                                            selectedSentence={selectedSentence}
-                                                            selectedRank = {selectedRank}
-                                                            nodeHash = {nodeHash}
-                                                            nodeList = { nodeArray }
-                                                            persons={personList}
-                                                            places = {placeList}
-                                                            dates = { dateList}
-                                                            onSelectNode={handleSelectNode}
-                                                            onSelectSentence={handleSelectSentence}
-                                                      />
-                                                </div>
-                                                <div style={{overflowX:'auto'}}> 
-                                                       <RankDisonance 
-                                                            viewport = { viewport }
-                                                            witnessCount = { witnesses.length}
-                                                            sectionId={sectionID}
-                                                            nodeHash = {nodeHash}
-                                                            activeNode = { selectedNode}
-                                                            selectedSentence={selectedSentence}
-                                                            selectedRank = { selectedRank}
-                                                            activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
-                                                            onSelectRank = {handleSelectRank}
-                                                      /> 
-                                                </div>
-                                   </div>
-                                    
-                              }
-
-                                <div style={{height:'16px'}}></div>  
-                             
-                              {/* {sectionID &&
-                              <div style={textContainerStyle}>
-
-                                    <Grid container spacing={4}>
-                                          <Grid item xs={12} md={6}>
-                                                <TextPane 
-                                                      sections = { sections}
+                                    <div>
+                                          <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.30}px`}}>
+                                                <SvgGraph 
+                                                      viewport={viewport}
                                                       sectionId={sectionID}
+                                                      highlightedNode={selectedNode}
+                                                      selectedSentence={selectedSentence}
+                                                      selectedRank = {selectedRank}
+                                                      nodeHash = {nodeHash}
+                                                      nodeList = { nodeArray }
                                                       persons={personList}
                                                       places = {placeList}
                                                       dates = { dateList}
-                                                      reading = {leftReading}
-                                                      selectedNode={selectedNode}
-                                                      selectedSentence={selectedSentence}
                                                       onSelectNode={handleSelectNode}
                                                       onSelectSentence={handleSelectSentence}
                                                 />
-                                          </Grid>
+                                          </div>
+                                          <div style={{overflowX:'auto'}}> 
+                                                      <RankDisonance 
+                                                      viewport = { viewport }
+                                                      witnessCount = { witnesses.length}
+                                                      sectionId={sectionID}
+                                                      nodeHash = {nodeHash}
+                                                      activeNode = { selectedNode}
+                                                      selectedSentence={selectedSentence}
+                                                      selectedRank = { selectedRank}
+                                                      activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
+                                                      onSelectRank = {handleSelectRank}
+                                                /> 
+                                          </div>
+                                    </div>
+                                    
+                              }
 
-                                          <Grid item xs={12} md={6}>
+                              <div style={{height:'16px'}}></div>
+
+
+
+
+                                
+                              {sectionID &&
+                                    <div style={textContainerStyle}>
+                                          <Grid container xs={12} spacing={0}>
+                                                <Grid item xs={12} md={6}>
+                                                      <TextPane 
+                                                            sections = { sections}
+                                                            sectionId={sectionID}
+                                                            persons={personList}
+                                                            places = {placeList}
+                                                            dates = { dateList}
+                                                            reading = {leftReading}
+                                                            selectedNode={selectedNode}
+                                                            selectedSentence={selectedSentence}
+                                                            onSelectNode={handleSelectNode}
+                                                            onSelectSentence={handleSelectSentence}
+                                                      />
+                                                </Grid>
+
+                                                <Grid item xs={12} md={6}>
                                                 <TextPane 
                                                       sections = { sections}
                                                       sectionId={sectionID}
@@ -216,11 +219,16 @@ const Edition = ( props)=>{
                                                       onSelectSentence={handleSelectSentence}
                                                 />
                                           </Grid>
-                                    </Grid>
-                              </div>
-                              } */}
+                                          </Grid>
+                                    </div>
+                              } 
+
+
+
+
+
                         </div>
-                  </Grid>
+                  </Grid> 
 
             </Grid>
       )

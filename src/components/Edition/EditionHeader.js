@@ -30,7 +30,7 @@ return (
                                           <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
                                     </Tabs>
                        
-                  </AppBar> 
+                  </AppBar>  
       </div>
 )
 

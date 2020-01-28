@@ -22,7 +22,7 @@ const ViewOptions =(props)=>{
    
 
       return (
-            <div style={{marginLeft:'12px'}}>
+            <div style={{marginTop:'8px', marginLeft:'8px'}}>
                   <ExpansionPanel  
                         expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary

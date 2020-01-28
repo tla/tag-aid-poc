@@ -97,7 +97,7 @@ const RankDisonance = (props)=> {
                   chartData &&    
                   <VictoryChart
                   title="Rank Disonance"
-                       height="150"
+                       height={150}
                        domainPadding={{ x: 20 }}
                  padding={{ top: 3, bottom: 3, left: 60, right: 12 }}
                         containerComponent={<VictoryContainer responsive={false} /> }
