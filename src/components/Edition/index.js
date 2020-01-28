@@ -103,16 +103,17 @@ const Edition = ( props)=>{
 
       return (
             
-            <Grid container={true} spacing={1} style={{height:`${viewport.height}px`}}>
+            <Grid container={true} spacing={1} >
 
-                   <Grid id="edition-header" item xs={12} >
+                  <Grid id="edition-header" item xs={12} >
                         <EditionHeader />
                   </Grid> 
-                
-                  <Hidden smDown>
+  
+                        <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                               <div style={{display:'flex', flexDirection:'column', }}>
-                                     <ViewOptions style={{maxHeight:'400px'}}
+                               <div >
+                                     <ViewOptions 
+                                          viewport = {viewport}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
@@ -132,21 +133,22 @@ const Edition = ( props)=>{
                               
                                     <div style={{height:'16px'}}></div>
 
-                                    <SectionList 
-                                          parentHeight={isExpanded ? ` ${viewport.height - 480}px` : ` ${viewport.height - (viewport.height * .20)}px`}
+                                  <SectionList 
+                                 
+                                          parentHeight={isExpanded ? ` ${viewport.height - 620}px` : ` ${viewport.height -216}px`}
                                           sectionId={sectionID}
                                           list ={sections}
-                                     />
+                                     />  
                               </div> 
                   </Grid>
-                  </Hidden>  
+                  </Hidden> 
 
                   <Grid id="mainContent" item xs={12} md={10}> 
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
                                    
                                          <div>
-                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.40}px`}}>
+                                                <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.30}px`}}>
                                                       <SvgGraph 
                                                             viewport={viewport}
                                                             sectionId={sectionID}
@@ -163,7 +165,7 @@ const Edition = ( props)=>{
                                                       />
                                                 </div>
                                                 <div style={{overflowX:'auto'}}> 
-                                                      <RankDisonance 
+                                                       <RankDisonance 
                                                             viewport = { viewport }
                                                             witnessCount = { witnesses.length}
                                                             sectionId={sectionID}
@@ -173,7 +175,7 @@ const Edition = ( props)=>{
                                                             selectedRank = { selectedRank}
                                                             activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
                                                             onSelectRank = {handleSelectRank}
-                                                      />
+                                                      /> 
                                                 </div>
                                    </div>
                                     
@@ -181,7 +183,7 @@ const Edition = ( props)=>{
 
                                 <div style={{height:'16px'}}></div>  
                              
-                              {sectionID &&
+                              {/* {sectionID &&
                               <div style={textContainerStyle}>
 
                                     <Grid container spacing={4}>
@@ -216,7 +218,7 @@ const Edition = ( props)=>{
                                           </Grid>
                                     </Grid>
                               </div>
-                              }
+                              } */}
                         </div>
                   </Grid>
 

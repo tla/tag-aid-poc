@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const ViewOptions =(props)=>{
 
-      const {onToggleGraph, graphVisible, 
+      const {onToggleGraph, graphVisible, viewport,
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
             personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates,
       isExpanded, setIsExpanded} = props;
@@ -22,7 +22,7 @@ const ViewOptions =(props)=>{
    
 
       return (
-            <div>
+            <div style={{marginLeft:'12px'}}>
                   <ExpansionPanel  
                         expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary
@@ -95,7 +95,7 @@ const ViewOptions =(props)=>{
                               <div style={{width:'200px',  }}>
                                     <FormControl >
                                           <InputLabel style={{fontSize:'16px', }}>Left Text Pane</InputLabel>
-                                                <Select style={{width:'150px'}}
+                                                <Select style={{width:viewport.width * .12}}
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
@@ -111,7 +111,7 @@ const ViewOptions =(props)=>{
                               <div >
                                                 <FormControl >
                                                       <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
-                                                            <Select style={{width:'150px'}}
+                                                            <Select style={{width:viewport.width * .12}}
                                                                   value={rightReading}
                                                                   onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                             >

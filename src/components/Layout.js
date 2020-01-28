@@ -1,10 +1,9 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import AboutPage from './About';
 import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
 import Edition from './Edition/index';
 import HomePage from './HomePage';
-import Header from './Header';
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from './../utils/Viewport';
 import { Grid } from '@material-ui/core';
@@ -26,8 +25,7 @@ const Layout = ( props)=>{
            
             <ThemeProvider  theme={ChronicleTheme}>
 
-                  <Grid container spacing={1} style={{margin:'0px'}}>
-                  <Grid id="pages" item xs={12}>
+                 
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
                                     <Edition  sections={sections}  viewport={viewport} witnesses = { witnesses} />
@@ -49,8 +47,7 @@ const Layout = ( props)=>{
                                     <HomePage sections={sections} />
                               </Route> 
                         </Switch>
-                  </Grid>
-            </Grid> 
+                 
      
             </ThemeProvider>
       )

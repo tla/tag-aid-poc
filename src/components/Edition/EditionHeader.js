@@ -15,22 +15,22 @@ useEffect(()=>{
     
 
 return (
-      <div className="header" role="banner" >
+      <div  className="header">
                   <Typography variant="h5" style={{padding:'12px 42px'}}>
                         The Chronicle of Matthew of Edessa
                   </Typography>
-            <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
-                  <div style={{display:'flex', justifyContent:'flex-end',padding:'5px',fontSize:'16px'}}>
-                              <Tabs value={tabIndex} style={{float:'right', color:'black'}} onChange={handleTabChange} >
-                                    <Tab label="Home" href="/" value="#/" />
-                                    <Tab label="About" href="#/About"  value="#/About"  />
-                                    <Tab label="Methods"  href="#/Methods" value="#/Methods" />
-                                    <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                    <Tab label="Edition" href="#/Edition/1019321"    value="#/Edition"   />
-                                    <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
-                              </Tabs>
-                  </div>
-            </AppBar> 
+                  <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
+                     
+                                    <Tabs value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
+                                          <Tab  label="Home" href="/" value="#/" />
+                                          <Tab label="About" href="#/About"  value="#/About"  />
+                                          <Tab label="Methods"  href="#/Methods" value="#/Methods" />
+                                          <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
+                                          <Tab label="Edition" href="#/Edition/1019321"    value="#/Edition"   />
+                                          <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
+                                    </Tabs>
+                       
+                  </AppBar> 
       </div>
 )
 

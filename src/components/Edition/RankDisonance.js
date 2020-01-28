@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
-import {VictoryChart, VictoryBar, VictoryContainer, VictoryLine, VictoryTheme,
-VictoryTooltip, VictorySelectionContainer} from 'victory'
+import {VictoryChart, VictoryBar, VictoryContainer, VictoryTheme,
+VictoryTooltip, VictoryAxis , VictoryLabel, VictorySelectionContainer, } from 'victory'
 
 
 
@@ -79,34 +79,44 @@ const RankDisonance = (props)=> {
             
       }, [selectedSentence])
     
-
+      const xaxisStyle = {
+            grid:    {stroke:  "transparent", } ,
+            axis: { stroke: "grey" },
+            ticks: { stroke: "transparent" },
+            tickLabels: { fill: "none" }
+          };
+          const yaxisStyle = {
+            grid:    {stroke:  "transparent", } ,
+            axis: { stroke: "grey" },
+            ticks: { stroke: "grey" },
+            tickLabels: { fill: "none" }
+          };
       return (
-            <div style={{height:'235px'}}>
-              {chartData &&    <VictoryChart
-                        height={255}
+            <div style={{height:'155px'}}>
+            {
+                  chartData &&    
+                  <VictoryChart
+                  title="Rank Disonance"
+                       height="150"
+                       domainPadding={{ x: 20 }}
+                 padding={{ top: 3, bottom: 3, left: 60, right: 12 }}
                         containerComponent={<VictoryContainer responsive={false} /> }
                         width={chartData.length * 15 + 100}
+                       domainPadding={{x:20}}
                         scale={{ x: "linear", y: "linear" }}
-                        theme={VictoryTheme.material}
-                        //  containerComponent={<VictorySelectionContainer
-                        //       selectionDimension="x"
-                        //       onClick={ () =>{ alert('clicked')}}
-                        //       selectionStyle={{
-                        //             fill: "tomato", fillOpacity: 0.5,
-                        //             stroke: "tomato", strokeWidth: 2
-                        //           }}
-                        //  />}
-                         
-                         
-                         >
+                        >
+                                <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
+                                <VictoryAxis tickCount = {6} dependentAxis style={yaxisStyle} 
+                                          ></VictoryAxis>
                         <VictoryBar
-                        
                               style={{
                                     data: { stroke: "#c43a31" , fill:"#550C18"},
-                                    parent: { border: "1px solid #ccc"}
+                                    parent: { border: "1px solid #ccc"},
+                                   
                               }}
-                              barWidth={15}
-                              alignment = "start"
+                             
+                              
+                           barRatio={.8}
                               data={chartData}
                               labels={({ datum }) => datum.label}
                               events = {[
@@ -115,11 +125,13 @@ const RankDisonance = (props)=> {
                                           target: "data",
                                           eventHandlers: {
                                                 onClick: (event, props, key)=>{
-                                                    
-                                                      onSelectRank(key)
+                                                      let selectedFill = lastSelected? lastSelected.toString() === key.toString() ? "#550C18" : "#00a600" : "#00a600";
+                                                      if( selectedFill === "#550C18") // its a deselect
+                                                            onSelectRank(null)
+                                                      else
+                                                            onSelectRank(key)
                                                       return [
                                                             {
-                                                                  
                                                                   eventKey:[lastSelected],
                                                                   mutation: () => {
                                                                         return { style: { fill: "#550C18"} };
@@ -127,7 +139,7 @@ const RankDisonance = (props)=> {
                                                             },
                                                             {
                                                                   mutation: () => {
-                                                                        return { style: { fill: "#00a600"} };
+                                                                        return { style: { fill: selectedFill} };
                                                                   }// end mutation
                                                             }// end second onclick handler
                                                       ]
@@ -136,33 +148,16 @@ const RankDisonance = (props)=> {
 
                                     }
                               ]}
-                             
-                              // events={[{
-                              //                   childName:"bar",
-                              //                   target: "data",
-                              //                   eventHandlers: {
-                              //                   onClick: (moe, curly, rank) => {
-                              //                         onSelectRank(rank)
-                              //                         return [
-                              //                               {
-                              //                               mutation: () => {
-                              //                                     return { style: { fill: "#00a600"} };
-                              //                               }
-                              //                               },
-                              //                         ]
-                              //                         }
-                              //                   }
-                              //                    } ]}
                               labelComponent={
-                                    <VictoryTooltip />
+                                    <VictoryTooltip   />
                               }
-                              
                               >
 
+               
                         </VictoryBar>
 
                   </VictoryChart>
-                  }
+            }
             </div>
             );
        
