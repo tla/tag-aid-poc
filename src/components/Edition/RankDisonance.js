@@ -42,10 +42,10 @@ const RankDisonance = (props)=> {
             tickLabels: { fill: "none" }
           };
           const yaxisStyle = {
-            grid:    {stroke:  "transparent", } ,
+            grid:    {stroke:  "#E9E4E8", } ,
             axis: { stroke: "grey" },
             ticks: { stroke: "grey" },
-            tickLabels: { fill: "none" }
+            
           };
 
 
@@ -57,7 +57,7 @@ const RankDisonance = (props)=> {
                         title="Rank Disonance"
                        height={150}
                        domainPadding={{ x: 6 }}
-                        padding={{ top: 3, bottom: 3, left: 20, right: 12 }}
+                        padding={{ top: 6, bottom: 3, left: 40, right: 12 }}
                         containerComponent={<VictoryContainer responsive={false} /> }
                         width={chartData.length * 15 + 100}
                         scale={{ x: "linear", y: "linear" }}
