@@ -74,7 +74,10 @@ svg g.node.disonance {
 svg  g.node.disonance ellipse{
       fill: #00a600 ;
 }
-
+svg  g.node.disonance.active ellipse{
+      stroke: red;
+      fill:#00a600 ;
+}
 
 svg g.edge:not(.majority):hover {
   cursor: pointer;

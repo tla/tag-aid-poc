@@ -8,43 +8,17 @@ VictoryTooltip, VictoryAxis , VictoryLabel, VictorySelectionContainer, } from 'v
 
 const RankDisonance = (props)=> {
 
-      const { sectionId, 
-            activeWitness,  
+      const { 
+            sectionId, 
+            activeNode,
             selectedRank, 
             selectedSentence, 
             onSelectRank,  
-            nodeHash, 
-            viewport} = props;
-      const [highlightList, setHighlightList] = useState([])
-     // const [rankReport, setRankReport] = useState([]); // rank report fetches the data, onSectionChange and feeds the histogram;
+          } = props;
       const [chartData, setChartData] = useState();
-      const [lastSelected, setLastSelected] = useState();
-
-      useEffect( ()=>{
-            setLastSelected(selectedRank)
-      }, [selectedRank])
-
-      // highlight list
+     
       useEffect(()=>{
-            if( ! nodeHash)
-                  return;
-            setHighlightList([]);
-            const highlights = [];
-           for ( const n in nodeHash){
-                  let id = n.id;
-                  let rank = n.rank;
-                  if(selectedSentence){
-                        if( rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ){
-                              highlights.push({id:id, rank:rank})
-                        }
-                  }
-            }
-            setHighlightList(highlights)
-      },[sectionId, selectedSentence])
-
-      // rank report - for histogram
-      useEffect(()=>{
-           // setRankReport([]);
+            setChartData([]);
             setChartData(null);
             DataApi.getRankReport(sectionId, (report)=>{
                   report.sort( (a,b)=> {
@@ -55,30 +29,12 @@ const RankDisonance = (props)=> {
                         else 
                               return 0;
                   })
-           // setRankReport( report ) ;
 
             const formatedForChart = generateChartData(report);
             setChartData(formatedForChart)
             });
       },[sectionId])
 
-      // sentence selected
-      useEffect(()=>{
-            if( ! nodeHash)
-                  return;
-            setHighlightList([]);
-            const highlights=[];
-            if(selectedSentence){
-                  for ( const n in nodeHash ){
-                        if( n.rank >= selectedSentence.startRank && n.rank <= selectedSentence.endRank ){
-                              highlights.push({id:n.id, rank:n.rank})
-                        }
-                  }
-                  setHighlightList(highlights)
-            }
-            
-      }, [selectedSentence])
-    
       const xaxisStyle = {
             grid:    {stroke:  "transparent", } ,
             axis: { stroke: "grey" },
@@ -91,6 +47,8 @@ const RankDisonance = (props)=> {
             ticks: { stroke: "grey" },
             tickLabels: { fill: "none" }
           };
+
+
       return (
             <div style={{height:'155px'}}>
             {
@@ -98,8 +56,8 @@ const RankDisonance = (props)=> {
                   <VictoryChart
                         title="Rank Disonance"
                        height={150}
-                       domainPadding={{ x: 20 }}
-                        padding={{ top: 3, bottom: 3, left: 60, right: 12 }}
+                       domainPadding={{ x: 6 }}
+                        padding={{ top: 3, bottom: 3, left: 20, right: 12 }}
                         containerComponent={<VictoryContainer responsive={false} /> }
                         width={chartData.length * 15 + 100}
                         scale={{ x: "linear", y: "linear" }}
@@ -110,15 +68,15 @@ const RankDisonance = (props)=> {
                         <VictoryBar
                               style={{
                                     data: { 
-                                                stroke: "#c43a31" , 
+                                         
                                                 fill: ({datum})=>  getBarColor(datum) 
                                           },
                                     parent: { border: "1px solid #ccc"},
                                    
                               }}
                              
-                              
-                              barRatio={.8}
+                            
+                              barRatio={.7}
                               data={chartData}
                               labels={({ datum }) => datum.label}
                               events = {[
@@ -127,24 +85,21 @@ const RankDisonance = (props)=> {
                                           target: "data",
                                           eventHandlers: {
                                                 onClick: (event, props, key)=>{
-                                                      let selectedFill = lastSelected? lastSelected.toString() === key.toString() ? "#550C18" : "#00a600" : "#00a600";
-                                                      if( selectedFill === "#550C18") // its a deselect
-                                                            onSelectRank(null)
-                                                      else
-                                                            onSelectRank(key)
-                                                      return [
-                                                            {
-                                                                  eventKey:[lastSelected],
-                                                                  mutation: () => {
-                                                                        return { style: { fill: "#550C18"} };
-                                                                  }   
-                                                            },
-                                                            {
-                                                                  mutation: () => {
-                                                                        return { style: { fill: selectedFill} };
-                                                                  }// end mutation
-                                                            }// end second onclick handler
-                                                      ]
+                                                 
+                                                           return  onSelectRank(key)
+                                                      // return [
+                                                      //       {
+                                                      //             eventKey:[lastSelected],
+                                                      //             mutation: () => {
+                                                      //                   return { style: { fill: "#550C18"} };
+                                                      //             }   
+                                                      //       },
+                                                      //       {
+                                                      //             mutation: () => {
+                                                      //                   return { style: { fill: selectedFill} };
+                                                      //             }// end mutation
+                                                      //       }// end second onclick handler
+                                                      // ]
                                                 }// end onClick
                                           }// end event handlers</VictoryChart>
 
@@ -162,6 +117,7 @@ const RankDisonance = (props)=> {
             }
             </div>
             );
+           
 
             function getBarColor(datum){
                   let color= "#550C18";
@@ -169,11 +125,15 @@ const RankDisonance = (props)=> {
                         if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
                               color="yellow"
                   }
-                 
-
+                  if( activeNode ) {
+                        if( datum.x.toString() === activeNode.rank.toString() ){
+                              color="#00a600";
+                              return color;
+                        }
+                  }
                   return color;
             }
-       
+
             // to do let generator script do this
             function generateChartData( report ) {
                   let data = [];

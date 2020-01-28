@@ -30,7 +30,7 @@ const TextPane =(props) => {
                                     }
                               } else {
 
-                                    let selected= props.selectedNode ? props.selectedNode === nodeId : false;
+                                    let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
                                     let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
                                     let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
                                     let date = dates? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
@@ -40,7 +40,7 @@ const TextPane =(props) => {
                                           backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':'transparent'
                                     }
                                    
-                                          return <span style={textStyle} onClick={()=>{handleSelected(nodeId)}} >
+                                          return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank})}} >
                                                 {domToReact(children,parserOptions)}</span>
 
                               }
@@ -115,8 +115,8 @@ const TextPane =(props) => {
             onSelectSentence(startNodeId, endNodeId)
       }
 
-      function handleSelected( textNodeId){
-            onSelectNode(textNodeId)
+      function handleSelected( node){
+            onSelectNode(node)
       }
 
       

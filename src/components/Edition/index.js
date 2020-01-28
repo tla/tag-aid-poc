@@ -165,15 +165,12 @@ const Edition = ( props)=>{
                                                 />
                                           </div>
                                           <div style={{overflowX:'auto'}}> 
-                                                      <RankDisonance 
+                                                <RankDisonance 
                                                       viewport = { viewport }
-                                                      witnessCount = { witnesses.length}
                                                       sectionId={sectionID}
-                                                      nodeHash = {nodeHash}
                                                       activeNode = { selectedNode}
                                                       selectedSentence={selectedSentence}
                                                       selectedRank = { selectedRank}
-                                                      activeWitness = { leftReading !== "Translation" ? leftReading : rightReading !== "Translation" ? rightReading : ''}
                                                       onSelectRank = {handleSelectRank}
                                                 /> 
                                           </div>
@@ -183,10 +180,6 @@ const Edition = ( props)=>{
 
                               <div style={{height:'16px'}}></div>
 
-
-
-
-                                
                               {sectionID &&
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>
@@ -233,13 +226,19 @@ const Edition = ( props)=>{
             </Grid>
       )
 
-      function handleSelectNode( nodeId ){
-            setSelectedNode(nodeId);
+      function handleSelectNode( node ){
+            if( selectedNode)
+                  if( node.nodeId === selectedNode.nodeId){
+                        setSelectedNode(null);
+                        setSelectedRank( null );
+                        return;
+                  }
+           
+                  setSelectedRank( node.rank)
+                  setSelectedNode(node);
       }
 
       function handleSelectSentence( start, end ){
-            
-
 
             const startRank = start.split('-')[0]
             const startNodeId = start.split('-')[1];
@@ -276,9 +275,15 @@ const Edition = ( props)=>{
             let toggled = !datesVisible;
             setDatesVisible(toggled)
       }
+
       function handleSelectRank(rank){
-           
-            setSelectedRank( parseInt(rank))
+            let node = nodeArray.find( n=> { return n.rank.toString() === rank.toString()});
+            if ( selectedRank === rank){
+                  setSelectedRank(null);
+                  return;
+            }
+            setSelectedNode( {nodeId:node.id, rank:rank})
+            setSelectedRank( rank)
       }
 
 }

@@ -10,7 +10,6 @@ const SvgGraph =(props)=>{
       const svgRef = useRef(null);
     
       useEffect( ()=>{
-            
             highlightAndSelect();
       },[selectedRank, selectedSentence, highlightedNode] )
 
@@ -25,7 +24,7 @@ const SvgGraph =(props)=>{
             if(! props.highlightedNode)
                   return;
             const zoomNode = props.highlightedNode;
-            zoomToNode(zoomNode)
+            zoomToNode(zoomNode.nodeId)
       },[props.highlightedNode])
 
       useEffect( ()=>{
@@ -62,7 +61,8 @@ const SvgGraph =(props)=>{
             if (nodeGroup != null) {
                   const id = nodeGroup.parentNode.id;
                   let trimmedId = id.replace('n','')
-                  onSelectNode(trimmedId);
+                  let lookUp = nodeHash[trimmedId]
+                  onSelectNode({nodeId:trimmedId, rank: lookUp.rank} );
             }
       }
 
@@ -99,9 +99,9 @@ const SvgGraph =(props)=>{
                   if( dates )
                         isDate = dates.find( d=> { return d.begin.toString() === nodeId.toString()})
                   if(highlightedNode)
-                        isSelectedNode = nodeId === highlightedNode ;
+                        isSelectedNode = nodeId === highlightedNode.nodeId ;
                   if(selectedRank && rank )
-                        isRank = rank === selectedRank
+                        isRank = rank.toString() === selectedRank.toString()
 
 
                   if( isPerson ) {
