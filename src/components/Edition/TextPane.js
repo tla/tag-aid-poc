@@ -92,7 +92,7 @@ const TextPane =(props) => {
 
 //[ selectedNode, selectedSentence, persons]
       return (
-           <div >
+           <div style={{marginRight:'12px'}}>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
                               { enTitle? reading === "Translation" ? enTitle.split("(")[0]:arTitle.split("(")[0] : ''}
                         </Typography>

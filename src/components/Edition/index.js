@@ -4,13 +4,14 @@ import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
 import SvgGraph from './SvgGraph'
-import HeatMap from './HeatMap'
 import RankDisonance from './RankDisonance'
 import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 import EditionHeader from './EditionHeader'
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
+import Paper from '@material-ui/core/Paper';
+
 
 const Edition = ( props)=>{
       
@@ -148,23 +149,31 @@ const Edition = ( props)=>{
                               {sectionID && graphVisible &&
                                    
                                     <div>
-                                          <div style={{overflowX:'auto', overflowY:'auto',maxHeight:`${viewport.height *.30}px`}}>
-                                                <SvgGraph 
-                                                      viewport={viewport}
-                                                      sectionId={sectionID}
-                                                      highlightedNode={selectedNode}
-                                                      selectedSentence={selectedSentence}
-                                                      selectedRank = {selectedRank}
-                                                      nodeHash = {nodeHash}
-                                                      nodeList = { nodeArray }
-                                                      persons={personList}
-                                                      places = {placeList}
-                                                      dates = { dateList}
-                                                      onSelectNode={handleSelectNode}
-                                                      onSelectSentence={handleSelectSentence}
-                                                />
+                                          <div >
+                                               <Paper  style={{margin:'12px',overflowX:'auto', overflowY:'auto',height:`${viewport.height *.30}px`}}
+                                                >
+                                                       <SvgGraph 
+                                                            viewport={viewport}
+                                                            sectionId={sectionID}
+                                                            highlightedNode={selectedNode}
+                                                            selectedSentence={selectedSentence}
+                                                            selectedRank = {selectedRank}
+                                                            nodeHash = {nodeHash}
+                                                            nodeList = { nodeArray }
+                                                            persons={personList}
+                                                            places = {placeList}
+                                                            dates = { dateList}
+                                                            onSelectNode={handleSelectNode}
+                                                            onSelectSentence={handleSelectSentence}
+                                                      /> 
+
+                                                </Paper>
+                                               
+                                               
+                                             
                                           </div>
-                                          <div style={{overflowX:'auto'}}> 
+                                          <div > 
+                                          <Paper style={{margin:'12px',overflowX:'auto'}}>
                                                 <RankDisonance 
                                                       viewport = { viewport }
                                                       sectionId={sectionID}
@@ -173,6 +182,7 @@ const Edition = ( props)=>{
                                                       selectedRank = { selectedRank}
                                                       onSelectRank = {handleSelectRank}
                                                 /> 
+                                          </Paper>
                                           </div>
                                     </div>
                                     
