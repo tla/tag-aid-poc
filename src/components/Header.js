@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect,Fragment} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,10 +9,19 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Grid } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
 
 const Header = ( props)=>{
 
       const [tabIndex, setTabIndex]=useState("#/")
+      const [isExpanded, setIsExpanded]= useState(false)
 
       useEffect(()=>{
             let pageName = window.location.hash.split("/")[1]
@@ -31,10 +40,24 @@ const Header = ( props)=>{
 
                         <Hidden mdUp>
                               <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa' }}>
-                                    <IconButton edge="start" >
+                                    <IconButton edge="start" onClick={()=>{setIsExpanded(true)}}>
                                           <MenuIcon />
                                     </IconButton>
-                              
+                                    <Drawer anchor="top" open={isExpanded} onClose={()=>{setIsExpanded(false)}}>
+                                          <List>
+                                          {['Home', 'About', 'Methods','Manuscripts','Edition','Visualizations']
+                                          .map((text, index) => (
+                                                <Fragment>
+                                                      <a style={{textDecoration:'none'}} href={`#/${text}`}>
+                                                            <ListItem button key={text}>
+                                                                  <ListItemText primary={text}/>
+                                                            </ListItem>
+                                                            <Divider />
+                                                      </a>
+                                                 </Fragment>
+                                                ))}
+                                          </List>
+                                    </Drawer>
                               </Toolbar>
                         </Hidden>
 

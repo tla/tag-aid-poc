@@ -42,6 +42,9 @@ const Layout = ( props)=>{
                               <Route path="/Manuscripts" >
                                     <ManuscriptPage /> 
                               </Route>
+                              <Route path="/Home" exact>
+                                    <HomePage sections={sections} />
+                              </Route> 
                             
                                <Route path="/" exact>
                                     <HomePage sections={sections} />
