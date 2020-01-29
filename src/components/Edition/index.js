@@ -11,9 +11,8 @@ import * as DataApi from '../../utils/Api';
 import EditionHeader from './EditionHeader'
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
-import PlayCircleOutlineOutlinedIcon from '@material-ui/icons/PlayCircleOutlineOutlined';
-import IconButton from '@material-ui/core/IconButton';
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
+import PreviousNext from './PreviousNext';
     
 const Edition = ( props)=>{
       
@@ -112,7 +111,7 @@ const Edition = ( props)=>{
                    <Grid id="edition-header" item xs={12} >
                         <EditionHeader />
                   </Grid>  
-   
+             
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
                                <div >
@@ -195,15 +194,14 @@ const Edition = ( props)=>{
                                           <Grid container  spacing={0}>
 
                                                 <Grid item xs={12} >
-                                                      <div style={{display:'flex', justifyContent:'center',padding:'8px'}}>
-                                                      <IconButton onClick={previousSection} >
-                                                            <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px' ,transform:'rotate(180deg)'}}/>
-                                                      </IconButton>
-                                                      <IconButton  onClick={nextSection} >
-                                                            <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px'}} />
-                                                      </IconButton>
-                                                      </div>
-                                                </Grid> 
+                                                      <PreviousNext 
+                                                            onPrevious ={ previousSection}
+                                                            onNext = { nextSection}
+                                                            sections = { sections}
+                                                            sectionId = { sectionID }
+                                                            />
+                                                      
+                                                </Grid>  
 
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
