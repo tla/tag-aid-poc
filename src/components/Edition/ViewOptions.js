@@ -28,7 +28,7 @@ const ViewOptions =(props)=>{
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
-                              <Typography variant="h6" >
+                              <Typography variant="h5" >
                                     {'View Options'}
                               </Typography>
                         </ExpansionPanelSummary>
@@ -52,7 +52,7 @@ const ViewOptions =(props)=>{
                                     <Typography varinat="h5">
                                           {'Highlights'}
                                     </Typography>
-                                    <div style={{display:'flex', flexDirection:'column'}}>
+                                    <div style={{paddingLeft:'16px',display:'flex', flexDirection:'column'}}>
                                     <FormControlLabel
                                           control={
                                                 <Checkbox
