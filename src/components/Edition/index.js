@@ -16,6 +16,8 @@ import Paper from '@material-ui/core/Paper';
 const Edition = ( props)=>{
       
       let {sectionID} = useParams()
+      if(! sectionID)
+            sectionID = "1019321"
       const {sections , viewport , witnesses} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
