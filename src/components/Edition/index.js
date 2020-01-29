@@ -187,8 +187,6 @@ const Edition = ( props)=>{
                                     
                               }
 
-                            
-
                               {sectionID &&
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>

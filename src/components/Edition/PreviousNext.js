@@ -10,11 +10,16 @@ const PreviousNext = ( props )=>{
       const [title, setTitle] = useState();
 
       useEffect( ()=>{
+
             if( !sections || !sectionId)
                   return
-            let yearName = sections.find( s=> { return s.sectionId.toString() === sectionId.toString()}).englishTitle;
-           yearName =  yearName.split("(")[0];
-           setTitle(yearName)
+            let year="";
+            let section = sections.find( s=> { return s.sectionId.toString() === sectionId.toString()})
+            if( !section)
+                  return;
+            year = section.englishTitle.split("(")[0] ? section.englishTitle.split("(")[0] : section.englishTitle;
+          
+           setTitle(year)
 
       }, [sections,sectionId])
 
