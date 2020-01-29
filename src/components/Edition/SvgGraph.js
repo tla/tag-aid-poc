@@ -30,8 +30,7 @@ const SvgGraph =(props)=>{
       useEffect( ()=>{
             if(! props.selectedRank)
                   return;
-            
-            let nodesAtRank = nodeList.filter( n=> {return n.rank === selectedRank})
+            let nodesAtRank = nodeList.filter( n=> {return n.rank === props.selectedRank})
             nodesAtRank.forEach( n=>{
                   const zoomNode = getGraphDOMNode(n.id)
                   if(zoomNode )
@@ -40,7 +39,7 @@ const SvgGraph =(props)=>{
                               return;
                         }
             })
-      },[props.selectedRank])
+      },[props.selectedRank, nodeList])
 
       return (
             <div style={{position:'relative', padding:'16px'}}>
@@ -65,8 +64,6 @@ const SvgGraph =(props)=>{
                   onSelectNode({nodeId:trimmedId, rank: lookUp.rank} );
             }
       }
-
-
 
       function highlightAndSelect() {
             let allGraphNodes = svgRef.current.querySelectorAll("g.node");

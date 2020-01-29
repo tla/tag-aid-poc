@@ -24,7 +24,7 @@ const [isExpanded, setIsExpanded]= useState(false);
 useEffect(()=>{
       let pageName = window.location.hash.split("/")[1]
       setTabIndex(`#/${pageName}`)
-})
+},[])
     
 
 return (
@@ -45,9 +45,9 @@ return (
                                           <List>
                                           {['Home', 'About', 'Methods','Manuscripts','Edition','Visualizations']
                                           .map((text, index) => (
-                                                <Fragment>
-                                                      <a style={{textDecoration:'none'}} href={`#/${text}`}>
-                                                            <ListItem button key={text}>
+                                                <Fragment key={text}>
+                                                      <a  style={{textDecoration:'none'}} href={`#/${text}`}>
+                                                            <ListItem button >
                                                                   <ListItemText primary={text}/>
                                                             </ListItem>
                                                             <Divider />

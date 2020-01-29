@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { Grid } from '@material-ui/core';
+import withWidth from '@material-ui/core/withWidth';
 import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
@@ -9,10 +10,11 @@ import { useParams} from 'react-router-dom'
 import * as DataApi from '../../utils/Api';
 import EditionHeader from './EditionHeader'
 import Hidden from '@material-ui/core/Hidden';
-import withWidth from '@material-ui/core/withWidth';
 import Paper from '@material-ui/core/Paper';
-
-
+import PlayCircleOutlineOutlinedIcon from '@material-ui/icons/PlayCircleOutlineOutlined';
+import IconButton from '@material-ui/core/IconButton';
+import {withRouter} from 'react-router-dom'
+    
 const Edition = ( props)=>{
       
       let {sectionID} = useParams()
@@ -100,9 +102,7 @@ const Edition = ( props)=>{
   
       let textContainerStyle={
             overflowY:'auto', 
-         
             height: graphVisible ? `${viewport.height * .30}px`:`${viewport.height - 170}px`,
-    
       }
 
       return (
@@ -170,9 +170,7 @@ const Edition = ( props)=>{
                                                       /> 
 
                                                 </Paper>
-                                               
-                                               
-                                             
+
                                           </div>
                                           <div > 
                                           <Paper style={{margin:'12px',overflowX:'auto'}}>
@@ -190,11 +188,23 @@ const Edition = ( props)=>{
                                     
                               }
 
-                              <div style={{height:'16px'}}></div>
+                            
 
                               {sectionID &&
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>
+
+                                                <Grid item xs={12} >
+                                                      <div style={{display:'flex', justifyContent:'center',padding:'8px'}}>
+                                                      <IconButton onClick={previousSection} >
+                                                            <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px' ,transform:'rotate(180deg)'}}/>
+                                                      </IconButton>
+                                                      <IconButton  onClick={nextSection} >
+                                                            <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px'}} />
+                                                      </IconButton>
+                                                      </div>
+                                                </Grid> 
+
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
                                                             sections = { sections}
@@ -228,10 +238,6 @@ const Edition = ( props)=>{
                                     </div>
                               } 
 
-
-
-
-
                         </div>
                   </Grid> 
 
@@ -245,11 +251,9 @@ const Edition = ( props)=>{
                         setSelectedRank( null );
                         return;
                   }
-           
                   setSelectedRank( node.rank)
                   setSelectedNode(node);
       }
-
       function handleSelectSentence( start, end ){
 
             const startRank = start.split('-')[0]
@@ -270,7 +274,6 @@ const Edition = ( props)=>{
                   'endId': endNodeId,
            } );
       }
-
       function handleToggleGraph(){
             let toggled = !graphVisible;
             setGraphVisible(toggled)
@@ -287,7 +290,6 @@ const Edition = ( props)=>{
             let toggled = !datesVisible;
             setDatesVisible(toggled)
       }
-
       function handleSelectRank(rank){
             let node = nodeArray.find( n=> { return n.rank.toString() === rank.toString()});
             if ( selectedRank === rank){
@@ -297,6 +299,20 @@ const Edition = ( props)=>{
             setSelectedNode( {nodeId:node.id, rank:rank})
             setSelectedRank( rank)
       }
+      function nextSection(){
+            let index = sections.findIndex( s=>{ return s.sectionId === sectionID});
+            if( index !== sections.length -1)
+                  index++;
+            const next = sections[index];
+            props.history.push(`/Edition/${next.sectionId}`)
+      }
+      function previousSection(){
+            let index = sections.findIndex( s=>{ return s.sectionId === sectionID});
+            if( index !== 0)
+                  index--;
+            const previous = sections[index];
+            props.history.push(`/Edition/${previous.sectionId}`)
+      }
 
 }
-export default withWidth() (Edition)
+export default  withRouter(Edition)

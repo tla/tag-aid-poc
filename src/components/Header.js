@@ -22,7 +22,7 @@ const Header = ( props)=>{
       useEffect(()=>{
             let pageName = window.location.hash.split("/")[1]
             setTabIndex(`#/${pageName}`)
-      })
+      },[])
       
 
       return (

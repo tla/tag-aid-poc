@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import AboutPage from './About';
 import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
@@ -6,20 +6,13 @@ import Edition from './Edition/index';
 import HomePage from './HomePage';
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from './../utils/Viewport';
-import { Grid } from '@material-ui/core';
 import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
-
-
 
 
 const Layout = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses} = props;
-
-      useEffect(()=>{
-            console.log('no witnesses : ', witnesses.length)
-      },[witnesses])
 
       return (
            
