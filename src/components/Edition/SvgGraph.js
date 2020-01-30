@@ -8,39 +8,37 @@ const SvgGraph =(props)=>{
             nodeHash, nodeList, persons, places, dates }=props;
     
       const svgRef = useRef(null);
-    
+   
       useEffect( ()=>{
+            if( props.selectedRank){
+                  let nodesAtRank = nodeList.filter( n=>  n.rank === parseInt(props.selectedRank) )
+                  for( let i=0; i< nodesAtRank.length; i++){
+                        const zoomNode = getGraphDOMNode(nodesAtRank[i].id)
+                        if( zoomNode ){
+                              zoomToNode(zoomNode);
+                              break;
+                        }
+                  }
+            }
             highlightAndSelect();
-      },[selectedRank, selectedSentence, highlightedNode] )
+      },[props.selectedRank, nodeList])
 
       useEffect( ()=>{
-            if(!props.selectedSentence)
-            return;
-            const zoomNode = props.selectedSentence.startId;
-            zoomToNode(zoomNode)
+            if(props.selectedSentence){
+                  const domNode = getGraphDOMNode(props.selectedSentence.startId)
+                  zoomToNode(domNode);
+            }
+            highlightAndSelect();
       },[props.selectedSentence])
 
       useEffect( ()=>{
             if(! props.highlightedNode)
                   return;
-            const zoomNode = props.highlightedNode;
-            zoomToNode(zoomNode.nodeId)
+            const domNode = getGraphDOMNode(props.highlightedNode.nodeId)
+            zoomToNode(domNode)
       },[props.highlightedNode])
 
-      useEffect( ()=>{
-            if(! props.selectedRank)
-                  return;
-            let nodesAtRank = nodeList.filter( n=> {return n.rank === props.selectedRank})
-            nodesAtRank.forEach( n=>{
-                  const zoomNode = getGraphDOMNode(n.id)
-                  if(zoomNode )
-                        {
-                              zoomToNode(n.id);
-                              return;
-                        }
-            })
-      },[props.selectedRank, nodeList])
-
+      
       return (
             <div style={{position:'relative', padding:'16px'}}>
                   <div   
@@ -125,13 +123,13 @@ const SvgGraph =(props)=>{
 
       }
 
-      function zoomToNode(zoomNode){
-            if(zoomNode){
-                  let domNode = getGraphDOMNode(zoomNode);
-                  if(domNode)
+      function zoomToNode(domNode){
+            if(domNode)
                         domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
-            }
+               
       }
+
+      
 
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;

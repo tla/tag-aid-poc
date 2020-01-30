@@ -10,7 +10,7 @@ const RankDisonance = (props)=> {
 
       const { 
             sectionId, 
-            activeNode,
+            highlightedNode,
             selectedRank, 
             selectedSentence, 
             onSelectRank,  
@@ -125,8 +125,14 @@ const RankDisonance = (props)=> {
                         if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
                               color="yellow"
                   }
-                  if( activeNode ) {
-                        if( datum.x.toString() === activeNode.rank.toString() ){
+                  if( highlightedNode ) {
+                        if( datum.x.toString() === highlightedNode.rank.toString() ){
+                              color="red";
+                              return color;
+                        }
+                  }
+                  if( selectedRank ) {
+                        if( datum.x.toString() === selectedRank.toString() ){
                               color="#00a600";
                               return color;
                         }

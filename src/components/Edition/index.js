@@ -68,7 +68,6 @@ const Edition = ( props)=>{
                  });
                  setNodeHash(hash);
                  setNodeArray(list);
-                 console.log( 'set node hash for section', sectionID)
            });
       },[sectionID])
 
@@ -176,7 +175,7 @@ const Edition = ( props)=>{
                                                 <RankDisonance 
                                                       viewport = { viewport }
                                                       sectionId={sectionID}
-                                                      activeNode = { selectedNode}
+                                                      highlightedNode = { selectedNode}
                                                       selectedSentence={selectedSentence}
                                                       selectedRank = { selectedRank}
                                                       onSelectRank = {handleSelectRank}
@@ -198,7 +197,6 @@ const Edition = ( props)=>{
                                                             sections = { sections}
                                                             sectionId = { sectionID }
                                                             />
-                                                      
                                                 </Grid>  
 
                                                 <Grid item xs={12} md={6}>
@@ -250,8 +248,8 @@ const Edition = ( props)=>{
                   setSelectedRank( node.rank)
                   setSelectedNode(node);
       }
-      function handleSelectSentence( start, end ){
 
+      function handleSelectSentence( start, end ){
             const startRank = start.split('-')[0]
             const startNodeId = start.split('-')[1];
             const endRank = end.split('-')[0]
@@ -286,15 +284,16 @@ const Edition = ( props)=>{
             let toggled = !datesVisible;
             setDatesVisible(toggled)
       }
+
       function handleSelectRank(rank){
-            let node = nodeArray.find( n=> { return n.rank.toString() === rank.toString()});
-            if ( selectedRank === rank){
+            if ( selectedRank && selectedRank === rank){
                   setSelectedRank(null);
+                  setSelectedNode(null)
                   return;
             }
-            setSelectedNode( {nodeId:node.id, rank:rank})
             setSelectedRank( rank)
       }
+
       function nextSection(){
             let index = sections.findIndex( s=>{ return s.sectionId === sectionID});
             if( index !== sections.length -1)
@@ -302,6 +301,7 @@ const Edition = ( props)=>{
             const next = sections[index];
             props.history.push(`/Edition/${next.sectionId}`)
       }
+      
       function previousSection(){
             let index = sections.findIndex( s=>{ return s.sectionId === sectionID});
             if( index !== 0)

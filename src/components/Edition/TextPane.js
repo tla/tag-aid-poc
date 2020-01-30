@@ -49,7 +49,6 @@ const TextPane =(props) => {
             }
       }
 
-      //get the title based on sectionId
       useEffect(()=>{
             if(!props.sections)
             return;
@@ -62,7 +61,6 @@ const TextPane =(props) => {
             }
       },[sectionId,props.sections])
 
-
       useEffect(()=>{
             setRawText(null);
             DataApi.getReading(sectionId,props.reading, (html)=>{
@@ -72,7 +70,6 @@ const TextPane =(props) => {
             });
       },[props.sectionId, props.reading])
 
-
       useEffect(()=>{
             setTextHTML(null);
             if(! rawText )
@@ -81,16 +78,6 @@ const TextPane =(props) => {
             setTextHTML(parsed);
       })
 
-      useEffect(()=>{
-            setTextHTML(null);
-            if(! rawText )
-                  return;
-            let parsed =  Parser(rawText, parserOptions);
-            setTextHTML(parsed);
-      },[props.persons])
-
-
-//[ selectedNode, selectedSentence, persons]
       return (
            <div style={{marginRight:'12px'}}>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
