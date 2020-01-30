@@ -127,7 +127,7 @@ const RankDisonance = (props)=> {
                   }
                   if( highlightedNode ) {
                         if( datum.x.toString() === highlightedNode.rank.toString() ){
-                              color="red";
+                              color="#00a600";
                               return color;
                         }
                   }

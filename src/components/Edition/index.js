@@ -208,6 +208,7 @@ const Edition = ( props)=>{
                                                             dates = { dateList}
                                                             reading = {leftReading}
                                                             selectedNode={selectedNode}
+                                                            selectedRank = { selectedRank }
                                                             selectedSentence={selectedSentence}
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
@@ -215,18 +216,19 @@ const Edition = ( props)=>{
                                                 </Grid>
 
                                                 <Grid item xs={12} md={6}>
-                                                <TextPane 
-                                                      sections = { sections}
-                                                      sectionId={sectionID}
-                                                      persons={personList}
-                                                      places = {placeList}
-                                                      dates = { dateList}
-                                                      reading = { rightReading}
-                                                      selectedNode={selectedNode}
-                                                      selectedSentence={selectedSentence}
-                                                      onSelectNode={handleSelectNode}
-                                                      onSelectSentence={handleSelectSentence}
-                                                />
+                                                      <TextPane 
+                                                            sections = { sections}
+                                                            sectionId={sectionID}
+                                                            persons={personList}
+                                                            places = {placeList}
+                                                            dates = { dateList}
+                                                            reading = { rightReading}
+                                                            selectedNode={selectedNode}
+                                                            selectedRank = { selectedRank }
+                                                            selectedSentence={selectedSentence}
+                                                            onSelectNode={handleSelectNode}
+                                                            onSelectSentence={handleSelectSentence}
+                                                      />
                                           </Grid>
                                           </Grid>
                                     </div>
@@ -291,6 +293,7 @@ const Edition = ( props)=>{
                   setSelectedNode(null)
                   return;
             }
+            setSelectedNode(null)
             setSelectedRank( rank)
       }
 
@@ -301,7 +304,7 @@ const Edition = ( props)=>{
             const next = sections[index];
             props.history.push(`/Edition/${next.sectionId}`)
       }
-      
+
       function previousSection(){
             let index = sections.findIndex( s=>{ return s.sectionId === sectionID});
             if( index !== 0)

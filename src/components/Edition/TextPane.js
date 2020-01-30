@@ -29,7 +29,7 @@ const TextPane =(props) => {
                                                       {domToReact(children,parserOptions)}</span>
                                     }
                               } else {
-
+                                    let atRank = props.selectedRank? props.selectedRank === rank : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
                                     let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
                                     let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
@@ -37,7 +37,7 @@ const TextPane =(props) => {
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
                                           color: selected? 'red':'black',
-                                          backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':'transparent'
+                                          backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':atRank?'#00a600':'transparent'
                                     }
                                    
                                           return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank})}} >
