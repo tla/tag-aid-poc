@@ -81,10 +81,10 @@ const TextPane =(props) => {
       return (
            <div style={{marginRight:'12px'}}>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
-                              { enTitle? reading === "Translation" ? enTitle.split("(")[0]:arTitle.split("(")[0] : ''}
+                              { enTitle? reading === "Translation" ? enTitle.split("(")[0]?enTitle.split("(")[0]: enTitle :arTitle.split("(")[0] ? arTitle.split("(")[0] : arTitle : ''}
                         </Typography>
                         <Typography variant="body2" style={{textAlign:'center'}}>
-                              {enTitle? reading ==="Translation" ? `(${enTitle.split("(")[1]}` : `(${arTitle.split("(")[1]}`:''}
+                              {enTitle? reading ==="Translation" ? enTitle.split("(")[1] ? enTitle.split("(")[1].replace(")","") : enTitle : arTitle.split("(")[1] ? arTitle.split("(")[1].replace(")","") :arTitle:''}
                         </Typography>
                     
                       <div style={{whiteSpace:'pre-line',marginTop:'16px', marginLeft:'32px', }}>
