@@ -8,6 +8,10 @@ const SvgGraph =(props)=>{
             nodeHash, nodeList, persons, places, dates }=props;
     
       const svgRef = useRef(null);
+
+      useEffect( ()=>{
+            highlightAndSelect();
+      },[persons, places,dates])
    
       useEffect( ()=>{
             if( props.selectedRank){
@@ -59,7 +63,8 @@ const SvgGraph =(props)=>{
                   const id = nodeGroup.parentNode.id;
                   let trimmedId = id.replace('n','')
                   let lookUp = nodeHash[trimmedId]
-                  onSelectNode({nodeId:trimmedId, rank: lookUp.rank} );
+                  if( lookUp)
+                        onSelectNode({nodeId:trimmedId, rank: lookUp.rank} );
             }
       }
 

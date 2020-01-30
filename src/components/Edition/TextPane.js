@@ -33,7 +33,7 @@ const TextPane =(props) => {
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
                                     let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
                                     let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
-                                    let date = dates? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
+                                    let date = dates ? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
                                           color: selected? 'red':'black',

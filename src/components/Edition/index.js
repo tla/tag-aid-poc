@@ -78,16 +78,16 @@ const Edition = ( props)=>{
             });
             else
                   setPersonList([])
-       },[personsVisible])
+       },[personsVisible, sectionID])
  
        useEffect(()=>{
             if(placesVisible)
-           DataApi.getPlaces(sectionID, (list)=>{
-                 setPlaceList(list)
-           });
+                  DataApi.getPlaces(sectionID, (list)=>{
+                        setPlaceList(list)
+                  });
            else
                  setPlaceList([])
-      },[placesVisible])
+      },[placesVisible, sectionID])
 
       useEffect(()=>{
             if(datesVisible)
@@ -96,7 +96,7 @@ const Edition = ( props)=>{
            });
            else
                  setDateList([])
-      },[datesVisible])
+      },[datesVisible, sectionID])
   
       let textContainerStyle={
             overflowY:'auto', 
