@@ -3,6 +3,8 @@ import TextPane from './Edition/TextPane'
 import Typography from '@material-ui/core/Typography'
 import { Grid } from '@material-ui/core';
 import Header from './Header'
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const HomePage = (props)=> {
       const {sections} = props;
@@ -60,10 +62,22 @@ const HomePage = (props)=> {
                                                       onDeselectNode={()=>{}}
                                                 />
                                           </Grid>
+                                          <Grid item={true} xs={12} style={{textAlign:'center', marginBottom:'48px'}}>
+                                                <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
+                                                      <Typography variant="h5">
+                                                            {"Read on..."}
+                                                      </Typography>
+                                                </Button>
+                                          </Grid>
                                     </Grid>
             </div>         
         </div>
         </Fragment>
     )
+
+    function handleReadOn(){
+
+
+    }
 }
 export default HomePage
