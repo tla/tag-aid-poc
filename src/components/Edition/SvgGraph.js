@@ -1,6 +1,10 @@
-import React, { useEffect, useRef} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SVG from 'react-inlinesvg';
+import {ReactSvgPanZoomLoader} from 'react-svg-pan-zoom-loader'
+import {ReactSVGPanZoom} from 'react-svg-pan-zoom'
 //import {ReactComponent as Sample} from './sample-graph.svg'// also works
+
+
 
 const SvgGraph =(props)=>{
 
@@ -8,11 +12,13 @@ const SvgGraph =(props)=>{
             nodeHash, nodeList, persons, places, dates }=props;
     
       const svgRef = useRef(null);
+      const [tool, setTool ] = useState();
+      const [ pzValue, setPZValue] = useState();
 
       useEffect( ()=>{
             highlightAndSelect();
       },[persons, places,dates])
-   
+
       useEffect( ()=>{
             if( props.selectedRank){
                   let nodesAtRank = nodeList.filter( n=>  n.rank === parseInt(props.selectedRank) )
@@ -43,16 +49,36 @@ const SvgGraph =(props)=>{
       },[props.highlightedNode])
 
       
+      const mel =   (<SVG 
+      src= {`data/${sectionId}/graph.svg`}
+      onClick={handleClick}
+      onLoad = { defaultStart }
+/>)
+
       return (
             <div style={{position:'relative', padding:'16px'}}>
                   <div   
                         className='graphWindow'
-                        ref={svgRef}>
-                              <SVG 
-                                    src= {`data/${sectionId}/graph.svg`}
-                                    onClick={handleClick}
-                                    onLoad = { defaultStart }
-                              />
+                        ref={svgRef}
+                       >
+ 
+
+ <ReactSvgPanZoomLoader   src={`data/${sectionId}/graph.svg`} render= {(content) => (
+      <ReactSVGPanZoom width={1000}   height={238}
+            tool={tool}
+            onChangeTool={tool => setTool(tool)}
+            value={pzValue}
+            onChangeValue={value => setPZValue(value)}
+      
+      
+      >
+          <svg width={1000}  hieght={238}   >
+              {content}
+          </svg>  
+      </ReactSVGPanZoom>
+  )}/>
+
+
                   </div>
             </div>
             )

@@ -75,9 +75,5 @@ const HomePage = (props)=> {
         </Fragment>
     )
 
-    function handleReadOn(){
-
-
-    }
 }
 export default HomePage
