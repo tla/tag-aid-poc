@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SVG from 'react-inlinesvg';
 import {ReactSvgPanZoomLoader} from 'react-svg-pan-zoom-loader'
-import {TOOL_NONE, UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom'
+import {setPointOnViewerCenter, UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom'
 //import {ReactComponent as Sample} from './sample-graph.svg'// also works
 
 
@@ -183,7 +183,7 @@ const SvgGraph =(props)=>{
                        
                        // domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
                        let mel = viewerRef;
-                      // setPointOnViewerCenter(x, y, 12)
+                       setPointOnViewerCenter(x, y, 12)
                   }catch( error ){
                         console.log(error)
                   }
