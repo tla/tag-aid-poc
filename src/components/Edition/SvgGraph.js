@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SVG from 'react-inlinesvg';
 import {ReactSvgPanZoomLoader} from 'react-svg-pan-zoom-loader'
-import {ReactSVGPanZoom} from 'react-svg-pan-zoom'
+import {TOOL_NONE, UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom'
 //import {ReactComponent as Sample} from './sample-graph.svg'// also works
 
 
@@ -12,8 +12,9 @@ const SvgGraph =(props)=>{
             nodeHash, nodeList, persons, places, dates }=props;
     
       const svgRef = useRef(null);
+      const viewerRef = useRef( null);
       const [tool, setTool ] = useState();
-      const [ pzValue, setPZValue] = useState();
+      const [ pzValue, setPZValue] = useState({});
 
       useEffect( ()=>{
             highlightAndSelect();
@@ -63,25 +64,31 @@ const SvgGraph =(props)=>{
                        >
  
 
- <ReactSvgPanZoomLoader   src={`data/${sectionId}/graph.svg`} render= {(content) => (
-      <ReactSVGPanZoom width={1000}   height={238}
-            tool={tool}
-            onChangeTool={tool => setTool(tool)}
-            value={pzValue}
-            onChangeValue={value => setPZValue(value)}
-      
-      
-      >
-          <svg width={1000}  hieght={238}   >
-              {content}
-          </svg>  
-      </ReactSVGPanZoom>
-  )}/>
+                        <ReactSvgPanZoomLoader   src={`data/${sectionId}/graph.svg`} render= {(content) => (
+                              <UncontrolledReactSVGPanZoom width={900}   height={238}
+                                    ref={viewerRef}
+                                 
+                                  
+                                    onClick={handleClickPanZoomViewer}
+                                 
+                              
+                              
+                              >
+                              <svg width={900}  height={238}   >
+                                    {content}
+                              </svg>  
+                              </UncontrolledReactSVGPanZoom>
+                              
+                        )}/>
 
 
                   </div>
             </div>
             )
+
+      function handleClickPanZoomViewer(event){
+           //event.x, event.y, event.originalEvent)
+      }
 
       function handleClick(ev){
             const nodeGroup = ev.target; 
@@ -155,8 +162,34 @@ const SvgGraph =(props)=>{
       }
 
       function zoomToNode(domNode){
-            if(domNode)
-                        domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
+            if(domNode){
+                  try{
+                        if ( ! domNode.childNodes)
+                              return;
+
+                              let x="";
+                              let y="";
+
+
+                        domNode.childNodes.forEach(  item=>{
+                              if(item.cx){
+                                    x = item.cx.baseVal.valueAsString;
+                                    y = item.cy.baseVal.valueAsString;
+                              }
+                              
+                        })
+                    //    let x =  domNode.childNodes.ellipse.attributes.cx.nodeValue;
+                      //  let y = domNode.childNodes.ellipse.attributes.cy.nodeValue;
+                       
+                       // domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
+                       let mel = viewerRef;
+                      // setPointOnViewerCenter(x, y, 12)
+                  }catch( error ){
+                        console.log(error)
+                  }
+               
+            }
+                        
                
       }
 
