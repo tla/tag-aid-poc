@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
-import {VictoryChart, VictoryBar, VictoryContainer, VictoryTheme,
-VictoryTooltip, VictoryAxis , VictoryLabel, VictorySelectionContainer, } from 'victory'
+import {VictoryChart, VictoryBar, VictoryContainer,
+VictoryTooltip, VictoryAxis ,  } from 'victory'
 
 
 

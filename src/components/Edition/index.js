@@ -150,7 +150,7 @@ const Edition = ( props)=>{
                                    
                                     <div>
                                           <div >
-                                               <Paper  style={{margin:'12px',overflowX:'auto', overflowY:'auto',height:`${viewport.height *.30}px`}}
+                                               <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}
                                                 >
                                                        <SvgGraph 
                                                             viewport={viewport}

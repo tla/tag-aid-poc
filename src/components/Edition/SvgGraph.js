@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SVG from 'react-inlinesvg';
-import {ReactSvgPanZoomLoader} from 'react-svg-pan-zoom-loader'
-import {setPointOnViewerCenter, UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom'
-//import {ReactComponent as Sample} from './sample-graph.svg'// also works
-
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
 const SvgGraph =(props)=>{
 
       const {sectionId, highlightedNode, selectedSentence, selectedRank, onSelectNode, 
-            nodeHash, nodeList, persons, places, dates }=props;
+            nodeHash, nodeList, persons, places, dates ,
+          }=props;
     
       const svgRef = useRef(null);
-      const viewerRef = useRef( null);
-      const [tool, setTool ] = useState();
-      const [ pzValue, setPZValue] = useState({});
+  
 
       useEffect( ()=>{
             highlightAndSelect();
@@ -49,47 +45,74 @@ const SvgGraph =(props)=>{
             zoomToNode(domNode)
       },[props.highlightedNode])
 
-      
-      const mel =   (<SVG 
-      src= {`data/${sectionId}/graph.svg`}
-      onClick={handleClick}
-      onLoad = { defaultStart }
-/>)
-
-      return (
-            <div style={{position:'relative', padding:'16px'}}>
-                  <div   
-                        className='graphWindow'
-                        ref={svgRef}
-                       >
  
 
-                        <ReactSvgPanZoomLoader   src={`data/${sectionId}/graph.svg`} render= {(content) => (
-                              <UncontrolledReactSVGPanZoom width={900}   height={238}
-                                    ref={viewerRef}
-                                 
-                                  
-                                    onClick={handleClickPanZoomViewer}
-                                 
-                              
-                              
-                              >
-                              <svg width={900}  height={238}   >
-                                    {content}
-                              </svg>  
-                              </UncontrolledReactSVGPanZoom>
-                              
-                        )}/>
+      return (
+
+         
+            <div style={{position:'relative', padding:'16px'}}>
+                       
+                  <div   
+                    
+                        ref={svgRef}
+                       >
 
 
+                  <TransformWrapper
+
+              
+      options={{
+            limitToBounds:false,
+            transformEnabled:true,
+            disabled:false,
+            limitToWrapper:false,
+          }}
+                        pan={{
+                              disabled: false,
+                              lockAxisX:false,
+                              lockAxisY:false,
+                             
+                        }}
+
+                        wheel={{
+                            step:8,
+                            limitsOnWheel:false
+                            }}
+                           
+                  >
+                       { ({
+                              zoomIn,
+                              zoomOut,
+                              resetTransform,
+                       })=>(
+
+          <React.Fragment>
+             <div style={{zIndex:'99',position:'sticky',top:'0px',left:'0px'}}>
+                              <button onClick={zoomIn}>+</button>
+                              <button onClick={zoomOut}>-</button>
+                              <button onClick={resetTransform}>x</button>
+                        </div>
+            <TransformComponent     style={{cursor:'move'}}>
+                        <SVG 
+                                          src= {`data/${sectionId}/graph.svg`}
+                                          style={{cursor:'move'}}
+                                          onClick={handleClick}
+                                          onLoad = { defaultStart }
+                               />   
+            </TransformComponent>
+          </React.Fragment>
+        )}
+
+
+                      
+                  </TransformWrapper>
+ 
                   </div>
             </div>
+           
             )
 
-      function handleClickPanZoomViewer(event){
-           //event.x, event.y, event.originalEvent)
-      }
-
+      
       function handleClick(ev){
             const nodeGroup = ev.target; 
             if (nodeGroup != null) {
@@ -162,37 +185,13 @@ const SvgGraph =(props)=>{
       }
 
       function zoomToNode(domNode){
-            if(domNode){
-                  try{
-                        if ( ! domNode.childNodes)
-                              return;
 
-                              let x="";
-                              let y="";
-
-
-                        domNode.childNodes.forEach(  item=>{
-                              if(item.cx){
-                                    x = item.cx.baseVal.valueAsString;
-                                    y = item.cy.baseVal.valueAsString;
-                              }
-                              
-                        })
-                    //    let x =  domNode.childNodes.ellipse.attributes.cx.nodeValue;
-                      //  let y = domNode.childNodes.ellipse.attributes.cy.nodeValue;
-                       
-                       // domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
-                       let mel = viewerRef;
-                       setPointOnViewerCenter(x, y, 12)
-                  }catch( error ){
-                        console.log(error)
-                  }
-               
-            }
-                        
+             if(domNode)
+                        domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
                
       }
 
+    
       
 
       function getGraphDOMNode(nodeId){
