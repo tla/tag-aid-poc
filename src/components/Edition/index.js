@@ -34,7 +34,7 @@ const Edition = ( props)=>{
       const [datesVisible, setDatesVisible] = useState(false);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
-      const [isExpanded, setIsExpanded] = useState(true);
+      const [isExpanded, setIsExpanded] = useState(false);
 
       useEffect(()=>{
             setSelectedSentence(null);
@@ -168,8 +168,9 @@ const Edition = ( props)=>{
                                                 </Paper>
                                           </div>
                                           <div > 
-                                                <Paper style={{margin:'12px',overflowX:'hidden'}}>
+                                                <Paper style={{margin:'12px',overflowX:'hidden', overflowY:'hidden', position:'relative'}}>
                                                       <RankDisonance 
+                                                           
                                                             viewport = { viewport }
                                                             sectionId={sectionID}
                                                             highlightedNode = { selectedNode}
