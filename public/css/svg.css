@@ -2,7 +2,6 @@ svg {
   height: 100%;
 }
 svg g.node {
-  fill:#fff;
   stroke: #000;
   transition: stroke 700ms;
 }

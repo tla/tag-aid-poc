@@ -45,73 +45,43 @@ const SvgGraph =(props)=>{
             zoomToNode(domNode)
       },[props.highlightedNode])
 
- 
 
       return (
-
-         
             <div style={{position:'relative', padding:'16px'}}>
-                       
-                  <div   
-                    
-                        ref={svgRef}
-                       >
-
-
+                  <div ref={svgRef}>
                   <TransformWrapper
-
-              
-      options={{
-            limitToBounds:false,
-            transformEnabled:true,
-            disabled:false,
-            limitToWrapper:false,
-          }}
+                        options={{
+                              limitToBounds:false,
+                              transformEnabled:true,
+                              disabled:false,
+                              limitToWrapper:false,
+                        }}
                         pan={{
                               disabled: false,
                               lockAxisX:false,
                               lockAxisY:false,
-                             
                         }}
-
                         wheel={{
-                            step:8,
-                            limitsOnWheel:false
-                            }}
-                           
+                              step:8,
+                              limitsOnWheel:false
+                              }}
                   >
-                       { ({
-                              zoomIn,
-                              zoomOut,
-                              resetTransform,
-                       })=>(
-
-          <React.Fragment>
-             <div style={{zIndex:'99',position:'sticky',top:'0px',left:'0px'}}>
-                              <button onClick={zoomIn}>+</button>
-                              <button onClick={zoomOut}>-</button>
-                              <button onClick={resetTransform}>x</button>
-                        </div>
-            <TransformComponent     style={{cursor:'move'}}>
-                        <SVG 
-                                          src= {`data/${sectionId}/graph.svg`}
-                                          style={{cursor:'move'}}
-                                          onClick={handleClick}
-                                          onLoad = { defaultStart }
-                               />   
-            </TransformComponent>
-          </React.Fragment>
-        )}
-
-
-                      
+                                    <div  style={{position:'relative'}}>
+                                          <TransformComponent >
+                                                <SVG 
+                                                            src= {`data/${sectionId}/graph.svg`}
+                                                            style={{cursor:'grab'}}
+                                                            onClick={handleClick}
+                                                            onLoad = { defaultStart }
+                                                />   
+                                          </TransformComponent>
+                                    </div>
+                              
                   </TransformWrapper>
- 
                   </div>
-            </div>
-           
-            )
-
+            </div>  
+       )
+            
       
       function handleClick(ev){
             const nodeGroup = ev.target; 
@@ -173,8 +143,7 @@ const SvgGraph =(props)=>{
                   if( isRank ) {
                         classNames += " disonance"
                   }
-                       
-                  
+
                   if( isSelectedNode)
                         classNames += " active";
 
