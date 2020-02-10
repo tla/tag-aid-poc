@@ -136,7 +136,7 @@ const Edition = ( props)=>{
                                     <div style={{height:'16px'}}></div>
 
                                   <SectionList 
-                                         parentHeight={isExpanded ? ` ${viewport.height - 630}px` : ` ${viewport.height -216}px`}
+                                          parentHeight={isExpanded ? ` ${viewport.height - 630}px` : ` ${viewport.height -216}px`}
                                           sectionId={sectionID}
                                           list ={sections}
                                      />  
@@ -150,8 +150,7 @@ const Edition = ( props)=>{
                                    
                                     <div>
                                           <div >
-                                               <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}
-                                                >
+                                               <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}>
                                                        <SvgGraph 
                                                             viewport={viewport}
                                                             sectionId={sectionID}
@@ -166,21 +165,19 @@ const Edition = ( props)=>{
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
                                                       /> 
-
                                                 </Paper>
-
                                           </div>
                                           <div > 
-                                          <Paper style={{margin:'12px',overflowX:'auto'}}>
-                                                <RankDisonance 
-                                                      viewport = { viewport }
-                                                      sectionId={sectionID}
-                                                      highlightedNode = { selectedNode}
-                                                      selectedSentence={selectedSentence}
-                                                      selectedRank = { selectedRank}
-                                                      onSelectRank = {handleSelectRank}
-                                                /> 
-                                          </Paper>
+                                                <Paper style={{margin:'12px',overflowX:'hidden'}}>
+                                                      <RankDisonance 
+                                                            viewport = { viewport }
+                                                            sectionId={sectionID}
+                                                            highlightedNode = { selectedNode}
+                                                            selectedSentence={selectedSentence}
+                                                            selectedRank = { selectedRank}
+                                                            onSelectRank = {handleSelectRank}
+                                                      /> 
+                                                </Paper>
                                           </div>
                                     </div>
                                     

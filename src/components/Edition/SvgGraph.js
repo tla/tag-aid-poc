@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SVG from 'react-inlinesvg';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, 
+      TransformComponent } from "react-zoom-pan-pinch";
 
 
 const SvgGraph =(props)=>{
@@ -82,7 +83,7 @@ const SvgGraph =(props)=>{
             </div>  
        )
             
-      
+
       function handleClick(ev){
             const nodeGroup = ev.target; 
             if (nodeGroup != null) {
@@ -154,14 +155,9 @@ const SvgGraph =(props)=>{
       }
 
       function zoomToNode(domNode){
-
              if(domNode)
                         domNode.scrollIntoView({behavior:'smooth', inline:'center',block:'center'});
-               
       }
-
-    
-      
 
       function getGraphDOMNode(nodeId){
             const graphRef = svgRef.current;
@@ -186,10 +182,6 @@ const SvgGraph =(props)=>{
             let found =  graphRef.querySelector(selector);
             return found;
       }
-
-
- 
-
 
 }
 export default SvgGraph

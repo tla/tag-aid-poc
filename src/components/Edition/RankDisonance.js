@@ -2,7 +2,8 @@ import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
 import {VictoryChart, VictoryBar, VictoryContainer,
 VictoryTooltip, VictoryAxis ,  } from 'victory'
-
+import { TransformWrapper, 
+      TransformComponent } from "react-zoom-pan-pinch";
 
 const RankDisonance = (props)=> {
 
@@ -12,6 +13,7 @@ const RankDisonance = (props)=> {
             selectedRank, 
             selectedSentence, 
             onSelectRank,  
+            viewport
           } = props;
       const [chartData, setChartData] = useState();
      
@@ -49,68 +51,68 @@ const RankDisonance = (props)=> {
       return (
             <div style={{height:'155px'}}>
             {
-                  chartData &&    
-                  <VictoryChart
-                        title="Rank Disonance"
-                       height={300}
-                       domainPadding={{ x: 6 }}
-                        padding={{ top: 6, bottom: 3, left: 40, right: 12 }}
-                        containerComponent={<VictoryContainer responsive={true} /> }
-                        width={chartData.length * 15 + 100}
-                        scale={{ x: "linear", y: "linear" }}
-                        >
-                                <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
-                                <VictoryAxis tickCount = {6} dependentAxis style={yaxisStyle} 
-                                          ></VictoryAxis>
-                        <VictoryBar
-                              style={{
-                                    data: { 
-                                         
-                                                fill: ({datum})=>  getBarColor(datum) 
-                                          },
-                                    parent: { border: "1px solid #ccc"},
-                                   
+                  chartData &&  
+                  <TransformWrapper
+                        options={{
+                              limitToBounds:false,
+                              transformEnabled:true,
+                              disabled:false,
+                              limitToWrapper:false,
+                        }}
+                        pan={{
+                              disabled: false,
+                              lockAxisX:false,
+                              lockAxisY:false,
+                        }}
+                        wheel={{
+                              step:8,
+                              limitsOnWheel:false
                               }}
-                             
-                            
-                              barRatio={.7}
-                              data={chartData}
-                              labels={({ datum }) => datum.label}
-                              events = {[
-                                    {
-                                          childName: "bar",
-                                          target: "data",
-                                          eventHandlers: {
-                                                onClick: (event, props, key)=>{
-                                                 
-                                                           return  onSelectRank(key)
-                                                      // return [
-                                                      //       {
-                                                      //             eventKey:[lastSelected],
-                                                      //             mutation: () => {
-                                                      //                   return { style: { fill: "#550C18"} };
-                                                      //             }   
-                                                      //       },
-                                                      //       {
-                                                      //             mutation: () => {
-                                                      //                   return { style: { fill: selectedFill} };
-                                                      //             }// end mutation
-                                                      //       }// end second onclick handler
-                                                      // ]
-                                                }// end onClick
-                                          }// end event handlers</VictoryChart>
-
-                                    }
-                              ]}
-                              labelComponent={
-                                    <VictoryTooltip   />
-                              }
+                  >
+                    <TransformComponent >
+                          <div   style={{cursor:'grab'}}>
+                        <VictoryChart
+                              title="Rank Disonance"
+                              domainPadding={{ x: 6 }}
+                              padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
+                              containerComponent={<VictoryContainer responsive={true} /> }
+                              height={viewport.height * .23}
+                              width={chartData.length * 15 + 100}
+                              scale={{ x: "linear", y: "linear" }}
+                              
                               >
-
-               
-                        </VictoryBar>
-
-                  </VictoryChart>
+                                    <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
+                                    <VictoryAxis tickCount = {6} dependentAxis style={yaxisStyle} 
+                                                ></VictoryAxis>
+                                          <VictoryBar
+                                                style={{
+                                                      data: { 
+                                                            fill: ({datum})=>  getBarColor(datum) 
+                                                            },
+                                                      parent: { border: "1px solid #ccc"},
+                                                }}
+                                                barRatio={.7}
+                                                data={chartData}
+                                                labels={({ datum }) => datum.label}
+                                                events = {[
+                                                      {
+                                                            childName: "bar",
+                                                            target: "data",
+                                                            eventHandlers: {
+                                                                  onClick: (event, props, key)=>{
+                                                                        return  onSelectRank(key)
+                                                                  }// end onClick
+                                                            }// end event handlers</VictoryChart>
+                                                      }
+                                                ]}
+                                                labelComponent={
+                                                      <VictoryTooltip   />
+                                                      }
+                                          ></VictoryBar>
+                        </VictoryChart>
+                        </div>
+                  </TransformComponent>
+            </TransformWrapper>
             }
             </div>
             );
