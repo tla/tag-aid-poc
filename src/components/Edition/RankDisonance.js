@@ -78,10 +78,8 @@ const RankDisonance = (props)=> {
                               domainPadding={{ x: 6 }}
                               padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
                               containerComponent={<VictoryContainer responsive={true} 
-                            
-                              
                               /> }
-                              height={viewport.height * .17}
+                             
                               width={chartData.length * 15 + 100}
                               scale={{ x: "linear", y: "linear" }}
                               
