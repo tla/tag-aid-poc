@@ -4,8 +4,6 @@ import {VictoryChart, VictoryBar, VictoryContainer,
 VictoryTooltip, VictoryAxis ,  } from 'victory'
 
 
-
-
 const RankDisonance = (props)=> {
 
       const { 
@@ -48,17 +46,16 @@ const RankDisonance = (props)=> {
             
           };
 
-
       return (
             <div style={{height:'155px'}}>
             {
                   chartData &&    
                   <VictoryChart
                         title="Rank Disonance"
-                       height={150}
+                       height={300}
                        domainPadding={{ x: 6 }}
                         padding={{ top: 6, bottom: 3, left: 40, right: 12 }}
-                        containerComponent={<VictoryContainer responsive={false} /> }
+                        containerComponent={<VictoryContainer responsive={true} /> }
                         width={chartData.length * 15 + 100}
                         scale={{ x: "linear", y: "linear" }}
                         >
