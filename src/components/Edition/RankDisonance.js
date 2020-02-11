@@ -38,7 +38,7 @@ const RankDisonance = (props)=> {
             grid:    {stroke:  "transparent", } ,
             axis: { stroke: "grey" },
             ticks: { stroke: "transparent" },
-            tickLabels: { fill: "none" }
+            tickLabels: { fill: "none"}
       };
 
       const yaxisStyle = {
@@ -89,7 +89,8 @@ const RankDisonance = (props)=> {
                                                       }
                                                 ]}
                                                 labelComponent={
-                                                      <VictoryTooltip   />
+                                                      
+                                                      <VictoryTooltip pointerLength={4} pointerWidth={4} style={{fontSize:5}}/>
                                                       }
                                           ></VictoryBar>
                         </VictoryChart>

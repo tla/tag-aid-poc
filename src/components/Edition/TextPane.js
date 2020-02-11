@@ -80,6 +80,9 @@ const TextPane =(props) => {
 
       return (
            <div style={{marginRight:'12px'}}>
+                        <Typography variant="body1" style={{textAlign:'center'}}>
+                              {reading}
+                        </Typography>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
                               { enTitle? reading === "Translation" ? enTitle.split("(")[0]?enTitle.split("(")[0]: enTitle :arTitle.split("(")[0] ? arTitle.split("(")[0] : arTitle : ''}
                         </Typography>

@@ -2,6 +2,14 @@ import React, { useEffect, useState} from 'react'
 import PlayCircleOutlineOutlinedIcon from '@material-ui/icons/PlayCircleOutlineOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
+const buttonStyles = {
+      cleanButton:{
+                        outline:'none'
+                  }
+     
+}
 
 const PreviousNext = ( props )=>{
 
@@ -27,13 +35,13 @@ const PreviousNext = ( props )=>{
       return (
 
             <div style={{display:'flex', justifyContent:'center',padding:'8px'}}>
-                  <IconButton onClick={onPrevious} style={{margin:'2px 10px'}}>
+                  <IconButton  onClick={onPrevious} style={{margin:'2px 10px', outline:'none'}}>
                         <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px' ,transform:'rotate(180deg)'}}/>
                   </IconButton>
                   <Typography variant = "h5" style={{marginTop:'20px'}}>
                         {title}
                   </Typography>
-                  <IconButton  onClick={onNext} style={{margin:'2px 10px'}}>
+                  <IconButton  onClick={onNext} style={{margin:'2px 10px',outline:'none'}}>
                         <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px'}} />
                   </IconButton>
             </div>
@@ -44,4 +52,4 @@ const PreviousNext = ( props )=>{
 
 }
 
-export default PreviousNext
+export default withStyles(buttonStyles) (PreviousNext)
