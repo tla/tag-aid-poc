@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
 import {VictoryChart, VictoryBar, VictoryContainer,
 VictoryTooltip, VictoryAxis ,  } from 'victory'
-import { TransformWrapper, 
-      TransformComponent } from "react-zoom-pan-pinch";
+
 
 const RankDisonance = (props)=> {
 
@@ -46,47 +45,28 @@ const RankDisonance = (props)=> {
             grid:    {stroke:  "#E9E4E8", } ,
             axis: { stroke: "grey" },
             ticks: { stroke: "grey" },
-            
+            tickLabels: {fontSize: 5},
       };
 
       return (
             <div style={{ height:viewport.height * .18, display:'flex', flexDirection:'column', justifyContent:'center'}}>
             {
                   chartData &&  
-                  <TransformWrapper
-                 
-                        options={{
-                              limitToBounds:false,
-                              transformEnabled:true,
-                              disabled:false,
-                              limitToWrapper:false,
-                        }}
-                        pan={{
-                              disabled: false,
-                              lockAxisX:false,
-                              lockAxisY:false,
-                        }}
-                        wheel={{
-                              step:8,
-                              limitsOnWheel:false
-                              }}
-                  >
-                    <TransformComponent >
-                          <div   style={{cursor:'grab' }}>
+               
+                          <div   style={{height:'144'}}>
                         <VictoryChart
                               title="Rank Disonance"
                               domainPadding={{ x: 6 }}
                               padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
                               containerComponent={<VictoryContainer responsive={true} 
                               /> }
-                             
-                              width={chartData.length * 15 + 100}
+                           height={50}
+                              width={400}
                               scale={{ x: "linear", y: "linear" }}
-                              
                               >
                                     <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
-                                    <VictoryAxis tickCount = {6} dependentAxis style={yaxisStyle} 
-                                                ></VictoryAxis>
+                                    <VictoryAxis  dependentAxis style={yaxisStyle} 
+                                             ></VictoryAxis>
                                           <VictoryBar
                                                 style={{
                                                       data: { 
@@ -114,8 +94,7 @@ const RankDisonance = (props)=> {
                                           ></VictoryBar>
                         </VictoryChart>
                         </div>
-                  </TransformComponent>
-            </TransformWrapper>
+          
             }
             </div>
             );

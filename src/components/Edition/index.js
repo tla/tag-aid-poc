@@ -108,12 +108,15 @@ const Edition = ( props)=>{
             <Grid container={true} spacing={0} >
 
                    <Grid id="edition-header" item xs={12} >
-                        <EditionHeader />
+                         <div style={{height: '100px'}}>
+                         <EditionHeader />
+                         </div>
+                        
                   </Grid>  
              
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                               <div >
+                               <div style={{height: isExpanded?'480px':'80px', }}>
                                      <ViewOptions 
                                           viewport = {viewport}
                                           witnesses = {witnesses}
@@ -131,12 +134,13 @@ const Edition = ( props)=>{
                                           onSelectRightReading={setRightReading}
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
-                                    /> 
-                              
-                                    <div style={{height:'16px'}}></div>
-
+                                    />
+                              </div> 
+                             <div style={{height:'16px'}}></div>
+                       
+                              <div style={{height: isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}}>
                                   <SectionList 
-                                          parentHeight={isExpanded ? ` ${viewport.height - 630}px` : ` ${viewport.height -216}px`}
+                                          height={isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}
                                           sectionId={sectionID}
                                           list ={sections}
                                      />  
