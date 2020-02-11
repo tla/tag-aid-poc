@@ -90,7 +90,10 @@ const RankDisonance = (props)=> {
                                                 ]}
                                                 labelComponent={
                                                       
-                                                      <VictoryTooltip pointerLength={4} pointerWidth={4} style={{fontSize:5}}/>
+                                                      <VictoryTooltip 
+                                                       constrainToVisibleArea 
+                                                     pointerOrientation={"bottom"}
+                                                      pointerLength={4} pointerWidth={4} style={{fontSize:5}}/>
                                                       }
                                           ></VictoryBar>
                         </VictoryChart>

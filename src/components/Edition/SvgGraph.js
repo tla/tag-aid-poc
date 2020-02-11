@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef} from 'react'
 import SVG from 'react-inlinesvg';
-import { TransformWrapper, 
-      TransformComponent } from "react-zoom-pan-pinch";
-
+import panzoom from 'panzoom'
 
 const SvgGraph =(props)=>{
 
@@ -12,6 +10,9 @@ const SvgGraph =(props)=>{
     
       const svgRef = useRef(null);
   
+          useEffect(()=>{
+                panzoom(svgRef.current)
+          },[])
 
       useEffect( ()=>{
             highlightAndSelect();
@@ -50,35 +51,17 @@ const SvgGraph =(props)=>{
       return (
             <div style={{position:'relative', padding:'16px'}}>
                   <div ref={svgRef}>
-                  <TransformWrapper
-                        options={{
-                              limitToBounds:false,
-                              transformEnabled:true,
-                              disabled:false,
-                              limitToWrapper:false,
-                        }}
-                        pan={{
-                              disabled: false,
-                              lockAxisX:false,
-                              lockAxisY:false,
-                        }}
-                        wheel={{
-                              step:8,
-                              limitsOnWheel:false
-                              }}
-                  >
-                                    <div  style={{position:'relative'}}>
-                                          <TransformComponent >
+                
                                                 <SVG 
                                                             src= {`data/${sectionId}/graph.svg`}
                                                             style={{cursor:'grab'}}
                                                             onClick={handleClick}
                                                             onLoad = { defaultStart }
                                                 />   
-                                          </TransformComponent>
-                                    </div>
+                                          
+                                 
                               
-                  </TransformWrapper>
+                
                   </div>
             </div>  
        )
