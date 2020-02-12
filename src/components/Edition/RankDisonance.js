@@ -76,7 +76,8 @@ const RankDisonance = (props)=> {
                                                 }}
                                                 barRatio={.7}
                                                 data={chartData}
-                                                labels={({ datum }) => datum.label}
+                                               labels={[]}
+                                               style={{ labels: { display:"none"} }}
                                                 events = {[
                                                       {
                                                             childName: "bar",
@@ -88,13 +89,6 @@ const RankDisonance = (props)=> {
                                                             }// end event handlers</VictoryChart>
                                                       }
                                                 ]}
-                                                labelComponent={
-                                                      
-                                                      <VictoryTooltip 
-                                                       constrainToVisibleArea 
-                                                     pointerOrientation={"bottom"}
-                                                      pointerLength={4} pointerWidth={4} style={{fontSize:5}}/>
-                                                      }
                                           ></VictoryBar>
                         </VictoryChart>
                         </div>

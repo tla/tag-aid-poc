@@ -28,7 +28,7 @@ const Edition = ( props)=>{
       const [dateList, setDateList] = useState([]);
       const [nodeHash, setNodeHash] =useState();
       const [nodeArray, setNodeArray] = useState([]);
-      const [graphVisible, setGraphVisible] = useState(true);
+      const [graphVisible, setGraphVisible] = useState(false);
       const [personsVisible, setPersonsVisible] = useState(false);
       const [placesVisible, setPlacesVisible] = useState(false);
       const [datesVisible, setDatesVisible] = useState(false);
@@ -105,20 +105,20 @@ const Edition = ( props)=>{
 
       return (
             
-            <Grid container={true} spacing={0} >
+            <Grid container spacing={0} >
 
-                   <Grid id="edition-header" item xs={12} >
-                         <div style={{height: '100px'}}>
-                         <EditionHeader />
-                         </div>
-                        
+                   <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
+                       
+                              <EditionHeader />
                   </Grid>  
              
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                               <div style={{height: isExpanded?'480px':'80px', }}>
+                              <div style={{display:'flex', flexDirection:'column'}}>
+                              
                                      <ViewOptions 
-                                          viewport = {viewport}
+                                          height={isExpanded?'500px':'80px'}
+                                          viewport={viewport}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
@@ -135,16 +135,16 @@ const Edition = ( props)=>{
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
                                     />
-                              </div> 
-                             <div style={{height:'16px'}}></div>
+                             
+                                    <div style={{height:'8px'}}></div>
                        
-                              <div style={{height: isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}}>
-                                  <SectionList 
-                                          height={isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}
-                                          sectionId={sectionID}
-                                          list ={sections}
-                                     />  
-                              </div> 
+                              
+                              <SectionList 
+                                    height={isExpanded ? ` ${viewport.height - 662 > 0 ? viewport.height - 662 : 0}px` : ` ${viewport.height - 230}px`}
+                                    sectionId={sectionID}
+                                    list ={sections}
+                                    />  
+                        </div>      
                   </Grid>
                   </Hidden> 
 
@@ -316,4 +316,4 @@ const Edition = ( props)=>{
       }
 
 }
-export default  withRouter(Edition)
+export default  withWidth() (withRouter(Edition) )

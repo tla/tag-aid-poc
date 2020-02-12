@@ -44,8 +44,8 @@ const Header = ( props)=>{
                                           {['Home', 'About', 'Methods','Manuscripts','Edition','Visualizations']
                                           .map((text, index) => (
                                                 <Fragment>
-                                                      <a style={{textDecoration:'none'}} href={`#/${text}`}>
-                                                            <ListItem button key={text}>
+                                                      <a key={text} style={{textDecoration:'none'}} href={`#/${text}`}>
+                                                            <ListItem button >
                                                                   <ListItemText primary={text}/>
                                                             </ListItem>
                                                             <Divider />

@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const ViewOptions =(props)=>{
 
-      const {onToggleGraph, graphVisible, viewport,
+      const {onToggleGraph, graphVisible, height, viewport,
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
             personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates,
       isExpanded, setIsExpanded} = props;
@@ -22,17 +22,17 @@ const ViewOptions =(props)=>{
    
 
       return (
-            <div style={{marginTop:'8px', marginLeft:'8px'}}>
-                  <ExpansionPanel  
+          
+                  <ExpansionPanel  style={{marginTop:'8px', marginLeft:'8px', height:height}}
                         expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
-                              <Typography variant="h5" >
+                              <Typography variant="h5" style={{overflow:'hidden'}}>
                                     {'View Options'}
                               </Typography>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails style={{display:'flex', flexDirection:'column', }}>
+                        <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',padding:'8px 8px 0px 16px' }}>
 
                               <div>
                                     <FormControlLabel
@@ -46,6 +46,7 @@ const ViewOptions =(props)=>{
                                           label="Display Graph"
                                     />
                               </div> 
+
                               <div style={{height:'16px'}}></div>
 
                               <div>
@@ -109,27 +110,25 @@ const ViewOptions =(props)=>{
                               </div>
                               <div style={{height:'8px'}}></div>
                               <div >
-                                                <FormControl >
-                                                      <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
-                                                            <Select style={{width:viewport.width * .12}}
-                                                                  value={rightReading}
-                                                                  onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
-                                                            >
-                                                                  {
-                                                                        witnesses.map(witness=>{
-                                                                              return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
-                                                                        })
-                                                                  }
-                                                            </Select>
-                                                </FormControl>
-                                          </div>
-                           
+                                    <FormControl style={{width:'200px'  }}>
+                                          <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
+                                                <Select style={{width:viewport.width * .12,marginBottom:'16px'}}
+                                                      value={rightReading}
+                                                      onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
+                                                >
+                                                      {
+                                                            witnesses.map(witness=>{
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
+                                                            })
+                                                      }
+                                                </Select>
+                                    </FormControl>
+                              </div>
+                             
 
                         </ExpansionPanelDetails>
                   </ExpansionPanel>
-                 
-
-            </div>
+ 
       )
 
       

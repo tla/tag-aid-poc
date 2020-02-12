@@ -28,15 +28,13 @@ useEffect(()=>{
     
 
 return (
-      <Grid container spacing={0}>
-            <div  item xs={12} className="header" >
-
-            <div item xs={12}>
+      <Grid container spacing={0} style={{maxHeight:'112px'}}>
+                  <div  item xs={12} className="header" >
                         <Typography variant="h5" style={{padding:'12px 42px'}}>
                               The Chronicle of Matthew of Edessa
                         </Typography>
                   </div>
-                  <Hidden mdUp>
+                   <Hidden mdUp>
                               <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa' }}>
                                     <IconButton edge="start" onClick={()=>{setIsExpanded(true)}}>
                                           <MenuIcon />
@@ -62,7 +60,13 @@ return (
                   
                   <Hidden smDown>
                               <div item md={12 }>
-                                           <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
+                                         
+                                           <AppBar  style={{backgroundColor:'#f8f9fa' }}>
+                                           <div   className="header" >
+                                                <Typography variant="h5" style={{padding:'12px 42px',color:'black'}}>
+                                                      The Chronicle of Matthew of Edessa
+                                                </Typography>
+                                          </div>
                                                       <div style={{display:'flex', justifyContent:'flex-end',}}>
                                                             <Tabs value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
                                                                   <Tab  label="Home" href="/" value="#/" />
@@ -77,10 +81,8 @@ return (
                                           </AppBar> 
                               </div>
                   </Hidden>  
+         
             
-            
-            
-            </div>
       </Grid>
 )
 
