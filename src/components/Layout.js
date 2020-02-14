@@ -4,6 +4,7 @@ import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
 import Edition from './Edition/index';
 import HomePage from './HomePage';
+import EditionLanding from './EditionLanding'
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from './../utils/Viewport';
 import ChronicleTheme from './Theme';
@@ -24,7 +25,7 @@ const Layout = ( props)=>{
                                     <Edition  sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition" >
-                                    <Edition   sections={sections}  viewport={viewport}  witnesses = { witnesses} />
+                                    <EditionLanding   sections={sections}  viewport={viewport}  witnesses = { witnesses} />
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 

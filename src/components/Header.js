@@ -66,7 +66,7 @@ const Header = ( props)=>{
                                                             <Tab label="About" href="#/About"  value="#/About"  />
                                                             <Tab label="Methods"  href="#/Methods" value="#/Methods" />
                                                             <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                                            <Tab label="Edition" href="#/Edition/1019321"    value="#/Edition"   />
+                                                            <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
                                                             <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
                                                       </Tabs>
                                           </div>
