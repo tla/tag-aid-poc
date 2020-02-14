@@ -19,33 +19,15 @@ const EditionLanding = ( props)=>{
            
       }
 
-      const paperStyle={
-            
-            textAlign:'center'
-      }
-
-
-
       return (
             <Grid container >
                   <Grid item>
                         <Header  />
                   </Grid>
                   <Grid item xs={12}>
-                        
+                
                               <Grid container alignItems="center" direction="column">
 
-
-                                    {/* <Grid item xs={12} >
-                                         
-                                                <Typography variant="body2" style={{textAlign:'right'}}>
-                                                      {"Download the Armenian text as JSON or TEI"}
-                                                </Typography>
-                                         
-                                    </Grid> */}
-                                          
-                                          
-                                          
                                           <Grid item xs={12}>
                                                 <Typography variant="h4" style={{textAlign:'center',margin:'50px 0px 30px 0px', fontWeight:'900'}}>
                                                       {"Critical Edition"}
@@ -62,7 +44,8 @@ const EditionLanding = ( props)=>{
                                                 
                                           </Grid>
                                           <Grid item xs={12} md={8} >
-                                                <Typography variant="body2" style={{textAlign:'justify', padding:"6px 12px"}}>
+                                               
+                                                <Typography variant="body2" style={{textAlign:'justify', padding:"6px 12px", marginBottom:'30px'}}>
                                                       μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος
                                                       οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε,
                                                       πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν
@@ -86,9 +69,14 @@ const EditionLanding = ( props)=>{
                                                       ἁζόμενοι Διὸς υἱὸν ἑκηβόλον Ἀπόλλωνα.
                                                       ἔνθ᾽ ἄλλοι μὲν πάντες ἐπευφήμησαν Ἀχαιοὶ
                                                 </Typography>
+                                                <Typography variant="body2" style={{float:'right', marginBottom:"6px"}}>
+                                                     Download the Armenian text as JSON or TEI
+                                                </Typography>
                                           </Grid>
                                         
-                                               
+                                        
+                            
+                                                  
                                       
                                           <Grid item xs={12}>
                                                 <Grid container  justify="center" alignItems="center">
@@ -147,14 +135,14 @@ const EditionLanding = ( props)=>{
                                                             </Grid>
                                                 </Grid>
                                           </Grid>
+                                    
                               </Grid>
                              
-                         
-                                    
-                                   
-                             
-                                          
-                            
+                  </Grid>
+                  <Grid item xs={12}>
+                        <Paper style={{margin:'12px 16px 24px 16px', height:'140px',padding:'16px'}} >
+                              <Typography variant="body1">{"footer..."}</Typography>
+                        </Paper>
                   </Grid>
             </Grid>
       )
