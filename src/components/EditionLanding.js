@@ -112,7 +112,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Prologue"}
+                                                                                                            {"Section 1"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -125,7 +125,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Prologue"}
+                                                                                                            {"Section 2"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -138,7 +138,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Prologue"}
+                                                                                                            {"Section 3"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
