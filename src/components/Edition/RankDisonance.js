@@ -37,7 +37,7 @@ const RankDisonance = (props)=> {
             const formatedForChart = generateChartData(report);
             setChartData(formatedForChart)
             });
-      },[])
+      },[sectionId])
 
       // useEffect(()=>{
       //       setChartData([]);
@@ -80,7 +80,7 @@ const RankDisonance = (props)=> {
                               title="Rank Disonance"
                               domainPadding={{ x: 6 }}
                               padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
-                              containerComponent={<VictoryContainer responsive={true} 
+                              containerComponent={<VictoryContainer responsive={false} 
                               /> }
                               height={100}
                               width={`${viewport.width * .80}`}
