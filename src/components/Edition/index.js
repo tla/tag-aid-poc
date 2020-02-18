@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { Grid } from '@material-ui/core';
-import withWidth from '@material-ui/core/withWidth';
+import withWidth from '@material-ui/core/withWidth';// used by grid
 import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
