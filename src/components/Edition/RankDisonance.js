@@ -15,6 +15,11 @@ const RankDisonance = (props)=> {
             viewport
           } = props;
       const [chartData, setChartData] = useState();
+      const [lastSelected, setLastSelected] = useState();
+
+      useEffect( ()=>{
+            setLastSelected(selectedRank)
+      }, [selectedRank])
      
       useEffect(()=>{
             setChartData([]);
@@ -32,7 +37,24 @@ const RankDisonance = (props)=> {
             const formatedForChart = generateChartData(report);
             setChartData(formatedForChart)
             });
-      },[sectionId])
+      },[])
+
+      // useEffect(()=>{
+      //       setChartData([]);
+      //       setChartData(null);
+      //       DataApi.getRankReport(sectionId, (report)=>{
+      //             report.sort( (a,b)=> {
+      //                   if(a.rank > b.rank)
+      //                         return 1;
+      //                   if( a.rank < b.rank)
+      //                         return -1
+      //                   else 
+      //                         return 0;
+      //             })
+      //       const formatedForChart = generateChartData(report);
+      //       setChartData(formatedForChart)
+      //       });
+      // },[selectedRank])
 
       const xaxisStyle = {
             grid:    {stroke:  "transparent", } ,
@@ -60,8 +82,8 @@ const RankDisonance = (props)=> {
                               padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
                               containerComponent={<VictoryContainer responsive={true} 
                               /> }
-                           height={50}
-                              width={400}
+                              height={100}
+                              width={`${viewport.width * .80}`}
                               scale={{ x: "linear", y: "linear" }}
                               >
                                     <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
@@ -76,17 +98,51 @@ const RankDisonance = (props)=> {
                                                 }}
                                                 barRatio={.7}
                                                 data={chartData}
-                                               labels={[]}
-                                               style={{ labels: { display:"none"} }}
+                                                labels={[]}
+                                                style={{ labels: { display:"none"} }}
                                                 events = {[
                                                       {
                                                             childName: "bar",
                                                             target: "data",
-                                                            eventHandlers: {
+                                                            // eventHandlers: {
+                                                            //       onClick: (event, props, key)=>{
+                                                            //             return  onSelectRank(key)
+                                                            //       }// end onClick
+                                                            // }// end event handlers
+
+                                                           eventHandlers: {
+
+                                                                  // onClick: () => {
+                                                                  //       return [{
+                                                                  //             mutation: (props) => {
+                                                                  //                   return  {style: {fill: "tomato"}};
+                                                                  //             }
+                                                                  //       }];
+                                                                  // }
+
+
                                                                   onClick: (event, props, key)=>{
-                                                                        return  onSelectRank(key)
+                                                                   
+                                                                            // return 
+                                                                              onSelectRank(key)
+                                                                        return [
+                                                                              {
+                                                                                   eventKey:[lastSelected],
+                                                                                    mutation: (props) => {
+                                                                                          console.log(props)
+                                                                                          return { style: { fill: "#550C18"} };
+                                                                                    }   
+                                                                              },
+                                                                              {
+                                                                                    mutation: (props) => {
+                                                                                          return { style: { fill: "#00a600"} };
+                                                                                    }// end mutation
+                                                                              }// end second onclick handler
+                                                                        ]
                                                                   }// end onClick
-                                                            }// end event handlers</VictoryChart>
+
+
+                                                            }// end event handlers</V
                                                       }
                                                 ]}
                                           ></VictoryBar>
@@ -99,6 +155,7 @@ const RankDisonance = (props)=> {
            
 
             function getBarColor(datum){
+                  console.log("get chart highlight color for rank selected")
                   let color= "#550C18";
                   if(selectedSentence){
                         if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
