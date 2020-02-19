@@ -37,7 +37,7 @@ const RankDisonance = (props)=> {
             const formatedForChart = generateChartData(report);
             setChartData(formatedForChart)
             });
-      },[sectionId])
+      },[sectionId, selectedSentence,selectedRank])
 
       // useEffect(()=>{
       //       setChartData([]);
@@ -82,9 +82,9 @@ const RankDisonance = (props)=> {
                               padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
                               containerComponent={<VictoryContainer responsive={false} 
                               /> }
-                              height={100}
-                              width={`${viewport.width * .80}`}
-                              scale={{ x: "linear", y: "linear" }}
+                               height={100}
+                               width={viewport.width > 960 ? viewport.width * .80: viewport.width * .96}
+                               scale={{ x: "linear", y: "linear" }}
                               >
                                     <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
                                     <VictoryAxis  dependentAxis style={yaxisStyle} 
@@ -95,22 +95,23 @@ const RankDisonance = (props)=> {
                                                             fill: ({datum})=>  getBarColor(datum) 
                                                             },
                                                       parent: { border: "1px solid #ccc"},
+                                                      labels: { display:"none"}, 
                                                 }}
                                                 barRatio={.7}
                                                 data={chartData}
                                                 labels={[]}
-                                                style={{ labels: { display:"none"} }}
+                                             
                                                 events = {[
                                                       {
                                                             childName: "bar",
                                                             target: "data",
-                                                            // eventHandlers: {
-                                                            //       onClick: (event, props, key)=>{
-                                                            //             return  onSelectRank(key)
-                                                            //       }// end onClick
-                                                            // }// end event handlers
+                                                            eventHandlers: {
+                                                                  onClick: (event, props, key)=>{
+                                                                        return  onSelectRank(key)
+                                                                  }// end onClick
+                                                            }// end event handlers
 
-                                                           eventHandlers: {
+                                                          // eventHandlers: {
 
                                                                   // onClick: () => {
                                                                   //       return [{
@@ -120,29 +121,28 @@ const RankDisonance = (props)=> {
                                                                   //       }];
                                                                   // }
 
-
-                                                                  onClick: (event, props, key)=>{
+                                                                  // onClick: (event, props, key)=>{
                                                                    
-                                                                            // return 
-                                                                              onSelectRank(key)
-                                                                        return [
-                                                                              {
-                                                                                   eventKey:[lastSelected],
-                                                                                    mutation: (props) => {
-                                                                                          console.log(props)
-                                                                                          return { style: { fill: "#550C18"} };
-                                                                                    }   
-                                                                              },
-                                                                              {
-                                                                                    mutation: (props) => {
-                                                                                          return { style: { fill: "#00a600"} };
-                                                                                    }// end mutation
-                                                                              }// end second onclick handler
-                                                                        ]
-                                                                  }// end onClick
+                                                                  //           // return 
+                                                                  //             onSelectRank(key)
+                                                                  //       return [
+                                                                  //             {
+                                                                  //                  eventKey:[lastSelected],
+                                                                  //                   mutation: (props) => {
+                                                                  //                         console.log(props)
+                                                                  //                         return { style: { fill: "#550C18"} };
+                                                                  //                   }   
+                                                                  //             },
+                                                                  //             {
+                                                                  //                   mutation: (props) => {
+                                                                  //                         return { style: { fill: "#00a600"} };
+                                                                  //                   }// end mutation
+                                                                  //             }// end second onclick handler
+                                                                  //       ]
+                                                                  // }// end onClick
 
 
-                                                            }// end event handlers</V
+                                                          //  }// end event handlers</V
                                                       }
                                                 ]}
                                           ></VictoryBar>
