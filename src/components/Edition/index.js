@@ -13,9 +13,9 @@ import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import {withRouter} from 'react-router-dom';
 import PreviousNext from './PreviousNext';
-    
-const Edition = ( props)=>{
-      
+
+
+const Edition = ( props)=>{    
       let {sectionID} = useParams()
       if(! sectionID)
             sectionID = "1019321"
@@ -58,9 +58,9 @@ const Edition = ( props)=>{
                  nodelist.forEach( (node)=>{
                        const value = 
                        {
-                                    id: node.id,
-                                    rank:node.rank,
-                                    witnesses: node.witnesses
+                              id: node.id,
+                              rank:node.rank,
+                              witnesses: node.witnesses
                         }
                         hash[node.id]= value;
                         list.push(value);

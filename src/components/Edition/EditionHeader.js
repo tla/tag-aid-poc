@@ -13,21 +13,47 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Grid } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import ChronicleTheme from './../Theme';
+import {
+      fade,
+      ThemeProvider,
+      withStyles,
+      makeStyles,
+      createMuiTheme,
+    } from '@material-ui/core/styles';
+    import TextField from '@material-ui/core/TextField';
 
+    import SearchInput from './SearchInupt'
 
-
+const useStyles = makeStyles(theme => ({
+      search: {
+            float:'right',
+            display:'inline',
+            height:'40px',
+           width:'300px',
+            border:'2px solid red',
+            marginRight:'16px'
+      }
+       
+         
+}));
+      
 const EditionHeader = ( props)=>{
+      const classes = useStyles();
+      const [tabIndex, setTabIndex]=useState(0)
+      const [isExpanded, setIsExpanded]= useState(false);
+      const [searchQuery, setSearchQuery] = useState('');
 
-const [tabIndex, setTabIndex]=useState(0)
-const [isExpanded, setIsExpanded]= useState(false);
-
-useEffect(()=>{
-      let pageName = window.location.hash.split("/")[1]
-      setTabIndex(`#/${pageName}`)
-},[])
+      useEffect(()=>{
+            let pageName = window.location.hash.split("/")[1]
+            setTabIndex(`#/${pageName}`)
+      },[])
     
 
-return (
+      return (
+            
       <Grid container spacing={0} style={{maxHeight:'112px'}}>
                   <div  item xs={12} className="header" >
                         <Typography variant="h5" style={{padding:'12px 42px'}}>
@@ -61,36 +87,56 @@ return (
                   <Hidden smDown>
                               <div item md={12 }>
                                          
-                                           <AppBar  style={{backgroundColor:'#f8f9fa' }}>
-                                           <div   className="header" >
+                                    <AppBar  style={{backgroundColor:'#f8f9fa' }}>
+                                           <div   className="header" style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                                                
                                                 <Typography variant="h5" style={{padding:'12px 42px',color:'black'}}>
                                                       The Chronicle of Matthew of Edessa
                                                 </Typography>
+                                                
+                                                <SearchInput  
+                                                       onPressEnter={handlePressEnter}
+                                                       onChange={handleChange} 
+                                                       searchQuery={searchQuery}
+                                                      />
                                           </div>
-                                                      <div style={{display:'flex', justifyContent:'flex-end',}}>
-                                                            <Tabs value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
-                                                                  <Tab  label="Home" href="/" value="#/" />
-                                                                  <Tab label="About" href="#/About"  value="#/About"  />
-                                                                  <Tab label="Methods"  href="#/Methods" value="#/Methods" />
-                                                                  <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                                                  <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
-                                                                  <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
-                                                            </Tabs>
-                                                      </div>
 
-                                          </AppBar> 
+                                          <div style={{display:'flex', justifyContent:'flex-end',}}>
+                                                <Tabs value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
+                                                      <Tab  label="Home" href="/" value="#/" />
+                                                      <Tab label="About" href="#/About"  value="#/About"  />
+                                                      <Tab label="Methods"  href="#/Methods" value="#/Methods" />
+                                                      <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
+                                                      <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
+                                                      <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
+                                                </Tabs>
+                                          </div>
+
+                                    </AppBar> 
                               </div>
                   </Hidden>  
          
             
       </Grid>
-)
+      )
 
-function handleTabChange(e, value){
-      setTabIndex(value)
+      function handleChange(e){
+            setSearchQuery(e.target.value);
+
+      }
+
+      function handlePressEnter(e, value){
+            alert(`seraching for ${searchQuery}`)
      
-}
+      }
 
+      function handleTabChange(e, value){
+            setTabIndex(value)
+      }
+
+      
+
+      
 
 }
 export default EditionHeader
