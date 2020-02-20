@@ -193,7 +193,7 @@ const Edition = ( props)=>{
                                                 onNext = { nextSection}
                                                 sections = { sections}
                                                 sectionId = { sectionID }
-                                                />
+                                          />
                                     </div>
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>

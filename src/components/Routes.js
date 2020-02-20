@@ -8,26 +8,25 @@ import EditionLanding from './EditionLanding';
 import ManuscriptView from './Manuscript/ManuscriptView';
 import ManuscriptViewClientParse from './Manuscript/ManuscriptViewClientParse'
 import { Route, Switch } from 'react-router-dom';
-import useWindowSize from './../utils/Viewport';
+import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
+import SearchResults from './Edition/SearchResults'
+// import CustomizedInputs from './Edition/MUIInputDemo';
 
-
-const Layout = ( props)=>{
+const Routes = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses} = props;
 
       return (
-           
             <ThemeProvider  theme={ChronicleTheme}>
-
-                 
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
                                     <Edition  sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
-                              <Route path="/Edition" >
+                              <Route path="/Edition">
                                     <EditionLanding   sections={sections}   />
+                                    {/* <CustomizedInputs     /> */}
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 
@@ -47,15 +46,15 @@ const Layout = ( props)=>{
                               <Route path="/Home" exact>
                                     <HomePage sections={sections} />
                               </Route> 
-                            
+                              <Route path="/Search" exact>
+                                    <SearchResults  />
+                              </Route> 
                                <Route path="/" exact>
                                     <HomePage sections={sections} />
                               </Route> 
                         </Switch>
-                 
-     
             </ThemeProvider>
       )
 
 }
-export default Layout
+export default Routes

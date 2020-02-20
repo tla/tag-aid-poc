@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 const Header = ( props)=>{
-
+     
       const [tabIndex, setTabIndex]=useState("#/")
       const [isExpanded, setIsExpanded]= useState(false)
 
@@ -23,8 +23,8 @@ const Header = ( props)=>{
             let pageName = window.location.hash.split("/")[1]
             setTabIndex(`#/${pageName}`)
       },[])
-      
 
+    
       return (
             <Grid container spacing={0}>
                   <div id="headerPanel" role="banner" >
@@ -60,6 +60,7 @@ const Header = ( props)=>{
                         <Hidden smDown>
                               <div item md={12 }>
                                     <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
+                                         
                                           <div style={{display:'flex', justifyContent:'flex-end'}}>
                                                       <Tabs value={tabIndex} style={{float:'right', color:'black'}} onChange={handleTabChange} >
                                                             <Tab label="Home" href="/" value="#/" />

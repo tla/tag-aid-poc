@@ -13,19 +13,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Grid } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import ChronicleTheme from './../Theme';
-import {
-      fade,
-      ThemeProvider,
-      withStyles,
-      makeStyles,
-      createMuiTheme,
-    } from '@material-ui/core/styles';
-    import TextField from '@material-ui/core/TextField';
-
-    import SearchInput from './SearchInupt'
+import {makeStyles,} from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom' 
+import SearchInput from './SearchInupt'
 
 const useStyles = makeStyles(theme => ({
       search: {
@@ -98,7 +88,7 @@ const EditionHeader = ( props)=>{
                                                        onPressEnter={handlePressEnter}
                                                        onChange={handleChange} 
                                                        searchQuery={searchQuery}
-                                                      />
+                                                />
                                           </div>
 
                                           <div style={{display:'flex', justifyContent:'flex-end',}}>
@@ -122,12 +112,12 @@ const EditionHeader = ( props)=>{
 
       function handleChange(e){
             setSearchQuery(e.target.value);
-
       }
 
       function handlePressEnter(e, value){
-            alert(`seraching for ${searchQuery}`)
-     
+           console.log('search query',searchQuery)
+           setSearchQuery('');
+           props.history.push('/Search');
       }
 
       function handleTabChange(e, value){
@@ -139,4 +129,4 @@ const EditionHeader = ( props)=>{
       
 
 }
-export default EditionHeader
+export default withRouter(EditionHeader)
