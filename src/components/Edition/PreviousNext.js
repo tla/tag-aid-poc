@@ -35,14 +35,14 @@ const PreviousNext = ( props )=>{
       return (
 
             <div style={{display:'flex', justifyContent:'center',padding:'8px'}}>
-                  <IconButton  onClick={onPrevious} style={{margin:'2px 10px', outline:'none'}}>
-                        <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px' ,transform:'rotate(180deg)'}}/>
+                  <IconButton  onClick={onPrevious} style={{margin:'2px', outline:'none'}}>
+                        <PlayCircleOutlineOutlinedIcon style={{width:'40px',height:'40px' ,transform:'rotate(180deg)'}}/>
                   </IconButton>
-                  <Typography variant = "h5" style={{marginTop:'20px'}}>
+                  <Typography variant = "h5" style={{marginTop:'20px',marginRight:'10px', marginLeft:'10px'}}>
                         {title}
                   </Typography>
-                  <IconButton  onClick={onNext} style={{margin:'2px 10px',outline:'none'}}>
-                        <PlayCircleOutlineOutlinedIcon style={{width:'50px',height:'50px'}} />
+                  <IconButton  onClick={onNext} style={{margin:'2px',outline:'none'}}>
+                        <PlayCircleOutlineOutlinedIcon style={{width:'40px',height:'40px'}} />
                   </IconButton>
             </div>
 

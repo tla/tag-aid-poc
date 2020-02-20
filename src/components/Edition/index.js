@@ -100,7 +100,7 @@ const Edition = ( props)=>{
   
       let textContainerStyle={
             overflowY:'auto', 
-            height: graphVisible ? `${viewport.height * .30}px`:`${viewport.height - 170}px`,
+            height: graphVisible ? `${viewport.height * .30 -84}px`:`${viewport.height - 254}px`,
       }
 
       return (
@@ -139,19 +139,18 @@ const Edition = ( props)=>{
                                     <div style={{height:'8px'}}></div>
                        
                               
-                              <SectionList 
-                                    height={isExpanded ? ` ${viewport.height - 662 > 0 ? viewport.height - 662 : 0}px` : ` ${viewport.height - 230}px`}
-                                    sectionId={sectionID}
-                                    list ={sections}
+                                    <SectionList 
+                                          height={isExpanded ? ` ${viewport.height - 662 > 0 ? viewport.height - 662 : 0}px` : ` ${viewport.height - 230}px`}
+                                          sectionId={sectionID}
+                                          list ={sections}
                                     />  
-                        </div>      
-                  </Grid>
+                              </div>      
+                        </Grid>
                   </Hidden> 
 
                   <Grid id="mainContent" item xs={12} md={10}> 
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
-                                   
                                     <div>
                                           <div >
                                                <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}>
@@ -174,7 +173,6 @@ const Edition = ( props)=>{
                                           <div > 
                                                 <Paper style={{margin:'12px',overflowX:'hidden', overflowY:'hidden', position:'relative'}}>
                                                       <RankDisonance 
-                                                           
                                                             viewport = { viewport }
                                                             sectionId={sectionID}
                                                             highlightedNode = { selectedNode}
@@ -185,22 +183,20 @@ const Edition = ( props)=>{
                                                 </Paper>
                                           </div>
                                     </div>
-                                    
                               }
 
                               {sectionID &&
+                                  <React.Fragment>
+                                    <div style={{display:'flex', justifyContent:'center', height:'84px'}}>
+                                          <PreviousNext 
+                                                onPrevious ={ previousSection}
+                                                onNext = { nextSection}
+                                                sections = { sections}
+                                                sectionId = { sectionID }
+                                                />
+                                    </div>
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>
-
-                                                <Grid item xs={12} >
-                                                      <PreviousNext 
-                                                            onPrevious ={ previousSection}
-                                                            onNext = { nextSection}
-                                                            sections = { sections}
-                                                            sectionId = { sectionID }
-                                                            />
-                                                </Grid>  
-
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
                                                             sections = { sections}
@@ -231,9 +227,10 @@ const Edition = ( props)=>{
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
                                                       />
-                                          </Grid>
+                                                </Grid>
                                           </Grid>
                                     </div>
+                                    </React.Fragment>
                               } 
 
                         </div>
