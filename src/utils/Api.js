@@ -87,6 +87,26 @@ export const getReading = async ( sectionId, reading, onTextReceived )=>{
       }
 }
 
+export const getManuscript = async ( manuscriptId, onTextReceived )=>{
+      const manuscriptFile = `${localUrl}dist/content/${manuscriptId}.tei.xml`;    
+      try{
+            const result = await axios.get(manuscriptFile);
+            onTextReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getLunrIndex = async( onIndexReceived )=>{
+      const indexFile = `${localUrl}data/lunrIndex.json`;
+      try{
+            const result = await axios.get(indexFile);
+            onIndexReceived(result)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
 
 
 

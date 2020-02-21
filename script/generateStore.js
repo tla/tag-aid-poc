@@ -1,7 +1,8 @@
 const fs = require('fs')
 const axios = require('axios');
 const moment = require('moment')
-     
+//const CETEI = require('./../utils/CETEI')
+const lunr = require('lunr');    
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
 // inspired by fast async await example - everything in parallel when possible - 
 // do add error handling please
@@ -14,6 +15,7 @@ async function generateStore() {
       const baseURL=`${config.options.repository}/tradition/${config.options.tradition_id}`;
       const auth = config.auth;
       const outdir = "public/data";
+      const lunrIndex = [];
 
      // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
      // console.log('testing')
@@ -54,6 +56,7 @@ async function generateStore() {
             });
             sectionStore = await Promise.all(sectionPromises);
             writeSectionFile( validSections);
+            writeLunrIndex();
       }
 
       async function getSectionData( sectionId, witnesses, validSections ){
@@ -185,6 +188,22 @@ async function generateStore() {
             return response.data;
       }
 
+      async function getManuscript(manuscriptId){
+            const manuscriptDir = `images/mss/${manuscriptId}`
+            const manuscriptFile = `${manuscriptDir}/${manuscriptId}.html`;
+            const manuscriptURL = `${manuscriptDir}/${manuscriptId}.tei.xml`;
+            const response = await axios.get( `${manuscriptURL}`)
+            var TEI =response;
+            const CETEIcean = new CETEI();
+            let htmlContainer;
+            CETEIcean.makeHTML5(TEI, function(data) {
+                  htmlContainer = document.createElement('div');
+                  htmlContainer.appendChild(data);
+            });
+
+          writeFile(manuscriptFile,htmlContainer.innerHTML)  
+      }
+
       function readingToHTML( reading ){
             if( reading.length === 0 )
             return;
@@ -204,6 +223,7 @@ async function generateStore() {
             if( translation.length === 0 )
             return;
             let textElements = [] ;
+            let lunrText = [];
             const translationFragments = [];
             for (const entry of translation ) {
                   const text = entry.properties.text;
@@ -223,10 +243,13 @@ async function generateStore() {
             translationFragments.sort( (a,b)=>{return a.startRank - b.startRank});
     
             translationFragments.forEach( f => {
+                  lunrText.push( f.text)
                   const textElement = `<span id='${f.startRank}-${f.start}' key='${f.endRank}-${f.end}'>${f.text}</span>`;
                   textElements.push(textElement)
             })
-            return  `${textElements.join(' ')}`
+            const textJoined = `${lunrText.join(' ')}`
+            appendLunrIndex(textJoined,sectionId)
+            return `${textElements.join(' ')}`
       }
 
       function writeLemmaFile(readings,sectionId){
@@ -303,11 +326,9 @@ async function generateStore() {
 
       function writeTranslationFile( translation,sectionId, readings){
             if ( ! translation.length > 0 ){
-
                   console.log('no translation for section', sectionId)
                   return;
             }
-                 
             const sectiondir = `${outdir}/${sectionId}`;
             const translationFilePath = `${sectiondir}/en.html`;
             const translationHTML = translationToHTML(translation, sectionId, readings)
@@ -364,6 +385,25 @@ async function generateStore() {
 
       function writeFile(fileName, contents){
             fs.writeFileSync( fileName, contents )  
+      }
+
+      function appendLunrIndex(translation,sectionId){
+            lunrIndex.push({sectionId:sectionId,title:'',text:translation})
+      }
+
+      function writeLunrIndex( ){
+            var idx = lunr(function () {
+                  this.ref('sectionId')
+                  this.field('title')
+                  this.field('text')
+              
+                  lunrIndex.forEach(function (doc) {
+                              this.add(doc)
+                        }, this)
+                  });
+            const lunrFile = `${outdir}/lunrIndex.json`;
+            fs.writeFileSync( lunrFile, JSON.stringify(idx) )   
+            console.log('lunr index file written')  
       }
 
      
