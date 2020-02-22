@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import AboutPage from './About';
 import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
@@ -17,12 +17,13 @@ import SearchResults from './Edition/SearchResults'
 const Routes = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses} = props;
+      const [searchTerm, setSearchTerm ] = useState('');
 
       return (
             <ThemeProvider  theme={ChronicleTheme}>
                         <Switch>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition  sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
                                     <EditionLanding   sections={sections}   />
@@ -47,7 +48,7 @@ const Routes = ( props)=>{
                                     <HomePage sections={sections} />
                               </Route> 
                               <Route path="/Search" exact>
-                                    <SearchResults  />
+                                    <SearchResults onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route> 
                                <Route path="/" exact>
                                     <HomePage sections={sections} />

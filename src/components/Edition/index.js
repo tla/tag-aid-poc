@@ -19,7 +19,7 @@ const Edition = ( props)=>{
       let {sectionID} = useParams()
       if(! sectionID)
             sectionID = "1019321"
-      const {sections , viewport , witnesses} = props;
+      const {sections , viewport , witnesses, onSearch} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [selectedRank, setSelectedRank] =  useState();
@@ -109,7 +109,7 @@ const Edition = ( props)=>{
 
                    <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
                        
-                              <EditionHeader />
+                              <EditionHeader onSearch={onSearch} />
                   </Grid>  
              
                   <Hidden smDown>

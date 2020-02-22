@@ -8,16 +8,21 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "html-react-parser": "^0.9.1",
+    "jsdom": "^16.2.0",
+    "lunr": "^2.3.8",
     "material-ui": "^0.20.2",
     "panzoom": "^9.2.0",
+    "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-inlinesvg": "^1.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
+    "react-spinners-kit": "^1.9.1",
     "react-svg": "latest",
-    "victory": "^34.0.1"
+    "victory": "^34.0.1",
+    "xmldom": "^0.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

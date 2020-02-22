@@ -31,6 +31,8 @@ const useStyles = makeStyles(theme => ({
 }));
       
 const EditionHeader = ( props)=>{
+
+      const {onSearch} = props;
       const classes = useStyles();
       const [tabIndex, setTabIndex]=useState(0)
       const [isExpanded, setIsExpanded]= useState(false);
@@ -115,8 +117,10 @@ const EditionHeader = ( props)=>{
       }
 
       function handlePressEnter(e, value){
-           console.log('search query',searchQuery)
+          // console.log('search query',searchQuery)
+           onSearch(searchQuery)
            setSearchQuery('');
+
            props.history.push('/Search');
       }
 

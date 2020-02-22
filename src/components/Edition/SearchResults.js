@@ -4,60 +4,65 @@ import EditionHeader from './EditionHeader'
 import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
 import * as DataApi from '../../utils/Api';
-import lunr from 'lunr'
+import lunr from 'lunr';
+import documents from './LunrData'
+import Typography from '@material-ui/core/Typography';
+
 
 const SearchResults=(props)=>{
 
-      const searchTerm = "king";
-      const [moonIndex, setMoonIndex] = useState();
-      const [ searchResults, setSearchResults] = useState([]);
+      const {searchTerm, onSearch} = props;
+      const [ lunrResults, setLunrResults] = useState([]);
+  
 
-      useEffect( ()=>{
-            DataApi.getLunrIndex( (data)=>{
-                  const idx = lunr.Index.load(JSON.parse(data));
-                  setMoonIndex(idx);
-                  let results =   idx.search("king");
-                  setSearchResults(results);
+      useEffect(() => {
+            if(! searchTerm )
+            return;
+
+            var idx = lunr(function () {
+                  this.ref('sectionId')
+                  this.field('text')
+
+                  documents.forEach(function (doc) {
+                        this.add(doc)
+                  }, this)
             });
-           
-      },[])
+
+            let hopingFor = idx.search(searchTerm);
+            setLunrResults(hopingFor);
+      },[searchTerm])
 
 return (
             <Grid container spacing={0} >
 
                   <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
-                        <EditionHeader />
+                        <EditionHeader onSearch={onSearch} />
                   </Grid>  
-            {/* 
-                  <Hidden smDown>
-                        <Grid item id="sideBar" md={2} >
-                        <div style={{display:'flex', flexDirection:'column'}}>
+          
+                   <Grid id="mainContent" item xs={12} > 
+                        <div style={{display:'flex',justifyContent:'center'}}>
+                        <Paper  style={{margin:'12px',width:'80%'}}>
+                              { 
+                                    lunrResults.map( (r) => {
+                                    let value = documents.find(d => { return d.sectionId === r.ref }).text     
 
-                        
-                              </div>      
-                        </Grid>
-                  </Hidden>  */}
-
-                  <Grid id="mainContent" item xs={12} md={10}> 
-                        <div style={{display:'flex', flexDirection:'column', }}>
-                                    <Paper  style={{margin:'12px'}}>
-                                          {'search results go here'}
-                                    </Paper>
+                                       return (
+                                             <div key={r.ref} style={{marginBottom:'16px'}}>
+                                                   <Typography variant="body1">
+                                                            {value}
+                                                   </Typography>
+                                             </div>
+                                       )
+                                    })
+                              }
+                        </Paper>
                         </div>
-                  </Grid> 
+                  </Grid>  
 
             </Grid>
       )
 
-      function doSearch(){
-            let results
-            if(moonIndex)
-             results = moonIndex.search("king")
-          //  setSearchResults(results)
-      }
-
-
-
+    
 
 }
 
