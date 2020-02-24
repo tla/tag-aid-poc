@@ -137,8 +137,9 @@ async function generateLunrSource() {
                   textElements.push(textElement)
             })
             const textJoined = `${lunrText.join(' ')}`
+            const htmlJoined = `${textElements.join(' ')}`
             appendLunrIndex(textJoined,sectionId)
-            lunrData.push({sectionId:sectionId, text:textJoined})
+            lunrData.push({sectionId:sectionId, text:htmlJoined})
       };
 
    

@@ -35,6 +35,7 @@ const Edition = ( props)=>{
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
       const [isExpanded, setIsExpanded] = useState(false);
+    
 
       useEffect(()=>{
             setSelectedSentence(null);

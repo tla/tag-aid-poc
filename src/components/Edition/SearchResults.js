@@ -7,27 +7,39 @@ import * as DataApi from '../../utils/Api';
 import lunr from 'lunr';
 import documents from './LunrData'
 import Typography from '@material-ui/core/Typography';
-
+import Parser , {domToReact} from 'html-react-parser';
 
 const SearchResults=(props)=>{
 
-      const {searchTerm, onSearch} = props;
-      const [ lunrResults, setLunrResults] = useState([]);
+      const {searchTerm, onSearch, dataDictionary} = props;
+      const [ lunrResults, setLunrResults] = useState([]);  
+    
+
+    
+
+      const parserOptions = {
+            replace: function(domNode) {
+                  if( domNode.children){
+                        if(domNode.children[0].data.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 )
+                              return <span  style={{backgroundColor:'yellow'}}>{domToReact(domNode.children,parserOptions)}</span>
+                        else
+                              return <span  >{domToReact(domNode.children,parserOptions)}</span>
+                  }
+               
+            }
+      }
   
 
       useEffect(() => {
             if(! searchTerm )
             return;
-
             var idx = lunr(function () {
                   this.ref('sectionId')
                   this.field('text')
-
                   documents.forEach(function (doc) {
                         this.add(doc)
                   }, this)
             });
-
             let hopingFor = idx.search(searchTerm);
             setLunrResults(hopingFor);
       },[searchTerm])
@@ -40,23 +52,43 @@ return (
                   </Grid>  
           
                    <Grid id="mainContent" item xs={12} > 
-                        <div style={{display:'flex',justifyContent:'center'}}>
-                        <Paper  style={{margin:'12px',width:'80%'}}>
-                              { 
-                                    lunrResults.map( (r) => {
-                                    let value = documents.find(d => { return d.sectionId === r.ref }).text     
+                        {searchTerm  &&
+                              <div style={{display:'flex',justifyContent:'center'}}>
+                              <Paper  style={{margin:'12px',width:'80%',padding:'12px'}}>
+                              <Typography variant="h5" style={{marginBottom:'31px'}}>
+                                     { 'Search Results' }
+                        </Typography>
+                                          {
+                                                lunrResults.length > 0 ?
+                                                lunrResults.map( (r) => {
+                                                      let value;
+                                                      value = dataDictionary.find(d => { return d.sectionId === r.ref }).text
+                                                      return (
+                                                            <div key={r.ref} style={{marginBottom:'16px'}}>
+                                                                  <Typography variant="h6">
+                                                                              {`section: ${r.ref}` }
+                                                                  </Typography>
+                                                                  <Typography variant="body1">
+                                                                              {Parser(value,parserOptions)}
+                                                                  </Typography>
+                                                            </div>
+                                                      )
+                                                })   
+                                                
+                                                :  searchTerm ? 
+                                                <Typography>
+                                                      {`${searchTerm} not found`}
+                                                </Typography> : <span/>
+                                              
+                                             
+                                          }
+                              
+                        </Paper></div> 
 
-                                       return (
-                                             <div key={r.ref} style={{marginBottom:'16px'}}>
-                                                   <Typography variant="body1">
-                                                            {value}
-                                                   </Typography>
-                                             </div>
-                                       )
-                                    })
-                              }
-                        </Paper>
-                        </div>
+                                    }
+                        
+                     
+                        
                   </Grid>  
 
             </Grid>
