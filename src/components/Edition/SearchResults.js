@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import EditionHeader from './EditionHeader'
 import Paper from '@material-ui/core/Paper';
-import Hidden from '@material-ui/core/Hidden';
-import * as DataApi from '../../utils/Api';
 import lunr from 'lunr';
-import documents from './LunrData'
 import Typography from '@material-ui/core/Typography';
 import Parser , {domToReact} from 'html-react-parser';
 
@@ -13,9 +10,6 @@ const SearchResults=(props)=>{
 
       const {searchTerm, onSearch, dataDictionary} = props;
       const [ lunrResults, setLunrResults] = useState([]);  
-    
-
-    
 
       const parserOptions = {
             replace: function(domNode) {
@@ -36,7 +30,7 @@ const SearchResults=(props)=>{
             var idx = lunr(function () {
                   this.ref('sectionId')
                   this.field('text')
-                  documents.forEach(function (doc) {
+                  dataDictionary.forEach(function (doc) {
                         this.add(doc)
                   }, this)
             });

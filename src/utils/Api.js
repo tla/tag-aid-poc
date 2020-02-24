@@ -108,6 +108,17 @@ export const getLunrIndex = async( onIndexReceived )=>{
 }
 
 
+export const getLunrData = async( onDataReceived )=>{
+      const dataFile = `${localUrl}data/lunrData.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+
 
 
 
