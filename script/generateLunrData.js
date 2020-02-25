@@ -16,7 +16,9 @@ async function generateLunrSource() {
       const auth = config.auth;
       const outdir = "public/data";
       const lunrData = [];
-      const lunrIndex = []
+      const lunrIndex = [];
+      const lunrArmenian = [];
+      const lunrArmenianIndex = [];
 
 
      // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
@@ -57,7 +59,8 @@ async function generateLunrSource() {
                   sectionPromises.push(sectionData);
             });
             sectionStore = await Promise.all(sectionPromises);
-            writeLunrIndex();
+            writeTranslationDataIndexFiles();
+            writeLemmaDataIndexFiles();
       }
 
       async function getSectionData( sectionId ){
@@ -68,43 +71,24 @@ async function generateLunrSource() {
                   let allReadings = new Promise( (resolve )=>{
                         getReadings(sectionId)
                         .then( readings=>{
-                             // writeReadingLookup(readings, sectionId);
-                            //  writeLemmaFile( readings, sectionId); 
-                            //  writeWitnessFiles(readings, witnesses, sectionId);
-                                    getTranslation(sectionId)
+                            
+                              prepareLemmaDataIndex( readings, sectionId); 
+                           
+                              getTranslation(sectionId)
                                     .then( translation=>{
-                                          writeTranslationData(translation, sectionId, readings)
+                                          prepareTranslationDataIndex(translation, sectionId, readings)
                                           resolve();
                                     });
                         });
 
                   });
 
-                
                  return data =  await Promise.all( [allReadings,] )
-                 // etc for person place and date - although this will just be used for text highlights
             }
       }
 
-      async function getLemmaText(sectionId){
-            const url = `${baseURL}/section/${sectionId}/lemmatext`;
-            const response = await axios.get(url, { auth, params: {'final': 'true'} });
-            return response.data;
-      }
-
-      async function getReadings(sectionId){
-            const sectionURL = `${baseURL}/section/${sectionId}`
-            const response = await axios.get(`${sectionURL}/readings`, {auth});
-            return response.data;
-      }
-
-      async function getTranslation(sectionId){
-            const sectionURL = `${baseURL}/section/${sectionId}`;
-            const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'TRANSLATION'}})
-            return response.data;
-      }
-
-      function writeTranslationData( translation,sectionId, reading){
+    
+      function prepareTranslationDataIndex( translation,sectionId, reading){
             if ( ! translation.length > 0 ){
                   console.log('no translation for section', sectionId)
                   return;
@@ -136,18 +120,88 @@ async function generateLunrSource() {
                   const textElement = `<span id='${f.startRank}-${f.start}' key='${f.endRank}-${f.end}'>${f.text}</span>`;
                   textElements.push(textElement)
             })
-            const textJoined = `${lunrText.join(' ')}`
+
             const htmlJoined = `${textElements.join(' ')}`
-            appendLunrIndex(textJoined,sectionId)
-            lunrData.push({sectionId:sectionId, text:htmlJoined})
+            lunrData.push({sectionId:sectionId, text:htmlJoined});
+
+            const textJoined = `${lunrText.join(' ')}`
+            lunrIndex.push({sectionId:sectionId,title:'',text:textJoined})
+        
+          
       };
 
-   
+      function prepareLemmaDataIndex(reading,sectionId){
+            let rawLemma = parseWitnessReading("Lemma text", reading);
+            if( reading.length === 0 )
+            return;
+            let textElements = [] ;
+            let lunrText = [];
+            for (let i=0; i< reading.length; i++ ) {
+                  let entry = reading[i];
+                  const text = entry.normal_form ? entry.normal_form : entry.text
+                  if (i > 0 && !reading[i-1].join_next && ! entry.join_prior) {
+                        textElements.push(' ')
+                  }
+                  lunrText.push(text)
+                  textElements.push( `<span id='${entry.id}' key=${entry.rank}>${text}</span>`)
+            }
 
-      function appendLunrIndex(translation,sectionId){
-            lunrIndex.push({sectionId:sectionId,title:'',text:translation})
+            const htmlJoined =  `${textElements.join('')}`
+            lunrArmenian.push({sectionId : sectionId, text: htmlJoined});
+
+            const textJoined = `${lunrText.join(' ')}`;
+            lunrArmenianIndex.push({sectionId:sectionId, text:textJoined})
       }
 
+      function parseWitnessReading(sigil, readings) {
+            const filterCondition = sigil === 'Lemma text'
+                  ? (r) => r.is_lemma && !r.is_start && !r.is_end
+                  : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
+            const witReadings = readings.filter(filterCondition);
+            witReadings.sort((first, second) => { return first.rank - second.rank  })
+            return {
+                  sigil: sigil,
+                  readings: witReadings
+            };
+      }
+  
+      function writeTranslationDataIndexFiles( ){
+            var idx = lunr(function () {
+                  this.ref('sectionId')
+                  this.field('text')
+              
+                  lunrIndex.forEach(function (doc) {
+                              this.add(doc)
+                        }, this)
+                  });
+
+            const lunrDataFile = `${outdir}/lunrData.json`;
+            fs.writeFileSync( lunrDataFile, JSON.stringify(lunrData) ) ;
+
+            const lunrIndexFile = `${outdir}/lunrIndex.json`;
+            fs.writeFileSync( lunrIndexFile, JSON.stringify(idx) );
+
+            console.log('lunr translation index file written')  
+      }
+
+      function writeLemmaDataIndexFiles( ){
+            var idx = lunr(function () {
+                  this.ref('sectionId')
+                  this.field('text')
+              
+                  lunrArmenianIndex.forEach(function (doc) {
+                              this.add(doc)
+                        }, this)
+                  });
+
+            const lunrDataFile = `${outdir}/lunrArmenianData.json`;
+            fs.writeFileSync( lunrDataFile, JSON.stringify(lunrArmenian) ) ;
+
+            const lunrIndexFile = `${outdir}/lunrArmenianIndex.json`;
+            fs.writeFileSync( lunrIndexFile, JSON.stringify(idx) ) ;
+
+            console.log('lunr Armenian index file written')  
+      }
 
       async function makeDirectory(sectiondir){
             if( ! fs.existsSync('public') )
@@ -162,27 +216,24 @@ async function generateLunrSource() {
             fs.writeFileSync( fileName, contents )  
       }
 
-   
-
-      function writeLunrIndex( ){
-            var idx = lunr(function () {
-                  this.ref('sectionId')
-                  this.field('title')
-                  this.field('text')
-              
-                  lunrIndex.forEach(function (doc) {
-                              this.add(doc)
-                        }, this)
-                  });
-
-            const lunrDataFile = `${outdir}/lunrData.json`;
-            fs.writeFileSync( lunrDataFile, JSON.stringify(lunrData) )  
-            const lunrIndexFile = `${outdir}/lunrIndex.json`;
-            fs.writeFileSync( lunrIndexFile, JSON.stringify(idx) )   
-            console.log('lunr index file written')  
+      async function getLemmaText(sectionId){
+            const url = `${baseURL}/section/${sectionId}/lemmatext`;
+            const response = await axios.get(url, { auth, params: {'final': 'true'} });
+            return response.data;
       }
 
-  
+      async function getReadings(sectionId){
+            const sectionURL = `${baseURL}/section/${sectionId}`
+            const response = await axios.get(`${sectionURL}/readings`, {auth});
+            return response.data;
+      }
+
+      async function getTranslation(sectionId){
+            const sectionURL = `${baseURL}/section/${sectionId}`;
+            const response = await axios.get( `${sectionURL}/annotations`, {auth, params: {label: 'TRANSLATION'}})
+            return response.data;
+      }
+
     
 }
 
