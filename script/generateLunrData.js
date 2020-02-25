@@ -186,6 +186,11 @@ async function generateLunrSource() {
 
       function writeLemmaDataIndexFiles( ){
             var idx = lunr(function () {
+
+                  this.pipeline.remove(lunr.trimmer)
+                  this.pipeline.remove(lunr.stemmer)
+                  this.pipeline.remove(lunr.stopWordFilter)
+
                   this.ref('sectionId')
                   this.field('text')
               
