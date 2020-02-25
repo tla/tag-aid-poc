@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import AboutPage from './About';
 import MethodsPage from './Methods';
 import ManuscriptPage from './Manuscript';
@@ -11,13 +11,45 @@ import { Route, Switch } from 'react-router-dom';
 import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
-import SearchResults from './Edition/SearchResults'
+import SearchResults from './Edition/SearchResults';
+import * as DataApi from './../utils/Api'
 // import CustomizedInputs from './Edition/MUIInputDemo';
 
 const Routes = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses} = props;
       const [searchTerm, setSearchTerm ] = useState('');
+      const [translationDictionary, setTranslationDictionary] = useState([]);
+      const [translationIndex, setTranslationIndex] = useState();
+      const [armenianDictionary, setArmenianDictionary] = useState([])
+      const [armenianIndex, setArmenianIndex] = useState();
+
+      useEffect(()=>{
+            if( ! translationIndex )
+            DataApi.getTranslationIndex((data)=>{
+                  setTranslationIndex(data )
+            })
+      })
+      useEffect(()=>{
+            if( translationDictionary.length===0 )
+                  DataApi.getLunrData((data)=>{
+                        setTranslationDictionary(data )
+            })
+      })
+      useEffect(()=>{
+            if( ! armenianIndex )
+                  DataApi.getArmenianIndex((data)=>{
+                        setArmenianIndex(data )
+            })
+      })
+      useEffect(()=>{
+            if( armenianDictionary.length===0 )
+            DataApi.getLunrArmenianData((data)=>{
+                  setArmenianDictionary(data )
+            })
+      });
+
+
 
       return (
             <ThemeProvider  theme={ChronicleTheme}>
@@ -48,7 +80,10 @@ const Routes = ( props)=>{
                                     <HomePage sections={sections} />
                               </Route> 
                               <Route path="/Search" exact>
-                                    <SearchResults onSearch={setSearchTerm} searchTerm = {searchTerm} />
+                                    <SearchResults 
+                                          translationDictionary={translationDictionary} translationIndex={translationIndex}
+                                          armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
+                                          onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route> 
                                <Route path="/" exact>
                                     <HomePage sections={sections} />

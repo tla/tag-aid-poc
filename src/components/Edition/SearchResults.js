@@ -8,8 +8,9 @@ import Parser , {domToReact} from 'html-react-parser';
 
 const SearchResults=(props)=>{
 
-      const {searchTerm, onSearch, dataDictionary} = props;
+      const {searchTerm, onSearch, translationDictionary, translationIndex, armenianDictionary, armenianIndex} = props;
       const [ lunrResults, setLunrResults] = useState([]);  
+      const [dataDictionary, setDataDictionary] = useState([]);
 
       const parserOptions = {
             replace: function(domNode) {
@@ -27,15 +28,22 @@ const SearchResults=(props)=>{
       useEffect(() => {
             if(! searchTerm )
             return;
-            var idx = lunr(function () {
-                  this.ref('sectionId')
-                  this.field('text')
-                  dataDictionary.forEach(function (doc) {
-                        this.add(doc)
-                  }, this)
-            });
+
+            const characterCode = searchTerm.codePointAt(0);
+            let armenianCharacter = (characterCode >= 1280  &&  characterCode <=1535) ? true: false;
+            let idx;
+
+            if( ! armenianCharacter ){
+                  idx = lunr.Index.load(translationIndex);
+                  setDataDictionary(translationDictionary)
+            } else {
+                  idx = lunr.Index.load(armenianIndex);
+                  setDataDictionary(armenianDictionary)
+            }
+      
             let hopingFor = idx.search(searchTerm);
             setLunrResults(hopingFor);
+
       },[searchTerm])
 
 return (

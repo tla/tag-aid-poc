@@ -97,11 +97,21 @@ export const getManuscript = async ( manuscriptId, onTextReceived )=>{
       }
 }
 
-export const getLunrIndex = async( onIndexReceived )=>{
+export const getTranslationIndex = async( onIndexReceived )=>{
       const indexFile = `${localUrl}data/lunrIndex.json`;
       try{
             const result = await axios.get(indexFile);
-            onIndexReceived(result)
+            onIndexReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getArmenianIndex = async( onIndexReceived )=>{
+      const indexFile = `${localUrl}data/lunrArmenianIndex.json`;
+      try{
+            const result = await axios.get(indexFile);
+            onIndexReceived(result.data)
       } catch( error ) {
             console.log(error)
       }
@@ -110,6 +120,16 @@ export const getLunrIndex = async( onIndexReceived )=>{
 
 export const getLunrData = async( onDataReceived )=>{
       const dataFile = `${localUrl}data/lunrData.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getLunrArmenianData = async( onDataReceived )=>{
+      const dataFile = `${localUrl}data/lunrArmenianData.json`;
       try{
             const result = await axios.get(dataFile);
             onDataReceived(result.data)
