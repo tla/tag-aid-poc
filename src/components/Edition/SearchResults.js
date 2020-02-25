@@ -5,6 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import lunr from 'lunr';
 import Typography from '@material-ui/core/Typography';
 import Parser , {domToReact} from 'html-react-parser';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 const SearchResults=(props)=>{
 
@@ -67,9 +70,12 @@ return (
                                                       value = dataDictionary.find(d => { return d.sectionId === r.ref }).text
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
-                                                                  <Typography variant="h6">
+                                                                   <Button size="large" component={Link} to={`/Edition/${r.ref}`} color="secondary">
+                                                                        <Typography variant="h6">
                                                                               {`section: ${r.ref}` }
-                                                                  </Typography>
+                                                                        </Typography>
+                                                                  </Button>
+                                                                  
                                                                   <Typography variant="body1">
                                                                               {Parser(value,parserOptions)}
                                                                   </Typography>
