@@ -43,7 +43,9 @@ Its important to use the new version of python - not 2.7 - which the Mac is defa
 This is not a particularly fast script allow at least 10 minutes.
 
 
-
+* values returned from stemmarest annotationLabel='PLACE'
+contain a links array of objects with a "target" property
+this target value refers to an annotation id and can be used to find another annotation where annotationLabel ='PlaceRef'.  We are using placeRefs, to generate the list of places in each section, so that they may be highlighted - PlaceRefs - include the nodeId in the lemma text where they are mentioned,  Places contain, information about where to lookup the geoCoordinates for that location ( for example pleiades )  - we need both Places - ( for coordinates to show on the map ) and PlaceRefs - to find that place in the text
 
 
 
