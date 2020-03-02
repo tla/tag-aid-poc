@@ -12,8 +12,9 @@ import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import SearchResults from './Edition/SearchResults';
-import * as DataApi from './../utils/Api'
-// import CustomizedInputs from './Edition/MUIInputDemo';
+import * as DataApi from './../utils/Api';
+import MapView from './Visualizations/Map'
+
 
 const Routes = ( props)=>{
       const viewport = useWindowSize();
@@ -84,7 +85,10 @@ const Routes = ( props)=>{
                                           translationDictionary={translationDictionary} translationIndex={translationIndex}
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
-                              </Route> 
+                              </Route>
+                              <Route path="/Map" exact>
+                                    <MapView  />
+                              </Route>
                                <Route path="/" exact>
                                     <HomePage sections={sections} />
                               </Route> 

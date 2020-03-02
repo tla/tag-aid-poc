@@ -100,7 +100,7 @@ const EditionHeader = ( props)=>{
                                                       <Tab label="Methods"  href="#/Methods" value="#/Methods" />
                                                       <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
                                                       <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
-                                                      <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
+                                                      <Tab label="Visualizations" href="#/Map" value="#/Map" />
                                                 </Tabs>
                                           </div>
 
