@@ -24,31 +24,42 @@ const Routes = ( props)=>{
       const [translationIndex, setTranslationIndex] = useState();
       const [armenianDictionary, setArmenianDictionary] = useState([])
       const [armenianIndex, setArmenianIndex] = useState();
+      const [mapFeatures,setMapFeatures] = useState([])
 
       useEffect(()=>{
             if( ! translationIndex )
             DataApi.getTranslationIndex((data)=>{
                   setTranslationIndex(data )
             })
-      })
+      },[])
+
       useEffect(()=>{
             if( translationDictionary.length===0 )
                   DataApi.getLunrData((data)=>{
                         setTranslationDictionary(data )
             })
-      })
+      },[])
       useEffect(()=>{
             if( ! armenianIndex )
                   DataApi.getArmenianIndex((data)=>{
                         setArmenianIndex(data )
             })
-      })
+      },[])
       useEffect(()=>{
             if( armenianDictionary.length===0 )
             DataApi.getLunrArmenianData((data)=>{
                   setArmenianDictionary(data )
             })
-      });
+      },[]);
+
+      useEffect(()=>{
+            if(mapFeatures.length===0){
+                  DataApi.getLocationData((data)=>{
+                        console.log(`got data ${data.length}`)
+                        setMapFeatures(data)
+                  })
+            }
+      })
 
 
 
@@ -87,7 +98,7 @@ const Routes = ( props)=>{
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
                               <Route path="/Map" exact>
-                                    <MapView  />
+                                    <MapView geoData= {mapFeatures}  />
                               </Route>
                                <Route path="/" exact>
                                     <HomePage sections={sections} />

@@ -138,6 +138,17 @@ export const getLunrArmenianData = async( onDataReceived )=>{
       }
 }
 
+export const getLocationData = async( onDataReceived)=>{
+      const dataFile = `${localUrl}data/locations.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+
+}
+
 
 
 
