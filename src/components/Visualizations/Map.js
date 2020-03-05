@@ -85,12 +85,22 @@ const MapView = ( props)=>{
                               'id':p.title,
                               'type':'fill',
                               'source':p.title,
-                              'layout':{},
+                             
                               'paint':{
                                     'fill-color':'#077',
                                     'fill-opacity': 0.2
-                              }
+                              },
+
+
                         })
+
+                        let el = window.document.createElement('div');
+                        el.className = 'marker';
+                        el.innerText=p.title;
+                        new mapboxgl.Marker(el)
+                        .setLngLat(p.representativePoint)
+                        .addTo(mapInstance );
+                      
                   }catch(error){
                         console.log(error)
                   }
@@ -158,6 +168,7 @@ const MapView = ( props)=>{
                   if(g && g.geometry && g.geometry.type === "Polygon"){
                         let polygonFeature ={
                         'title':f.title,
+                        'representativePoint':f.representativePoint,
                         'data': {
                               'type':'Feature',
                               'geometry':g.geometry,
