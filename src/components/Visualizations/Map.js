@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState} from 'react';
 import mapboxgl from 'mapbox-gl'
 import * as DataApi from '../../utils/Api';
+import Header from './../Header'
+
 mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
 
 
@@ -78,10 +80,13 @@ const MapView = ( props)=>{
 
 
       return(
-
-            <div ref={mapRef} style={{height:'600px', width:'1000px'}}>
-                 
-            </div>
+      <React.Fragment>
+                  <Header  />
+                  <div ref={mapRef} style={{height:'600px', width:'100%'}}>
+                  
+                  </div>
+      </React.Fragment>
+            
       )
 
      
