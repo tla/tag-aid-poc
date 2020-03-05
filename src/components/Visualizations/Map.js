@@ -12,8 +12,6 @@ const MapView = ( props)=>{
       const { geoData } = props;
      
 
-     
-
       useEffect( ()=>{
             const mapInstance = new mapboxgl.Map({
                   container: mapRef.current,
@@ -29,7 +27,7 @@ const MapView = ( props)=>{
                               'type':'geojson',
                               'data' : pointData
                         });
-               let cityLayer =    mapInstance.addLayer(
+                  let pointLayer =    mapInstance.addLayer(
                         {
                               'id':'cities',
                               'type':'symbol',
@@ -61,17 +59,43 @@ const MapView = ( props)=>{
                         .setLngLat(coordinates)
                         .setHTML(description)
                         .addTo(mapInstance);
-                        });
+                  });
                          
                         // Change the cursor to a pointer when the mouse is over the places layer.
                         mapInstance.on('mouseenter', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = 'pointer';
-                        });
+                  });
                          
                         // Change it back to a pointer when it leaves.
                         mapInstance.on('mouseleave', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = '';
-                        });
+                  });
+
+                  const polygons = parsePolygons();
+                  polygons.forEach( p =>{
+                  
+                  try{
+                        mapInstance.addSource(p.title,
+                              {
+                                    'type': 'geojson',
+                                    'data':p.data
+                              }
+                        );
+                        mapInstance.addLayer({
+                              'id':p.title,
+                              'type':'fill',
+                              'source':p.title,
+                              'layout':{},
+                              'paint':{
+                                    'fill-color':'#077',
+                                    'fill-opacity': 0.2
+                              }
+                        })
+                  }catch(error){
+                        console.log(error)
+                  }
+
+                  })// end for each poly
 
             
             })// end on load handler
@@ -94,14 +118,14 @@ const MapView = ( props)=>{
       function parsePoints(){
            let pointData = {
                  'type':'FeatureCollection',
-                
            }
-           const pointArray=[]
+           const pointArray=[];
+         
            geoData.forEach( f =>{
                   const g = f.geometry[0];
                  
                   if(g && g.geometry && g.geometry.type === "Point"){
-                        let headache = 10;
+                       
                         let pointFeature = {
                               'type':'Feature',
                               'geometry':g.geometry,
@@ -115,14 +139,35 @@ const MapView = ( props)=>{
                                           <b>link: </b><a href='${g.properties.link}'>Pleiades</a><br/>
                                           <b>snippet: </b>${g.properties.snippet}
                                           </p>`
-                                  
                                     }
                         }
                         pointArray.push(pointFeature)
                   }// end if feature is a point
+                 
            })// end for each in geo Data
            pointData.features = pointArray;
            return pointData;
+
+      }
+
+      function parsePolygons(){
+            const polygonArray=[];
+            geoData.forEach( f =>{
+                  const g = f.geometry[0];
+                 
+                  if(g && g.geometry && g.geometry.type === "Polygon"){
+                        let polygonFeature ={
+                        'title':f.title,
+                        'data': {
+                              'type':'Feature',
+                              'geometry':g.geometry,
+                              }
+                        }
+                        polygonArray.push(polygonFeature)
+                  }// end if feature is a polygon
+           })// end for each in geo Data
+
+           return polygonArray;
 
       }
 
