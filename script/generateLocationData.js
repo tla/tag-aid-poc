@@ -22,50 +22,83 @@ async function GenerateLocationData () {
       }
 
       async function fetchData(){
+           
             const geoRequests=[];
             const places = await getPlaces()
 
             places.data.forEach( p =>{
                   let url = p.properties.href
-                  if( url && url.indexOf("pleiades") >-1 ){
-                        let geoRequest = fetchLocation(url);
-                        geoRequests.push(geoRequest);
+                  // if( url && url.indexOf("pleiades") >-1 ){
+                  //       let pleiadesRequest = fetchGeoJsonLocation(url);
+                  //       geoRequests.push(pleiadesRequest);
+                  // }
+                  if(url && url.indexOf("geonames") > -1){
+                        const geoNameId = url.split("/")[3];
+                        const jsonUrl = `http://geonames.org/getJSON?id=${geoNameId}`;
+                        let geonamesRequest = fetchKMLLocation( jsonUrl);
+                        geoRequests.push(geonamesRequest)
                   }
             });
 
             let allLocations = await Promise.all(geoRequests);
             
             writeLocationFile();
-        
-            
       }
 
-      async function fetchLocation(url){
-          return geoData = await new Promise(resolve=>{
+      async function fetchKMLLocation(url){
+            return geoData = await new Promise(resolve=>{
                   getGeoJson(url)
                   .then( openData =>{
                         const record = openData.data
                         geoLocations.push({
                              // identifier:p.identifier, placeRef id
-                              id: record.id,
-                              title: record.title,
-                              provenance:record.provenance,
-                              representativePoint:record.reprPoint,
-                              geometry:record.features
-                              });
-
-                              resolve();
+                              id: record.geonameId,
+                              title: record.name,
+                              provenance:'geonames.org',
+                              geometry:[{
+                                    type:"Point",
+                                    geometry: {
+                                          coordinates:[record.lat, record.lng],
+                                          properties:{
+                                                description: `${record.fclName}, ${record.fcodeName} country: ${record.countryName} admin: ${record.adminName1} `
+                                          }
+                                    }
+                              }]
                         });
-                        
+
+                        resolve();
                   })
-         
-      
+                  .catch( error =>{
+                        console.log(error)
+                  })
+                        
+            })
       }
+
+      async function fetchGeoJsonLocation(url){
+            return geoData = await new Promise(resolve=>{
+                    getGeoJson(url)
+                    .then( openData =>{
+                          const record = openData.data
+                          geoLocations.push({
+                               // identifier:p.identifier, placeRef id
+                                id: record.id,
+                                title: record.title,
+                                provenance:record.provenance,
+                                representativePoint:record.reprPoint,
+                                geometry:record.features
+                                });
+  
+                                resolve();
+                          });
+                          
+                    })
+        }
 
       function writeLocationFile(){
             makeDirectory();
             const fileName=`${outdir}/locations.json`;
-            console.log(`count of pleiades locations ${geoLocations.length}`)
+            console.log(`location count ${geoLocations.length}`)
             writeFile(fileName, JSON.stringify(geoLocations));
       }
 
@@ -83,8 +116,7 @@ async function GenerateLocationData () {
       }
 
       async function getGeoJson(url){
-           return response = await axios.get(url, {auth})
-           
+           return response = await axios.get(url)
       }
 
       async function makeDirectory(){
