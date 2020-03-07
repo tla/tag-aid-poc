@@ -40,8 +40,7 @@ async function GenerateLocationData () {
                         geoRequests.push(geonamesRequest)
                   }
                   if(url && url.indexOf("syriaca") > -1){
-
-                      let syriacGazetteerRequest =   fetchSyriacLocation(url);
+                      let syriacGazetteerRequest =  fetchSyriacLocation(url);
                       geoRequests.push(syriacGazetteerRequest)
                   }
             });
@@ -106,7 +105,7 @@ async function GenerateLocationData () {
                                     // identifier:p.identifier, placeRef id
                                     id: record.id,
                                     title: record.title,
-                                    provenance:record.provenance,
+                                    provenance:'http://syriaca.org/',
                                     representativePoint:record.reprPoint,
                                     geometry:record.features
                               });
