@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState} from 'react';
 import mapboxgl from 'mapbox-gl'
 import * as DataApi from '../../utils/Api';
-import Header from './../Header'
+import EditionHeader from './../Edition/EditionHeader'
 
 mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
 
@@ -85,13 +85,10 @@ const MapView = ( props)=>{
                               'id':p.title,
                               'type':'fill',
                               'source':p.title,
-                             
                               'paint':{
                                     'fill-color':'#077',
                                     'fill-opacity': 0.2
                               },
-
-
                         })
 
                         let el = window.document.createElement('div');
@@ -115,8 +112,8 @@ const MapView = ( props)=>{
 
       return(
       <React.Fragment>
-                  <Header  />
-                  <div ref={mapRef} style={{height:'600px', width:'100%'}}>
+                  <EditionHeader  />
+                  <div ref={mapRef} style={{height:'700px', width:'100%'}}>
                   
                   </div>
       </React.Fragment>
@@ -136,6 +133,10 @@ const MapView = ( props)=>{
                  
                   if(g && g.geometry && g.geometry.type === "Point"){
                        
+                        let feature = f;
+                        let geometry = g;
+                        const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
+
                         let pointFeature = {
                               'type':'Feature',
                               'geometry':g.geometry,
@@ -146,12 +147,12 @@ const MapView = ( props)=>{
                                           <h6>${f.title}</h5>
                                           <b>description: </b>${g.properties.description}<br/>
                                           <b>provenance: </b>${f.provenance}<br/>
-                                          <b>link: </b><a href='${g.properties.link}'>Pleiades</a><br/>
+                                          <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
                                           <b>snippet: </b>${g.properties.snippet}
                                           </p>`
                                     }
                         }
-                        pointArray.push(pointFeature)
+                       pointArray.push(pointFeature)
                   }// end if feature is a point
                  
            })// end for each in geo Data

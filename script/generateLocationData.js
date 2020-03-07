@@ -28,14 +28,14 @@ async function GenerateLocationData () {
 
             places.data.forEach( p =>{
                   let url = p.properties.href
-                  // if( url && url.indexOf("pleiades") >-1 ){
-                  //       let pleiadesRequest = fetchGeoJsonLocation(url);
-                  //       geoRequests.push(pleiadesRequest);
-                  // }
+                  if( url && url.indexOf("pleiades") >-1 ){
+                        let pleiadesRequest = fetchGeoJsonLocation(url);
+                        geoRequests.push(pleiadesRequest);
+                  }
                   if(url && url.indexOf("geonames") > -1){
                         const geoNameId = url.split("/")[3];
                         const jsonUrl = `http://geonames.org/getJSON?id=${geoNameId}`;
-                        let geonamesRequest = fetchKMLLocation( jsonUrl);
+                        let geonamesRequest = fetchKMLLocation( jsonUrl, url);
                         geoRequests.push(geonamesRequest)
                   }
             });
@@ -45,7 +45,7 @@ async function GenerateLocationData () {
             writeLocationFile();
       }
 
-      async function fetchKMLLocation(url){
+      async function fetchKMLLocation(url, originalUrl){
             return geoData = await new Promise(resolve=>{
                   getGeoJson(url)
                   .then( openData =>{
@@ -56,12 +56,16 @@ async function GenerateLocationData () {
                               title: record.name,
                               provenance:'geonames.org',
                               geometry:[{
-                                    type:"Point",
+                                    
                                     geometry: {
-                                          coordinates:[record.lat, record.lng],
-                                          properties:{
-                                                description: `${record.fclName}, ${record.fcodeName} country: ${record.countryName} admin: ${record.adminName1} `
-                                          }
+                                          type:"Point",
+                                          coordinates:[record.lng,record.lat],
+                                          
+                                    },
+                                    properties:{
+                                          snippet:`${record.fclName}, ${record.fcodeName}`,
+                                          description: `country: ${record.countryName} admin: ${record.adminName1}`,
+                                          link:originalUrl
                                     }
                               }]
                         });
