@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
-const moment = require('moment')
+const moment = require('moment');
+const cheerio = require('cheerio')
 
 async function GenerateLocationData () {
       const startTime= moment();
@@ -37,6 +38,11 @@ async function GenerateLocationData () {
                         const jsonUrl = `http://geonames.org/getJSON?id=${geoNameId}`;
                         let geonamesRequest = fetchKMLLocation( jsonUrl, url);
                         geoRequests.push(geonamesRequest)
+                  }
+                  if(url && url.indexOf("syriaca") > -1){
+
+                      let syriacGazetteerRequest =   fetchSyriacLocation(url);
+                      geoRequests.push(syriacGazetteerRequest)
                   }
             });
 
@@ -79,25 +85,57 @@ async function GenerateLocationData () {
             })
       }
 
+      async function fetchSyriacLocation(url){
+
+            return geoData = await new Promise(resolve=>{
+                  getGeoJson(url)
+                  .then( openData =>{
+                        const $ = cheerio.load(openData.data.trim())
+                        let anchors = $('a');
+                        let pleiadesUrl;
+                        for( let i=0; i< anchors.length; i++){
+                              if(anchors[i].attribs.href.indexOf("pleiades") > -1){
+                                    pleiadesUrl=anchors[i].attribs.href;
+                                    break;
+                              }
+                        }  
+                        getGeoJson(pleiadesUrl)
+                        .then( openData =>{
+                              const record = openData.data
+                              geoLocations.push({
+                                    // identifier:p.identifier, placeRef id
+                                    id: record.id,
+                                    title: record.title,
+                                    provenance:record.provenance,
+                                    representativePoint:record.reprPoint,
+                                    geometry:record.features
+                              });
+                        resolve();
+                        });
+
+                  });
+
+            });
+                  
+      }              
+ 
       async function fetchGeoJsonLocation(url){
             return geoData = await new Promise(resolve=>{
-                    getGeoJson(url)
-                    .then( openData =>{
-                          const record = openData.data
-                          geoLocations.push({
-                               // identifier:p.identifier, placeRef id
-                                id: record.id,
-                                title: record.title,
-                                provenance:record.provenance,
-                                representativePoint:record.reprPoint,
-                                geometry:record.features
-                                });
-  
-                                resolve();
-                          });
-                          
-                    })
-        }
+                  getGeoJson(url)
+                  .then( openData =>{
+                        const record = openData.data
+                        geoLocations.push({
+                              // identifier:p.identifier, placeRef id
+                              id: record.id,
+                              title: record.title,
+                              provenance:record.provenance,
+                              representativePoint:record.reprPoint,
+                              geometry:record.features
+                        });
+                        resolve();
+                  });
+            });
+      }
 
       function writeLocationFile(){
             makeDirectory();
@@ -137,3 +175,7 @@ async function GenerateLocationData () {
 }
 
 GenerateLocationData();
+
+
+//tei.text.body.listplace.idno type=URI http://pleiades.stoa.org/places/658587
+      // there are 4 idno type=URIs in this example   
