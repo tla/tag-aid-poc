@@ -30,17 +30,17 @@ async function GenerateLocationData () {
             places.data.forEach( p =>{
                   let url = p.properties.href
                   if( url && url.indexOf("pleiades") >-1 ){
-                        let pleiadesRequest = fetchGeoJsonLocation(url);
+                        let pleiadesRequest = fetchGeoJsonLocation(url, p);
                         geoRequests.push(pleiadesRequest);
                   }
                   if(url && url.indexOf("geonames") > -1){
                         const geoNameId = url.split("/")[3];
                         const jsonUrl = `http://geonames.org/getJSON?id=${geoNameId}`;
-                        let geonamesRequest = fetchKMLLocation( jsonUrl, url);
+                        let geonamesRequest = fetchKMLLocation( jsonUrl, url, p);
                         geoRequests.push(geonamesRequest)
                   }
                   if(url && url.indexOf("syriaca") > -1){
-                      let syriacGazetteerRequest =  fetchSyriacLocation(url);
+                      let syriacGazetteerRequest =  fetchSyriacLocation(url, p);
                       geoRequests.push(syriacGazetteerRequest)
                   }
             });
@@ -50,7 +50,7 @@ async function GenerateLocationData () {
             writeLocationFile();
       }
 
-      async function fetchKMLLocation(url, originalUrl){
+      async function fetchKMLLocation(url, originalUrl, place){
             return geoData = await new Promise(resolve=>{
                   getGeoJson(url)
                   .then( openData =>{
@@ -72,7 +72,8 @@ async function GenerateLocationData () {
                                           description: `country: ${record.countryName} admin: ${record.adminName1}`,
                                           link:originalUrl
                                     }
-                              }]
+                              }],
+                              links:place.links
                         });
 
                         resolve();
@@ -84,7 +85,7 @@ async function GenerateLocationData () {
             })
       }
 
-      async function fetchSyriacLocation(url){
+      async function fetchSyriacLocation(url, place){
 
             return geoData = await new Promise(resolve=>{
                   getGeoJson(url)
@@ -107,7 +108,8 @@ async function GenerateLocationData () {
                                     title: record.title,
                                     provenance:'http://syriaca.org/',
                                     representativePoint:record.reprPoint,
-                                    geometry:record.features
+                                    geometry:record.features,
+                                    links:place.links
                               });
                         resolve();
                         });
@@ -118,7 +120,7 @@ async function GenerateLocationData () {
                   
       }              
  
-      async function fetchGeoJsonLocation(url){
+      async function fetchGeoJsonLocation(url, place){
             return geoData = await new Promise(resolve=>{
                   getGeoJson(url)
                   .then( openData =>{
@@ -129,7 +131,8 @@ async function GenerateLocationData () {
                               title: record.title,
                               provenance:record.provenance,
                               representativePoint:record.reprPoint,
-                              geometry:record.features
+                              geometry:record.features,
+                              links:place.links
                         });
                         resolve();
                   });
@@ -174,7 +177,3 @@ async function GenerateLocationData () {
 }
 
 GenerateLocationData();
-
-
-//tei.text.body.listplace.idno type=URI http://pleiades.stoa.org/places/658587
-      // there are 4 idno type=URIs in this example   
