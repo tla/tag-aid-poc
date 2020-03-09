@@ -24,7 +24,8 @@ const Routes = ( props)=>{
       const [translationIndex, setTranslationIndex] = useState();
       const [armenianDictionary, setArmenianDictionary] = useState([])
       const [armenianIndex, setArmenianIndex] = useState();
-      const [mapFeatures,setMapFeatures] = useState([])
+      const [mapFeatures,setMapFeatures] = useState([]);
+      const [locationLookup, setLocationLookup]=useState([]);
 
       useEffect(()=>{
             if( ! translationIndex )
@@ -43,24 +44,30 @@ const Routes = ( props)=>{
             if( ! armenianIndex )
                   DataApi.getArmenianIndex((data)=>{
                         setArmenianIndex(data )
-            })
+                  })
       },[])
       useEffect(()=>{
             if( armenianDictionary.length===0 )
             DataApi.getLunrArmenianData((data)=>{
                   setArmenianDictionary(data )
-            })
+                  })
       },[]);
 
       useEffect(()=>{
             if(mapFeatures.length===0){
                   DataApi.getLocationData((data)=>{
-                        console.log(`got data ${data.length}`)
                         setMapFeatures(data)
                   })
             }
       })
 
+      useEffect(()=>{
+            if(locationLookup.length===0){
+                  DataApi.getLocationLookup((data)=>{
+                        setLocationLookup(data)
+                  })
+            }
+      })
 
 
       return (
@@ -98,7 +105,7 @@ const Routes = ( props)=>{
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
                               <Route path="/Map" exact>
-                                    <MapView geoData= {mapFeatures}  />
+                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
                               </Route>
                                <Route path="/" exact>
                                     <HomePage sections={sections} />

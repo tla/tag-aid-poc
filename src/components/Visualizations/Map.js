@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl'
-import * as DataApi from '../../utils/Api';
 import EditionHeader from './../Edition/EditionHeader'
+import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button';
 
 mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
 
@@ -9,7 +11,7 @@ mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmV
 const MapView = ( props)=>{
 
       const mapRef=useRef()
-      const { geoData } = props;
+      const { geoData, locationLookup } = props;
      
 
       useEffect( ()=>{
@@ -107,7 +109,7 @@ const MapView = ( props)=>{
             
             })// end on load handler
 
-      },[])
+      })
 
 
       return(
@@ -136,6 +138,7 @@ const MapView = ( props)=>{
                         let feature = f;
                         let geometry = g;
                         const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
+                        const sectionLinks = generateSectionLink(f.links);
 
                         let pointFeature = {
                               'type':'Feature',
@@ -149,6 +152,10 @@ const MapView = ( props)=>{
                                           <b>provenance: </b>${f.provenance}<br/>
                                           <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
                                           <b>snippet: </b>${g.properties.snippet}
+                                          <b>Text References </b>
+                                          <ul>
+                                                ${ sectionLinks}
+                                          </ul>
                                           </p>`
                                     }
                         }
@@ -159,6 +166,21 @@ const MapView = ( props)=>{
            pointData.features = pointArray;
            return pointData;
 
+      }
+
+      function generateSectionLink( links ){
+            if( !links)
+            return '';
+            let innerHtml = '';
+            links.forEach( link =>{
+                  const lookup = locationLookup.find( l=> l.placeRefId.toString() === link.target.toString() );
+                  if(lookup){
+                        const sectionId = lookup.sectionId;
+                        innerHtml +=`<li><a href='/#/Edition/${sectionId}'>${sectionId}</a></li>`     
+                  }
+
+            })
+            return innerHtml;
       }
 
       function parsePolygons(){

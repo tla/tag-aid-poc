@@ -47,12 +47,13 @@ const EditionHeader = ( props)=>{
       return (
             
       <Grid container spacing={0} style={{maxHeight:'112px'}}>
-                  <div  item xs={12} className="header" >
+                  <Grid item xs={12} className="header" >
                         <Typography variant="h5" style={{padding:'12px 42px'}}>
                               The Chronicle of Matthew of Edessa
                         </Typography>
-                  </div>
+                  </Grid>
                    <Hidden mdUp>
+                         <Grid item>
                               <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa' }}>
                                     <IconButton edge="start" onClick={()=>{setIsExpanded(true)}}>
                                           <MenuIcon />
@@ -73,6 +74,7 @@ const EditionHeader = ( props)=>{
                                           </List>
                                     </Drawer>
                               </Toolbar>
+                              </Grid>
                   </Hidden>
 
                   

@@ -43,14 +43,14 @@ const Header = ( props)=>{
                                           <List>
                                           {['Home', 'About', 'Methods','Manuscripts','Edition','Visualizations']
                                           .map((text, index) => (
-                                                <Fragment>
+                                                
                                                       <a key={text} style={{textDecoration:'none'}} href={`#/${text}`}>
                                                             <ListItem button >
                                                                   <ListItemText primary={text}/>
                                                             </ListItem>
                                                             <Divider />
                                                       </a>
-                                                 </Fragment>
+                                                
                                                 ))}
                                           </List>
                                     </Drawer>
