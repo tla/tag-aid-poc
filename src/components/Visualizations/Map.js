@@ -32,7 +32,7 @@ const MapView = ( props)=>{
                   container: mapRef.current,
                   style:'mapbox://styles/mapbox/light-v10',
                   center: selectedLocation? selectedLocation:Edessa,
-                  zoom:selectedLocation?8:5
+                  zoom:selectedLocation?12:5
             });
 
             mapInstance.on('load', ()=>{
@@ -102,8 +102,40 @@ const MapView = ( props)=>{
                                     'fill-opacity': 0.2
                               },
                         })
+ let stupid = Math.random();
+                        mapInstance.addSource(`${p.title}-${stupid.toString()}`, {
+                              'type': 'geojson',
+                              'data': {
+                                          'type': 'Feature',
+                                          'geometry': {
+                                                'type': 'Point',
+                                                'coordinates': p.representativePoint
+                                                },
+                                          'properties':{
+                                                'title':p.title,
+                                                'description':'bunnies are cute'
+                                          }
+                                    }
+                              });
 
-                        mapInstance.on('click', p.title, function(e) {
+                              mapInstance.addLayer({
+                                    'id': `${p.title}-${stupid.toString()}`,
+                                    'type': 'symbol',
+                                    'source': `${p.title}-${stupid.toString()}`,
+                                    'layout': {
+                                         
+                                          'text-field': ['get', 'title'],
+                                          'text-size':20,
+                                          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                                          'text-offset': [0, 0.6],
+                                          'text-anchor': 'top'
+                                          },
+                                    'paint':{
+                                          'text-color':'#F0F62A'
+                                    }
+                              });
+
+                        mapInstance.on('click', `${p.title}-${stupid.toString()}`, function(e) {
                               var coordinates = e.lngLat;
                               var description = e.features[0].properties.description;
                                
@@ -120,20 +152,23 @@ const MapView = ( props)=>{
                               .addTo(mapInstance);
                         });
       
-                        mapInstance.on('mouseenter', p.title, function() {
+                        mapInstance.on('mouseenter', `${p.title}-${stupid.toString()}`, function() {
                               mapInstance.getCanvas().style.cursor = 'pointer';
                         });
                                
-                        mapInstance.on('mouseleave', p.title, function() {
+                        mapInstance.on('mouseleave', `${p.title}-${stupid.toString()}`, function() {
                               mapInstance.getCanvas().style.cursor = '';
                         });
 
-                        let el = window.document.createElement('div');
-                        el.className = 'marker';
-                        el.innerText=p.title;
-                        new mapboxgl.Marker(el)
-                        .setLngLat(p.representativePoint)
-                        .addTo(mapInstance );
+
+
+
+                        // let el = window.document.createElement('div');
+                        // el.className = 'marker';
+                        // el.innerText=p.title;
+                        // new mapboxgl.Marker(el)
+                        // .setLngLat(p.representativePoint)
+                        // .addTo(mapInstance );
                       
                   }catch(error){
                         console.log(error)
@@ -225,27 +260,30 @@ const MapView = ( props)=>{
 
                         const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
                         const sectionLinks = generateSectionLink(f.links);
+
                         let polygonFeature ={
-                        'title':f.title,
-                        'representativePoint':f.representativePoint,
-                        'data': {
-                              'type':'Feature',
-                              'geometry':g.geometry,
-                              'properties':{
-                                    'description':`<p>
-                                    <h6>${f.title}</h5>
-                                    <b>description: </b>${g.properties.description}<br/>
-                                    <b>provenance: </b>${f.provenance}<br/>
-                                    <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
-                                    <b>snippet: </b>${g.properties.snippet?g.properties.snippet:'bunnies'}<br/>
-                                    <b>Text References </b>
-                                    <ul>
-                                          ${ sectionLinks}
-                                    </ul>
-                                    </p>`
-                              }
-                              }
-                        }
+                              'title':f.title,
+                              'representativePoint':f.representativePoint,
+                              'data': {
+                                    'type':'Feature',
+                                    'geometry':g.geometry,
+                                    'properties':{
+                                          'icon':'town-hall',
+                                          'description':`<p>
+                                          <h6>${f.title}</h5>
+                                          <b>description: </b>${g.properties.description}<br/>
+                                          <b>provenance: </b>${f.provenance}<br/>
+                                          <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
+                                          <b>snippet: </b>${g.properties.snippet?g.properties.snippet:'bunnies'}<br/>
+                                          <b>Text References </b>
+                                          <ul>
+                                                ${ sectionLinks}
+                                          </ul>
+                                          </p>`
+                                    }
+                              }// end polygonFeature
+
+                        }// end for each polygon
                         polygonArray.push(polygonFeature)
                   }// end if feature is a polygon
            })// end for each in geo Data

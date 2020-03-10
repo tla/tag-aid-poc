@@ -16,13 +16,12 @@ async function generateStore() {
       const auth = config.auth;
       const outdir = "public/data";
       const lunrIndex = [];
-
-     // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
-     // console.log('testing')
+      const locationLookup = [];
 
       await fetchData(baseURL,auth);
       const endTime= moment();
       console.log('Done!', endTime.format('hh:mm:ss'))
+
 
       function loadConfig() {
             const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
@@ -57,6 +56,7 @@ async function generateStore() {
             sectionStore = await Promise.all(sectionPromises);
             writeSectionFile( validSections);
             writeLunrIndex();
+            writeLocationLookup()
       }
 
       async function getSectionData( sectionId, witnesses, validSections ){
@@ -109,7 +109,8 @@ async function generateStore() {
                         getPlaces(sectionId)
                         .then( places =>{
                               if(places) 
-                                    writeAnnotationList(places,sectionId, 'places')
+                                    writeAnnotationList(places,sectionId, 'places');
+                                    appendLocationLookup(sectionId, places)
                               resolve();
                         })
                   });
@@ -374,6 +375,16 @@ async function generateStore() {
             fs.writeFileSync( sectFile, JSON.stringify(refs) )
       }
 
+      function appendLocationLookup(sectionId, places){
+            places.forEach( place =>{
+                  let placeEntry={
+                        placeRefId: place.id,
+                        sectionId:sectionId,
+                  }
+                  locationLookup.push(placeEntry);
+            })          
+      }
+
       async function makeDirectory(sectiondir){
             if( ! fs.existsSync('public') )
                    fs.mkdirSync('public', {recursive:true});
@@ -406,6 +417,13 @@ async function generateStore() {
             console.log('lunr index file written')  
       }
 
+      function writeLocationLookup(){
+            const dataDir = `${outdir}`;
+            const fileName = `locationLookup`
+            makeDirectory(dataDir)
+            const sectFile = `${outdir}/${fileName}.json`
+            fs.writeFileSync( sectFile, JSON.stringify(locationLookup) )
+      }
      
      
     
