@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 
 const TextPane =(props) => {
 
-      const {sectionId, reading, onSelectNode, selectedNode, selectedSentence, onSelectSentence,
+      const {sectionId, reading, onSelectNode, onSelectLocation, selectedSentence, onSelectSentence,
       persons, places, dates} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
@@ -39,8 +39,7 @@ const TextPane =(props) => {
                                           color: selected? 'red':'black',
                                           backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':atRank?'#00a600':'transparent'
                                     }
-                                   
-                                          return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank})}} >
+                                          return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank, place: place})}} >
                                                 {domToReact(children,parserOptions)}</span>
 
                               }
@@ -106,7 +105,10 @@ const TextPane =(props) => {
       }
 
       function handleSelected( node){
-            onSelectNode(node)
+            if(node.place)
+                  onSelectLocation(node);
+            else
+                  onSelectNode(node);
       }
 
       

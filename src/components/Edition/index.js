@@ -211,6 +211,7 @@ const Edition = ( props)=>{
                                                             selectedSentence={selectedSentence}
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
+                                                            onSelectLocation={handleSelectLocation}
                                                       />
                                                 </Grid>
 
@@ -262,7 +263,6 @@ const Edition = ( props)=>{
                         setSelectedSentence(null);
                         return;
             }
-            
             setSelectedSentence({
                   'startRank': startRank,
                   'startId': startNodeId, 
@@ -270,6 +270,11 @@ const Edition = ( props)=>{
                   'endId': endNodeId,
            } );
       }
+
+      function handleSelectLocation(node){
+            props.history.push(`/Map/${node.place.annotationId}`);
+      }
+
       function handleToggleGraph(){
             let toggled = !graphVisible;
             setGraphVisible(toggled)

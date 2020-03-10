@@ -1,9 +1,8 @@
 import React, { useRef, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl'
 import EditionHeader from './../Edition/EditionHeader'
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button';
+import {withRouter} from 'react-router-dom';
+import { useParams} from 'react-router-dom'
 
 mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
 
@@ -12,14 +11,30 @@ const MapView = ( props)=>{
 
       const mapRef=useRef()
       const { geoData, locationLookup } = props;
+      let {locationId} = useParams()
+
      
 
       useEffect( ()=>{
+            const Edessa = [37.1747759,38.7708186];
+            let selectedLocation;
+            if( locationId){
+                  let place = geoData.find( g=> g.links.find( l => l.target.toString() === locationId.toString()) );
+                 if(place && place.geometry && place.geometry[0] && place.geometry[0].geometry){
+                        if(place.geometry[0].geometry.type ==="Point")
+                              selectedLocation=place.geometry[0].geometry.coordinates;
+                        if(place.geometry[0].geometry.type === "Polygon")
+                              selectedLocation=place.representativePoint;
+                 }
+               
+            }
+                 
+
             const mapInstance = new mapboxgl.Map({
                   container: mapRef.current,
                   style:'mapbox://styles/mapbox/light-v10',
-                  center: [37.1747759,38.7708186],
-                  zoom:5
+                  center: selectedLocation? selectedLocation:Edessa,
+                  zoom:selectedLocation?8:5
             });
 
             mapInstance.on('load', ()=>{
@@ -165,7 +180,6 @@ const MapView = ( props)=>{
            })// end for each in geo Data
            pointData.features = pointArray;
            return pointData;
-
       }
 
       function generateSectionLink( links ){
@@ -178,7 +192,6 @@ const MapView = ( props)=>{
                         const sectionId = lookup.sectionId;
                         innerHtml +=`<li><a href='/#/Edition/${sectionId}'>${sectionId}</a></li>`     
                   }
-
             })
             return innerHtml;
       }
@@ -211,4 +224,4 @@ const MapView = ( props)=>{
 
 
 }
-export default MapView
+export default withRouter(MapView)

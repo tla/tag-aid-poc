@@ -107,6 +107,9 @@ const Routes = ( props)=>{
                               <Route path="/Map" exact>
                                     <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
                               </Route>
+                              <Route path="/Map/:locationId" exact>
+                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
+                              </Route>
                                <Route path="/" exact>
                                     <HomePage sections={sections} />
                               </Route> 
