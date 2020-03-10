@@ -26,9 +26,7 @@ const MapView = ( props)=>{
                         if(place.geometry[0].geometry.type === "Polygon")
                               selectedLocation=place.representativePoint;
                  }
-               
             }
-                 
 
             const mapInstance = new mapboxgl.Map({
                   container: mapRef.current,
@@ -49,15 +47,14 @@ const MapView = ( props)=>{
                               'id':'cities',
                               'type':'symbol',
                               'source':'cities',
-                           //   'layout':{'visibility':'visible'}
-                           'layout': {
-                              'icon-image': '{icon}-15',
-                              'icon-allow-overlap': true,
-                              'text-field': ['get', 'title'],
-                              'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                              'text-offset': [0, 0.6],
-                              'text-anchor': 'top'
-                              }
+                              'layout': {
+                                    'icon-image': '{icon}-15',
+                                    'icon-allow-overlap': true,
+                                    'text-field': ['get', 'title'],
+                                    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                                    'text-offset': [0, 0.6],
+                                    'text-anchor': 'top'
+                                    }
                         }
                   );
 
@@ -77,14 +74,12 @@ const MapView = ( props)=>{
                         .setHTML(description)
                         .addTo(mapInstance);
                   });
-                         
-                        // Change the cursor to a pointer when the mouse is over the places layer.
-                        mapInstance.on('mouseenter', 'cities', function() {
+
+                  mapInstance.on('mouseenter', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = 'pointer';
                   });
                          
-                        // Change it back to a pointer when it leaves.
-                        mapInstance.on('mouseleave', 'cities', function() {
+                  mapInstance.on('mouseleave', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = '';
                   });
 
@@ -107,6 +102,31 @@ const MapView = ( props)=>{
                                     'fill-opacity': 0.2
                               },
                         })
+
+                        mapInstance.on('click', p.title, function(e) {
+                              var coordinates = e.lngLat;
+                              var description = e.features[0].properties.description;
+                               
+                              // Ensure that if the map is zoomed out such that multiple
+                              // copies of the feature are visible, the popup appears
+                              // over the copy being pointed to.
+                              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                              }
+                               
+                              new mapboxgl.Popup()
+                              .setLngLat(coordinates)
+                              .setHTML(description)
+                              .addTo(mapInstance);
+                        });
+      
+                        mapInstance.on('mouseenter', p.title, function() {
+                              mapInstance.getCanvas().style.cursor = 'pointer';
+                        });
+                               
+                        mapInstance.on('mouseleave', p.title, function() {
+                              mapInstance.getCanvas().style.cursor = '';
+                        });
 
                         let el = window.document.createElement('div');
                         el.className = 'marker';
@@ -166,7 +186,7 @@ const MapView = ( props)=>{
                                           <b>description: </b>${g.properties.description}<br/>
                                           <b>provenance: </b>${f.provenance}<br/>
                                           <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
-                                          <b>snippet: </b>${g.properties.snippet}
+                                          <b>snippet: </b>${g.properties.snippet?g.properties.snippet:''}<br/>
                                           <b>Text References </b>
                                           <ul>
                                                 ${ sectionLinks}
@@ -202,12 +222,28 @@ const MapView = ( props)=>{
                   const g = f.geometry[0];
                  
                   if(g && g.geometry && g.geometry.type === "Polygon"){
+
+                        const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
+                        const sectionLinks = generateSectionLink(f.links);
                         let polygonFeature ={
                         'title':f.title,
                         'representativePoint':f.representativePoint,
                         'data': {
                               'type':'Feature',
                               'geometry':g.geometry,
+                              'properties':{
+                                    'description':`<p>
+                                    <h6>${f.title}</h5>
+                                    <b>description: </b>${g.properties.description}<br/>
+                                    <b>provenance: </b>${f.provenance}<br/>
+                                    <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
+                                    <b>snippet: </b>${g.properties.snippet?g.properties.snippet:'bunnies'}<br/>
+                                    <b>Text References </b>
+                                    <ul>
+                                          ${ sectionLinks}
+                                    </ul>
+                                    </p>`
+                              }
                               }
                         }
                         polygonArray.push(polygonFeature)
