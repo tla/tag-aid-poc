@@ -113,7 +113,7 @@ const MapView = ( props)=>{
                                                 },
                                           'properties':{
                                                 'title':p.title,
-                                                'description':'bunnies are cute'
+                                                'description':p.data.properties.description
                                           }
                                     }
                               });
