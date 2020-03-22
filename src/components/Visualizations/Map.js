@@ -30,7 +30,7 @@ const MapView = ( props)=>{
 
             const mapInstance = new mapboxgl.Map({
                   container: mapRef.current,
-                  style:'mapbox://styles/mapbox/light-v10',
+                  style:'mapbox://styles/mapbox/streets-v11',
                   center: selectedLocation? selectedLocation:Edessa,
                   zoom:selectedLocation?12:5
             });
