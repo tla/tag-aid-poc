@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 const TextPane =(props) => {
 
       const {sectionId, reading, onSelectNode, onSelectLocation, selectedSentence, onSelectSentence,
-      persons, places, dates} = props;
+      persons, places, dates, graphVisible} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
@@ -107,8 +107,11 @@ const TextPane =(props) => {
       function handleSelected( node){
             if(node.place)
                   onSelectLocation(node);
-            else
-                  onSelectNode(node);
+            else {
+                  if(graphVisible)
+                        onSelectNode(node);
+            }
+                  
       }
 
       
