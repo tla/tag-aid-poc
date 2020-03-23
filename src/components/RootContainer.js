@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import  * as DataApi from './../utils/Api';
-import Layout from './Layout'
+import Routes from './Routes'
 import { HashRouter as Router} from 'react-router-dom'
 
 
@@ -20,7 +20,7 @@ const RootContainer = ( props )=>{
       return (
             <Router>
                  
-                  <Layout 
+                  <Routes
                         sections = {sectionList}
                         witnesses = {witnessList}
                   />

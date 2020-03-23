@@ -87,6 +87,82 @@ export const getReading = async ( sectionId, reading, onTextReceived )=>{
       }
 }
 
+export const getManuscript = async ( manuscriptId, onTextReceived )=>{
+      const manuscriptFile = `${localUrl}dist/content/${manuscriptId}.tei.xml`;    
+      try{
+            const result = await axios.get(manuscriptFile);
+            onTextReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getTranslationIndex = async( onIndexReceived )=>{
+      const indexFile = `${localUrl}data/lunrIndex.json`;
+      try{
+            const result = await axios.get(indexFile);
+            onIndexReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getArmenianIndex = async( onIndexReceived )=>{
+      const indexFile = `${localUrl}data/lunrArmenianIndex.json`;
+      try{
+            const result = await axios.get(indexFile);
+            onIndexReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+
+export const getLunrData = async( onDataReceived )=>{
+      const dataFile = `${localUrl}data/lunrData.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getLunrArmenianData = async( onDataReceived )=>{
+      const dataFile = `${localUrl}data/lunrArmenianData.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+//from the stemmarest api where annotations?label=PLACE
+// the target property refrences a PLACEREF - see below
+export const getLocationData = async( onDataReceived)=>{
+      const dataFile = `${localUrl}data/locations.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+//from the stemmarest api where annotations?label=PLACEREF and sectionId is specified
+// the target property references a text nodeId
+export const getLocationLookup = async( onDataReceived)=>{
+      const dataFile = `${localUrl}data/locationLookup.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+
+}
+
 
 
 

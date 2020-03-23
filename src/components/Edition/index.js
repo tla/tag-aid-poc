@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { Grid } from '@material-ui/core';
-import withWidth from '@material-ui/core/withWidth';
+import withWidth from '@material-ui/core/withWidth';// used by grid
 import SectionList from './SectionList';
 import ViewOptions from './ViewOptions';
 import TextPane from './TextPane';
@@ -13,13 +13,13 @@ import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import {withRouter} from 'react-router-dom';
 import PreviousNext from './PreviousNext';
-    
-const Edition = ( props)=>{
-      
+
+
+const Edition = ( props)=>{    
       let {sectionID} = useParams()
       if(! sectionID)
             sectionID = "1019321"
-      const {sections , viewport , witnesses} = props;
+      const {sections , viewport , witnesses, onSearch} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [selectedRank, setSelectedRank] =  useState();
@@ -28,13 +28,14 @@ const Edition = ( props)=>{
       const [dateList, setDateList] = useState([]);
       const [nodeHash, setNodeHash] =useState();
       const [nodeArray, setNodeArray] = useState([]);
-      const [graphVisible, setGraphVisible] = useState(true);
+      const [graphVisible, setGraphVisible] = useState(false);
       const [personsVisible, setPersonsVisible] = useState(false);
       const [placesVisible, setPlacesVisible] = useState(false);
       const [datesVisible, setDatesVisible] = useState(false);
       const [leftReading, setLeftReading] = useState('Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
       const [isExpanded, setIsExpanded] = useState(false);
+    
 
       useEffect(()=>{
             setSelectedSentence(null);
@@ -58,9 +59,9 @@ const Edition = ( props)=>{
                  nodelist.forEach( (node)=>{
                        const value = 
                        {
-                                    id: node.id,
-                                    rank:node.rank,
-                                    witnesses: node.witnesses
+                              id: node.id,
+                              rank:node.rank,
+                              witnesses: node.witnesses
                         }
                         hash[node.id]= value;
                         list.push(value);
@@ -100,25 +101,25 @@ const Edition = ( props)=>{
   
       let textContainerStyle={
             overflowY:'auto', 
-            height: graphVisible ? `${viewport.height * .30}px`:`${viewport.height - 170}px`,
+            height: graphVisible ? `${viewport.height * .30 -84}px`:`${viewport.height - 254}px`,
       }
 
       return (
             
-            <Grid container={true} spacing={0} >
+            <Grid container spacing={0} >
 
-                   <Grid id="edition-header" item xs={12} >
-                         <div style={{height: '100px'}}>
-                         <EditionHeader />
-                         </div>
-                        
+                   <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
+                       
+                              <EditionHeader onSearch={onSearch} />
                   </Grid>  
              
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                               <div style={{height: isExpanded?'480px':'80px', }}>
+                              <div style={{display:'flex', flexDirection:'column'}}>
+                              
                                      <ViewOptions 
-                                          viewport = {viewport}
+                                          height={isExpanded?'500px':'80px'}
+                                          viewport={viewport}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
@@ -135,23 +136,22 @@ const Edition = ( props)=>{
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
                                     />
-                              </div> 
-                             <div style={{height:'16px'}}></div>
+                             
+                                    <div style={{height:'8px'}}></div>
                        
-                              <div style={{height: isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}}>
-                                  <SectionList 
-                                          height={isExpanded ? ` ${viewport.height - 640}px` : ` ${viewport.height - 230}px`}
+                              
+                                    <SectionList 
+                                          height={isExpanded ? ` ${viewport.height - 662 > 0 ? viewport.height - 662 : 0}px` : ` ${viewport.height - 230}px`}
                                           sectionId={sectionID}
                                           list ={sections}
-                                     />  
-                              </div> 
-                  </Grid>
+                                    />  
+                              </div>      
+                        </Grid>
                   </Hidden> 
 
                   <Grid id="mainContent" item xs={12} md={10}> 
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
-                                   
                                     <div>
                                           <div >
                                                <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}>
@@ -174,7 +174,6 @@ const Edition = ( props)=>{
                                           <div > 
                                                 <Paper style={{margin:'12px',overflowX:'hidden', overflowY:'hidden', position:'relative'}}>
                                                       <RankDisonance 
-                                                           
                                                             viewport = { viewport }
                                                             sectionId={sectionID}
                                                             highlightedNode = { selectedNode}
@@ -185,22 +184,20 @@ const Edition = ( props)=>{
                                                 </Paper>
                                           </div>
                                     </div>
-                                    
                               }
 
                               {sectionID &&
+                                  <React.Fragment>
+                                    <div style={{display:'flex', justifyContent:'center', height:'84px'}}>
+                                          <PreviousNext 
+                                                onPrevious ={ previousSection}
+                                                onNext = { nextSection}
+                                                sections = { sections}
+                                                sectionId = { sectionID }
+                                          />
+                                    </div>
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>
-
-                                                <Grid item xs={12} >
-                                                      <PreviousNext 
-                                                            onPrevious ={ previousSection}
-                                                            onNext = { nextSection}
-                                                            sections = { sections}
-                                                            sectionId = { sectionID }
-                                                            />
-                                                </Grid>  
-
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
                                                             sections = { sections}
@@ -214,6 +211,7 @@ const Edition = ( props)=>{
                                                             selectedSentence={selectedSentence}
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
+                                                            onSelectLocation={handleSelectLocation}
                                                       />
                                                 </Grid>
 
@@ -231,9 +229,10 @@ const Edition = ( props)=>{
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
                                                       />
-                                          </Grid>
+                                                </Grid>
                                           </Grid>
                                     </div>
+                                    </React.Fragment>
                               } 
 
                         </div>
@@ -264,7 +263,6 @@ const Edition = ( props)=>{
                         setSelectedSentence(null);
                         return;
             }
-            
             setSelectedSentence({
                   'startRank': startRank,
                   'startId': startNodeId, 
@@ -272,6 +270,11 @@ const Edition = ( props)=>{
                   'endId': endNodeId,
            } );
       }
+
+      function handleSelectLocation(node){
+            props.history.push(`/Map/${node.place.annotationId}`);
+      }
+
       function handleToggleGraph(){
             let toggled = !graphVisible;
             setGraphVisible(toggled)
@@ -316,4 +319,4 @@ const Edition = ( props)=>{
       }
 
 }
-export default  withRouter(Edition)
+export default  withWidth() (withRouter(Edition) )

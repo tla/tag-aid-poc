@@ -1,4 +1,4 @@
-import React,{useState, useEffect,Fragment} from 'react';
+import React,{useState, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 const Header = ( props)=>{
-
+     
       const [tabIndex, setTabIndex]=useState("#/")
       const [isExpanded, setIsExpanded]= useState(false)
 
@@ -23,8 +23,8 @@ const Header = ( props)=>{
             let pageName = window.location.hash.split("/")[1]
             setTabIndex(`#/${pageName}`)
       },[])
-      
 
+    
       return (
             <Grid container spacing={0}>
                   <div id="headerPanel" role="banner" >
@@ -43,14 +43,14 @@ const Header = ( props)=>{
                                           <List>
                                           {['Home', 'About', 'Methods','Manuscripts','Edition','Visualizations']
                                           .map((text, index) => (
-                                                <Fragment>
-                                                      <a style={{textDecoration:'none'}} href={`#/${text}`}>
-                                                            <ListItem button key={text}>
+                                                
+                                                      <a key={text} style={{textDecoration:'none'}} href={`#/${text}`}>
+                                                            <ListItem button >
                                                                   <ListItemText primary={text}/>
                                                             </ListItem>
                                                             <Divider />
                                                       </a>
-                                                 </Fragment>
+                                                
                                                 ))}
                                           </List>
                                     </Drawer>
@@ -60,14 +60,15 @@ const Header = ( props)=>{
                         <Hidden smDown>
                               <div item md={12 }>
                                     <AppBar position="static" style={{backgroundColor:'#f8f9fa' }}>
+                                         
                                           <div style={{display:'flex', justifyContent:'flex-end'}}>
                                                       <Tabs value={tabIndex} style={{float:'right', color:'black'}} onChange={handleTabChange} >
                                                             <Tab label="Home" href="/" value="#/" />
                                                             <Tab label="About" href="#/About"  value="#/About"  />
                                                             <Tab label="Methods"  href="#/Methods" value="#/Methods" />
                                                             <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                                            <Tab label="Edition" href="#/Edition/1019321"    value="#/Edition"   />
-                                                            <Tab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
+                                                            <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
+                                                            <Tab label="Visualizations" href="#/Map" value="#/Map" />
                                                       </Tabs>
                                           </div>
                                     </AppBar> 

@@ -62,7 +62,7 @@ const HomePage = (props)=> {
                                                       onDeselectNode={()=>{}}
                                                 />
                                           </Grid>
-                                          <Grid item={true} xs={12} style={{textAlign:'center', marginBottom:'48px'}}>
+                                          <Grid  item xs={12} style={{textAlign:'center', marginBottom:'48px'}}>
                                                 <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                       <Typography variant="h5">
                                                             {"Read on..."}

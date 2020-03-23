@@ -1,7 +1,8 @@
 const fs = require('fs')
 const axios = require('axios');
 const moment = require('moment')
-     
+//const CETEI = require('./../utils/CETEI')
+const lunr = require('lunr');    
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
 // inspired by fast async await example - everything in parallel when possible - 
 // do add error handling please
@@ -14,15 +15,16 @@ async function generateStore() {
       const baseURL=`${config.options.repository}/tradition/${config.options.tradition_id}`;
       const auth = config.auth;
       const outdir = "public/data";
-
-     // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
-     // console.log('testing')
+      const lunrIndex = [];
+      const locationLookup = [];
 
       await fetchData(baseURL,auth);
       const endTime= moment();
       console.log('Done!', endTime.format('hh:mm:ss'))
 
+
       function loadConfig() {
+          
             const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
             return JSON.parse(configJSON);
       }
@@ -54,6 +56,8 @@ async function generateStore() {
             });
             sectionStore = await Promise.all(sectionPromises);
             writeSectionFile( validSections);
+            writeLunrIndex();
+            writeLocationLookup()
       }
 
       async function getSectionData( sectionId, witnesses, validSections ){
@@ -106,7 +110,8 @@ async function generateStore() {
                         getPlaces(sectionId)
                         .then( places =>{
                               if(places) 
-                                    writeAnnotationList(places,sectionId, 'places')
+                                    writeAnnotationList(places,sectionId, 'places');
+                                    appendLocationLookup(sectionId, places)
                               resolve();
                         })
                   });
@@ -185,6 +190,22 @@ async function generateStore() {
             return response.data;
       }
 
+      async function getManuscript(manuscriptId){
+            const manuscriptDir = `images/mss/${manuscriptId}`
+            const manuscriptFile = `${manuscriptDir}/${manuscriptId}.html`;
+            const manuscriptURL = `${manuscriptDir}/${manuscriptId}.tei.xml`;
+            const response = await axios.get( `${manuscriptURL}`)
+            var TEI =response;
+            const CETEIcean = new CETEI();
+            let htmlContainer;
+            CETEIcean.makeHTML5(TEI, function(data) {
+                  htmlContainer = document.createElement('div');
+                  htmlContainer.appendChild(data);
+            });
+
+          writeFile(manuscriptFile,htmlContainer.innerHTML)  
+      }
+
       function readingToHTML( reading ){
             if( reading.length === 0 )
             return;
@@ -204,6 +225,7 @@ async function generateStore() {
             if( translation.length === 0 )
             return;
             let textElements = [] ;
+            let lunrText = [];
             const translationFragments = [];
             for (const entry of translation ) {
                   const text = entry.properties.text;
@@ -223,10 +245,13 @@ async function generateStore() {
             translationFragments.sort( (a,b)=>{return a.startRank - b.startRank});
     
             translationFragments.forEach( f => {
+                  lunrText.push( f.text)
                   const textElement = `<span id='${f.startRank}-${f.start}' key='${f.endRank}-${f.end}'>${f.text}</span>`;
                   textElements.push(textElement)
             })
-            return  `${textElements.join(' ')}`
+            const textJoined = `${lunrText.join(' ')}`
+            appendLunrIndex(textJoined,sectionId)
+            return `${textElements.join(' ')}`
       }
 
       function writeLemmaFile(readings,sectionId){
@@ -303,11 +328,9 @@ async function generateStore() {
 
       function writeTranslationFile( translation,sectionId, readings){
             if ( ! translation.length > 0 ){
-
                   console.log('no translation for section', sectionId)
                   return;
             }
-                 
             const sectiondir = `${outdir}/${sectionId}`;
             const translationFilePath = `${sectiondir}/en.html`;
             const translationHTML = translationToHTML(translation, sectionId, readings)
@@ -353,6 +376,16 @@ async function generateStore() {
             fs.writeFileSync( sectFile, JSON.stringify(refs) )
       }
 
+      function appendLocationLookup(sectionId, places){
+            places.forEach( place =>{
+                  let placeEntry={
+                        placeRefId: place.id,
+                        sectionId:sectionId,
+                  }
+                  locationLookup.push(placeEntry);
+            })          
+      }
+
       async function makeDirectory(sectiondir){
             if( ! fs.existsSync('public') )
                    fs.mkdirSync('public', {recursive:true});
@@ -366,6 +399,32 @@ async function generateStore() {
             fs.writeFileSync( fileName, contents )  
       }
 
+      function appendLunrIndex(translation,sectionId){
+            lunrIndex.push({sectionId:sectionId,title:'',text:translation})
+      }
+
+      function writeLunrIndex( ){
+            var idx = lunr(function () {
+                  this.ref('sectionId')
+                  this.field('title')
+                  this.field('text')
+              
+                  lunrIndex.forEach(function (doc) {
+                              this.add(doc)
+                        }, this)
+                  });
+            const lunrFile = `${outdir}/lunrIndex.json`;
+            fs.writeFileSync( lunrFile, JSON.stringify(idx) )   
+            console.log('lunr index file written')  
+      }
+
+      function writeLocationLookup(){
+            const dataDir = `${outdir}`;
+            const fileName = `locationLookup`
+            makeDirectory(dataDir)
+            const sectFile = `${outdir}/${fileName}.json`
+            fs.writeFileSync( sectFile, JSON.stringify(locationLookup) )
+      }
      
      
     
