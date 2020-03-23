@@ -66,8 +66,8 @@ const RankDisonance = (props)=> {
       const yaxisStyle = {
             grid:    {stroke:  "#E9E4E8", } ,
             axis: { stroke: "grey" },
-            ticks: { stroke: "grey" },
-            tickLabels: {fontSize: 5},
+            ticks: { stroke: "transparent" },
+            tickLabels: {fill:"none"},
       };
 
       return (
