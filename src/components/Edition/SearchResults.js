@@ -11,15 +11,18 @@ import Button from '@material-ui/core/Button';
 
 const SearchResults=(props)=>{
 
-      const {searchTerm, onSearch, translationDictionary, translationIndex, armenianDictionary, armenianIndex} = props;
+      const {searchTerm, onSearch, translationDictionary, translationIndex, armenianDictionary, armenianIndex, sections} = props;
       const [ lunrResults, setLunrResults] = useState([]);  
       const [dataDictionary, setDataDictionary] = useState([]);
+     const[isArmenian, setIsArmenian]=useState();
+
+    
 
       const parserOptions = {
             replace: function(domNode) {
                   if( domNode.children){
                         if(domNode.children[0].data.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 )
-                              return <span  style={{backgroundColor:'yellow'}}>{domToReact(domNode.children,parserOptions)}</span>
+                              return <span  style={{backgroundColor:'#F2F19C'}}>{domToReact(domNode.children,parserOptions)}</span>
                         else
                               return <span  >{domToReact(domNode.children,parserOptions)}</span>
                   }
@@ -27,7 +30,6 @@ const SearchResults=(props)=>{
             }
       }
   
-
       useEffect(() => {
             if(! searchTerm )
             return;
@@ -37,14 +39,34 @@ const SearchResults=(props)=>{
             let idx;
 
             if( ! armenianCharacter ){
+                  setIsArmenian(false)
                   idx = lunr.Index.load(translationIndex);
                   setDataDictionary(translationDictionary)
             } else {
+                  setIsArmenian(true)
                   idx = lunr.Index.load(armenianIndex);
                   setDataDictionary(armenianDictionary)
             }
       
             let hopingFor = idx.search(searchTerm);
+            hopingFor.sort( (a,b)=>{
+                  let aHeader = props.sections.find( s =>{
+                        return s.sectionId === a.ref;
+                  });
+                  let bHeader =  props.sections.find( s =>{
+                        return s.sectionId === b.ref;
+                  });
+
+                  let aYear = parseInt(aHeader.englishTitle.substring(9,12));
+                  let bYear = parseInt(bHeader.englishTitle.substring(9,12));
+       
+                  if(aYear > bYear )
+                        return 1;
+                  if(aYear < bYear)
+                        return -1;
+                  else 
+                        return 0;   
+            })
             setLunrResults(hopingFor);
 
       },[searchTerm])
@@ -60,19 +82,28 @@ return (
                         {searchTerm  &&
                               <div style={{display:'flex',justifyContent:'center'}}>
                               <Paper  style={{margin:'12px',width:'80%',padding:'12px'}}>
-                              <Typography variant="h5" style={{marginBottom:'31px'}}>
-                                     { 'Search Results' }
-                        </Typography>
+                                    <div style={{display:'flex'}}>
+                                          <Typography variant="h5" style={{marginBottom:'31px'}}>
+                                          { `Search Results for`}
+                                          </Typography>
+                                          <Typography variant="h5" style={{fontStyle:'italic', marginLeft:'6px'}}>
+                                                      { searchTerm}
+                                          </Typography>
+                                    </div>
+                           
                                           {
                                                 lunrResults.length > 0 ?
                                                 lunrResults.map( (r) => {
                                                       let value;
                                                       value = dataDictionary.find(d => { return d.sectionId === r.ref }).text
+                                                      let headerText = props.sections.find( s =>{
+                                                            return s.sectionId === r.ref;
+                                                      });
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                    <Button size="large" component={Link} to={`/Edition/${r.ref}`} color="secondary">
                                                                         <Typography variant="h6">
-                                                                              {`section: ${r.ref}` }
+                                                                              {isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)} 
                                                                         </Typography>
                                                                   </Button>
                                                                   

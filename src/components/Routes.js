@@ -100,6 +100,7 @@ const Routes = ( props)=>{
                               </Route> 
                               <Route path="/Search" exact>
                                     <SearchResults 
+                                          sections={sections}
                                           translationDictionary={translationDictionary} translationIndex={translationIndex}
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />

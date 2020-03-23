@@ -8,82 +8,44 @@ svg g.node {
 svg g.node:hover {
   cursor: pointer;
 }
-svg g.node:hover ellipse {
-  fill: #add8e6;
-}
-/* svg g.node.highlight {
-  stroke: #008000;
-}
-svg  g.node.highlight.active ellipse{
-      fill:#d9ffd9 ;
-    
-}
-svg g.node.highlight.active {
-  stroke: #006400;
-} */
-svg g.node.highlight {
-      stroke: black;
-}
 
 svg  g.node.highlight ellipse{
-      fill:yellow ;
+      fill:#F2F19C ;
 }
 
 svg g.node.person ellipse{
-      fill:#22e7eea2;
-}
-
-svg g.node.person {
-      stroke: black;
+      fill:#D1F3FA;
 }
 
 svg g.node.place ellipse{
-      fill:#756de2;
-}
-
-svg g.node.date {
-      stroke: black;
+      fill:#F3E3FB;
 }
 
 svg g.node.date ellipse{
-      fill:#F526C0;
-}
-
-svg g.node.place {
-      stroke: black;
-}
-
-svg g.node.active {
-      stroke: red;
+      fill:#FAD3C3;
 }
 
 svg  g.node.highlight.active ellipse{
-      stroke: red;
-      fill:yellow ;
+      /* stroke: red; */
+      fill:#F2F19C ;
 }
 
 svg  g.node.highlight.start ellipse{
       fill:#d1f30d ;  
 }
 
-svg g.node.disonance {
-      stroke: black;
-}
-
 svg  g.node.disonance ellipse{
-      fill: #00a600 ;
+      fill: #D4FCA4 ;
 }
 svg  g.node.disonance.active ellipse{
-      stroke: red;
-      fill:#00a600 ;
+      stroke: black;
+      fill:#D4FCA4;
 }
 
 svg g.edge:not(.majority):hover {
   cursor: pointer;
 }
-svg g.edge:not(.majority):hover text {
-  fill: #f00;
-}
+
 svg g.edge path {
   fill: none;
   stroke: #000;
