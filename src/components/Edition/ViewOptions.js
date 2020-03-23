@@ -70,7 +70,7 @@ const ViewOptions =(props)=>{
                                                 <Checkbox
                                                       checked={placesVisible}
                                                       onChange={onTogglePlaces}
-                                                      style={{color:'#756de2'}}
+                                                      style={{color:'#F3E3FB'}}
                                                 />
                                           }
                                           labelPlacement='end'
@@ -82,7 +82,7 @@ const ViewOptions =(props)=>{
                                                 <Checkbox
                                                       checked={datesVisible}
                                                       onChange={onToggleDates}
-                                                      style={{color:'#F526C0'}}
+                                                      style={{color:'#FAD3C3'}}
                                                 />
                                           }
                                           labelPlacement='end'

@@ -39,22 +39,7 @@ const RankDisonance = (props)=> {
             });
       },[sectionId, selectedSentence,selectedRank])
 
-      // useEffect(()=>{
-      //       setChartData([]);
-      //       setChartData(null);
-      //       DataApi.getRankReport(sectionId, (report)=>{
-      //             report.sort( (a,b)=> {
-      //                   if(a.rank > b.rank)
-      //                         return 1;
-      //                   if( a.rank < b.rank)
-      //                         return -1
-      //                   else 
-      //                         return 0;
-      //             })
-      //       const formatedForChart = generateChartData(report);
-      //       setChartData(formatedForChart)
-      //       });
-      // },[selectedRank])
+     
 
       const xaxisStyle = {
             grid:    {stroke:  "transparent", } ,
@@ -159,7 +144,7 @@ const RankDisonance = (props)=> {
                   let color= "#550C18";
                   if(selectedSentence){
                         if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
-                              color="yellow"
+                              color="#F2F19C"
                   }
                   if( highlightedNode ) {
                         if( datum.x.toString() === highlightedNode.rank.toString() ){

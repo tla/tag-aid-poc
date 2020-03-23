@@ -206,7 +206,7 @@ const Edition = ( props)=>{
                                                             places = {placeList}
                                                             dates = { dateList}
                                                             reading = {leftReading}
-                                                            graphyVisible={graphVisible}
+                                                            graphVisible={graphVisible}
                                                             selectedNode={selectedNode}
                                                             selectedRank = { selectedRank }
                                                             selectedSentence={selectedSentence}

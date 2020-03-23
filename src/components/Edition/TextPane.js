@@ -22,7 +22,7 @@ const TextPane =(props) => {
                               if( reading === "Translation"){
                                     let selected= props.selectedSentence ? props.selectedSentence.startId === nodeId  : false;
                                     if(selected) {
-                                                return <span style={{backgroundColor:'yellow'}} onClick={()=>{ handleHighlight(attribs.id, attribs.key)}} >
+                                                return <span style={{backgroundColor:'#F2F19C'}} onClick={()=>{ handleHighlight(attribs.id, attribs.key)}} >
                                                       {domToReact(children,parserOptions)}</span>
                                     } else {
                                                 return <span onClick={()=>{ handleHighlight(attribs.id, attribs.key)}}>
@@ -36,8 +36,8 @@ const TextPane =(props) => {
                                     let date = dates ? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
-                                          color: selected? 'red':'black',
-                                          backgroundColor: person ? '#22e7eea2' : place ? '#756de2' : date ? '#F526C0' :inSelectedSentence ? 'yellow':atRank?'#00a600':'transparent'
+                                          color: 'black',
+                                          backgroundColor: selected?'#D4FCA4':person ? '#22e7eea2' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#00a600':'transparent'
                                     }
                                           return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank, place: place})}} >
                                                 {domToReact(children,parserOptions)}</span>
