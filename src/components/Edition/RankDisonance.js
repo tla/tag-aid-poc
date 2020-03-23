@@ -140,7 +140,6 @@ const RankDisonance = (props)=> {
            
 
             function getBarColor(datum){
-                  console.log("get chart highlight color for rank selected")
                   let color= "#550C18";
                   if(selectedSentence){
                         if(datum.x >= selectedSentence.startRank && datum.x <= selectedSentence.endRank)
@@ -148,13 +147,13 @@ const RankDisonance = (props)=> {
                   }
                   if( highlightedNode ) {
                         if( datum.x.toString() === highlightedNode.rank.toString() ){
-                              color="#00a600";
+                              color="#D4FCA4";
                               return color;
                         }
                   }
                   if( selectedRank ) {
                         if( datum.x.toString() === selectedRank.toString() ){
-                              color="#00a600";
+                              color="#D4FCA4";
                               return color;
                         }
                   }

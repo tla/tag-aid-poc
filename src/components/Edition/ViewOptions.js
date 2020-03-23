@@ -59,7 +59,7 @@ const ViewOptions =(props)=>{
                                                 <Checkbox
                                                       checked={personsVisible}
                                                       onChange={onTogglePersons}
-                                                      style={{color:'#22e7eea2'}}
+                                                      style={{color:'#D1F3FA'}}
                                                 />
                                           }
                                           labelPlacement='end'

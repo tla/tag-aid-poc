@@ -37,7 +37,7 @@ const TextPane =(props) => {
                                     let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
                                     let textStyle={
                                           color: 'black',
-                                          backgroundColor: selected?'#D4FCA4':person ? '#22e7eea2' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#00a600':'transparent'
+                                          backgroundColor: selected?'#D4FCA4':person ? '#D1F3FA' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#00a600':'transparent'
                                     }
                                           return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank, place: place})}} >
                                                 {domToReact(children,parserOptions)}</span>

@@ -26,9 +26,7 @@ const SectionList = ( props ) =>{
                                                                   {s.englishTitle.substring(0,13)}
                                                             </Typography>
                                                       </Link>
-                                                      <Typography variant="subtitle2" style={{marginLeft:'0px'}}>
-                                                            {`Section Id:${s.sectionId}`}
-                                                      </Typography>
+                                                     
                                                 </div>
                                          
                                     </ListItem>
