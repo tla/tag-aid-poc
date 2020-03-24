@@ -29,11 +29,14 @@ const MapView = ( props)=>{
             }
 
             const mapInstance = new mapboxgl.Map({
+                  attributionControl: false,
                   container: mapRef.current,
-                  style:'mapbox://styles/mapbox/streets-v11',
+                  style:'mapbox://styles/mapbox/satellite-v9',
                   center: selectedLocation? selectedLocation:Edessa,
                   zoom:selectedLocation?12:5
             });
+
+          
 
             mapInstance.on('load', ()=>{
                   const pointData = parsePoints();
@@ -51,7 +54,8 @@ const MapView = ( props)=>{
                                     'icon-image': '{icon}-15',
                                     'icon-allow-overlap': true,
                                     'text-field': ['get', 'title'],
-                                    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                                    'text-font': ['Roboto Black','Arial Unicode MS Regular'],
+                                    'text-size':18,
                                     'text-offset': [0, 0.6],
                                     'text-anchor': 'top'
                                     }
@@ -85,7 +89,6 @@ const MapView = ( props)=>{
 
                   const polygons = parsePolygons();
                   polygons.forEach( p =>{
-                  
                   try{
                         mapInstance.addSource(p.title,
                               {
@@ -98,11 +101,11 @@ const MapView = ( props)=>{
                               'type':'fill',
                               'source':p.title,
                               'paint':{
-                                    'fill-color':'#077',
-                                    'fill-opacity': 0.2
+                                    'fill-color':'#edbbc4',
+                                    'fill-opacity': 0.4
                               },
                         })
- let stupid = Math.random();
+                        let stupid = Math.random();
                         mapInstance.addSource(`${p.title}-${stupid.toString()}`, {
                               'type': 'geojson',
                               'data': {
@@ -125,13 +128,13 @@ const MapView = ( props)=>{
                                     'layout': {
                                          
                                           'text-field': ['get', 'title'],
-                                          'text-size':20,
-                                          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                                          'text-size':22,
+                                          'text-font': ['Roboto Black','Arial Unicode MS Bold'],
                                           'text-offset': [0, 0.6],
                                           'text-anchor': 'top'
                                           },
                                     'paint':{
-                                          'text-color':'#F0F62A'
+                                          'text-color':'black'
                                     }
                               });
 
@@ -159,16 +162,6 @@ const MapView = ( props)=>{
                         mapInstance.on('mouseleave', `${p.title}-${stupid.toString()}`, function() {
                               mapInstance.getCanvas().style.cursor = '';
                         });
-
-
-
-
-                        // let el = window.document.createElement('div');
-                        // el.className = 'marker';
-                        // el.innerText=p.title;
-                        // new mapboxgl.Marker(el)
-                        // .setLngLat(p.representativePoint)
-                        // .addTo(mapInstance );
                       
                   }catch(error){
                         console.log(error)
@@ -185,7 +178,7 @@ const MapView = ( props)=>{
       return(
       <React.Fragment>
                   <EditionHeader  />
-                  <div ref={mapRef} style={{height:'700px', width:'100%'}}>
+                  <div ref={mapRef} style={{position:'absolute',bottom:0,top:'0', width:'100%'}}>
                   
                   </div>
       </React.Fragment>
