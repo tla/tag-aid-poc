@@ -105,7 +105,7 @@ return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                    <Typography variant="body1">
                                                                               {  witnessName}
-                                                                        </Typography>
+                                                                  </Typography>
                                                                    <Button size="large" component={Link} to={`/Edition/${r.ref}`} color="secondary">
                                                                         <Typography variant="h6">
                                                                               {` ${isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)}` }

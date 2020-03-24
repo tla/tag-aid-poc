@@ -24,13 +24,3 @@ h1,h2,h3 {
     float: right;
     margin-right: 100px;
 }
-
-.marker {
-      /* //background-image: url('../images/Chartreuse.png');
-        border-radius: 50%;
-     // background-size: cover; */
-    
-    font-size:18px;
-    color:darkgreen;
-      cursor: pointer;
-    }
