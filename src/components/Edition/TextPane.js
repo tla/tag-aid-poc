@@ -41,7 +41,6 @@ const TextPane =(props) => {
                                     }
                                           return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank, place: place})}} >
                                                 {domToReact(children,parserOptions)}</span>
-
                               }
 
                   }
