@@ -119,10 +119,9 @@ const EditionHeader = ( props)=>{
       }
 
       function handlePressEnter(e, value){
-          // console.log('search query',searchQuery)
+   
            onSearch(searchQuery)
            setSearchQuery('');
-
            props.history.push('/Search');
       }
 

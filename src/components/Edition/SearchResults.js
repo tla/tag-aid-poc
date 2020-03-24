@@ -14,8 +14,8 @@ const SearchResults=(props)=>{
       const {searchTerm, onSearch, translationDictionary, translationIndex, armenianDictionary, armenianIndex, sections} = props;
       const [ lunrResults, setLunrResults] = useState([]);  
       const [dataDictionary, setDataDictionary] = useState([]);
-     const[isArmenian, setIsArmenian]=useState();
-
+      const[isArmenian, setIsArmenian]=useState();
+      const [witnessName, setWitnessName] = useState();
     
 
       const parserOptions = {
@@ -40,10 +40,12 @@ const SearchResults=(props)=>{
 
             if( ! armenianCharacter ){
                   setIsArmenian(false)
+                  setWitnessName("Translation");// for now its trans or lemma
                   idx = lunr.Index.load(translationIndex);
                   setDataDictionary(translationDictionary)
             } else {
-                  setIsArmenian(true)
+                  setIsArmenian(true);
+                  setWitnessName("Lemma Text");// for now its trans or lemma
                   idx = lunr.Index.load(armenianIndex);
                   setDataDictionary(armenianDictionary)
             }
@@ -101,9 +103,12 @@ return (
                                                       });
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
+                                                                   <Typography variant="body1">
+                                                                              {  witnessName}
+                                                                        </Typography>
                                                                    <Button size="large" component={Link} to={`/Edition/${r.ref}`} color="secondary">
                                                                         <Typography variant="h6">
-                                                                              {isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)} 
+                                                                              {` ${isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)}` }
                                                                         </Typography>
                                                                   </Button>
                                                                   
@@ -118,16 +123,11 @@ return (
                                                 <Typography>
                                                       {`${searchTerm} not found`}
                                                 </Typography> : <span/>
-                                              
-                                             
                                           }
                               
                         </Paper></div> 
 
                                     }
-                        
-                     
-                        
                   </Grid>  
 
             </Grid>
