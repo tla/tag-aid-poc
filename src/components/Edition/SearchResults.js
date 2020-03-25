@@ -51,12 +51,18 @@ const SearchResults=(props)=>{
             }
       
             let hopingFor = idx.search(searchTerm);
+
             hopingFor.sort( (a,b)=>{
+                  let aSectionId = a.ref.split('-')[0];
+                  let bSectionId = b.ref.split('-')[0];
+                  let aWitness = a.ref.split('-')[1];
+                  let bWitness = b.ref.split('-')[1];
+
                   let aHeader = props.sections.find( s =>{
-                        return s.sectionId === a.ref;
+                        return s.sectionId === aSectionId;
                   });
                   let bHeader =  props.sections.find( s =>{
-                        return s.sectionId === b.ref;
+                        return s.sectionId === bSectionId;
                   });
 
                   let aYear = parseInt(aHeader.englishTitle.substring(9,12));
@@ -64,10 +70,17 @@ const SearchResults=(props)=>{
        
                   if(aYear > bYear )
                         return 1;
-                  if(aYear < bYear)
+                  if(aYear < bYear )
                         return -1;
-                  else 
-                        return 0;   
+                  if(aYear === bYear){
+                        if(aWitness.toUpperCase() < bWitness.toUpperCase())
+                              return -1;
+                        if ( aWitness.toUpperCase() > bWitness.toUpperCase())
+                              return 1;
+                        else
+                              return 0;
+                  }
+                       
             })
             setLunrResults(hopingFor);
 
@@ -97,24 +110,32 @@ return (
                                                 lunrResults.length > 0 ?
                                                 lunrResults.map( (r) => {
                                                       let value;
-                                                      value = dataDictionary.find(d => { return d.sectionId === r.ref }).text
+                                                      let sectionId = r.ref.split('-')[0];
+                                                      let witnessId = r.ref.split('-')[1];
+                                                      value = dataDictionary.find( (d) => { 
+                                                           if (d.sectionId === sectionId && d.witnessId === witnessId) 
+                                                                  return d 
+                                                            else 
+                                                                  return null;} );
+
                                                       let headerText = props.sections.find( s =>{
-                                                            return s.sectionId === r.ref;
+                                                            return s.sectionId === sectionId;
                                                       });
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
-                                                                   <Typography variant="body1">
-                                                                              {  witnessName}
-                                                                  </Typography>
-                                                                   <Button size="large" component={Link} to={`/Edition/${r.ref}`} color="secondary">
+                                                                   
+                                                                   <Button size="large" component={Link} to={`/Edition/${sectionId}/${witnessId}`} color="secondary">
                                                                         <Typography variant="h6">
                                                                               {` ${isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)}` }
+                                                                        </Typography>
+                                                                        <Typography variant="body1" style={{marginLeft:'8px'}}>
+                                                                              { isArmenian ? `Witness Sigil: ${witnessId}`: 'Translation'}
                                                                         </Typography>
                                                                   </Button>
                                                                   
                                                                   <Typography variant="body1">
-                                                                              {Parser(value,parserOptions)}
-                                                                  </Typography>
+                                                                              {Parser(value.text,parserOptions)}
+                                                                  </Typography> 
                                                             </div>
                                                       )
                                                 })   

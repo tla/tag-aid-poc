@@ -16,7 +16,8 @@ import PreviousNext from './PreviousNext';
 
 
 const Edition = ( props)=>{    
-      let {sectionID} = useParams()
+      let {sectionID} = useParams();
+      let {witnessID} = useParams();
       if(! sectionID)
             sectionID = "1019321"
       const {sections , viewport , witnesses, onSearch} = props;
@@ -32,7 +33,7 @@ const Edition = ( props)=>{
       const [personsVisible, setPersonsVisible] = useState(false);
       const [placesVisible, setPlacesVisible] = useState(false);
       const [datesVisible, setDatesVisible] = useState(false);
-      const [leftReading, setLeftReading] = useState('Lemma Text');
+      const [leftReading, setLeftReading] = useState(witnessID? witnessID:'Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
       const [isExpanded, setIsExpanded] = useState(false);
     

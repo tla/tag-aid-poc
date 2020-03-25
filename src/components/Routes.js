@@ -72,12 +72,14 @@ const Routes = ( props)=>{
       return (
             <ThemeProvider  theme={ChronicleTheme}>
                         <Switch>
+                              <Route path="/Edition/:sectionID/:witnessID" exact>
+                                    <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                              </Route>
                               <Route path="/Edition/:sectionID" exact>
                                     <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
                                     <EditionLanding   sections={sections}   />
-                                    {/* <CustomizedInputs     /> */}
                               </Route>
                               <Route path="/About" >
                                     <AboutPage /> 

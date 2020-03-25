@@ -48,7 +48,7 @@
                   "skipFiles": [
                         "<node_internals>/**"
                   ],
-                  "program": "${workspaceFolder}/script/generateLunrData.js"
+                  "program": "${workspaceFolder}/script/generateAllWitnessLunrData.js"
             }
       ]
 }
