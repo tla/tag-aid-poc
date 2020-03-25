@@ -124,7 +124,7 @@ return (
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                    
-                                                                   <Button size="large" component={Link} to={`/Edition/${sectionId}/${witnessId}`} color="secondary">
+                                                                   <Button size="large" component={Link} to={`/Edition/${sectionId}/${witnessId?witnessId:''}`} color="secondary">
                                                                         <Typography variant="h6">
                                                                               {` ${isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)}` }
                                                                         </Typography>
