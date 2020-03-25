@@ -92,42 +92,31 @@ const RankDisonance = (props)=> {
                                                             target: "data",
                                                             eventHandlers: {
                                                                   onClick: (event, props, key)=>{
-                                                                        return  onSelectRank(key)
-                                                                  }// end onClick
+                                                                              setLastSelected(key)
+                                                                              onSelectRank(key);
+                                                                           return [{
+                                                                              mutation: (props) => {
+                                                                                    return  {style: {fill: "#D4FCA4"}};
+                                                                              }
+                                                                        }];
+                                                                  },
+                                                                  onMouseEnter: () => {
+                                                                        return [{
+                                                                              mutation: (props) => {
+                                                                                    return  {style: {fill: "#D4FCA4"}};
+                                                                              }
+                                                                        }];
+                                                                  },
+                                                                  onMouseOut: (event, props, key) => {
+                                                                        if( key !== selectedRank || key !== lastSelected)
+                                                                        return [{
+                                                                              mutation: (props) => {
+                                                                                    return  {style: {fill: "#550C18"}};
+                                                                              }
+                                                                        }];
+                                                                  },
+
                                                             }// end event handlers
-
-                                                          // eventHandlers: {
-
-                                                                  // onClick: () => {
-                                                                  //       return [{
-                                                                  //             mutation: (props) => {
-                                                                  //                   return  {style: {fill: "tomato"}};
-                                                                  //             }
-                                                                  //       }];
-                                                                  // }
-
-                                                                  // onClick: (event, props, key)=>{
-                                                                   
-                                                                  //           // return 
-                                                                  //             onSelectRank(key)
-                                                                  //       return [
-                                                                  //             {
-                                                                  //                  eventKey:[lastSelected],
-                                                                  //                   mutation: (props) => {
-                                                                  //                         console.log(props)
-                                                                  //                         return { style: { fill: "#550C18"} };
-                                                                  //                   }   
-                                                                  //             },
-                                                                  //             {
-                                                                  //                   mutation: (props) => {
-                                                                  //                         return { style: { fill: "#00a600"} };
-                                                                  //                   }// end mutation
-                                                                  //             }// end second onclick handler
-                                                                  //       ]
-                                                                  // }// end onClick
-
-
-                                                          //  }// end event handlers</V
                                                       }
                                                 ]}
                                           ></VictoryBar>
