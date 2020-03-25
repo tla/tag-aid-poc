@@ -2,7 +2,9 @@ import React, { useRef, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl'
 import EditionHeader from './../Edition/EditionHeader'
 import {withRouter} from 'react-router-dom';
-import { useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
 
@@ -33,7 +35,8 @@ const MapView = ( props)=>{
                   container: mapRef.current,
                   style:'mapbox://styles/mapbox/satellite-v9',
                   center: selectedLocation? selectedLocation:Edessa,
-                  zoom:selectedLocation?12:5
+                  zoom:selectedLocation?11:5,
+                  maxZoom:11
             });
 
           
@@ -54,11 +57,13 @@ const MapView = ( props)=>{
                                     'icon-image': '{icon}-15',
                                     'icon-allow-overlap': true,
                                     'text-field': ['get', 'title'],
-                                    'text-font': ['Roboto Black','Arial Unicode MS Regular'],
-                                    'text-size':18,
-                                    'text-offset': [0, 0.6],
-                                    'text-anchor': 'top'
-                                    }
+                                    'text-font': ['Open Sans Bold'],
+                                    'text-size':20,
+                                    'text-offset': [0, 0.5],
+                                    'text-anchor': 'top',
+                                  
+                                    },
+                             
                         }
                   );
 
@@ -128,8 +133,8 @@ const MapView = ( props)=>{
                                     'layout': {
                                          
                                           'text-field': ['get', 'title'],
-                                          'text-size':22,
-                                          'text-font': ['Roboto Black','Arial Unicode MS Bold'],
+                                          'text-size':24,
+                                          'text-font': ['Open Sans Regular'],
                                           'text-offset': [0, 0.6],
                                           'text-anchor': 'top'
                                           },
@@ -181,6 +186,19 @@ const MapView = ( props)=>{
                   <div ref={mapRef} style={{position:'absolute',bottom:0,top:'0', width:'100%'}}>
                   
                   </div>
+                  <Paper elevation={2} style={{display:'flex', flexDirection:'column', justifyContent:'center',width:'532px',
+                  textAlign:'center', position:'relative',top:'64px',left:'32px',backgroundColor:'rgb(255, 250, 245)',padding:'12px'}}>
+                        <Typography variant="h5">
+                              {'Textual Place References'}
+                        </Typography>
+                        <Typography variant="h6">
+                              {'Years 401 - 611'}
+                        </Typography>
+                        <Typography variant="h6">
+                              {'2 April 952 CE - 8 February 1163 CE'}
+                        </Typography>
+                       
+                  </Paper>
       </React.Fragment>
             
       )
