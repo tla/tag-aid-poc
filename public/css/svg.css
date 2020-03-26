@@ -42,9 +42,7 @@ svg  g.node.disonance.active ellipse{
       fill:#D4FCA4;
 }
 
-svg g.edge:not(.majority):hover {
-  cursor: pointer;
-}
+
 
 svg g.edge path {
   fill: none;

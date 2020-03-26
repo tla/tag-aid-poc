@@ -110,16 +110,13 @@ const Edition = ( props)=>{
             <Grid container spacing={0} >
 
                    <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
-                       
                               <EditionHeader onSearch={onSearch} />
                   </Grid>  
-             
+                      
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                              <div style={{display:'flex', flexDirection:'column'}}>
-                              
+                              <div style={{position:'relative', display:'flex', flexDirection:'column', minWidth:'160px',}}>
                                      <ViewOptions 
-                                          height={isExpanded?'500px':'80px'}
                                           viewport={viewport}
                                           witnesses = {witnesses}
                                           graphVisible={graphVisible}
@@ -137,12 +134,9 @@ const Edition = ( props)=>{
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
                                     />
-                             
-                                    <div style={{height:'8px'}}></div>
-                       
                               
                                     <SectionList 
-                                          height={isExpanded ? ` ${viewport.height - 662 > 0 ? viewport.height - 662 : 0}px` : ` ${viewport.height - 230}px`}
+                                           height={isExpanded ? ` ${viewport.height - 570 > 0 ? viewport.height - 570 : 0}px` : ` ${viewport.height - 200}px`}
                                           sectionId={sectionID}
                                           list ={sections}
                                     />  
@@ -240,6 +234,8 @@ const Edition = ( props)=>{
                         </div>
                   </Grid> 
 
+            
+                    
             </Grid>
       )
 

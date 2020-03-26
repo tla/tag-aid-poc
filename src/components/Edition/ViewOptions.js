@@ -23,12 +23,12 @@ const ViewOptions =(props)=>{
 
       return (
           
-                  <ExpansionPanel  style={{ marginLeft:'16px',  }}
+                  <ExpansionPanel  style={{ marginLeft:'16px', marginBottom:'8px' ,minWith:'160px'}}
                         expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
-                              <Typography variant="h6" >
+                              <Typography variant="h6" style={{minWidth:'130px'}}>
                                     {'View Options'}
                               </Typography>
                         </ExpansionPanelSummary>
