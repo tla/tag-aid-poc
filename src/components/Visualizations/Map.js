@@ -186,7 +186,7 @@ const MapView = ( props)=>{
                   <div ref={mapRef} style={{position:'absolute',bottom:0,top:'0', width:'100%'}}>
                   
                   </div>
-                  <Paper elevation={2} style={{display:'flex', flexDirection:'column', justifyContent:'center',width:'532px',
+                  <Paper elevation={2} style={{display:'flex', flexDirection:'column', justifyContent:'center',width:'400px',
                   textAlign:'center', position:'relative',top:'64px',left:'32px',backgroundColor:'rgb(255, 250, 245)',padding:'12px'}}>
                         <Typography variant="h5">
                               {'Textual Place References'}

@@ -33,9 +33,7 @@ const ViewOptions =(props)=>{
                               </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',alignItems:'center' }}>
-
-                         
-                                    <FormControlLabel
+                                    <FormControlLabel style={{minWidth:'180px' ,alignSelf:'flex-start'}}
                                           control={
                                                 <Switch
                                                       checked={graphVisible}
@@ -45,11 +43,9 @@ const ViewOptions =(props)=>{
                                           labelPlacement='end'
                                           label="Display Graph"
                                     />
-                  
-
-                              <div>
-                            
-                                          <FormControlLabel
+                       
+                                    <div style={{alignSelf:'flex-start'}}>
+                                          <FormControlLabel 
                                                 control={
                                                       <Checkbox
                                                             checked={personsVisible}
@@ -59,8 +55,8 @@ const ViewOptions =(props)=>{
                                                 }
                                                 labelPlacement='end'
                                                 label="Persons"
-                                          />
-                                          <FormControlLabel
+                                          /><br/>
+                                          <FormControlLabel 
                                                 control={
                                                       <Checkbox
                                                             checked={placesVisible}
@@ -70,9 +66,8 @@ const ViewOptions =(props)=>{
                                                 }
                                                 labelPlacement='end'
                                                 label="Places"
-                                          />
-                              
-                                          <FormControlLabel
+                                          /><br/>
+                                          <FormControlLabel 
                                                 control={
                                                       <Checkbox
                                                             checked={datesVisible}
@@ -82,12 +77,9 @@ const ViewOptions =(props)=>{
                                                 }
                                                 labelPlacement='end'
                                                 label="Dates"
-                                          />
-                                   
-                              </div> 
-                         
-                              
-                            
+                                          /><br/>
+                                    </div>
+
                                     <FormControl >
                                           <InputLabel style={{fontSize:'16px', }}>Left Text Pane</InputLabel>
                                                 <Select style={{width:viewport.width * .12}}

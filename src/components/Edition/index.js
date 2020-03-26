@@ -136,7 +136,7 @@ const Edition = ( props)=>{
                                     />
                               
                                     <SectionList 
-                                           height={isExpanded ? ` ${viewport.height - 570 > 0 ? viewport.height - 570 : 0}px` : ` ${viewport.height - 200}px`}
+                                           height={isExpanded ? ` ${viewport.height - 550 > 0 ? viewport.height - 550 : 0}px` : ` ${viewport.height - 188}px`}
                                           sectionId={sectionID}
                                           list ={sections}
                                     />  
