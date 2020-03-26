@@ -12,7 +12,7 @@ mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmV
 const MapView = ( props)=>{
 
       const mapRef=useRef()
-      const { geoData, locationLookup } = props;
+      const { geoData, locationLookup, sections} = props;
       let {locationId} = useParams()
 
      
@@ -254,9 +254,12 @@ const MapView = ( props)=>{
             let innerHtml = '';
             links.forEach( link =>{
                   const lookup = locationLookup.find( l=> l.placeRefId.toString() === link.target.toString() );
+                 
                   if(lookup){
+                        let titles = sections.find(s => s.sectionId === lookup.sectionId)
                         const sectionId = lookup.sectionId;
-                        innerHtml +=`<li><a href='/#/Edition/${sectionId}'>${sectionId}</a></li>`     
+                        const yearTitle = 
+                        innerHtml +=`<li><a href='/#/Edition/${sectionId}'>${titles.englishTitle.substring(0,12)}</a></li>`     
                   }
             })
             return innerHtml;

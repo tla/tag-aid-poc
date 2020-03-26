@@ -104,10 +104,10 @@ const Routes = ( props)=>{
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
                               <Route path="/Map" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
+                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
                               <Route path="/Map/:locationId" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
+                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
                                <Route path="/" exact>
                                     <HomePage sections={sections} />

@@ -12,6 +12,11 @@ body {
     a:hover {
       color: #A4243B;
     }
+
+    a:hover {
+      color: #0e8a79;
+    }
+    
     
     code {
       color: #212529;
