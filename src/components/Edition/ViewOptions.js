@@ -23,18 +23,18 @@ const ViewOptions =(props)=>{
 
       return (
           
-                  <ExpansionPanel  style={{marginTop:'8px', marginLeft:'8px', height:height}}
+                  <ExpansionPanel  style={{ marginLeft:'16px',  }}
                         expanded={ isExpanded} onChange={ ()=>{ let ex = !isExpanded; setIsExpanded(ex)}}>
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
-                              <Typography variant="h5" style={{overflow:'hidden'}}>
+                              <Typography variant="h6" >
                                     {'View Options'}
                               </Typography>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',padding:'8px 8px 0px 16px' }}>
+                        <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',alignItems:'center' }}>
 
-                              <div>
+                         
                                     <FormControlLabel
                                           control={
                                                 <Switch
@@ -45,55 +45,49 @@ const ViewOptions =(props)=>{
                                           labelPlacement='end'
                                           label="Display Graph"
                                     />
-                              </div> 
-
-                              <div style={{height:'16px'}}></div>
+                  
 
                               <div>
-                                    <Typography varinat="h5">
-                                          {'Highlights'}
-                                    </Typography>
-                                    <div style={{paddingLeft:'16px',display:'flex', flexDirection:'column'}}>
-                                    <FormControlLabel
-                                          control={
-                                                <Checkbox
-                                                      checked={personsVisible}
-                                                      onChange={onTogglePersons}
-                                                      style={{color:'#D1F3FA'}}
-                                                />
-                                          }
-                                          labelPlacement='end'
-                                          label="Persons"
-                                    />
-                                    <FormControlLabel
-                                          control={
-                                                <Checkbox
-                                                      checked={placesVisible}
-                                                      onChange={onTogglePlaces}
-                                                      style={{color:'#F3E3FB'}}
-                                                />
-                                          }
-                                          labelPlacement='end'
-                                          label="Places"
-                                    />
                             
-                                    <FormControlLabel
-                                          control={
-                                                <Checkbox
-                                                      checked={datesVisible}
-                                                      onChange={onToggleDates}
-                                                      style={{color:'#FAD3C3'}}
-                                                />
-                                          }
-                                          labelPlacement='end'
-                                          label="Dates"
-                                    />
-                                    </div>
-                              </div> 
-                              <div style={{height:'16px'}}></div>
-
+                                          <FormControlLabel
+                                                control={
+                                                      <Checkbox
+                                                            checked={personsVisible}
+                                                            onChange={onTogglePersons}
+                                                            style={{color:'#D1F3FA'}}
+                                                      />
+                                                }
+                                                labelPlacement='end'
+                                                label="Persons"
+                                          />
+                                          <FormControlLabel
+                                                control={
+                                                      <Checkbox
+                                                            checked={placesVisible}
+                                                            onChange={onTogglePlaces}
+                                                            style={{color:'#F3E3FB'}}
+                                                      />
+                                                }
+                                                labelPlacement='end'
+                                                label="Places"
+                                          />
                               
-                              <div style={{width:'200px',  }}>
+                                          <FormControlLabel
+                                                control={
+                                                      <Checkbox
+                                                            checked={datesVisible}
+                                                            onChange={onToggleDates}
+                                                            style={{color:'#FAD3C3'}}
+                                                      />
+                                                }
+                                                labelPlacement='end'
+                                                label="Dates"
+                                          />
+                                   
+                              </div> 
+                         
+                              
+                            
                                     <FormControl >
                                           <InputLabel style={{fontSize:'16px', }}>Left Text Pane</InputLabel>
                                                 <Select style={{width:viewport.width * .12}}
@@ -107,10 +101,10 @@ const ViewOptions =(props)=>{
                                                       }
                                                 </Select>
                                     </FormControl>
-                              </div>
-                              <div style={{height:'8px'}}></div>
-                              <div >
-                                    <FormControl style={{width:'200px'  }}>
+                             
+                                    <div style={{height:'8px'}}></div>
+                             
+                                    <FormControl >
                                           <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
                                                 <Select style={{width:viewport.width * .12,marginBottom:'16px'}}
                                                       value={rightReading}
@@ -123,7 +117,7 @@ const ViewOptions =(props)=>{
                                                       }
                                                 </Select>
                                     </FormControl>
-                              </div>
+                            
                              
 
                         </ExpansionPanelDetails>
