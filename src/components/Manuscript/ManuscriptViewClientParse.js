@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom';
 import { useParams} from 'react-router-dom'
 import { PushSpinner } from "react-spinners-kit"
 
+
 const ManuscriptViewClientParse = ( props ) =>{
       const {viewport} = props
       let {manuscriptId} = useParams()
@@ -49,13 +50,13 @@ return (
             </Grid>
             
             <Grid item xs={12} >
-                  <Grid container alignItems="center" direction="column" style={{height: `${viewport.height - 450}px`}}>
+                  <Grid container alignItems="center" direction="column" style={{height: `${viewport.height - 354}px`}}>
                   <div style={{height:'100px'}}>
 
                   </div>
                    <PushSpinner size={30} color="#6f42c1" loading={loading} style={{marginTop:'100px'}}/>
 
-                        <Typography id="textContainer" variant="h6" style={{margin:"6px 100px", overflowY:'scroll'}}>
+                        <Typography id="textContainer" variant="h6" style={{margin:"12px 100px", overflowY:'scroll'}}>
                            
                         </Typography>
                         
