@@ -15,9 +15,10 @@ const TextPane =(props) => {
       
       const parserOptions = {
             replace: function({attribs,children}) {
-                  if( attribs && attribs.id ){
-                              let nodeId = reading ==="Translation" ? attribs.id.split('-')[1] : attribs.id;
+                  if( attribs && attribs.id ){// the translation and armenian texts are encode with nodeId and rank
                               let rank = reading ==="Translation" ? attribs.id.split('-')[0] : attribs.key;
+                              let nodeId = reading ==="Translation" ? attribs.id.split('-')[1] : attribs.id;
+                             
 // this can be further refactored - it was in transition... 
                               if( reading === "Translation"){
                                     let selected= props.selectedSentence ? props.selectedSentence.startId === nodeId  : false;
@@ -31,10 +32,10 @@ const TextPane =(props) => {
                               } else {
                                     let atRank = props.selectedRank? props.selectedRank === rank : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
-                                    let person = persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
+                                    let person =persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
                                     let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
-                                    let date = dates ? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
-                                    let inSelectedSentence = props.selectedSentence? (rank >= selectedSentence.startRank && rank <= selectedSentence.endRank ) : false;
+                                    let date =dates ? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
+                                    let inSelectedSentence = props.selectedSentence? (parseInt(rank) >= parseInt(selectedSentence.startRank) && parseInt(rank)<= parseInt(selectedSentence.endRank) ) : false;
                                     let textStyle={
                                           color: 'black',
                                           backgroundColor: selected?'#D4FCA4':person ? '#D1F3FA' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#D4FCA4':'transparent'
