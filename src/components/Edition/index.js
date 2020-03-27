@@ -257,10 +257,12 @@ const Edition = ( props)=>{
             const endNodeId = end.split('-')[1];
 
             if(selectedSentence){
-                  if(selectedSentence.startId === startNodeId);
+                  if(selectedSentence.startId === startNodeId){
                         setSelectedSentence(null);
                         return;
+                  }
             }
+            
             setSelectedSentence({
                   'startRank': startRank,
                   'startId': startNodeId, 
