@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import * as DataApi from '../../utils/Api';
 import {VictoryChart, VictoryBar, VictoryContainer,
-VictoryTooltip, VictoryAxis ,  } from 'victory'
+VictoryAxis ,  } from 'victory'
 
 
 const RankDisonance = (props)=> {
@@ -15,12 +15,7 @@ const RankDisonance = (props)=> {
             viewport
           } = props;
       const [chartData, setChartData] = useState();
-      const [lastSelected, setLastSelected] = useState();
-
-      useEffect( ()=>{
-            setLastSelected(selectedRank)
-      }, [selectedRank])
-     
+    
       useEffect(()=>{
             setChartData([]);
             setChartData(null);
@@ -37,9 +32,7 @@ const RankDisonance = (props)=> {
             const formatedForChart = generateChartData(report);
             setChartData(formatedForChart)
             });
-      },[sectionId, selectedSentence,selectedRank])
-
-     
+      },[sectionId, selectedSentence])
 
       const xaxisStyle = {
             grid:    {stroke:  "transparent", } ,
@@ -72,8 +65,7 @@ const RankDisonance = (props)=> {
                                scale={{ x: "linear", y: "linear" }}
                               >
                                     <VictoryAxis  crossAxis style={xaxisStyle}></VictoryAxis>
-                                    <VictoryAxis  dependentAxis style={yaxisStyle} 
-                                             ></VictoryAxis>
+                                    <VictoryAxis  dependentAxis style={yaxisStyle} ></VictoryAxis>
                                           <VictoryBar
                                                 style={{
                                                       data: { 
@@ -85,30 +77,38 @@ const RankDisonance = (props)=> {
                                                 barRatio={.7}
                                                 data={chartData}
                                                 labels={[]}
-                                             
                                                 events = {[
                                                       {
-                                                            childName: "bar",
+                                                           
                                                             target: "data",
                                                             eventHandlers: {
                                                                   onClick: (event, props, key)=>{
-                                                                              setLastSelected(key)
                                                                               onSelectRank(key);
                                                                            return [{
+                                                                              target:"data",
+                                                                              eventKey:key,
                                                                               mutation: (props) => {
                                                                                     return  {style: {fill: "#D4FCA4"}};
                                                                               }
-                                                                        }];
+                                                                        },
+                                                                        {
+                                                                              target:"data",
+                                                                              eventKey: selectedRank,
+                                                                              mutation: (props) => {
+                                                                                    return  {style: {fill: "#550C18"}};
+                                                                                    }
+                                                                        },];
                                                                   },
                                                                   onMouseEnter: () => {
                                                                         return [{
-                                                                              mutation: (props) => {
-                                                                                    return  {style: {fill: "#D4FCA4"}};
-                                                                              }
-                                                                        }];
+                                                                                   
+                                                                                    mutation: (props) => {
+                                                                                          return  {style: {fill: "#D4FCA4"}};
+                                                                                          }
+                                                                              } ];
                                                                   },
                                                                   onMouseOut: (event, props, key) => {
-                                                                        if( key !== selectedRank || key !== lastSelected)
+                                                                        if( key !== selectedRank )
                                                                         return [{
                                                                               mutation: (props) => {
                                                                                     return  {style: {fill: "#550C18"}};
@@ -161,11 +161,6 @@ const RankDisonance = (props)=> {
                         data.push( dataPoint );
                   })
                   return data;
-            }
-            
-         
-        
+            } 
 }
-
-
 export default RankDisonance;
