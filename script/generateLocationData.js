@@ -58,7 +58,7 @@ async function GenerateLocationData () {
                         geoLocations.push({
                              // identifier:p.identifier, placeRef id
                               id: record.geonameId,
-                              title: record.name,
+                              title: place.properties.identifier,
                               provenance:'geonames.org',
                               geometry:[{
                                     
@@ -105,7 +105,7 @@ async function GenerateLocationData () {
                               geoLocations.push({
                                     // identifier:p.identifier, placeRef id
                                     id: record.id,
-                                    title: record.title,
+                                    title: place.properties.identifier,
                                     provenance:'http://syriaca.org/',
                                     representativePoint:record.reprPoint,
                                     geometry:record.features,
@@ -128,7 +128,7 @@ async function GenerateLocationData () {
                         geoLocations.push({
                               // identifier:p.identifier, placeRef id
                               id: record.id,
-                              title: record.title,
+                              title: place.properties.identifier,
                               provenance:record.provenance,
                               representativePoint:record.reprPoint,
                               geometry:record.features,
