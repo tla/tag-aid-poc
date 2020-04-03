@@ -35,7 +35,7 @@ const Edition = ( props)=>{
       const [datesVisible, setDatesVisible] = useState(false);
       const [leftReading, setLeftReading] = useState(witnessID? witnessID:'Lemma Text');
       const [rightReading, setRightReading] = useState('Translation');
-      const [isExpanded, setIsExpanded] = useState(false);
+      const [isExpanded, setIsExpanded] = useState(true);
     
 
       useEffect(()=>{
