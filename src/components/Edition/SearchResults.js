@@ -19,7 +19,7 @@ const SearchResults=(props)=>{
       const [ groupedResults, setGroupedResults] = useState([]);  
       const [dataDictionary, setDataDictionary] = useState([]);
       const [isArmenian, setIsArmenian]=useState();
-      const [witnessName, setWitnessName] = useState();
+    //  const [witnessName, setWitnessName] = useState();
     
       const parserOptions = {
             replace: function(domNode) {
@@ -42,12 +42,12 @@ const SearchResults=(props)=>{
 
             if( ! armenianCharacter ){
                   setIsArmenian(false)
-                  setWitnessName("Translation");// for now its trans or lemma
+               //   setWitnessName("Translation");
                   idx = lunr.Index.load(translationIndex);
                   setDataDictionary(translationDictionary)
             } else {
                   setIsArmenian(true);
-                  setWitnessName("Lemma Text");// for now its trans or lemma
+                //  setWitnessName("Lemma Text");// for now its trans or lemma
                   idx = lunr.Index.load(armenianIndex);
                   setDataDictionary(armenianDictionary)
             }
@@ -79,9 +79,13 @@ return (
                            
                                           {
                                                 groupedResults.length > 0 ?
+
+                                                isArmenian ?
+
                                                 groupedResults.map( (r) => {
-                                                   
-                                                      return (<div key={r.year} style={{marginBottom:'16px'}}>
+                                                return(
+                                                    
+                                                      <div key={r.year} style={{marginBottom:'16px'}}>
                                                                    <ExpansionPanel>
                                                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
                                                                               <Typography variant="h5"> {`Year ${r.year} ${r.witnesses.length} Witnesses`}</Typography>
@@ -93,7 +97,7 @@ return (
                                                                                                 <Link style={{display:'block'}} to={`/Edition/${w.sectionId}/${w.witness?w.witness:''}`} color="secondary">
                                                                                                      
                                                                                                       <Typography variant="h6" style={{marginLeft:'8px'}}>
-                                                                                                            { isArmenian ? `Witness Sigil: ${w.witness}`: 'Translation'}
+                                                                                                            {`Witness Sigil: ${w.witness}`}
                                                                                                       </Typography>
                                                                                                 </Link>
                                                                                                 )
@@ -101,9 +105,32 @@ return (
                                                                         }
                                                                         </ExpansionPanelDetails>
                                                                   </ExpansionPanel>
-                                                            </div>)
-                                                })   
+                                                            </div>
+                                                            
+                                                            
+                                                            )
+                                                })  
                                                 
+                                                :
+                                                groupedResults.map( (r) => {
+                                                      let value;
+                                                      let section = r.witnesses[0].sectionId;
+                                                      value = dataDictionary.find(d => { return d.sectionId === section }).text
+                                                      return (
+                                                            <div key={r.ref} style={{marginBottom:'16px'}}>
+                                                                        <Button size="large" component={Link} to={`/Edition/${section}`} color="secondary">
+                                                                        <Typography variant="h6">
+                                                                              {`section: ${section}` }
+                                                                        </Typography>
+                                                                  </Button>
+                                                                  
+                                                                  <Typography variant="body1">
+                                                                              {Parser(value,parserOptions)}
+                                                                  </Typography>
+                                                            </div>
+                                                      )
+                                                })   
+
                                                 :  searchTerm ? 
                                                 <Typography>
                                                       {`${searchTerm} not found`}

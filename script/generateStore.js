@@ -24,7 +24,6 @@ async function generateStore() {
 
 
       function loadConfig() {
-          
             const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
             return JSON.parse(configJSON);
       }
