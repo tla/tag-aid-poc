@@ -73,28 +73,28 @@ const Routes = ( props)=>{
             <ThemeProvider  theme={ChronicleTheme}>
                         <Switch>
                               <Route path="/Edition/:sectionID/:witnessID" exact>
-                                    <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition onSearch={setSearchTerm}  sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
-                                    <EditionLanding   sections={sections}   />
+                                    <EditionLanding   sections={sections} onSearch={setSearchTerm}  />
                               </Route>
                               <Route path="/About" >
-                                    <AboutPage /> 
+                                    <AboutPage onSearch={setSearchTerm} /> 
                               </Route>
                               <Route path="/Methods" >
-                                    <MethodsPage /> 
+                                    <MethodsPage onSearch={setSearchTerm} /> 
                               </Route>
                               <Route path="/Manuscripts" >
-                                    <ManuscriptPage /> 
+                                    <ManuscriptPage onSearch={setSearchTerm} /> 
                               </Route>
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
-                                    <ManuscriptViewClientParse  viewport={viewport}  /> 
+                                    <ManuscriptViewClientParse onSearch={setSearchTerm}  viewport={viewport}  /> 
                               </Route>   
                               <Route path="/Home" exact>
-                                    <HomePage sections={sections} />
+                                    <HomePage sections={sections} onSearch={setSearchTerm} />
                               </Route> 
                               <Route path="/Search" exact>
                                     <SearchResults 
@@ -104,13 +104,13 @@ const Routes = ( props)=>{
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
                               <Route path="/Map" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
+                                    <MapView  onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections} />
                               </Route>
                               <Route path="/Map/:locationId" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
+                                    <MapView onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
                                <Route path="/" exact>
-                                    <HomePage sections={sections} />
+                                    <HomePage  onSearch={setSearchTerm} sections={sections} />
                               </Route> 
                         </Switch>
             </ThemeProvider>

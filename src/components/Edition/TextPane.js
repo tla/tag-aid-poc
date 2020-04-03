@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 const TextPane =(props) => {
 
       const {sectionId, reading, onSelectNode, onSelectLocation, selectedSentence, onSelectSentence,
-      persons, places, dates, graphVisible} = props;
+      persons, places, dates, graphVisible, searchTerm} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
@@ -30,6 +30,9 @@ const TextPane =(props) => {
                                                       {domToReact(children,parserOptions)}</span>
                                     }
                               } else {
+                                    let isSearchTerm = searchTerm? children[0].data === searchTerm ? true: false : false;
+                                    if( isSearchTerm)
+                                          onSelectNode(nodeId);
                                     let atRank = props.selectedRank? props.selectedRank === rank : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
                                     let person =persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
@@ -38,7 +41,7 @@ const TextPane =(props) => {
                                     let inSelectedSentence = props.selectedSentence? (parseInt(rank) >= parseInt(selectedSentence.startRank) && parseInt(rank)<= parseInt(selectedSentence.endRank) ) : false;
                                     let textStyle={
                                           color: 'black',
-                                          backgroundColor: selected?'#D4FCA4':person ? '#D1F3FA' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#D4FCA4':'transparent'
+                                          backgroundColor: isSearchTerm?'#D4FCA4':selected?'#D4FCA4':person ? '#D1F3FA' : place ? '#F3E3FB' : date ? '#FAD3C3' :inSelectedSentence ? '#F2F19C':atRank?'#D4FCA4':'transparent'
                                     }
                                           return <span style={textStyle} onClick={()=>{handleSelected({nodeId:nodeId, rank:rank, place: place})}} >
                                                 {domToReact(children,parserOptions)}</span>

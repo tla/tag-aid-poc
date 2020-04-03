@@ -7,17 +7,20 @@ import Typography from '@material-ui/core/Typography';
 import Parser , {domToReact} from 'html-react-parser';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 const SearchResults=(props)=>{
 
       const {searchTerm, onSearch, translationDictionary, translationIndex, armenianDictionary, armenianIndex, sections} = props;
-      const [ lunrResults, setLunrResults] = useState([]);  
+      const [ groupedResults, setGroupedResults] = useState([]);  
       const [dataDictionary, setDataDictionary] = useState([]);
-      const[isArmenian, setIsArmenian]=useState();
+      const [isArmenian, setIsArmenian]=useState();
       const [witnessName, setWitnessName] = useState();
     
-
       const parserOptions = {
             replace: function(domNode) {
                   if( domNode.children){
@@ -26,7 +29,6 @@ const SearchResults=(props)=>{
                         else
                               return <span  >{domToReact(domNode.children,parserOptions)}</span>
                   }
-               
             }
       }
   
@@ -51,38 +53,7 @@ const SearchResults=(props)=>{
             }
       
             let hopingFor = idx.search(searchTerm);
-
-            hopingFor.sort( (a,b)=>{
-                  let aSectionId = a.ref.split('-')[0];
-                  let bSectionId = b.ref.split('-')[0];
-                  let aWitness = a.ref.split('-')[1];
-                  let bWitness = b.ref.split('-')[1];
-
-                  let aHeader = props.sections.find( s =>{
-                        return s.sectionId === aSectionId;
-                  });
-                  let bHeader =  props.sections.find( s =>{
-                        return s.sectionId === bSectionId;
-                  });
-
-                  let aYear = parseInt(aHeader.englishTitle.substring(9,12));
-                  let bYear = parseInt(bHeader.englishTitle.substring(9,12));
-       
-                  if(aYear > bYear )
-                        return 1;
-                  if(aYear < bYear )
-                        return -1;
-                  if(aYear === bYear){
-                        if(aWitness.toUpperCase() < bWitness.toUpperCase())
-                              return -1;
-                        if ( aWitness.toUpperCase() > bWitness.toUpperCase())
-                              return 1;
-                        else
-                              return 0;
-                  }
-                       
-            })
-            setLunrResults(hopingFor);
+            groupSearchResults(hopingFor);
 
       },[searchTerm])
 
@@ -107,37 +78,30 @@ return (
                                     </div>
                            
                                           {
-                                                lunrResults.length > 0 ?
-                                                lunrResults.map( (r) => {
-                                                      let value;
-                                                      let sectionId = r.ref.split('-')[0];
-                                                      let witnessId = r.ref.split('-')[1];
-                                                      value = dataDictionary.find( (d) => { 
-                                                           if (d.sectionId === sectionId && d.witnessId === witnessId) 
-                                                                  return d 
-                                                            else 
-                                                                  return null;} );
+                                                groupedResults.length > 0 ?
+                                                groupedResults.map( (r) => {
+                                                   
+                                                      return (<div key={r.year} style={{marginBottom:'16px'}}>
+                                                                   <ExpansionPanel>
+                                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
+                                                                              <Typography variant="h5"> {`Year ${r.year} ${r.witnesses.length} Witnesses`}</Typography>
+                                                                        </ExpansionPanelSummary>
+                                                                        <ExpansionPanelDetails style={{display:'flex', flexDirection:'column'}}>
+                                                                              { r.witnesses.map( w=>{
+                                                                                    return (
 
-                                                      let headerText = props.sections.find( s =>{
-                                                            return s.sectionId === sectionId;
-                                                      });
-                                                      return (
-                                                            <div key={r.ref} style={{marginBottom:'16px'}}>
-                                                                   
-                                                                   <Button size="large" component={Link} to={`/Edition/${sectionId}/${witnessId?witnessId:''}`} color="secondary">
-                                                                        <Typography variant="h6">
-                                                                              {` ${isArmenian?headerText.armenianTitle: headerText.englishTitle.substring(0,13)}` }
-                                                                        </Typography>
-                                                                        <Typography variant="body1" style={{marginLeft:'8px'}}>
-                                                                              { isArmenian ? `Witness Sigil: ${witnessId}`: 'Translation'}
-                                                                        </Typography>
-                                                                  </Button>
-                                                                  
-                                                                  <Typography variant="body1">
-                                                                              {Parser(value.text,parserOptions)}
-                                                                  </Typography> 
-                                                            </div>
-                                                      )
+                                                                                                <Link style={{display:'block'}} to={`/Edition/${w.sectionId}/${w.witness?w.witness:''}`} color="secondary">
+                                                                                                     
+                                                                                                      <Typography variant="h6" style={{marginLeft:'8px'}}>
+                                                                                                            { isArmenian ? `Witness Sigil: ${w.witness}`: 'Translation'}
+                                                                                                      </Typography>
+                                                                                                </Link>
+                                                                                                )
+                                                                              })
+                                                                        }
+                                                                        </ExpansionPanelDetails>
+                                                                  </ExpansionPanel>
+                                                            </div>)
                                                 })   
                                                 
                                                 :  searchTerm ? 
@@ -154,7 +118,49 @@ return (
             </Grid>
       )
 
-    
+  
+function groupSearchResults(lunrSearch){
+      let groupedYears=[]
+       lunrSearch.forEach( result =>{
+             let sectionId = result.ref.split('-')[0];
+             let witness = result.ref.split('-')[1];
+             let header =  sections.find( s =>{
+                   return s.sectionId === sectionId;
+             });
+             let year = parseInt(header.englishTitle.substring(9,12));
+ 
+            let yearGroup = groupedYears.find( gr=>{return gr.year === year });
+             if ( yearGroup )
+             {
+                   yearGroup.witnesses.push( {sectionId:sectionId, witness:witness, year:year, text:result.text, header: header});// denormalized redundant year I know 
+                   yearGroup.witnesses.sort( ( a, b)=>{
+                        if(a.witness.toUpperCase() > b.witness.toUpperCase())
+                         return 1;
+                         if(a.witness.toUpperCase() < b.witness.toUpperCase())
+                               return -1;
+                         else 
+                               return 0;
+                  })
+             }
+             else {
+                   let witnesses=[];
+                   witnesses.push({sectionId:sectionId, witness:witness, year:year, text:result.text, header: header})
+                   groupedYears.push( {year:year, witnesses:witnesses})
+             }
+       });
+ 
+       groupedYears.sort( ( a, b)=>{
+             if(a.year > b.year )
+                   return 1;
+             else if ( a.year < b.year)
+                   return -1;
+             else  
+                   return 0;
+       })
+ 
+       setGroupedResults(groupedYears)
+ }
+   
 
 }
 

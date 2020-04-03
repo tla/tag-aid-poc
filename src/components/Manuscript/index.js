@@ -8,10 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 
 const ManuscriptPage = (props) => {
 
-
+      const { onSearch } = props;
       return (
             <Fragment>
-            <Header />
+            <Header onSearch={onSearch} />
             <div class="container content">
                  
                   <div className="row">

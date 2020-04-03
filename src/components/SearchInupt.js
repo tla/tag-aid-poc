@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: '#6f42c1',
+    color: 'rgb(92, 90, 137)',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),

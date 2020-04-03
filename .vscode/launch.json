@@ -49,6 +49,15 @@
                         "<node_internals>/**"
                   ],
                   "program": "${workspaceFolder}/script/generateAllWitnessLunrData.js"
+            },
+            {
+                  "type": "node",
+                  "request": "launch",
+                  "name": "Generate Date Info",
+                  "skipFiles": [
+                        "<node_internals>/**"
+                  ],
+                  "program": "${workspaceFolder}/script/generateDates.js"
             }
       ]
 }

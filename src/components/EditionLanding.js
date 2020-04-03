@@ -16,10 +16,12 @@ const EditionLanding = ( props)=>{
             height:'210px',
       }
 
+      const {onSearch} = props;
+
       return (
             <Grid container >
                   <Grid item>
-                        <Header  />
+                        <Header onSearch={onSearch} />
                   </Grid>
                   <Grid item xs={12}>
                 

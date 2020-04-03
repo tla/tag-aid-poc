@@ -20,7 +20,7 @@ const Edition = ( props)=>{
       let {witnessID} = useParams();
       if(! sectionID)
             sectionID = "1019321"
-      const {sections , viewport , witnesses, onSearch} = props;
+      const {sections , viewport , witnesses, onSearch, searchTerm} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [selectedRank, setSelectedRank] =  useState();
@@ -93,12 +93,18 @@ const Edition = ( props)=>{
 
       useEffect(()=>{
             if(datesVisible)
-           DataApi.getDates(sectionID, (list)=>{
-                 setDateList(list)
-           });
+                  DataApi.getDates(sectionID, (list)=>{
+                        setDateList(list)
+                  });
            else
                  setDateList([])
       },[datesVisible, sectionID])
+
+      useEffect(()=>{
+            if( !props.searchTerm)
+                  return;
+         
+      },[props.searchTerm])
   
       let textContainerStyle={
             overflowY:'auto', 
@@ -195,6 +201,7 @@ const Edition = ( props)=>{
                                           <Grid container  spacing={0}>
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            searchTerm={searchTerm}
                                                             sections = { sections}
                                                             sectionId={sectionID}
                                                             persons={personList}
@@ -213,6 +220,7 @@ const Edition = ( props)=>{
 
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            searchTerm={searchTerm}
                                                             sections = { sections}
                                                             sectionId={sectionID}
                                                             persons={personList}
