@@ -35,9 +35,9 @@ const TextPane =(props) => {
                                           onSelectNode(nodeId);
                                     let atRank = props.selectedRank? props.selectedRank === rank : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
-                                    let person =persons? persons.find( p=>{return p.begin.toString() === nodeId.toString()}): null;
-                                    let place = places? places.find( p=>{ return p.begin.toString() === nodeId.toString()}) : null ;
-                                    let date =dates ? dates.find( d=> { return d.begin.toString() === nodeId.toString()}) : null;
+                                    let person =persons? persons.find( p=>{return parseInt(p.begin) <= parseInt(nodeId) && parseInt(p.end) >= parseInt(nodeId) }): null;
+                                    let place = places? places.find( p=>{return parseInt(p.begin) <= parseInt(nodeId) && parseInt(p.end) >= parseInt(nodeId)}) : null ;
+                                    let date =dates ? dates.find( d=> { return parseInt(nodeId) >= parseInt(d.begin) && parseInt(nodeId) <= parseInt(d.end)}) : null;
                                     let inSelectedSentence = props.selectedSentence? (parseInt(rank) >= parseInt(selectedSentence.startRank) && parseInt(rank)<= parseInt(selectedSentence.endRank) ) : false;
                                     let textStyle={
                                           color: 'black',

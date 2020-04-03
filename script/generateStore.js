@@ -361,7 +361,7 @@ async function generateStore() {
             const refs = [];
             annotations.forEach( anno =>{
                   const beginNodeId = anno.links[0].type==="BEGIN"? anno.links[0].target : anno.links[1].target;
-                  const endNodeId = anno.links[1].type==="BEGIN"? anno.links[1].target : anno.links[0].target;
+                  const endNodeId = anno.links[1].type==="END"? anno.links[1].target : anno.links[0].target;
                   let ref = {
                         annotationId: anno.id,
                         begin: beginNodeId,
