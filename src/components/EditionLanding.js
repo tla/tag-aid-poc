@@ -28,45 +28,17 @@ const EditionLanding = ( props)=>{
                               <Grid container alignItems="center" direction="column">
 
                                           <Grid item xs={12}>
-                                                <Typography variant="h4" style={{textAlign:'center',margin:'50px 0px 30px 0px', fontWeight:'900'}}>
+                                                <Typography variant="h4" style={{textAlign:'center',margin:'30px 0px 10px 0px', }}>
                                                       {"Critical Edition"}
                                                 </Typography>
                                           </Grid>
-                                          <Grid item xs={12}>
-                                               
-                                                      <Typography variant="body1" style={{textAlign:'left', fontWeight:'bold', fontStyle:'italic'}}>
-                                                                  {"Landing page for all sections of the Edition."}
-                                                      </Typography>
-                                                      <Typography variant="body1" style={{textAlign:'left', fontWeight:'bold',fontStyle:'italic'}}>
-                                                                  {"This is a short abstract of what goes on the page 100 characters max"}
-                                                      </Typography>
-                                                
-                                          </Grid>
+                                       
                                           <Grid item xs={12} md={8} >
                                                
-                                                <Typography variant="body2" style={{textAlign:'justify', padding:"0px 12px", marginTop:'16px',marginBottom:'30px'}}>
-                                                      μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος
-                                                      οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε,
-                                                      πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν
-                                                      ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν
-                                                      5οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,
-                                                      ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε
-                                                      Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς.
-                                                      τίς τ᾽ ἄρ σφωε θεῶν ἔριδι ξυνέηκε μάχεσθαι;
-                                                      Λητοῦς καὶ Διὸς υἱός: ὃ γὰρ βασιλῆϊ χολωθεὶς
-                                                      10νοῦσον ἀνὰ στρατὸν ὄρσε κακήν, ὀλέκοντο δὲ λαοί,
-                                                      οὕνεκα τὸν Χρύσην ἠτίμασεν ἀρητῆρα
-                                                      Ἀτρεΐδης: ὃ γὰρ ἦλθε θοὰς ἐπὶ νῆας Ἀχαιῶν
-                                                      λυσόμενός τε θύγατρα φέρων τ᾽ ἀπερείσι᾽ ἄποινα,
-                                                      στέμματ᾽ ἔχων ἐν χερσὶν ἑκηβόλου Ἀπόλλωνος
-                                                      15χρυσέῳ ἀνὰ σκήπτρῳ, καὶ λίσσετο πάντας Ἀχαιούς,
-                                                      Ἀτρεΐδα δὲ μάλιστα δύω, κοσμήτορε λαῶν:
-                                                      Ἀτρεΐδαι τε καὶ ἄλλοι ἐϋκνήμιδες Ἀχαιοί,
-                                                      ὑμῖν μὲν θεοὶ δοῖεν Ὀλύμπια δώματ᾽ ἔχοντες
-                                                      ἐκπέρσαι Πριάμοιο πόλιν, εὖ δ᾽ οἴκαδ᾽ ἱκέσθαι:
-                                                      20παῖδα δ᾽ ἐμοὶ λύσαιτε φίλην, τὰ δ᾽ ἄποινα δέχεσθαι,
-                                                      ἁζόμενοι Διὸς υἱὸν ἑκηβόλον Ἀπόλλωνα.
-                                                      ἔνθ᾽ ἄλλοι μὲν πάντες ἐπευφήμησαν Ἀχαιοὶ
+                                                <Typography variant="body1" style={{textAlign:'justify', padding:"0px 12px", marginTop:'16px',marginBottom:'30px'}}>
+                                                Եւ վասն այսորիկ ես Մատթէոս Ուռհայեցի եւ վանական զաշխատութեան զգործ իմ ոչինչ համարեցայ, այլ թողի զայս յիշատակ սիրողաց ժամանակագրութեանց, զի յորժամ ի հանդէս քննութեան ելցեն յաղագս ժամանակաց անցելոցն, դիւրաւ կարասցեն գտանել զժամս եւ զժամանակս. եւ զկատարած բարկութեանն ի վերայ ժամանակացն գտանիցեն, եւ այնու զմտաւ ածեալ յիշեսցեն զաստուածասաստ բարկութիւնն՝ զոր վասն մեղացն ընկալաք զհատուցումն յարդար դատաւորէն յԱստուծոյ.
+                                                 / And therefore I, Mattʿēos Uṙhayecʿi, a monk, have reckoned as nothing my work of labour, but I leave this record for those who love chronicles, so that when they enter into an examination of past times, they will easily be able to find the times and the epochs. And they might learn of the fulfilment of wrath over the eras, and having pondered that, they might remember the severe divine wrath which we received from the righteous judge, God, in return for our sins.
+
                                                 </Typography>
                                                 <Typography variant="body2" style={{float:'right', margin:"6px"}}>
                                                      Download the Armenian text as JSON or TEI
@@ -86,7 +58,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Prologue"}
+                                                                                                            {"Book 1"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -99,7 +71,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Section 1"}
+                                                                                                            {"Book 2"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -112,7 +84,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Section 2"}
+                                                                                                            {"Book 3"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -125,7 +97,7 @@ const EditionLanding = ( props)=>{
                                                                               <CardActions>
                                                                                     <Button size="large" component={Link} to="/Edition/1019321" color="secondary">
                                                                                                       <Typography variant="body2">
-                                                                                                            {"Section 3"}
+                                                                                                            {"Continuation"}
                                                                                                       </Typography>
                                                                                     </Button>
                                                                               </CardActions>
@@ -138,11 +110,11 @@ const EditionLanding = ( props)=>{
                               </Grid>
                              
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                         <Paper style={{margin:'12px 16px 24px 16px', height:'140px',padding:'16px'}} >
                               <Typography variant="body1">{"footer..."}</Typography>
                         </Paper>
-                  </Grid>
+                  </Grid> */}
             </Grid>
       )
 
