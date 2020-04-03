@@ -22,10 +22,5 @@ const EditionHeader = ( props)=>{
       </Grid>
       )
 
-     
-      
-
-      
-
 }
 export default EditionHeader
