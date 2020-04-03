@@ -61,7 +61,6 @@ const MapView = ( props)=>{
                                     'text-size':20,
                                     'text-offset': [0, 0.5],
                                     'text-anchor': 'top',
-                                  
                                     },
                              
                         }
@@ -92,24 +91,25 @@ const MapView = ( props)=>{
                         mapInstance.getCanvas().style.cursor = '';
                   });
 
+                  // to do generate another point layer rather than polygon
                   const polygons = parsePolygons();
                   polygons.forEach( p =>{
                   try{
-                        mapInstance.addSource(p.title,
-                              {
-                                    'type': 'geojson',
-                                    'data':p.data
-                              }
-                        );
-                        mapInstance.addLayer({
-                              'id':p.title,
-                              'type':'fill',
-                              'source':p.title,
-                              'paint':{
-                                    'fill-color':'#edbbc4',
-                                    'fill-opacity': 0.4
-                              },
-                        })
+                        // mapInstance.addSource(p.title,
+                        //       {
+                        //             'type': 'geojson',
+                        //             'data':p.data
+                        //       }
+                        // );
+                        // mapInstance.addLayer({
+                        //       'id':p.title,
+                        //       'type':'fill',
+                        //       'source':p.title,
+                        //       'paint':{
+                        //             'fill-color':'#edbbc4',
+                        //             'fill-opacity': 0.4
+                        //       },
+                        // })
                         let stupid = Math.random();
                         mapInstance.addSource(`${p.title}-${stupid.toString()}`, {
                               'type': 'geojson',
@@ -288,7 +288,7 @@ const MapView = ( props)=>{
                                           <b>description: </b>${g.properties.description}<br/>
                                           <b>provenance: </b>${f.provenance}<br/>
                                           <b>link: </b><a href='${g.properties.link}'>${linkText}</a><br/>
-                                          <b>snippet: </b>${g.properties.snippet?g.properties.snippet:'bunnies'}<br/>
+                                          <b>snippet: </b>${g.properties.snippet?g.properties.snippet:''}<br/>
                                           <b>Text References </b>
                                           <ul>
                                                 ${ sectionLinks}
