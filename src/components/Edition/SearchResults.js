@@ -115,12 +115,13 @@ return (
                                                 groupedResults.map( (r) => {
                                                       let value;
                                                       let section = r.witnesses[0].sectionId;
-                                                      value = dataDictionary.find(d => { return d.sectionId === section }).text
+                                                      value = dataDictionary.find(d => { return d.sectionId === section }).text;
+                                                      let  title = secions.find(s=>{return s.sectionId === section}).englishTitle
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                         <Button size="large" component={Link} to={`/Edition/${section}`} color="secondary">
                                                                         <Typography variant="h6">
-                                                                              {`section: ${section}` }
+                                                                              {` ${title}` }
                                                                         </Typography>
                                                                   </Button>
                                                                   
