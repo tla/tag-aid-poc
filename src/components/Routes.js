@@ -76,7 +76,7 @@ const Routes = ( props)=>{
                                     <Edition onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition onSearch={setSearchTerm}  sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition onSearch={setSearchTerm}  searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
                                     <EditionLanding   sections={sections} onSearch={setSearchTerm}  />

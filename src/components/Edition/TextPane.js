@@ -22,7 +22,8 @@ const TextPane =(props) => {
 // this can be further refactored - it was in transition... 
                               if( reading === "Translation"){
                                     let selected= props.selectedSentence ? props.selectedSentence.startId === nodeId  : false;
-                                    if(selected) {
+                                    let searchedFor = children[0].data.indexOf(searchTerm) > -1 ? true:false;
+                                    if(selected || searchedFor) {
                                                 return <span style={{backgroundColor:'#F2F19C'}} onClick={()=>{ handleHighlight(attribs.id, attribs.key)}} >
                                                       {domToReact(children,parserOptions)}</span>
                                     } else {

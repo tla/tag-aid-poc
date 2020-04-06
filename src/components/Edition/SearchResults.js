@@ -94,7 +94,7 @@ return (
                                                                               { r.witnesses.map( w=>{
                                                                                     return (
 
-                                                                                                <Link style={{display:'block'}} to={`/Edition/${w.sectionId}/${w.witness?w.witness:''}`} color="secondary">
+                                                                                                <Link key={w.sectionId} style={{display:'block'}} to={`/Edition/${w.sectionId}/${w.witness?w.witness:''}`} color="secondary">
                                                                                                      
                                                                                                       <Typography variant="h6" style={{marginLeft:'8px'}}>
                                                                                                             {`Witness Sigil: ${w.witness}`}
@@ -116,7 +116,7 @@ return (
                                                       let value;
                                                       let section = r.witnesses[0].sectionId;
                                                       value = dataDictionary.find(d => { return d.sectionId === section }).text;
-                                                      let  title = secions.find(s=>{return s.sectionId === section}).englishTitle
+                                                      let  title = sections.find(s=>{return s.sectionId === section}).englishTitle
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                         <Button size="large" component={Link} to={`/Edition/${section}`} color="secondary">
