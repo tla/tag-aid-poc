@@ -88,7 +88,7 @@ export const getReading = async ( sectionId, reading, onTextReceived )=>{
 }
 
 export const getManuscript = async ( manuscriptId, onTextReceived )=>{
-      const manuscriptFile = `${localUrl}dist/content/${manuscriptId}.tei.xml`;    
+      const manuscriptFile = `${localUrl}/images/mss/${manuscriptId}/${manuscriptId}.html`;    
       try{
             const result = await axios.get(manuscriptFile);
             onTextReceived(result.data)

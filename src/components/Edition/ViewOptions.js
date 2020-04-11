@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const ViewOptions =(props)=>{
 
-      const {onToggleGraph, graphVisible, height, viewport,
+      const {onToggleGraph, graphVisible, viewport,
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
             personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates,
       isExpanded, setIsExpanded} = props;

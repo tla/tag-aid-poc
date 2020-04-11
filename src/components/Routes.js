@@ -5,6 +5,7 @@ import ManuscriptPage from './Manuscript';
 import Edition from './Edition/index';
 import HomePage from './HomePage';
 import EditionLanding from './EditionLanding';
+import ManuscriptView from './Manuscript/ManuscriptView';
 import ManuscriptViewClientParse from './Manuscript/ManuscriptViewClientParse'
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from '../utils/Viewport';
@@ -91,6 +92,9 @@ const Routes = ( props)=>{
                                     <ManuscriptPage onSearch={setSearchTerm} /> 
                               </Route>
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
+                                    <ManuscriptView onSearch={setSearchTerm}  viewport={viewport}  /> 
+                              </Route>   
+                              <Route path="/ManuscriptView2/:manuscriptId" exact>
                                     <ManuscriptViewClientParse onSearch={setSearchTerm}  viewport={viewport}  /> 
                               </Route>   
                               <Route path="/Home" exact>

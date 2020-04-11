@@ -9,6 +9,7 @@
     "cheerio": "^1.0.0-rc.3",
     "classnames": "^2.2.6",
     "html-react-parser": "^0.9.1",
+    "jsdom": "^16.2.2",
     "lunr": "^2.3.8",
     "mapbox-gl": "^1.8.1",
     "material-ui": "^0.20.2",
@@ -22,8 +23,7 @@
     "react-scripts": "^3.3.0",
     "react-spinners-kit": "^1.9.1",
     "react-svg": "latest",
-    "victory": "^34.0.1",
-    "xmldom": "^0.2.1"
+    "victory": "^34.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

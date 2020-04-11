@@ -12,7 +12,7 @@ const ManuscriptPage = (props) => {
       return (
             <Fragment>
             <Header onSearch={onSearch} />
-            <div class="container content">
+            <div className="container content">
                  
                   <div className="row">
                         <div className="col-md-3">
