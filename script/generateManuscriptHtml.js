@@ -4,60 +4,122 @@ const fs = require('fs')
 const jsdom = require("jsdom");
 const moment = require('moment');
 const { JSDOM } = jsdom
-
 const {CETEI} = require("./CETEI")
 
+class DirectoriesRead {
+     value=0;
+     total=null;
+     onComplete = null;
+      static increment = ()=>{ 
+            this.value = this.value + 1;
+            console.log(`processing file: ${this.value} of ${this.total}`)
+           if(this.value == this.total){
+              
+                  this.onComplete();
+           }
+                 
+           else{
+                 
+           }
+                  
+     }
+};
 
-function convertToHTML( sourcePath, destinationPath ) {
-    const htmlDOM = new JSDOM()
-    const ceTEI = new CETEI(htmlDOM.window)
+function process(){
+      console.log(`begin processing ${moment().format('mm:ss')}`);
+      const sourcePath = 'public/images/mss';
+      const sigilLookup = [];
+     
 
-    console.log(`Converting ${sourcePath}`)
-    try {
-            fs.readFile(sourcePath, "utf8", (err, filecontents )=>{
-                  if(err){
-                        console.error(`ERROR ${err}`)  ;
-                        return null;
+      iterateDirectories(sourcePath);
+    
+      function writeLookupFile(){
+            fs.writeFileSync('public/data/sigilLookup.json', JSON.stringify(sigilLookup), "utf8") ;
+            console.log(`completed processing ${moment().format('mm:ss')}`);
+      }
+
+      function iterateDirectories(sourcePath) {
+            const directories = fs.readdirSync(sourcePath, {withFileTypes: true});
+            DirectoriesRead.value = 0;
+            DirectoriesRead.total = directories.length;
+            DirectoriesRead.onComplete = writeLookupFile;
+
+            for( let i=0; i < directories.length; i++ ) {
+                  if(directories[i].isDirectory()){
+                    const teiFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.tei.xml`
+                    const htmlFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.html`;
+                    fs.readFile(teiFilePath, "utf8", (err, contents)=>onReadFile( err,contents,htmlFilePath,sigilLookup,DirectoriesRead) );
                   }
-                  const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })    
-                  const data = ceTEI.domToHTML5(xmlDOM.window.document)
-                  const html =  data.innerHTML;
-                  fs.writeFileSync(destinationPath, html, "utf8")  
-        })
+                  else
+                    DirectoriesRead.increment();
+            }
 
-    } catch( err ) {
-            console.error(`ERROR ${err}`)  ;
-    }
-   
+        }
+
+
+      function onReadFile(err, filecontents, destinationPath, collection, DirectoriesRead){
+            if(err){
+                  console.error(`ERROR ${err}`)  ;
+                  DirectoriesRead.increment();
+                  return null;
+                  
+            }
+            convertToHTML(filecontents,destinationPath, collection, DirectoriesRead);
+      }
+      
+      
+      function convertToHTML( filecontents,destinationPath,collection, DirectoriesRead) {
+            let manuscriptDescription ={
+                  id:null,
+                  settlement:null,
+                  repository:null,
+                  idno:null,
+                  origDate:null,
+                  origPlace:null
+            }
+      
+            const htmlDOM = new JSDOM()
+            const ceTEI = new CETEI(htmlDOM.window);
+            const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })    
+            const data = ceTEI.domToHTML5(xmlDOM.window.document, (el)=>{
+                  switch(el.localName){
+                        case "tei-msdesc":
+                              manuscriptDescription.id = el.id;
+                              break;
+                        case "tei-settlement":
+                              manuscriptDescription.settlement = el.innerHTML;
+                              break;
+                        case "tei-repository":
+                              manuscriptDescription.repository=el.innerHTML;
+                              break;
+                        case "tei-idno":
+                              manuscriptDescription.idno = el.innerHTML;
+                              break;
+                        case "tei-origdate":
+                              manuscriptDescription.origDate = el.innerHTML;
+                              break;
+                        case "tei-origplace":
+                              manuscriptDescription.origPlace = el.innerHTML;
+                              break;
+                  }  
+            })
+      
+            collection.push(manuscriptDescription);
+            const html =  data.innerHTML;
+            DirectoriesRead.increment();
+            fs.writeFileSync(destinationPath, html, "utf8") ;
+         
+            
+      }
+        
+     
 }
 
-function iterateDirectories(sourcePath) {
-    const directories = fs.readdirSync(sourcePath, {withFileTypes: true});
-    for( let i=0; i < directories.length; i++ ) {
-          if(directories[i].isDirectory()){
-            const teiFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.tei.xml`
-            const htmlFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.html`
-            convertToHTML(teiFilePath, htmlFilePath)
-          }
-    }
-}
 
-async function process(sourceDirectoriesPath) {
-      iterateDirectories(sourceDirectoriesPath)
-}
+     
+    
 
-async function run() {
-    await process('public/images/mss')
-}
 
-function main() {
-      console.info(`begin processing tei files ${moment().format('mm:ss')}.`)
-      run().then(() => {
-            console.info(`end processing tei files ${moment().format('mm:ss')}.`)
-    }, (err) => {
-        console.error(`${err}: ${err.stack}`)  
-    });
-}
 
-///// RUN THE SCRIPT
-main()
+
+process()
