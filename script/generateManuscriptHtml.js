@@ -13,15 +13,8 @@ class DirectoriesRead {
       static increment = ()=>{ 
             this.value = this.value + 1;
             console.log(`processing file: ${this.value} of ${this.total}`)
-           if(this.value == this.total){
-              
+           if(this.value == this.total)
                   this.onComplete();
-           }
-                 
-           else{
-                 
-           }
-                  
      }
 };
 
@@ -29,14 +22,10 @@ function process(){
       console.log(`begin processing ${moment().format('mm:ss')}`);
       const sourcePath = 'public/images/mss';
       const sigilLookup = [];
-     
 
       iterateDirectories(sourcePath);
     
-      function writeLookupFile(){
-            fs.writeFileSync('public/data/sigilLookup.json', JSON.stringify(sigilLookup), "utf8") ;
-            console.log(`completed processing ${moment().format('mm:ss')}`);
-      }
+    
 
       function iterateDirectories(sourcePath) {
             const directories = fs.readdirSync(sourcePath, {withFileTypes: true});
@@ -45,30 +34,27 @@ function process(){
             DirectoriesRead.onComplete = writeLookupFile;
 
             for( let i=0; i < directories.length; i++ ) {
+                  const teiFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.tei.xml`
+                  const htmlFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.html`;
                   if(directories[i].isDirectory()){
-                    const teiFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.tei.xml`
-                    const htmlFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.html`;
-                    fs.readFile(teiFilePath, "utf8", (err, contents)=>onReadFile( err,contents,htmlFilePath,sigilLookup,DirectoriesRead) );
+                        fs.readFile(teiFilePath, "utf8", (err, contents)=>onReadFile( err,contents,htmlFilePath) );
                   }
                   else
                     DirectoriesRead.increment();
             }
+      }
 
-        }
-
-
-      function onReadFile(err, filecontents, destinationPath, collection, DirectoriesRead){
+      function onReadFile(err, filecontents,destinationPath){
             if(err){
                   console.error(`ERROR ${err}`)  ;
                   DirectoriesRead.increment();
                   return null;
-                  
             }
-            convertToHTML(filecontents,destinationPath, collection, DirectoriesRead);
+            convertToHTML(filecontents, destinationPath);
       }
       
       
-      function convertToHTML( filecontents,destinationPath,collection, DirectoriesRead) {
+      function convertToHTML( filecontents,destinationPath) {
             let manuscriptDescription ={
                   id:null,
                   settlement:null,
@@ -77,7 +63,6 @@ function process(){
                   origDate:null,
                   origPlace:null
             }
-      
             const htmlDOM = new JSDOM()
             const ceTEI = new CETEI(htmlDOM.window);
             const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })    
@@ -103,23 +88,19 @@ function process(){
                               break;
                   }  
             })
-      
-            collection.push(manuscriptDescription);
+       
+           sigilLookup.push(manuscriptDescription);
             const html =  data.innerHTML;
             DirectoriesRead.increment();
             fs.writeFileSync(destinationPath, html, "utf8") ;
-         
-            
+      }
+
+      function writeLookupFile(){
+            fs.writeFileSync('public/data/sigilLookup.json', JSON.stringify(sigilLookup), "utf8") ;
+            console.log(`completed processing ${moment().format('mm:ss')}`);
       }
         
      
 }
 
-
-     
-    
-
-
-
-
-process()
+process();
