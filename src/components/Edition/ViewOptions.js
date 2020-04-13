@@ -17,7 +17,7 @@ const ViewOptions =(props)=>{
       const {onToggleGraph, graphVisible, viewport,
             witnesses, leftReading, rightReading, onSelectLeftReading, onSelectRightReading,
             personsVisible, onTogglePersons, placesVisible, onTogglePlaces, datesVisible, onToggleDates,
-      isExpanded, setIsExpanded} = props;
+            isExpanded, setIsExpanded, manuscripts} = props;
      
    
 
@@ -86,9 +86,14 @@ const ViewOptions =(props)=>{
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
-                                                      {
+                                                      {// refactor do this once, also may want to sort - although this is the order they are displayed on mscript page
                                                             witnesses.map(witness=>{
-                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
+                                                                  let msDescription = manuscripts.find( m=>{return m.id === witness.sigil})
+                                                                  let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:witness.sigil;
+                                                                  let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}
+                                                                  <br/>{placeDate}
+                                                                  </MenuItem>
                                                             })
                                                       }
                                                 </Select>
@@ -103,8 +108,13 @@ const ViewOptions =(props)=>{
                                                       onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                 >
                                                       {
-                                                            witnesses.map(witness=>{
-                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{witness.sigil}</MenuItem>
+                                                             witnesses.map(witness=>{
+                                                                  let msDescription = manuscripts.find( m=>{return m.id === witness.sigil})
+                                                                  let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:witness.sigil;
+                                                                  let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}
+                                                                  <br/>{placeDate}
+                                                                  </MenuItem>
                                                             })
                                                       }
                                                 </Select>

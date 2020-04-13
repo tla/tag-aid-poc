@@ -20,7 +20,7 @@ const Edition = ( props)=>{
       let {witnessID} = useParams();
       if(! sectionID)
             sectionID = "1019321"
-      const {sections , viewport , witnesses, onSearch, searchTerm} = props;
+      const {sections , viewport , witnesses, onSearch, searchTerm, manuscripts} = props;
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [selectedRank, setSelectedRank] =  useState();
@@ -125,6 +125,7 @@ const Edition = ( props)=>{
                                      <ViewOptions 
                                           viewport={viewport}
                                           witnesses = {witnesses}
+                                          manuscripts = {manuscripts}
                                           graphVisible={graphVisible}
                                           onToggleGraph={handleToggleGraph}
                                           personsVisible = {personsVisible}
@@ -201,6 +202,7 @@ const Edition = ( props)=>{
                                           <Grid container  spacing={0}>
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
                                                             sections = { sections}
                                                             sectionId={sectionID}
@@ -220,6 +222,7 @@ const Edition = ( props)=>{
 
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
                                                             sections = { sections}
                                                             sectionId={sectionID}

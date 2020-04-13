@@ -10,6 +10,7 @@ const RootContainer = ( props )=>{
 
       const [sectionList, setSectionList] = useState([])
       const [witnessList, setWitnessList] = useState([])
+      const [manuscriptLookup, setManuscriptLookup] = useState([]);
    
       useEffect( ()=>{
           DataApi.getSectionList( setSectionList )
@@ -17,12 +18,21 @@ const RootContainer = ( props )=>{
       useEffect( ()=>{
             DataApi.getWitnessList( setWitnessList )
         },[])
+        useEffect(()=>{
+           
+                  DataApi.getManuscriptLookup((data)=>{
+                        setManuscriptLookup(data)
+                  })
+       
+      },[])
+
       return (
             <Router>
                  
                   <Routes
                         sections = {sectionList}
                         witnesses = {witnessList}
+                        manuscripts = {manuscriptLookup}
                   />
             </Router>
       )

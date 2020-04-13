@@ -5,6 +5,8 @@
       "version": "0.2.0",
       "configurations": [
 
+      
+
 
             {
                   "name": "debug React in VS Code",
@@ -58,6 +60,15 @@
                         "<node_internals>/**"
                   ],
                   "program": "${workspaceFolder}/script/generateDates.js"
+            },
+            {
+                  "type": "node",
+                  "request": "launch",
+                  "name": "Generate Manuscript HTML",
+                  "skipFiles": [
+                        "<node_internals>/**"
+                  ],
+                  "program": "${workspaceFolder}/script/generateManuscriptHtml.js"
             }
       ]
 }

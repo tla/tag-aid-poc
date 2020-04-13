@@ -163,6 +163,17 @@ export const getLocationLookup = async( onDataReceived)=>{
 
 }
 
+export const getManuscriptLookup = async( onDataReceived)=>{
+      const dataFile = `${localUrl}data/sigilLookup.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+
+}
+
 
 
 

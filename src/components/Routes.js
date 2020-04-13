@@ -6,7 +6,6 @@ import Edition from './Edition/index';
 import HomePage from './HomePage';
 import EditionLanding from './EditionLanding';
 import ManuscriptView from './Manuscript/ManuscriptView';
-import ManuscriptViewClientParse from './Manuscript/ManuscriptViewClientParse'
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
@@ -18,7 +17,7 @@ import MapView from './Visualizations/Map'
 
 const Routes = ( props)=>{
       const viewport = useWindowSize();
-      const {sections, witnesses} = props;
+      const {sections, witnesses, manuscripts} = props;
       const [searchTerm, setSearchTerm ] = useState('');
       const [translationDictionary, setTranslationDictionary] = useState([]);
       const [translationIndex, setTranslationIndex] = useState();
@@ -69,15 +68,16 @@ const Routes = ( props)=>{
             }
       })
 
+      
 
       return (
             <ThemeProvider  theme={ChronicleTheme}>
                         <Switch>
                               <Route path="/Edition/:sectionID/:witnessID" exact>
-                                    <Edition onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition onSearch={setSearchTerm}  searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm}  searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
                                     <EditionLanding   sections={sections} onSearch={setSearchTerm}  />
@@ -89,13 +89,10 @@ const Routes = ( props)=>{
                                     <MethodsPage onSearch={setSearchTerm} /> 
                               </Route>
                               <Route path="/Manuscripts" >
-                                    <ManuscriptPage onSearch={setSearchTerm} /> 
+                                    <ManuscriptPage onSearch={setSearchTerm}   /> 
                               </Route>
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
                                     <ManuscriptView onSearch={setSearchTerm}  viewport={viewport}  /> 
-                              </Route>   
-                              <Route path="/ManuscriptView2/:manuscriptId" exact>
-                                    <ManuscriptViewClientParse onSearch={setSearchTerm}  viewport={viewport}  /> 
                               </Route>   
                               <Route path="/Home" exact>
                                     <HomePage sections={sections} onSearch={setSearchTerm} />

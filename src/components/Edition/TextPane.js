@@ -7,11 +7,12 @@ import Typography from '@material-ui/core/Typography'
 const TextPane =(props) => {
 
       const {sectionId, reading, onSelectNode, onSelectLocation, selectedSentence, onSelectSentence,
-      persons, places, dates, graphVisible, searchTerm} = props;
+      persons, places, dates, graphVisible, searchTerm, manuscripts} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
       const [textHTML, setTextHTML] = useState('');
+      const [manuscriptName, setManuscriptName] = useState();
       
       const parserOptions = {
             replace: function({attribs,children}) {
@@ -71,6 +72,9 @@ const TextPane =(props) => {
                   let parsed = Parser(html, parserOptions)
                   setTextHTML(parsed)
             });
+
+            lookupManuscriptName(props.reading)
+
       },[props.sectionId, props.reading])
 
       useEffect(()=>{
@@ -84,7 +88,7 @@ const TextPane =(props) => {
       return (
            <div style={{marginRight:'12px'}}>
                         <Typography variant="body1" style={{textAlign:'center'}}>
-                              {reading}
+                              {manuscriptName}
                         </Typography>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
                               { enTitle? reading === "Translation" ? enTitle.split("(")[0]?enTitle.split("(")[0]: enTitle :arTitle.split("(")[0] ? arTitle.split("(")[0] : arTitle : ''}
@@ -102,6 +106,14 @@ const TextPane =(props) => {
                            
            </div>
           )
+
+      function lookupManuscriptName(sigil){
+            let msDescription = manuscripts.find( m=>{return m.id === sigil})
+            let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:sigil;
+            let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
+            
+            setManuscriptName(`${descText} ${placeDate}`)
+      }
 
           // contains rank and id
       function handleHighlight( startNodeId, endNodeId){
