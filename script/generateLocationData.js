@@ -61,11 +61,9 @@ async function GenerateLocationData () {
                               title: place.properties.identifier,
                               provenance:'geonames.org',
                               geometry:[{
-                                    
                                     geometry: {
                                           type:"Point",
                                           coordinates:[record.lng,record.lat],
-                                          
                                     },
                                     properties:{
                                           snippet:`${record.fclName}, ${record.fcodeName}`,

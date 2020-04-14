@@ -108,7 +108,7 @@ const TextPane =(props) => {
           )
 
       function lookupManuscriptName(sigil){
-            let msDescription = manuscripts.find( m=>{return m.id === sigil})
+            let msDescription = manuscripts? manuscripts.find( m=>{return m.id === sigil}):null;
             let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:sigil;
             let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
             
