@@ -13,13 +13,17 @@ const ManuscriptPage = (props) => {
             <Fragment>
             <Header onSearch={onSearch} />
             <div className="container content">
-                 
+                 <div className="row">
+                        <div className = "col-md-12" >
+                              <h3>Bzommar Monastery</h3>
+                        </div>
+                 </div>
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/Bz430/Bz430.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Bzommar monastery, MS 430</h5>
+                                          <h5 className="card-title">MS 430</h5>
                                           <p className="card-text">Copied in 1323 at the Monastery of St. Tʿoros. Includes only the Prophecies of Kozeṙn.</p>
                                           <div display={{display:'flex'}}>
                                                 <a href="images/mss/Bz430/Bz430.tei.xml" download="Bzommar_430.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
@@ -34,8 +38,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/Bz449/Bz449.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Bzommar monastery, MS 449</h5>
-                                          <p className="card-text">Manuscript K. Copied in 1699, place unknown.</p>
+                                          <h5 className="card-title">MS 449</h5>
+                                          <p className="card-text">Copied in 1699, place unknown.</p>
                                           <a href="images/mss/Bz449/Bz449.tei.xml" download="Bzommar_430.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/Bz449" >
                                                             {"read transcription"}
@@ -47,7 +51,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/Bz644/Bz644.png" width="250" height="250" className="card-img-top" alt="Manuscript XX" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Bzommar monastery, MS 644</h5>
+                                          <h5 className="card-title">MS 644</h5>
                                           <p className="card-text">Copied in Livorno between 1775 and 1805.</p>
                                           <a href="images/mss/Bz644/Bz644.tei.xml" download="Bzommar_644.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/Bz644" color="secondary">
@@ -56,12 +60,18 @@ const ManuscriptPage = (props) => {
                                     </div>
                               </div>
                         </div>
+                        
+                  </div>
+                  <div className="row">
+                        <h3>London, British Library, Oriental </h3>
+                  </div>
+                  <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/L5260/L5260.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">London, British Library, Oriental MS 5260</h5>
-                                          <p className="card-text">Manuscript L. Copied around 1660, probably at Sanahin.</p>
+                                          <h5 className="card-title">MS 5260</h5>
+                                          <p className="card-text">Copied around 1660, probably at Sanahin.</p>
                                           <a href="images/mss/L5260/L5260.tei.xml" download="London_BL_OR5260.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/L5260" color="secondary">
                                                             {"read transcription"}
@@ -70,13 +80,17 @@ const ManuscriptPage = (props) => {
                               </div>
                         </div>
                   </div>
+
+                  <div className="row">
+                        <h3>Yerevan, Matenadaran</h3>
+                  </div>
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/M1731/M1731.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1731</h5>
-                                          <p className="card-text">Manuscript F. Copied in Lviv in 1617.</p>
+                                          <h5 className="card-title">MS 1731</h5>
+                                          <p className="card-text">Copied in Lviv in 1617.</p>
                                           <a href="images/mss/M1731/M1731.tei.xml" download="Matenadaran_1731.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1731" color="secondary">
                                                             {"read transcription"}
@@ -88,8 +102,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M1767/M1767.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1767</h5>
-                                          <p className="card-text">Manuscript B. Copied in 1623 in Aleppo.</p>
+                                          <h5 className="card-title">MS 1767</h5>
+                                          <p className="card-text">Copied in 1623 in Aleppo.</p>
                                           <a href="images/mss/M1767/M1767.tei.xml" download="Matenadaran_1767.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1767" color="secondary">
                                                             {"read transcription"}
@@ -101,8 +115,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M1768/M1768.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1768</h5>
-                                          <p className="card-text">Manuscript H. Copied sometime before 1661, place unknown.</p>
+                                          <h5 className="card-title">MS 1768</h5>
+                                          <p className="card-text">Copied sometime before 1661, place unknown.</p>
                                           <a href="images/mss/M1768/M1768.tei.xml" download="Matenadaran_1768.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1768" color="secondary">
                                                             {"read transcription"}
@@ -114,8 +128,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M1769/M1769.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1769</h5>
-                                          <p className="card-text">Manuscript I. Copied in 1664 in Tiflis.</p>
+                                          <h5 className="card-title">MS 1769</h5>
+                                          <p className="card-text">Copied in 1664 in Tiflis.</p>
                                           <a href="images/mss/M1769/M1769.tei.xml" download="Matenadaran_1769.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1769" color="secondary">
                                                             {"read transcription"}
@@ -129,7 +143,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M1775/M1775.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1775</h5>
+                                          <h5 className="card-title">MS 1775</h5>
                                           <p className="card-text">Copied in 1671, place unknown. Contains extracts from Book 1.</p>
                                           <a href="images/mss/M1775/M1775.tei.xml" download="Matenadaran_1775.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1775" color="secondary">
@@ -142,8 +156,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M1896/M1896.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 1896</h5>
-                                          <p className="card-text">Manuscript A. Copied in 1689 at the Amrdolu monastery of Bitlis.</p>
+                                          <h5 className="card-title">MS 1896</h5>
+                                          <p className="card-text">Copied in 1689 at the Amrdolu monastery of Bitlis.</p>
                                           <a href="images/mss/M1896/M1896.tei.xml" download="Matenadaran_1896.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M1896" color="secondary">
                                                             {"read transcription"}
@@ -155,8 +169,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M2644/M2644.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 2644</h5>
-                                          <p className="card-text">Manuscript G. Copied between 1850–57 in Constantinople.</p>
+                                          <h5 className="card-title">MS 2644</h5>
+                                          <p className="card-text">Copied between 1850–57 in Constantinople.</p>
                                           <a href="images/mss/M2644/M2644.tei.xml" download="Matenadaran_2644.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M2644" color="secondary">
                                                             {"read transcription"}
@@ -168,7 +182,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M2855/M2855.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 2855</h5>
+                                          <h5 className="card-title">MS 2855</h5>
                                           <p className="card-text">Presumed 17th century, place of copying unknown.</p>
                                           <a href="images/mss/M2855/M2855.tei.xml" download="Matenadaran_2855.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M2855" color="secondary">
@@ -183,7 +197,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M2899/M2899.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 2899</h5>
+                                          <h5 className="card-title">MS 2899</h5>
                                           <p className="card-text">Presumed 19th century, place of copying unknown.</p>
                                           <a href="images/mss/M2899/M2899.tei.xml" download="Matenadaran_2899.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M2899" color="secondary">
@@ -196,8 +210,8 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M3071/M3071.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 3071</h5>
-                                          <p className="card-text">Manuscript C. Copied between 1651–61 at Yovhannovankʿ.</p>
+                                          <h5 className="card-title">MS 3071</h5>
+                                          <p className="card-text">Copied between 1651–61 at Yovhannovankʿ.</p>
                                           <a href="images/mss/M3071/M3071.tei.xml" download="Matenadaran_3071.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M3071" color="secondary">
                                                             {"read transcription"}
@@ -209,7 +223,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M3380/M3380.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 3380</h5>
+                                          <h5 className="card-title">MS 3380 (sigil: M3380)</h5>
                                           <p className="card-text">Presumed 18th century, place of copying unknown.</p>
                                           <a href="images/mss/M3380/M3380.tei.xml" download="Matenadaran_3380.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M3380" color="secondary">
@@ -222,13 +236,11 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M3519/M3519.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 3519</h5>
-                                          <p className="card-text">Manuscript D. Copied in 1647 at Târgu Mureș.</p>
+                                          <h5 className="card-title">MS 3519</h5>
+                                          <p className="card-text">Copied in 1647 at Târgu Mureș.</p>
                                           <a href="images/mss/M3519/M3519.tei.xml" download="Matenadaran_3519.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M3519" color="secondary">
-                                                    
                                                             {"read transcription"}
-                                                     
                                           </Link>
                                     </div>
                               </div>
@@ -239,13 +251,11 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M3520/M3520.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 3520</h5>
-                                          <p className="card-text">Manuscript E. Copied sometime between 1601–21 century at Tufang</p>
+                                          <h5 className="card-title">MS 3520</h5>
+                                          <p className="card-text">Copied sometime between 1601–21 century at Tufang</p>
                                           <a href="images/mss/M3520/M3520.tei.xml" download="Matenadaran_3520.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M3520" color="secondary">
-                                                    
                                                             {"read transcription"}
-                                                      
                                          </Link>
                                     </div>
                               </div>
@@ -254,13 +264,11 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M5587/M5587.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 5587</h5>
-                                          <p className="card-text">Manuscript J. Copied in 1617 in Lviv.</p>
+                                          <h5 className="card-title">MS 5587</h5>
+                                          <p className="card-text">Copied in 1617 in Lviv.</p>
                                           <a href="images/mss/M5587/M5587.tei.xml" download="Matenadaran_5587.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M5587" color="secondary">
-                                                    
                                                             {"read transcription"}
-                                                      
                                          </Link>
                                     </div>
                               </div>
@@ -269,13 +277,11 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M6605/M6605.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 6605</h5>
+                                          <h5 className="card-title">MS 6605</h5>
                                           <p className="card-text">Copied in 1849 in Moscow.</p>
                                           <a href="images/mss/M6605/M6605.tei.xml" download="Matenadaran_6605.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M6605" color="secondary">
-                                                     
                                                             {"read transcription"}
-                                                     
                                          </Link>
                                     </div>
                               </div>
@@ -284,13 +290,11 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M6686/M6686.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Yerevan, Matenadaran, MS 6686</h5>
-                                          <p className="card-text">Copied in 1582, place unknown. Includes only the episode concerning Gagik Bagratuni's confession of faith.</p>
+                                          <h5 className="card-title">MS 6686</h5>
+                                          <p className="card-text">Copied in 1582, place unknown. Includes only Gagik Bagratuni's confession of faith.</p>
                                           <a href="images/mss/M6686/M6686.tei.xml" download="Matenadaran_6686.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M6686" color="secondary">
-                                                     
                                                             {"read transcription"}
-                                                     
                                          </Link>
                                     </div>
                               </div>
@@ -301,40 +305,49 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/M8232/M8232.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Copied in 1709 at Armavir.</h5>
-                                          <p className="card-text">A brief description</p>
+                                          <h5 className="card-title">MS 8232</h5>
+                                          <p className="card-text">Copied in 1709 at Armavir.</p>
                                           <a href="images/mss/M8232/M8232.tei.xml" download="Matenadaran_8232.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/M8232" color="secondary">
-                                                  
                                                             {"read transcription"}
-                                                     
                                          </Link>
                                     </div>
                               </div>
                         </div>
+                   </div>
+                                    
+                  <div className="row">
+                        <h3>Oxford, Bodleian Library</h3>
+                  </div>
+                  <div className ="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/Ox-e.32/Ox-e.32.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
-                                    <div className="card-body">
-                                          <h5 className="card-title">Oxford, Bodleian Library, MS Arm e.32</h5>
-                                          <p className="card-text">Manuscript O. Presumed 18th century, probably copied at Varag monastery.</p>
-                                          <a href="images/mss/Ox-e.32/Ox-e.32.tei.xml"
-                                                download="Oxford_Bodleian_Arm_e32.tei.xml"
-                                                className="btn btn-primary"><CloudDownloadIcon /></a>
-                                             <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/Ox-e.32" color="secondary">
-                                                     
-                                                            {"read transcription"}
-                                                      
-                                         </Link>
-                                    </div>
-                              </div>
-                        </div>
+                                                      <img src="images/mss/Ox-e.32/Ox-e.32.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                                      <div className="card-body">
+                                                            <h5 className="card-title">MS Arm e.32</h5>
+                                                            <p className="card-text">Presumed 18th century, probably copied at Varag monastery.</p>
+                                                            <a href="images/mss/Ox-e.32/Ox-e.32.tei.xml"
+                                                                  download="Oxford_Bodleian_Arm_e32.tei.xml"
+                                                                  className="btn btn-primary"><CloudDownloadIcon /></a>
+                                                            <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/Ox-e.32" color="secondary">
+                                                                  
+                                                                              {"read transcription"}
+                                                                        
+                                                      </Link>
+                                                      </div>
+                                                </div>
+                        </div>        
+                  </div>
+                  <div className ="row">
+                        <h3>Venice, Mekhitarist Library</h3>
+                  </div>
+                  <div className = "row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/V913/V913.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Venice, Mekhitarist Library, MS 887</h5>
-                                          <p className="card-text">Manuscript V. Copied between 1590–1600, probably at Aleppo.</p>
+                                          <h5 className="card-title">MS 887</h5>
+                                          <p className="card-text">Copied between 1590–1600, probably at Aleppo.</p>
                                           <a href="images/mss/V913/V913.tei.xml" download="Venice_887.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V913" color="secondary">
                                                       
@@ -348,7 +361,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/V901/V901.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Venice, Mekhitarist Library, MS 901</h5>
+                                          <h5 className="card-title">MS 901</h5>
                                           <p className="card-text">Manuscript X. Copied in 1669 in Isfahan.</p>
                                           <a href="images/mss/V901/V901.tei.xml" download="Venice_901.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V901" color="secondary">
@@ -359,13 +372,11 @@ const ManuscriptPage = (props) => {
                                     </div>
                               </div>
                         </div>
-                  </div>
-                  <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/V913/V913.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Venice, Mekhitarist Library, MS 913</h5>
+                                          <h5 className="card-title">MS 913</h5>
                                           <p className="card-text">Manuscript Y. Presumed 17th century, place of copying unknown.</p>
                                           <a href="images/mss/V913/V913.tei.xml" download="Venice_913.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V913" color="secondary">
@@ -380,7 +391,7 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/V917/V917.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Venice, Mekhitarist Library, MS 917</h5>
+                                          <h5 className="card-title">MS 917</h5>
                                           <p className="card-text">Manuscript Z. Presumed 17th century, place of copying unknown.</p>
                                           <a href="images/mss/V917/V917.tei.xml" download="Venice_917.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V917" color="secondary">
@@ -391,17 +402,20 @@ const ManuscriptPage = (props) => {
                                     </div>
                               </div>
                         </div>
+                  </div>
+                  <div className="row">
+                        <h3>Vienna, Mekhitarist Library</h3>
+                  </div>                       
+                  <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/W243/W243.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Vienna, Mekhitarist Library, MS 243</h5>
+                                          <h5 className="card-title">MS 243</h5>
                                           <p className="card-text">Presumed 18th or 19th century, place of copying unknown.</p>
                                           <a href="images/mss/W243/W243.tei.xml" download="Venice_887.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/W243" color="secondary">
-                                                      
                                                             {"read transcription"}
-                                                      
                                          </Link>
                                     </div>
                               </div>
@@ -410,25 +424,21 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/W246/W246.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Vienna, Mekhitarist Library, MS 246</h5>
+                                          <h5 className="card-title">MS 246</h5>
                                           <p className="card-text">Presumed 19th century, place of copying unknown.</p>
                                           <a href="images/mss/W246/W246.tei.xml" download="Venice_887.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/W246" color="secondary">
-                                                      
                                                             {"read transcription"}
-                                                     
                                          </Link>
                                     </div>
                               </div>
                         </div>
-                  </div>
-                  <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/W574/W574.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Vienna, Mekhitarist Library, MS 574</h5>
-                                          <p className="card-text">Manuscript W. Copied in 1601 in Constantinople.</p>
+                                          <h5 className="card-title">MS 574</h5>
+                                          <p className="card-text">Copied in 1601 in Constantinople.</p>
                                           <a href="images/mss/W574/W574.tei.xml" download="Venice_887.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/W574" color="secondary">
                                                             {"read transcription"}
@@ -436,12 +446,17 @@ const ManuscriptPage = (props) => {
                                     </div>
                               </div>
                         </div>
+                  </div>
+                  <div className="row">
+                        <h3>Paris, Bibliothèque Nationale</h3>
+                  </div>
+                  <div className="row">
                         <div className="col-md-3">
                               <div className="card">
                                     <img src="images/mss/P191/P191.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Paris, Bibliothèque nationale, MS arm. 191</h5>
-                                          <p className="card-text">Manuscript P. Copied between 1642–47, probably in Constantinople.</p>
+                                          <h5 className="card-title">MS arm. 191</h5>
+                                          <p className="card-text">Copied between 1642–47, probably in Constantinople.</p>
                                           <a href="manuscripts.html#" className="btn btn-primary disabled">Transcription pending</a>
                                          
                                     </div>
@@ -451,18 +466,25 @@ const ManuscriptPage = (props) => {
                               <div className="card">
                                     <img src="images/mss/P200/P200.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
-                                          <h5 className="card-title">Paris, Bibliothèque nationale, MS arm. 200</h5>
-                                          <p className="card-text">Manuscript Q. Copied in 1728 in Constantinople.</p>
+                                          <h5 className="card-title">MS arm. 200</h5>
+                                          <p className="card-text">Copied in 1728 in Constantinople.</p>
                                           <a href="manuscripts.html#" className="btn btn-primary disabled">Transcription pending</a>
                                          
                                     </div>
                               </div>
                         </div>
+                  </div>
+                  <div className="row">
+                        <h3>Rome, Armenian Hospice</h3>
+                  </div>
+                  <div className="row">      
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="https://editions.byzantini.st/ChronicleME/..." width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                   
+                                     {/* <img src="https://editions.byzantini.st/ChronicleME/..." 
+                                     width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" /> */} 
                                     <div className="card-body">
-                                          <h5 className="card-title">Rome, Armenian hospice, MS 25</h5>
+                                          <h5 className="card-title">MS 25</h5>
                                           <p className="card-text">Manuscript R. Presumed 17th century, place of copying unknown.</p>
                                           <a href="manuscripts.html#" className="btn btn-primary disabled">Manuscript unavailable</a>
                                           
