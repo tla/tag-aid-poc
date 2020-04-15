@@ -1,10 +1,8 @@
 import React , { Fragment} from 'react';
 import Header from '../Header';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import IconButton from '@material-ui/core/IconButton';
+
 
 const ManuscriptPage = (props) => {
 
@@ -362,7 +360,7 @@ const ManuscriptPage = (props) => {
                                     <img src="images/mss/V901/V901.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 901</h5>
-                                          <p className="card-text">Manuscript X. Copied in 1669 in Isfahan.</p>
+                                          <p className="card-text">Copied in 1669 in Isfahan.</p>
                                           <a href="images/mss/V901/V901.tei.xml" download="Venice_901.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V901" color="secondary">
                                                       
@@ -377,7 +375,7 @@ const ManuscriptPage = (props) => {
                                     <img src="images/mss/V913/V913.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 913</h5>
-                                          <p className="card-text">Manuscript Y. Presumed 17th century, place of copying unknown.</p>
+                                          <p className="card-text">Presumed 17th century, place of copying unknown.</p>
                                           <a href="images/mss/V913/V913.tei.xml" download="Venice_913.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V913" color="secondary">
                                                      
@@ -392,7 +390,7 @@ const ManuscriptPage = (props) => {
                                     <img src="images/mss/V917/V917.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 917</h5>
-                                          <p className="card-text">Manuscript Z. Presumed 17th century, place of copying unknown.</p>
+                                          <p className="card-text">Presumed 17th century, place of copying unknown.</p>
                                           <a href="images/mss/V917/V917.tei.xml" download="Venice_917.tei.xml" className="btn btn-primary"><CloudDownloadIcon /></a>
                                           <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/V917" color="secondary">
                                                       
