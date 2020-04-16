@@ -1,7 +1,8 @@
 const axios = require('axios');
 const fs = require('fs');
 const moment = require('moment');
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
+const sections = require('./../public/data/sections')// make sure you generated this first
 
 async function GenerateLocationData () {
       const startTime= moment();

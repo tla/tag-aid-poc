@@ -12,12 +12,16 @@ import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import SearchResults from './Edition/SearchResults';
 import * as DataApi from './../utils/Api';
-import MapView from './Visualizations/Map'
+import MapView from './Visualizations/Map';
+
 
 
 const Routes = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses, manuscripts} = props;
+
+   
+
       const [searchTerm, setSearchTerm ] = useState('');
       const [translationDictionary, setTranslationDictionary] = useState([]);
       const [translationIndex, setTranslationIndex] = useState();

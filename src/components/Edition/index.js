@@ -20,13 +20,7 @@ const Edition = ( props)=>{
 
       let {sectionID} = useParams();
       let {witnessID} = useParams();
-      let {milestone} = useParams();
-      if(milestone){
-            let section = sections.find(s=> s.milestone === milestone);
-            sectionID = section.id;
-      }
-      if(! sectionID )
-            sectionID = "1019321"
+    
 
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
@@ -73,7 +67,6 @@ const Edition = ( props)=>{
                         }
                         hash[node.id]= value;
                         list.push(value);
-                        
                  });
                  setNodeHash(hash);
                  setNodeArray(list);
@@ -110,7 +103,6 @@ const Edition = ( props)=>{
       useEffect(()=>{
             if( !props.searchTerm)
                   return;
-         
       },[props.searchTerm])
   
       let textContainerStyle={

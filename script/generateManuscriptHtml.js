@@ -5,6 +5,9 @@ const jsdom = require("jsdom");
 const moment = require('moment');
 const { JSDOM } = jsdom
 const {CETEI} = require("./CETEI")
+const axios = require('axios');
+
+
 
 class DirectoriesRead {
      value=0;
@@ -18,14 +21,26 @@ class DirectoriesRead {
      }
 };
 
-function process(){
+async function process(){
       console.log(`begin processing ${moment().format('mm:ss')}`);
+      const config = loadConfig();
+      const baseURL=`${config.options.repository}/tradition/${config.options.tradition_id}`;
+      const auth = config.auth;
       const sourcePath = 'public/images/mss';
       const sigilLookup = [];
+      const sections = await getSections();
 
       iterateDirectories(sourcePath);
+
+      function loadConfig() {
+            const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
+            return JSON.parse(configJSON);
+      }
     
-    
+      async function getSections(){
+            const response =   await axios.get(`${baseURL}/sections`, {auth} ) 
+            return response.data;
+      }
 
       function iterateDirectories(sourcePath) {
             const directories = fs.readdirSync(sourcePath, {withFileTypes: true});
@@ -53,7 +68,6 @@ function process(){
             convertToHTML(filecontents, destinationPath);
       }
       
-      
       function convertToHTML( filecontents,destinationPath) {
             let manuscriptDescription ={
                   id:null,
@@ -65,18 +79,24 @@ function process(){
             }
             const htmlDOM = new JSDOM()
             const ceTEI = new CETEI(htmlDOM.window);
-            const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })    
+            const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })  
+            let sigil;
+            
             const data = ceTEI.domToHTML5(xmlDOM.window.document, (el)=>{
                   switch(el.localName){
                         case "tei-milestone":
-                             const yearId = el.getAttribute("n")
-                             
-                              el.innerHTML = `<br/><a href="/Edition/null/${witnessId}/${yearId}">The Year ${yearId}</a><br/>`
+                              // this works because milestones are after the header so sigil is set
+                             const yearId = el.getAttribute("n");
+                             const compare = `milestone-${yearId}`
+                             const section = sections.find( s => s.name === compare )
+                            if(section)
+                              el.innerHTML = `<br/><a href="#/Edition/${section.id}/${sigil}" >The Year ${yearId}</a><br/>`
                               break;
                         case "tei-damage":
                               el.innerHTML = `(${el.innerHTML})`;
                               break;
                         case "tei-msdesc":
+                              sigil=el.id;
                               manuscriptDescription.id = el.id;
                               break;
                         case "tei-settlement":
