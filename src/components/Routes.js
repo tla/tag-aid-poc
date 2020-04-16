@@ -76,6 +76,9 @@ const Routes = ( props)=>{
                               <Route path="/Edition/:sectionID/:witnessID" exact>
                                     <Edition manuscripts = {manuscripts} onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
+                              <Route path="/Edition/:sectionID/:witnessID/:milestone" exact>
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                              </Route>
                               <Route path="/Edition/:sectionID" exact>
                                     <Edition manuscripts = {manuscripts} onSearch={setSearchTerm}  searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>

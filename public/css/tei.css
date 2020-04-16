@@ -5,8 +5,14 @@
       border-top: thin solid silver;
       color: gray;
     }
+    tei-teiheader {
+          display:none;
+    }
+    /* tei-damage {       
+          color: orange
+    } */
     tei-lb {
-          display:inline;
+          display:block;
     }
     tei-byline {
       display: block;
@@ -104,6 +110,7 @@
     tei-note {
           margin-top:12px;
           font-size:16px;
+          font-style:italic;
     }
 
     tei-note span{

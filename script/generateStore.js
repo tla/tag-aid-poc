@@ -50,21 +50,21 @@ async function generateStore() {
             const sectionPromises = [];
             const validSections = [];
             sections.forEach( section =>{
+                  console.log("fetching manuscripts with section", section.id);
                   sectionData = getSectionData(section.id, witnesses, validSections);
                   sectionPromises.push(sectionData);
             });
             sectionStore = await Promise.all(sectionPromises);
+            validSections.sort( (a,b)=>{a.milestone - b.milestone})
             writeSectionFile( validSections);
             writeLunrIndex();
             writeLocationLookup()
       }
 
       async function getSectionData( sectionId, witnesses, validSections ){
-            let lemmaTextFinal = await getLemmaText(sectionId);
-           
-            if( lemmaTextFinal.text ) {
-                 
-                  let allReadings = new Promise( (resolve )=>{
+            let lemmaTextFinal = await getLemmaText(sectionId);   
+                  
+            let allReadings = new Promise( (resolve )=>{
                         getReadings(sectionId)
                         .then( readings=>{
                               writeReadingLookup(readings, sectionId);
@@ -82,15 +82,21 @@ async function generateStore() {
                   let titleArray = new Promise( (resolve) =>{ 
                         getTitle(sectionId)
                         .then( titles =>{
-                              const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
-                              const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
-
-                               let validSection = {
-                                     sectionId: sectionId,
-                                     englishTitle: englishTitle,
-                                     armenianTitle: armenianTitle
-                               }
-                              validSections.push(validSection);
+                              if(titles.length === 0)
+                                    console.log('no title for section: ', sectionId);
+                              else {
+                                    const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
+                                    const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
+                                    const milestone = armenianTitle.substr(0,3);
+                                    console.log('milestone', milestone)
+                                    let validSection = {
+                                          sectionId: sectionId,
+                                          englishTitle: englishTitle,
+                                          armenianTitle: armenianTitle,
+                                          milestone: milestone
+                                    }
+                                    validSections.push(validSection);
+                              }
                               resolve();
                         });
 
@@ -123,11 +129,8 @@ async function generateStore() {
                               resolve();
                         })
                   });
-
-                
                  return data =  await Promise.all( [allReadings,titleArray,personArray,placeArray] )
-                 // etc for person place and date - although this will just be used for text highlights
-            }
+
       }
 
       async function getLemmaText(sectionId){

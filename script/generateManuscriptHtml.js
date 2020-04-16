@@ -68,6 +68,14 @@ function process(){
             const xmlDOM = new JSDOM(filecontents, { contentType: "text/xml" })    
             const data = ceTEI.domToHTML5(xmlDOM.window.document, (el)=>{
                   switch(el.localName){
+                        case "tei-milestone":
+                             const yearId = el.getAttribute("n")
+                             
+                              el.innerHTML = `<br/><a href="/Edition/null/${witnessId}/${yearId}">The Year ${yearId}</a><br/>`
+                              break;
+                        case "tei-damage":
+                              el.innerHTML = `(${el.innerHTML})`;
+                              break;
                         case "tei-msdesc":
                               manuscriptDescription.id = el.id;
                               break;
@@ -89,7 +97,7 @@ function process(){
                   }  
             })
        
-           sigilLookup.push(manuscriptDescription);
+            sigilLookup.push(manuscriptDescription);
             const html =  data.innerHTML;
             DirectoriesRead.increment();
             fs.writeFileSync(destinationPath, html, "utf8") ;

@@ -15,12 +15,19 @@ import {withRouter} from 'react-router-dom';
 import PreviousNext from './PreviousNext';
 
 
-const Edition = ( props)=>{    
+const Edition = ( props)=>{
+      const {sections , viewport , witnesses, onSearch, searchTerm, manuscripts} = props;
+
       let {sectionID} = useParams();
       let {witnessID} = useParams();
-      if(! sectionID)
+      let {milestone} = useParams();
+      if(milestone){
+            let section = sections.find(s=> s.milestone === milestone);
+            sectionID = section.id;
+      }
+      if(! sectionID )
             sectionID = "1019321"
-      const {sections , viewport , witnesses, onSearch, searchTerm, manuscripts} = props;
+
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
       const [selectedRank, setSelectedRank] =  useState();
