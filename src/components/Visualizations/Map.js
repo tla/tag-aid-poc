@@ -62,7 +62,9 @@ const MapView = ( props)=>{
                                     'text-offset': [0, 0.5],
                                     'text-anchor': 'top',
                                     },
-                             
+                                    'paint':{
+                                          'text-color':'#c4ed1f'
+                                    }
                         }
                   );
 
@@ -95,21 +97,7 @@ const MapView = ( props)=>{
                   const polygons = parsePolygons();
                   polygons.forEach( p =>{
                   try{
-                        // mapInstance.addSource(p.title,
-                        //       {
-                        //             'type': 'geojson',
-                        //             'data':p.data
-                        //       }
-                        // );
-                        // mapInstance.addLayer({
-                        //       'id':p.title,
-                        //       'type':'fill',
-                        //       'source':p.title,
-                        //       'paint':{
-                        //             'fill-color':'#edbbc4',
-                        //             'fill-opacity': 0.4
-                        //       },
-                        // })
+       
                         let stupid = Math.random();
                         mapInstance.addSource(`${p.title}-${stupid.toString()}`, {
                               'type': 'geojson',
@@ -133,13 +121,13 @@ const MapView = ( props)=>{
                                     'layout': {
                                          
                                           'text-field': ['get', 'title'],
-                                          'text-size':24,
-                                          'text-font': ['Open Sans Regular'],
+                                          'text-size':26,
+                                          'text-font': ['Open Sans Bold'],
                                           'text-offset': [0, 0.6],
                                           'text-anchor': 'top'
                                           },
                                     'paint':{
-                                          'text-color':'black'
+                                          'text-color':'#f29685'
                                     }
                               });
 
