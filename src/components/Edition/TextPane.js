@@ -13,6 +13,7 @@ const TextPane =(props) => {
       const [arTitle, setArTitle] = useState();
       const [textHTML, setTextHTML] = useState('');
       const [manuscriptName, setManuscriptName] = useState();
+      const [manuscriptPlaceDate, setManuscriptPlaceDate] = useState();
       
       const parserOptions = {
             replace: function({attribs,children}) {
@@ -87,13 +88,16 @@ const TextPane =(props) => {
 
       return (
            <div style={{marginRight:'12px'}}>
-                        <Typography variant="body1" style={{textAlign:'center'}}>
+                        <Typography variant="h5" style={{textAlign:'center'}}>
                               {manuscriptName}
+                        </Typography>
+                        <Typography variant="h6" style={{textAlign:'center'}}>
+                              {manuscriptPlaceDate}
                         </Typography>
                         <Typography variant="h5" style={{textAlign:'center', marginBottom:'6px'}}>
                               { enTitle? reading === "Translation" ? enTitle.split("(")[0]?enTitle.split("(")[0]: enTitle :arTitle.split("(")[0] ? arTitle.split("(")[0] : arTitle : ''}
                         </Typography>
-                        <Typography variant="body2" style={{textAlign:'center'}}>
+                        <Typography variant="h6" style={{textAlign:'center'}}>
                               {enTitle? reading ==="Translation" ? enTitle.split("(")[1] ? enTitle.split("(")[1].replace(")","") : enTitle : arTitle.split("(")[1] ? arTitle.split("(")[1].replace(")","") :arTitle:''}
                         </Typography>
                     
@@ -109,10 +113,10 @@ const TextPane =(props) => {
 
       function lookupManuscriptName(sigil){
             let msDescription = manuscripts? manuscripts.find( m=>{return m.id === sigil}):null;
-            let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:sigil;
-            let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
-            
-            setManuscriptName(`${descText} ${placeDate}`)
+            let descText = msDescription? ` MS ${msDescription.idno}  (sigil: ${sigil})`:`sigil: ${sigil} `
+            let placeDate = msDescription? `${msDescription.settlement} ${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
+            setManuscriptName(descText )
+            setManuscriptPlaceDate(placeDate)
       }
 
           // contains rank and id
