@@ -86,14 +86,11 @@ const ViewOptions =(props)=>{
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
-                                                      {// refactor do this once, also may want to sort - although this is the order they are displayed on mscript page
+                                                      {
                                                             witnesses.map(witness=>{
                                                                   let msDescription = manuscripts.find( m=>{return m.id === witness.sigil})
-                                                                  let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:witness.sigil;
-                                                                  let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
-                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}
-                                                                  <br/>{placeDate}
-                                                                  </MenuItem>
+                                                                  let descText = msDescription? ` MS ${msDescription.idno} (sigil: ${witness.sigil})`:`sigil: ${witness.sigil}`
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}</MenuItem>
                                                             })
                                                       }
                                                 </Select>
@@ -110,11 +107,8 @@ const ViewOptions =(props)=>{
                                                       {
                                                              witnesses.map(witness=>{
                                                                   let msDescription = manuscripts.find( m=>{return m.id === witness.sigil})
-                                                                  let descText = msDescription? `${msDescription.settlement} MS ${msDescription.idno}`:witness.sigil;
-                                                                  let placeDate = msDescription? `${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
-                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}
-                                                                  <br/>{placeDate}
-                                                                  </MenuItem>
+                                                                  let descText = msDescription? ` MS ${msDescription.idno} (sigil: ${witness.sigil})`:`sigil: ${witness.sigil}`
+                                                                  return <MenuItem key={witness.id} value={witness.sigil}>{descText}</MenuItem>
                                                             })
                                                       }
                                                 </Select>

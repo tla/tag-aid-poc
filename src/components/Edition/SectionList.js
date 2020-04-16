@@ -8,7 +8,7 @@ import { Link} from 'react-router-dom'
 
 const SectionList = ( props ) =>{
 
-      const {list, sectionId, height} = props
+      const {list, sectionId, height, witnessId} = props
    
       return (
             
@@ -22,10 +22,13 @@ const SectionList = ( props ) =>{
                                     <List style={{width:'160px'}}>
                                           {
                                           list ?   list.map( s => {
+
+                                                      let selectUrl = witnessId ?  `/Edition/${s.sectionId}/${witnessId}`:`/Edition/${s.sectionId}`
+
                                                       return(
                                                       <ListItem key={s.sectionId} value={s.sectionId} selected={s.sectionId === sectionId} >
                                                                   <div style={{display:'flex', flexDirection:'column'}}>
-                                                                        <Link   to={`${s.sectionId}`} >
+                                                                        <Link   to={selectUrl} >
                                                                               <Typography variant="body1" style={{wordWrap:'break-word'}}>
                                                                                     {s.englishTitle}
                                                                               </Typography>
