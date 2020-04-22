@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Header from './Header'
-import Paper from '@material-ui/core/Paper';
 
 
 const EditionLanding = ( props)=>{
