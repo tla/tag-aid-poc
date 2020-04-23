@@ -177,8 +177,6 @@ export const getManuscriptImage = async( dirName,onDataReceived)=>{
       const dataFile = `${localUrl}images/mss/${dirName}/${dirName}.tei.images.html`;
       try{
             const result = await axios.get(dataFile);
-          
-         
             onDataReceived(result.data)
       } catch( error ) {
             console.log(error)

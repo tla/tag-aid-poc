@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import Header from '../Header';
 import * as DataApi from '../../utils/Api'
 import {withRouter} from 'react-router-dom';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const TextImageDisplay = ( props )=>{
 
@@ -10,27 +11,48 @@ const TextImageDisplay = ( props )=>{
       const [imageUrl, setImageUrl] = useState();
 
       useEffect(()=>{
-            if(props.page.text)
-                  myContainer.current.innerHTML = decodeURI(props.page.text)
-      },props.page)
-
-      useEffect(()=>{
-            if(props.page.imageFile){
-                  let path = `images/mss/Ox-e.32/${props.page.imageFile}`
+            if(props.page && props.page.text)
+                  myContainer.current.innerHTML = props.page.text
+    
+            if(props.page && props.page.pbId.indexOf(".jpg")>-1){
+                  let path = `images/mss/Ox-e.32/${props.page.pbId}`
                   setImageUrl(path);
             }
-
-      }, props.page)
+      }, [props.page])
 
 
       return (
-            <div display="flex">
-                  <div ref={myContainer}>
+            <div style={{display:"flex", justifyContent:'space-between',}}>
+                  <div ref={myContainer} style={{minWidth:'35%',maxWidth:'35%',textAlign:"left", backgroundColor:'#f0ebf5', wordWrap:'break-word'}} >
                   </div>
-                  {
-                        
-                      imageUrl &&  <img  src={imageUrl} alt="picture of manuscript" style={{height:'400px'}} />
-                  }
+                  <div style={{width:'65%',minWidth:'65%',padding:'2px'}}>
+                        { imageUrl && 
+                       <TransformWrapper
+                       defaultScale={1}
+                       defaultPositionX={200}
+                       defaultPositionY={100}
+                       
+                       >
+{({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+<React.Fragment>
+            <div className="tools">
+              <button onClick={zoomIn}>+</button>
+              <button onClick={zoomOut}>-</button>
+              <button onClick={resetTransform}>x</button>
+            </div>
+
+
+                       <TransformComponent>
+                         <img src={imageUrl} alt="test" style={{width:'100%'}}/>
+                       </TransformComponent>
+
+                       </React.Fragment>
+                )}
+
+                     </TransformWrapper> 
+                              
+}
+                  </div>
             </div>
       )
 }
@@ -47,8 +69,9 @@ const ManuscriptImageView = ( props ) =>{
             return;
             DataApi.getManuscriptImage(manuscriptId, (data)=>{
                   try{
-                        console.log(data)
-                        setPages(data)
+                        let firstFew = data.slice(0,42);
+                        console.log(firstFew.length)
+                        setPages(firstFew)
                   }catch(error){
                         console.log(error)
                   }
@@ -63,17 +86,19 @@ const ManuscriptImageView = ( props ) =>{
                   </Grid> 
                   
                   <Grid item xs={12} >
-                        <Grid container alignItems="center" direction="column" >
+                        <ul style={{listStyle:'none'}}>
                              {
                                  pages &&  pages.map( page =>{
+                                       if(page.pdId !== "header")
                                          return (
-                                               <TextImageDisplay key = {page.id} page={page} />
+
+                                             <li>  <TextImageDisplay key = {page.pbId} page={page} /></li>
                                          )
                                    })
                              }
                    
                       
-                        </Grid>
+                        </ul>
                   </Grid>
             </Grid>
       )
