@@ -69,6 +69,7 @@
                         "<node_internals>/**"
                   ],
                   "program": "${workspaceFolder}/script/generateManuscriptHtml.js"
-            }
+            },
+          
       ]
 }
