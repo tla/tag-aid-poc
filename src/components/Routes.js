@@ -99,7 +99,7 @@ const Routes = ( props)=>{
                                     <ManuscriptPage onSearch={setSearchTerm}   /> 
                               </Route>
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
-                                    <ManuscriptView onSearch={setSearchTerm}  viewport={viewport}  /> 
+                                    <ManuscriptView onSearch={setSearchTerm}   /> 
                               </Route>   
                               <Route path="/Home" exact>
                                     <HomePage sections={sections} onSearch={setSearchTerm} />

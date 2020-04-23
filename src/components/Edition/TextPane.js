@@ -78,6 +78,8 @@ const TextPane =(props) => {
 
       },[props.sectionId, props.reading])
 
+
+      // this seems redundant - was it supposed to be removed?
       useEffect(()=>{
             setTextHTML(null);
             if(! rawText )

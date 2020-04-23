@@ -50,9 +50,9 @@ async function process(){
 
             for( let i=0; i < directories.length; i++ ) {
                   const teiFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.tei.xml`
-                  const htmlFilePath = `${sourcePath}/${directories[i].name}/${directories[i].name}.html`;
+    
                   if(directories[i].isDirectory()){
-                        fs.readFile(teiFilePath, "utf8", (err, contents)=>onReadFile( err,contents,htmlFilePath) );
+                        fs.readFile(teiFilePath, "utf8", (err, contents)=>onReadFile( err,contents,directories[i].name) );
                   }
                   else
                     DirectoriesRead.increment();
@@ -68,7 +68,8 @@ async function process(){
             convertToHTML(filecontents, destinationPath);
       }
       
-      function convertToHTML( filecontents,destinationPath) {
+      function convertToHTML( filecontents,directoryName) {
+            const htmlFilePath = `${sourcePath}/${directoryName}/${directoryName}.html`;
             let manuscriptDescription ={
                   id:null,
                   settlement:null,
@@ -95,6 +96,14 @@ async function process(){
                         case "tei-damage":
                               el.innerHTML = `(${el.innerHTML})`;
                               break;
+                        case "tei-pb":
+                              let pbId = el.attributes.n.nodeValue;
+                              if(pbId.indexOf(".jpg") > -1 ){
+                                    let imageUrl = `images/mss/${directoryName}/${pbId}`
+                                    el.innerHTML = `<br/><img  src=${imageUrl} alt=${pbId} width="175px"/><br/>`
+                              }
+                            
+                              break;
                         case "tei-msdesc":
                               sigil=el.id;
                               manuscriptDescription.id = el.id;
@@ -120,13 +129,15 @@ async function process(){
             sigilLookup.push(manuscriptDescription);
             const html =  data.innerHTML;
             DirectoriesRead.increment();
-            fs.writeFileSync(destinationPath, html, "utf8") ;
+            fs.writeFileSync(htmlFilePath, html, "utf8") ;
       }
 
       function writeLookupFile(){
             fs.writeFileSync('public/data/sigilLookup.json', JSON.stringify(sigilLookup), "utf8") ;
             console.log(`completed processing ${moment().format('mm:ss')}`);
       }
+
+    
         
      
 }
