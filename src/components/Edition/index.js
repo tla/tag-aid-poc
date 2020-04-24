@@ -51,9 +51,9 @@ const Edition = ( props)=>{
             setNodeHash(hash)
             DataApi.getNodeLookup(sectionID, (nodelist)=>{
                   nodelist.sort( (a,b)=>{
-                        if( parseInt(a.id) > parseInt(b.id))
+                        if( parseInt(a.rank) > parseInt(b.rank))
                               return 1;
-                        if(parseInt(a.id) < parseInt(b.id))
+                        if(parseInt(a.rank) < parseInt(b.rank))
                               return -1
                         else 
                               return 0;
@@ -202,6 +202,7 @@ const Edition = ( props)=>{
                                           <Grid container  spacing={0}>
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            nodeHash={nodeHash}
                                                             manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
                                                             sections = { sections}
@@ -222,6 +223,7 @@ const Edition = ( props)=>{
 
                                                 <Grid item xs={12} md={6}>
                                                       <TextPane 
+                                                            nodeHash={nodeHash}
                                                             manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
                                                             sections = { sections}

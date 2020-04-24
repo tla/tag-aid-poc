@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 const TextPane =(props) => {
 
       const {sectionId, reading, onSelectNode, onSelectLocation, selectedSentence, onSelectSentence,
-      persons, places, dates, graphVisible, searchTerm, manuscripts} = props;
+      persons, places, dates, graphVisible, searchTerm, manuscripts, nodeHash} = props;
       const [rawText, setRawText] = useState();
       const [enTitle, setEnTitle] = useState();
       const [arTitle, setArTitle] = useState();
@@ -17,6 +17,7 @@ const TextPane =(props) => {
       
       const parserOptions = {
             replace: function({attribs,children}) {
+          
                   if( attribs && attribs.id ){// the translation and armenian texts are encode with nodeId and rank
                               let rank = reading ==="Translation" ? attribs.id.split('-')[0] : attribs.key;
                               let nodeId = reading ==="Translation" ? attribs.id.split('-')[1] : attribs.id;
@@ -38,9 +39,9 @@ const TextPane =(props) => {
                                           onSelectNode(nodeId);
                                     let atRank = props.selectedRank? props.selectedRank === rank : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
-                                    let person =persons? persons.find( p=>{return parseInt(p.begin) <= parseInt(nodeId) && parseInt(p.end) >= parseInt(nodeId) }): null;
-                                    let place = places? places.find( p=>{return parseInt(p.begin) <= parseInt(nodeId) && parseInt(p.end) >= parseInt(nodeId)}) : null ;
-                                    let date =dates ? dates.find( d=> { return parseInt(nodeId) >= parseInt(d.begin) && parseInt(nodeId) <= parseInt(d.end)}) : null;
+                                    let person =persons? persons.find( p=>{return isWithinRange(p.begin, p.end, nodeId) }) : false ;
+                                    let place = places? places.find( p=>{return isWithinRange(p.begin, p.end, nodeId) }) : false ;
+                                    let date =dates ? dates.find( d=> {return isWithinRange(d.begin, d.end, nodeId) } ) : false;
                                     let inSelectedSentence = props.selectedSentence? (parseInt(rank) >= parseInt(selectedSentence.startRank) && parseInt(rank)<= parseInt(selectedSentence.endRank) ) : false;
                                     let textStyle={
                                           color: 'black',
@@ -73,14 +74,13 @@ const TextPane =(props) => {
                   let parsed = Parser(html, parserOptions)
                   setTextHTML(parsed)
             });
-
             lookupManuscriptName(props.reading)
-
       },[props.sectionId, props.reading])
 
 
       // this seems redundant - was it supposed to be removed?
       useEffect(()=>{
+        
             setTextHTML(null);
             if(! rawText )
                   return;
@@ -112,6 +112,36 @@ const TextPane =(props) => {
                            
            </div>
           )
+
+
+      function isWithinRange(startNodeId, endNodeId, nodeId ){
+            let withinRange = false;
+     
+           
+            try{
+            const startRank = nodeHash[startNodeId].rank;
+            if(!startRank) 
+                  return;
+            const endRank = nodeHash[endNodeId].rank;
+            if(! endRank)
+            return;
+  // it appears some of these are backwards in the database 
+            const validStart = startRank < endRank ? startRank:endRank;
+            const validEnd = endRank > startRank ? endRank: startRank;
+if(validStart !== startRank || validEnd !== endRank)
+console.log("begin end targets were reversed in section"+ sectionId )
+
+            const nodeRank = nodeHash[nodeId].rank;
+            if(! nodeRank)
+            return;
+           
+            if( nodeRank >= validStart && nodeRank <=validEnd)
+                  withinRange = true;
+            } catch(error){
+                  console.log( `error: startNodeId ${startNodeId} end ${endNodeId}  ${error.message}`)
+            }
+            return withinRange;
+      }
 
       function lookupManuscriptName(sigil){
             let msDescription = manuscripts? manuscripts.find( m=>{return m.id === sigil}):null;
