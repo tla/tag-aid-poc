@@ -28,8 +28,8 @@ const ViewOptions =(props)=>{
                         <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                         >
-                              <Typography variant="h6" style={{minWidth:'130px'}}>
-                                    {'View Options'}
+                              <Typography variant="h6" >
+                                    {'Options'}
                               </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',alignItems:'center' }}>
@@ -41,7 +41,7 @@ const ViewOptions =(props)=>{
                                                 />
                                           }
                                           labelPlacement='end'
-                                          label="Display Graph"
+                                          label="Graph"
                                     />
                        
                                     <div style={{alignSelf:'flex-start'}}>

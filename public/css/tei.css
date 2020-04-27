@@ -5,6 +5,22 @@
       border-top: thin solid silver;
       color: gray;
     }
+    tei-text{
+          max-width:98%;
+          overflow-wrap:break-word;
+    }
+
+
+
+
+      tei-pb img {
+               position:absolute;
+               right:20px;
+      }
+      tei-pb img:hover {
+            box-sizing:border-box;
+            border:4px solid rgb(131, 28, 35);
+          }
     tei-teiheader {
           display:none;
     }

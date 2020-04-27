@@ -121,7 +121,7 @@ const StyledTab = withStyles(theme => ({
                                                           
                                                        
                                                           
-                                                                  <div style={{ margin:'4px'}}>
+                                                                  <div style={{ margin:'8px 2px'}}>
                                                                         <SearchInput  
                                                                               onPressEnter={handlePressEnter}
                                                                               onChange={handleChange} 

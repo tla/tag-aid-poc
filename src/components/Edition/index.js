@@ -120,7 +120,7 @@ const Edition = ( props)=>{
                       
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                              <div style={{position:'relative', display:'flex', flexDirection:'column', minWidth:'160px',}}>
+                              <div style={{marginTop:'40px',position:'relative', display:'flex', flexDirection:'column', minWidth:'160px',}}>
                                      <ViewOptions 
                                           viewport={viewport}
                                           witnesses = {witnesses}
@@ -142,7 +142,7 @@ const Edition = ( props)=>{
                                     />
                               
                                     <SectionList 
-                                          height={isExpanded ? ` ${viewport.height - 550 > 0 ? viewport.height - 550 : 0}px` : ` ${viewport.height - 188}px`}
+                                          height={isExpanded ? ` ${viewport.height - 590 > 0 ? viewport.height - 590 : 0}px` : ` ${viewport.height - 228}px`}
                                           sectionId={sectionID}
                                           witnessId={witnessID}
                                           list ={sections}

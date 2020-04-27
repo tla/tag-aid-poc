@@ -19,7 +19,7 @@ const SectionList = ( props ) =>{
                               </Typography>
                      
                               <div style={{display:'flex', flexDirection:'column',alignItems:'center', }}>
-                                    <List style={{width:'160px'}}>
+                                    <List >
                                           {
                                           list ?   list.map( s => {
 

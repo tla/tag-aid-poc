@@ -3,10 +3,12 @@ body {
     background-color: rgb(255, 250, 245);
     padding:0px,
 }
+#home-page {
+      padding:8px 60px;
+}
 
 #headerPanel {
       background-image: url("../images/parchment.jpg");
-      
 }
 
 .header{
