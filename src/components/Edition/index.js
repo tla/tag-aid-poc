@@ -190,7 +190,7 @@ const Edition = ( props)=>{
 
                               {sectionID &&
                                   <React.Fragment>
-                                    <div style={{display:'flex', justifyContent:'center', height:'84px'}}>
+                                    <div style={{display:'flex', justifyContent:'center', height:'84px',marginTop:'20px'}}>
                                           <PreviousNext 
                                                 onPrevious ={ previousSection}
                                                 onNext = { nextSection}

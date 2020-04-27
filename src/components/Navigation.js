@@ -16,7 +16,7 @@ import Drawer from '@material-ui/core/Drawer';
 import {makeStyles,} from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom' 
 import SearchInput from './SearchInupt'
-
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
       search: {
@@ -27,8 +27,6 @@ const useStyles = makeStyles(theme => ({
             border:'2px solid red',
             marginRight:'16px'
       }
-       
-         
 }));
       
 const Navigation= ( props)=>{
@@ -43,11 +41,40 @@ const Navigation= ( props)=>{
             let pageName = window.location.hash.split("/")[1]
             setTabIndex(`#/${pageName}`)
       },[])
-    
+
+
+    const StyledTabs = withStyles({
+      indicator: {
+      display: 'flex',
+       justifyContent: 'flex-end !important' ,
+      backgroundColor: 'transparent',
+      '& > div': {
+            maxWidth: 110,
+            width: '100%',
+            backgroundColor: '#635ee7',
+      },
+      },
+})(props => <Tabs {...props} TabIndicatorProps={{ children: <div /> }} />);
+
+const StyledTab = withStyles(theme => ({
+  root: {
+    textTransform: 'none',
+    padding:'0',
+    margin:'0',
+    minWidth:'110px',
+    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: theme.typography.pxToRem(18),
+    marginRight: theme.spacing(1),
+    '&:focus': {
+      opacity: 1,
+    },
+  },
+}))(props => <Tab disableRipple {...props} />);
+
 
       return (
           
-      <Grid container spacing={0} style={{maxHeight:'112px', width:'100%'}}>
+      <Grid container spacing={0} style={{maxHeight:'112px', width:'100%'}} justify="flex-end">
                   
                    <Hidden mdUp>
                          <Grid item>
@@ -76,33 +103,37 @@ const Navigation= ( props)=>{
 
                   
                   <Hidden smDown>
-                                    <AppBar  style={{backgroundColor:'#f8f9fa', }} position="static">
-                                                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-
-                                                      <Tabs value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
-                                                            <Tab  label="Home" href="/" value="#/" />
-                                                            <Tab label="About" href="#/About"  value="#/About"  />
-                                                            <Tab label="Methods"  href="#/Methods" value="#/Methods" />
-                                                            <Tab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                                            <Tab label="Search" href="#/Search" value="#/Search" />
-                                                            <Tab label="Edition" href="#/Edition"    value="#/Edition"   />
-                                                            <Tab label="Visualizations" href="#/Map" value="#/Map" />
-                                                      </Tabs>
-                                               
-                                                      <div style={{ margin:'4px 8px'}}>
-                                                            <SearchInput  
-                                                                  onPressEnter={handlePressEnter}
-                                                                  onChange={handleChange} 
-                                                                  searchQuery={searchQuery}
-                                                            />
+                                   
+                                                {/* <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}> */}
+                                              
+                                                      <AppBar  style={{backgroundColor:'#f8f9fa', }} position="static" justify="flex-end">
+                                                      <div style={{display:"flex", justifyContent:'flex-end',flexWrap:"wrap"}} >
+                                                         
+                                                                  <StyledTabs  variant="scrollable" value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
+                                                                        <StyledTab  label="Home"  href="/" value="#/" />
+                                                                        <StyledTab label="About" href="#/About"  value="#/About"  />
+                                                                        <StyledTab label="Methods"  href="#/Methods" value="#/Methods" />
+                                                                        <StyledTab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
+                                                                        <StyledTab label="Search" href="#/Search" value="#/Search" />
+                                                                        <StyledTab label="Edition" href="#/Edition"    value="#/Edition"   />
+                                                                        <StyledTab label="Visualizations" href="#/Map" value="#/Map" />
+                                                                  </StyledTabs>
+                                                          
+                                                       
+                                                          
+                                                                  <div style={{ margin:'4px'}}>
+                                                                        <SearchInput  
+                                                                              onPressEnter={handlePressEnter}
+                                                                              onChange={handleChange} 
+                                                                              searchQuery={searchQuery}
+                                                                        />
+                                                                  </div>
+                                                         
                                                       </div>
-                                               
-                                         </div>
-                                    </AppBar> 
-                             
+
+
+                                                </AppBar> 
                   </Hidden>  
-         
-            
       </Grid>
       
       )
