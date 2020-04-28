@@ -74,11 +74,11 @@ const StyledTab = withStyles(theme => ({
 
       return (
           
-      <Grid container spacing={0} style={{maxHeight:'112px', width:'100%'}} justify="flex-end">
+      <Grid container spacing={0} style={{maxHeight:'112px', width:'100%',}} justify="flex-end">
                   
                    <Hidden mdUp>
                          <Grid item>
-                              <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa' }}>
+                              <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa', zIndex:'9999'}}>
                                     <IconButton edge="start" onClick={()=>{setIsExpanded(true)}}>
                                           <MenuIcon />
                                     </IconButton>
