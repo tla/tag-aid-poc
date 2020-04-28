@@ -98,14 +98,11 @@ const StyledTab = withStyles(theme => ({
                                           </List>
                                     </Drawer>
                               </Toolbar>
-                              </Grid>
+                        </Grid>
                   </Hidden>
 
                   
                   <Hidden smDown>
-                                   
-                                                {/* <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}> */}
-                                              
                                                       <AppBar  style={{backgroundColor:'#f8f9fa', }} position="static" justify="flex-end">
                                                       <div style={{display:"flex", justifyContent:'flex-end',flexWrap:"wrap"}} >
                                                          
@@ -114,12 +111,9 @@ const StyledTab = withStyles(theme => ({
                                                                         <StyledTab label="About" href="#/About"  value="#/About"  />
                                                                         <StyledTab label="Methods"  href="#/Methods" value="#/Methods" />
                                                                         <StyledTab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
-                                                                        <StyledTab label="Search" href="#/Search" value="#/Search" />
                                                                         <StyledTab label="Edition" href="#/Edition"    value="#/Edition"   />
                                                                         <StyledTab label="Visualizations" href="#/Map" value="#/Map" />
                                                                   </StyledTabs>
-                                                          
-                                                       
                                                           
                                                                   <div style={{ margin:'8px 2px'}}>
                                                                         <SearchInput  

@@ -60,13 +60,13 @@ const SearchResults=(props)=>{
 return (
             <Grid container spacing={0} >
 
-                  <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
+                  <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px', }} >
                         <EditionHeader onSearch={onSearch} />
                   </Grid>  
           
                    <Grid id="mainContent" item xs={12} > 
                         {searchTerm  &&
-                              <div style={{display:'flex',justifyContent:'center'}}>
+                              <div style={{display:'flex',justifyContent:'center',marginTop:'40px'}}>
                               <Paper  style={{margin:'12px',width:'80%',padding:'12px'}}>
                                     <div style={{display:'flex'}}>
                                           <Typography variant="h5" style={{marginBottom:'31px'}}>

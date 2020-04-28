@@ -100,7 +100,7 @@ async function process(){
                               let pbId = el.attributes.n.nodeValue;
                               if(pbId.indexOf(".jpg") > -1 ){
                                     let imageUrl = `images/mss/${directoryName}/${pbId}`
-                                    el.innerHTML = `<br/><img  src=${imageUrl} alt=${pbId} width="175px"/><br/>`
+                                    el.innerHTML = `<br/><img   src=${imageUrl} alt=${pbId} width="175px"/><br/>`
                               }
                             
                               break;

@@ -10,12 +10,9 @@
           overflow-wrap:break-word;
     }
 
-
-
-
       tei-pb img {
-               position:absolute;
-               right:20px;
+              position:absolute;
+               right:20px; 
       }
       tei-pb img:hover {
             box-sizing:border-box;
