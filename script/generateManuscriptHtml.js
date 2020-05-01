@@ -97,12 +97,16 @@ async function process(){
                               el.innerHTML = `(${el.innerHTML})`;
                               break;
                         case "tei-pb":
-                              let pbId = el.attributes.n.nodeValue;
-                              if(pbId.indexOf(".jpg") > -1 ){
-                                    let imageUrl = `images/mss/${directoryName}/${pbId}`
+                              if(directoryName === "Ox-e.32"){ // only create img elements for Oxford right now
+                                    let pbId = el.attributes.n.nodeValue;
+                                    let imageUrl;
+                                    if(pbId.indexOf(".jpg") > -1 ){
+                                          imageUrl = `images/mss/${directoryName}/${pbId}`
+                                    } else {
+                                          imageUrl=`images/mss/${directoryName}/page_${pbId}.jpg`
+                                    }
                                     el.innerHTML = `<br/><img   src=${imageUrl} alt=${pbId} width="175px"/><br/>`
                               }
-                            
                               break;
                         case "tei-msdesc":
                               sigil=el.id;
