@@ -65,4 +65,11 @@ body {
       width: 80%;
       margin: 50px;
     }
+
+    #manuscript-container img {
+          object-fit:cover !important;
+         max-height:250px !important;
+          overflow-y:hidden !important;
+          max-height:250 !important;
+    }
     

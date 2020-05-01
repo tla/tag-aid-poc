@@ -10,16 +10,17 @@ const ManuscriptPage = (props) => {
       return (
             <Fragment>
             <Header onSearch={onSearch} />
-            <div className="container content">
+            <div className="container content" id="manuscript-container">
                  <div className="row">
                         <div className = "col-md-12" >
                               <h3>Bzommar Monastery</h3>
                         </div>
                  </div>
+                  
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/Bz430/Bz430.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/Bz430/Bz430.png"   alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 430</h5>
                                           <p className="card-text">Copied in 1323 at the Monastery of St. Tʿoros. Includes only the Prophecies of Kozeṙn.</p>
@@ -34,7 +35,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/Bz449/Bz449.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/Bz449/Bz449.png"   alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 449</h5>
                                           <p className="card-text">Copied in 1699, place unknown.</p>
@@ -47,7 +48,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/Bz644/Bz644.png" width="250" height="250" className="card-img-top" alt="Manuscript XX" />
+                                    <img src="images/mss/Bz644/Bz644.png"   alt="Manuscript XX" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 644</h5>
                                           <p className="card-text">Copied in Livorno between 1775 and 1805.</p>
@@ -61,12 +62,14 @@ const ManuscriptPage = (props) => {
                         
                   </div>
                   <div className="row">
-                        <h3>London, British Library, Oriental </h3>
+                        <div className = "col-md-12" >
+                              <h3>London, British Library, Oriental </h3>
+                        </div>
                   </div>
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/L5260/L5260.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/L5260/L5260.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 5260</h5>
                                           <p className="card-text">Copied around 1660, probably at Sanahin.</p>
@@ -80,12 +83,14 @@ const ManuscriptPage = (props) => {
                   </div>
 
                   <div className="row">
-                        <h3>Yerevan, Matenadaran</h3>
+                        <div className = "col-md-12" >
+                              <h3>Yerevan, Matenadaran</h3>
+                        </div>
                   </div>
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1731/M1731.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1731/M1731.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1731</h5>
                                           <p className="card-text">Copied in Lviv in 1617.</p>
@@ -98,7 +103,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1767/M1767.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1767/M1767.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1767</h5>
                                           <p className="card-text">Copied in 1623 in Aleppo.</p>
@@ -111,7 +116,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1768/M1768.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1768/M1768.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1768</h5>
                                           <p className="card-text">Copied sometime before 1661, place unknown.</p>
@@ -124,7 +129,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1769/M1769.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1769/M1769.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1769</h5>
                                           <p className="card-text">Copied in 1664 in Tiflis.</p>
@@ -139,7 +144,7 @@ const ManuscriptPage = (props) => {
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1775/M1775.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1775/M1775.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1775</h5>
                                           <p className="card-text">Copied in 1671, place unknown. Contains extracts from Book 1.</p>
@@ -152,7 +157,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M1896/M1896.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M1896/M1896.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 1896</h5>
                                           <p className="card-text">Copied in 1689 at the Amrdolu monastery of Bitlis.</p>
@@ -165,7 +170,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M2644/M2644.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M2644/M2644.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 2644</h5>
                                           <p className="card-text">Copied between 1850–57 in Constantinople.</p>
@@ -178,7 +183,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M2855/M2855.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M2855/M2855.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 2855</h5>
                                           <p className="card-text">Presumed 17th century, place of copying unknown.</p>
@@ -193,7 +198,7 @@ const ManuscriptPage = (props) => {
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M2899/M2899.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M2899/M2899.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 2899</h5>
                                           <p className="card-text">Presumed 19th century, place of copying unknown.</p>
@@ -206,7 +211,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M3071/M3071.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M3071/M3071.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 3071</h5>
                                           <p className="card-text">Copied between 1651–61 at Yovhannovankʿ.</p>
@@ -219,7 +224,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M3380/M3380.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M3380/M3380.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 3380 (sigil: M3380)</h5>
                                           <p className="card-text">Presumed 18th century, place of copying unknown.</p>
@@ -232,7 +237,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M3519/M3519.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M3519/M3519.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 3519</h5>
                                           <p className="card-text">Copied in 1647 at Târgu Mureș.</p>
@@ -247,7 +252,7 @@ const ManuscriptPage = (props) => {
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M3520/M3520.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M3520/M3520.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 3520</h5>
                                           <p className="card-text">Copied sometime between 1601–21 century at Tufang</p>
@@ -260,7 +265,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M5587/M5587.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M5587/M5587.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 5587</h5>
                                           <p className="card-text">Copied in 1617 in Lviv.</p>
@@ -273,7 +278,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M6605/M6605.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M6605/M6605.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 6605</h5>
                                           <p className="card-text">Copied in 1849 in Moscow.</p>
@@ -286,7 +291,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M6686/M6686.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M6686/M6686.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 6686</h5>
                                           <p className="card-text">Copied in 1582, place unknown. Includes only Gagik Bagratuni's confession of faith.</p>
@@ -301,7 +306,7 @@ const ManuscriptPage = (props) => {
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/M8232/M8232.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/M8232/M8232.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 8232</h5>
                                           <p className="card-text">Copied in 1709 at Armavir.</p>
@@ -315,12 +320,14 @@ const ManuscriptPage = (props) => {
                    </div>
                                     
                   <div className="row">
-                        <h3>Oxford, Bodleian Library</h3>
+                        <div className = "col-md-12" >
+                              <h3>Oxford, Bodleian Library</h3>
+                        </div>
                   </div>
                   <div className ="row">
                         <div className="col-md-3">
                               <div className="card">
-                                                      <img src="images/mss/Ox-e.32/Ox-e.32.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                                      <img src="images/mss/Ox-e.32/Ox-e.32.png"  alt="Manuscript thumbnail" />
                                                       <div className="card-body">
                                                             <h5 className="card-title">MS Arm e.32</h5>
                                                             <p className="card-text">Presumed 18th century, probably copied at Varag monastery.</p>
@@ -337,12 +344,14 @@ const ManuscriptPage = (props) => {
                         </div>        
                   </div>
                   <div className ="row">
-                        <h3>Venice, Mekhitarist Library</h3>
+                        <div className = "col-md-12" >
+                              <h3>Venice, Mekhitarist Library</h3>
+                        </div>
                   </div>
                   <div className = "row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/V913/V913.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/V913/V913.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 887</h5>
                                           <p className="card-text">Copied between 1590–1600, probably at Aleppo.</p>
@@ -357,7 +366,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/V901/V901.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/V901/V901.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 901</h5>
                                           <p className="card-text">Copied in 1669 in Isfahan.</p>
@@ -372,7 +381,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/V913/V913.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/V913/V913.png" alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 913</h5>
                                           <p className="card-text">Presumed 17th century, place of copying unknown.</p>
@@ -387,7 +396,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/V917/V917.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/V917/V917.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 917</h5>
                                           <p className="card-text">Presumed 17th century, place of copying unknown.</p>
@@ -402,12 +411,14 @@ const ManuscriptPage = (props) => {
                         </div>
                   </div>
                   <div className="row">
-                        <h3>Vienna, Mekhitarist Library</h3>
+                        <div className = "col-md-12" >
+                              <h3>Vienna, Mekhitarist Library</h3>
+                        </div>
                   </div>                       
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/W243/W243.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/W243/W243.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 243</h5>
                                           <p className="card-text">Presumed 18th or 19th century, place of copying unknown.</p>
@@ -420,7 +431,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/W246/W246.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/W246/W246.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 246</h5>
                                           <p className="card-text">Presumed 19th century, place of copying unknown.</p>
@@ -433,7 +444,7 @@ const ManuscriptPage = (props) => {
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/W574/W574.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/W574/W574.png"  alt="Manuscript thumbnail" />
                                     <div className="card-body">
                                           <h5 className="card-title">MS 574</h5>
                                           <p className="card-text">Copied in 1601 in Constantinople.</p>
@@ -446,41 +457,49 @@ const ManuscriptPage = (props) => {
                         </div>
                   </div>
                   <div className="row">
-                        <h3>Paris, Bibliothèque Nationale</h3>
+                        <div className = "col-md-12" >
+                              <h3>Paris, Bibliothèque Nationale</h3>
+                        </div>
                   </div>
                   <div className="row">
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/P191/P191.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                   <img src="images/mss/P191/P191.png"  alt="Manuscript thumbnail" /> 
                                     <div className="card-body">
                                           <h5 className="card-title">MS arm. 191</h5>
                                           <p className="card-text">Copied between 1642–47, probably in Constantinople.</p>
                                           <a href="manuscripts.html#" className="btn btn-primary disabled">Transcription pending</a>
-                                         
+                                          <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/W574" color="secondary">
+                                                            {"read transcription"}
+                                         </Link>
                                     </div>
                               </div>
                         </div>
                         <div className="col-md-3">
                               <div className="card">
-                                    <img src="images/mss/P200/P200.png" width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" />
+                                    <img src="images/mss/P200/P200.png"  alt="Manuscript thumbnail" /> 
                                     <div className="card-body">
                                           <h5 className="card-title">MS arm. 200</h5>
                                           <p className="card-text">Copied in 1728 in Constantinople.</p>
                                           <a href="manuscripts.html#" className="btn btn-primary disabled">Transcription pending</a>
-                                         
+                                          <Link style={{width:'80px',marginLeft:'24px'}} to="/ManuscriptView/W574" color="secondary">
+                                                            {"read transcription"}
+                                         </Link>
                                     </div>
                               </div>
                         </div>
                   </div>
                   <div className="row">
-                        <h3>Rome, Armenian Hospice</h3>
+                        <div className = "col-md-12" >
+                              <h3>Rome, Armenian Hospice</h3>
+                        </div>
                   </div>
                   <div className="row">      
                         <div className="col-md-3">
                               <div className="card">
                                    
-                                     {/* <img src="https://editions.byzantini.st/ChronicleME/..." 
-                                     width="250" height="250" className="card-img-top" alt="Manuscript thumbnail" /> */} 
+                                   {/* <img src="https://editions.byzantini.st/ChronicleME/..."  
+                                   alt="Manuscript thumbnail" /> */}
                                     <div className="card-body">
                                           <h5 className="card-title">MS 25</h5>
                                           <p className="card-text">Manuscript R. Presumed 17th century, place of copying unknown.</p>
