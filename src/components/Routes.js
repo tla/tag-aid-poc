@@ -12,6 +12,8 @@ import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import SearchResults from './Edition/SearchResults';
 import * as DataApi from './../utils/Api';
+import Visualizations from './Visualizations';
+import Timeline from './Visualizations/Timeline';
 import MapView from './Visualizations/Map';
 
 
@@ -111,15 +113,21 @@ const Routes = ( props)=>{
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
+                              <Route path="/Visualizations" exact>
+                                    <Visualizations onSearch={setSearchTerm} />
+                              </Route>
                               <Route path="/Map" exact>
                                     <MapView  onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections} />
                               </Route>
                               <Route path="/Map/:locationId" exact>
                                     <MapView onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
+                              <Route path="/Timeline" exact>
+                                <Timeline onSearch={setSearchTerm} />
+                              </Route>
                                <Route path="/" exact>
                                     <HomePage  onSearch={setSearchTerm} sections={sections} />
-                              </Route> 
+                              </Route>
                         </Switch>
             </ThemeProvider>
       )

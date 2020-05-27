@@ -1,15 +1,18 @@
-import react from 'react';
+import React from 'react';
+import EditionHeader from './../Edition/EditionHeader'
 
+const Timeline = (props) => {
 
-const TimeLine = (props)=>{
+  const { onSearch } = props;
 
-
-      return (
-            <div>
-                  time line here
-            </div>
-      )
-
+  return (
+    <>
+      <EditionHeader  onSearch = {onSearch} />
+      <div>
+        time line here
+      </div>
+    </>
+  );
 
 }
-export default TimeLine;
+export default Timeline;

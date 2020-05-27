@@ -112,7 +112,7 @@ const StyledTab = withStyles(theme => ({
                                                                         <StyledTab label="Methods"  href="#/Methods" value="#/Methods" />
                                                                         <StyledTab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
                                                                         <StyledTab label="Edition" href="#/Edition"    value="#/Edition"   />
-                                                                        <StyledTab label="Visualizations" href="#/Map" value="#/Map" />
+                                                                        <StyledTab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
                                                                   </StyledTabs>
                                                           
                                                                   <div style={{ margin:'8px 2px'}}>
