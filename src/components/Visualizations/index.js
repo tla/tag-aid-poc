@@ -4,26 +4,31 @@ import Map from './Map';
 import Timeline from './Timeline'
 import { Link } from "react-router-dom";
 
-import { Container, Card, CardMedia, CardActionArea, CardContent, Typography } from '@material-ui/core';
+import { Container, Card, CardMedia, CardActionArea, CardContent, Typography, useMediaQuery } from '@material-ui/core';
 
   const Visualizations = (props) => {
 
     const { onSearch } = props;
 
+    const smallScreen = useMediaQuery('(min-width:600px)')
+
     const containerStyle = {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: smallScreen ? 'row' : 'column',
       justifyContent: 'space-between',
       paddingTop: 40
     };
 
     const cardStyle = {
-      width: '48%'
+      width: smallScreen ? '48%' : '98%',
+      marginBottom: smallScreen ? 0 : 20
     };
 
     const titleStyle = {
       color: 'darkred',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      fontSize: '2rem',
+      marginBottom: 0
     };
 
     const linkStyle = {
@@ -38,7 +43,7 @@ import { Container, Card, CardMedia, CardActionArea, CardContent, Typography } f
             <CardActionArea href="#/Map" style={linkStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" align={'center'} style={titleStyle}>
-                  Map
+                  <i> Map </i>
                 </Typography>
               </CardContent>
               <CardMedia
@@ -55,7 +60,7 @@ import { Container, Card, CardMedia, CardActionArea, CardContent, Typography } f
             <CardActionArea href="#/Timeline" style={linkStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" align={'center'} style={titleStyle}>
-                  Timeline
+                  <i> Timeline </i>
                 </Typography>
               </CardContent>
               <CardMedia
