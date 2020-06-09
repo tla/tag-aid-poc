@@ -28,7 +28,7 @@ const Timeline = (props) => {
       { type: 'date', id: 'End' }
     ],
     ...sortedDataset.map((event) => {
-      if (event.earliestDate && event.latestDate) {
+      if !!(event.earliestDate && event.latestDate) {
         return([
           event.section,
           event.translation || "No translation available",
