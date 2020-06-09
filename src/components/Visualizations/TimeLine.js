@@ -7,10 +7,13 @@ const Timeline = (props) => {
   const {
     onSearch,
     timelineData
-   } = props;
+  } = props;
+
   const [redirectPath, setRedirectPath] = useState();
 
   const sortedDataset = timelineData.sort((a, b) => { return new Date(a.earliestDate).getTime() - new Date(b.earliestDate).getTime() });
+
+  const filteredSortedDataset = sortedDataset.filter((event) => !!(event.earliestDate && event.latestDate));
 
   const pickDate = (date1, date2, earliestOrLatest) => {
     if (earliestOrLatest === 'earliest') {
@@ -27,7 +30,7 @@ const Timeline = (props) => {
       { type: 'date', id: 'Start' },
       { type: 'date', id: 'End' }
     ],
-    ...sortedDataset.map((event) => {
+    ...filteredSortedDataset.map((event) => {
       if (!!(event.earliestDate && event.latestDate)) {
         return([
           event.section,
