@@ -30,16 +30,14 @@ const Timeline = (props) => {
       { type: 'date', id: 'Start' },
       { type: 'date', id: 'End' }
     ],
-    ...filteredSortedDataset.map((event) => {
-      if (!!(event.earliestDate && event.latestDate)) {
-        return([
-          event.section,
-          event.translation || "No translation available",
-          pickDate(new Date(event.earliestDate), new Date(event.latestDate), "earliest"),
-          pickDate(new Date(event.earliestDate), new Date(event.latestDate), "latest")
-        ])
-      }
-    })
+    ...filteredSortedDataset.map((event) =>
+      [
+        event.section,
+        event.translation || "No translation available",
+        pickDate(new Date(event.earliestDate), new Date(event.latestDate), "earliest"),
+        pickDate(new Date(event.earliestDate), new Date(event.latestDate), "latest")
+      ]
+    )
   ];
 
   if (redirectPath) {
