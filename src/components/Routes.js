@@ -31,6 +31,7 @@ const Routes = ( props)=>{
       const [armenianIndex, setArmenianIndex] = useState();
       const [mapFeatures,setMapFeatures] = useState([]);
       const [locationLookup, setLocationLookup]=useState([]);
+      const [timelineDates, setTimelineDates] = useState([]);
 
       useEffect(()=>{
             if( ! translationIndex )
@@ -74,7 +75,15 @@ const Routes = ( props)=>{
             }
       })
 
-      
+      useEffect(() => {
+        if(timelineDates.length === 0) {
+          DataApi.getTimelineDates((data) => {
+            setTimelineDates(data);
+          });
+        }
+      });
+
+
 
       return (
             <ThemeProvider  theme={ChronicleTheme}>
@@ -123,7 +132,10 @@ const Routes = ( props)=>{
                                     <MapView onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
                               <Route path="/Timeline" exact>
-                                <Timeline onSearch={setSearchTerm} />
+                                <Timeline
+                                  onSearch={setSearchTerm}
+                                  timelineData={timelineDates}
+                                />
                               </Route>
                                <Route path="/" exact>
                                     <HomePage  onSearch={setSearchTerm} sections={sections} />

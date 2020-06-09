@@ -74,6 +74,16 @@ export const getDates = async ( sectionId, onListReceived )=>{
       }
 }
 
+export const getTimelineDates = async (onListReceived) => {
+  const timelineListURL = `${localUrl}data/chronicleDates.json`;
+  try {
+    const result = await axios.get(timelineListURL);
+    onListReceived(result.data);
+  } catch(error) {
+    console.log(error);
+  }
+};
+
 
 export const getReading = async ( sectionId, reading, onTextReceived )=>{
       reading = reading === "Lemma Text" ? "lemma": reading;
