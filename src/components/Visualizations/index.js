@@ -1,8 +1,5 @@
 import React from 'react';
 import Header from '../Header';
-import Map from './Map';
-import Timeline from './Timeline'
-import { Link } from "react-router-dom";
 
 import { Container, Card, CardMedia, CardActionArea, CardContent, Typography, useMediaQuery } from '@material-ui/core';
 
