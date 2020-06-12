@@ -65,7 +65,7 @@ const Routes = ( props)=>{
                         setMapFeatures(data)
                   })
             }
-      })
+      },[])
 
       useEffect(()=>{
             if(locationLookup.length===0){
@@ -73,7 +73,7 @@ const Routes = ( props)=>{
                         setLocationLookup(data)
                   })
             }
-      })
+      }, [])
 
       useEffect(() => {
         if(timelineDates.length === 0) {
@@ -81,7 +81,7 @@ const Routes = ( props)=>{
             setTimelineDates(data);
           });
         }
-      });
+      }, []);
 
 
 
