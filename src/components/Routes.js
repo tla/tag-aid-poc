@@ -122,20 +122,20 @@ const Routes = ( props)=>{
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
-                              <Route path="/Visualizations" exact>
-                                    <Visualizations onSearch={setSearchTerm} />
-                              </Route>
-                              <Route path="/Map" exact>
+                              <Route path="/Visualizations/Map" exact>
                                     <MapView  onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections} />
                               </Route>
-                              <Route path="/Map/:locationId" exact>
+                              <Route path="/Visualizations/Map/:locationId" exact>
                                     <MapView onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
                               </Route>
-                              <Route path="/Timeline" exact>
+                              <Route path="/Visualizations/Timeline" exact>
                                 <Timeline
                                   onSearch={setSearchTerm}
                                   timelineData={timelineDates}
                                 />
+                              </Route>
+                              <Route path="/Visualizations" exact>
+                                    <Visualizations onSearch={setSearchTerm} />
                               </Route>
                                <Route path="/" exact>
                                     <HomePage  onSearch={setSearchTerm} sections={sections} />

@@ -40,7 +40,7 @@ import { Container, Card, CardMedia, CardActionArea, CardContent, Typography, us
         <Header onSearch = {onSearch} />
         <Container fixed style={containerStyle} >
           <Card style={cardStyle}>
-            <CardActionArea href="#/Map" style={linkStyle}>
+            <CardActionArea href="#/Visualizations/Map" style={linkStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" align={'center'} style={titleStyle}>
                   <i> Map </i>
@@ -57,7 +57,7 @@ import { Container, Card, CardMedia, CardActionArea, CardContent, Typography, us
           </Card>
 
           <Card style={cardStyle}>
-            <CardActionArea href="#/Timeline" style={linkStyle}>
+            <CardActionArea href="#/Visualizations/Timeline" style={linkStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" align={'center'} style={titleStyle}>
                   <i> Timeline </i>
