@@ -10,10 +10,12 @@ const axios = require('axios');
 
 
 class DirectoriesRead {
-     value=0;
-     total=null;
-     onComplete = null;
-      static increment = ()=>{ 
+  constructor() {
+     this.value=0;
+     this.total=null;
+     this.onComplete = null;
+   };
+      static increment() {
             this.value = this.value + 1;
             console.log(`processing file: ${this.value} of ${this.total}`)
            if(this.value == this.total)
