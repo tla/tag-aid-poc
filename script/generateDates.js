@@ -72,33 +72,58 @@ async function generateDates(){
                   })
             });
 
+            let datings = Promise.resolve(fetchDatings())
+              .catch((error) => {
+                console.log(error);
+              });
 
-            let dateInfo = await Promise.all([dates, daterefs]);
-          
-            console.log('dates and daterefs fetched')
+
+            let dateInfo = await Promise.all([dates, daterefs, datings]);
+
+            console.log('dates, daterefs, and datings fetched')
+
             dateInfo[0].forEach( date => {
-                  let refId = date.links[0].target;
-                  let dateRef = dateInfo[1].find( r=>{ return parseInt(r.id ) === refId});
-                  if ( ! dateRef ){
-                        console.log( 'no dateref for date id ', date.id);
+                  date.links.forEach((link) => {
+                    let linkedId = link.target;
+                    let dateLinkToText;
+                    let dateRef = dateInfo[1].find( r=>{ return parseInt(r.id ) === linkedId});
+
+                    if ( dateRef ){
+                      dateLinkToText = dateRef;
+                    } else {
+                      let dating = dateInfo[2].find((dating) => parseInt(dating.id) === linkedId);
+                      if ( dating ) {
+                        dateLinkToText = dating;
+                      } else {
+                        console.log( 'no dateref or dating found for date id ', date.id);
                         return;
-                  }
-                  let beginNode = dateRef.links[0].type==="BEGIN"? dateRef.links[0].target:dateRef.links[1].target;
-                  let endNode = dateRef.links[1].type==="END"? dateRef.links[1].target:dateRef.links[0].target;
-                  let section = wordHash[beginNode].section;
-                  let earliestDate, latestDate;
-                  if( date.properties.notBefore ) 
-                        earliestDate = moment().year(date.properties.notBefore.year).dayOfYear(date.properties.notBefore.dayOfYear);
-                   if( date.properties.notAfter)
-                        latestDate = moment().year(date.properties.notAfter.year).dayOfYear(date.properties.notAfter.dayOfYear)
-                  dateList.push({
-                        earliestDate:earliestDate?  earliestDate.toISOString(): null,
-                        latestDate: latestDate?latestDate.toISOString(): null,
-                        section: section,
-                        beginNode: beginNode,
-                        endNode: endNode
-                  })
-                
+                      }
+                    }
+
+                    let beginNode = dateLinkToText.links.find((link) => link.type === "BEGIN").target;
+                    let endNode = dateLinkToText.links.find((link) => link.type === "END").target;
+                    let section = wordHash[beginNode].section;
+
+                    let earliestDate, latestDate, notBefore, notAfter;
+                    if( date.properties.notBefore )
+                          { notBefore = moment().year(date.properties.notBefore.year).dayOfYear(date.properties.notBefore.dayOfYear).toISOString(); };
+                     if( date.properties.notAfter)
+                          { notAfter = moment().year(date.properties.notAfter.year).dayOfYear(date.properties.notAfter.dayOfYear).toISOString(); };
+                    if (notBefore && notAfter) {
+                      earliestDate = notBefore < notAfter ? notBefore : notAfter;
+                      latestDate = notBefore > notAfter ? notBefore : notAfter;
+                    } else {
+                      earliestDate = notBefore || null;
+                      latestDate = notAfter || null;
+                    }
+                    dateList.push({
+                          earliestDate:earliestDate?  earliestDate: null,
+                          latestDate: latestDate?latestDate: null,
+                          section: section,
+                          beginNode: beginNode,
+                          endNode: endNode
+                    });
+                  });
             })
       }
 
@@ -120,7 +145,18 @@ async function generateDates(){
                   console.log(`no place refs for section ${sectionId} `);
                   return null
             }
-          
+
+      }
+
+      async function fetchDatings(){
+            try {
+                  const response = await axios.get(`${baseURL}/annotations`,{auth, params: {label: 'DATING'}});
+                  return response.data;
+            }catch( error ) {
+                  console.log(`no place refs for section ${sectionId} `);
+                  return null
+            }
+
       }
 
       async function fetchTranslations(){

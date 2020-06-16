@@ -11,9 +11,20 @@ const Timeline = (props) => {
 
   const [redirectPath, setRedirectPath] = useState();
 
-  const sortedDataset = timelineData.sort((a, b) => { return new Date(a.earliestDate).getTime() - new Date(b.earliestDate).getTime() });
+  // only want to show events that have an earliest and/or latest date -- can't show
+  // events on a timeline without at least one date
+  const filteredDataset = timelineData.filter((event) => event.earliestDate || event.latestDate);
 
-  const filteredSortedDataset = sortedDataset.filter((event) => !!(event.earliestDate && event.latestDate));
+  // if only one date (i.e. earliest OR latest), earliest and latest dates will be the same
+  filteredDataset.forEach((event) => {
+    if (event.earliestDate === null) {
+      event.earliestDate = event.latestDate;
+    } else if (event.latestDate === null) {
+      event.latestDate = event.latestDate;
+    }
+  })
+
+  const sortedDataset = filteredDataset.sort((a, b) => { return new Date(a.earliestDate).getTime() - new Date(b.earliestDate).getTime() });
 
   const pickDate = (date1, date2, earliestOrLatest) => {
     if (earliestOrLatest === 'earliest') {
@@ -30,7 +41,7 @@ const Timeline = (props) => {
       { type: 'date', id: 'Start' },
       { type: 'date', id: 'End' }
     ],
-    ...filteredSortedDataset.map((event) =>
+    ...sortedDataset.map((event) =>
       [
         event.section,
         event.translation || "No translation available",
