@@ -45,15 +45,14 @@ async function GenerateLocationData () {
                       geoRequests.push(syriacGazetteerRequest)
                   }
             });
-
-            let allLocations = await Promise.all(geoRequests);
-            
+            try {
+              const all = await Promise.all(geoRequests);
+            } catch(error) { console.log(error.message) }
             writeLocationFile();
       }
 
       async function fetchKMLLocation(url, originalUrl, place){
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const record = openData.data
                         geoLocations.push({
@@ -74,54 +73,46 @@ async function GenerateLocationData () {
                               }],
                               links:place.links
                         });
-
-                        resolve();
                   })
-                  .catch( error =>{
+                  .catch( (error) =>{
                         console.log(error)
                   })
-                        
-            })
       }
 
       async function fetchSyriacLocation(url, place){
-
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const $ = cheerio.load(openData.data.trim())
                         let anchors = $('a');
                         let pleiadesUrl;
                         for( let i=0; i< anchors.length; i++){
-                              if(anchors[i].attribs.href.indexOf("pleiades") > -1){
+                              if(anchors[i].attribs.href !== undefined && anchors[i].attribs.href.indexOf("pleiades") > -1){
                                     pleiadesUrl=anchors[i].attribs.href;
                                     break;
                               }
-                        }  
-                        getGeoJson(pleiadesUrl)
-                        .then( openData =>{
-                              const record = openData.data
-                              geoLocations.push({
-                                    // identifier:p.identifier, placeRef id
-                                    id: record.id,
-                                    title: place.properties.identifier,
-                                    provenance:'http://syriaca.org/',
-                                    representativePoint:record.reprPoint,
-                                    geometry:record.features,
-                                    links:place.links
-                              });
-                        resolve();
-                        });
+                        }
+                        if (pleiadesUrl) {
+                          getGeoJson(pleiadesUrl)
+                          .then( openData =>{
+                                const record = openData.data
+                                geoLocations.push({
+                                      // identifier:p.identifier, placeRef id
+                                      id: record.id,
+                                      title: place.properties.identifier,
+                                      provenance:'http://syriaca.org/',
+                                      representativePoint:record.reprPoint,
+                                      geometry:record.features,
+                                      links:place.links
+                                });
+                          });
+                        }
+                  })
+                  .catch((error) => console.log(error));
 
-                  });
+      }
 
-            });
-                  
-      }              
- 
       async function fetchGeoJsonLocation(url, place){
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const record = openData.data
                         geoLocations.push({
@@ -133,9 +124,8 @@ async function GenerateLocationData () {
                               geometry:record.features,
                               links:place.links
                         });
-                        resolve();
-                  });
-            });
+                  })
+                  .catch((error) => console.log(error))
       }
 
       function writeLocationFile(){
@@ -148,7 +138,7 @@ async function GenerateLocationData () {
       async function getPlaces(){
            // https://api.editions.byzantini.st/ChronicleME/stemmarest/tradition/4aaf8973-7ac9-402a-8df9-19a2a050e364/annotations?label=PLACE
            try{
-                  const response = axios.get(`${baseURL}/annotations?label=PLACE`, {auth} )
+                  const response = await axios.get(`${baseURL}/annotations?label=PLACE`, {auth} )
                   return response;
 
            } catch( error ){

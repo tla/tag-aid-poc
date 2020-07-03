@@ -79,14 +79,14 @@ const TextPane =(props) => {
 
 
       // this seems redundant - was it supposed to be removed?
-      useEffect(()=>{
-        
-            setTextHTML(null);
-            if(! rawText )
-                  return;
-            let parsed =  Parser(rawText, parserOptions);
-            setTextHTML(parsed);
-      })
+      // useEffect(()=>{
+      //
+      //       setTextHTML(null);
+      //       if(! rawText )
+      //             return;
+      //       let parsed =  Parser(rawText, parserOptions);
+      //       setTextHTML(parsed);
+      // })
 
       return (
            <div style={{marginRight:'12px'}}>
