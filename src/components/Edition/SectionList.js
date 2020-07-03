@@ -9,7 +9,14 @@ import { Link} from 'react-router-dom'
 const SectionList = ( props ) =>{
 
       const {list, sectionId, height, witnessId} = props
-   
+
+      const titleDisplay = (title) => {
+        const wordArray = title.split(" ");
+        const firstThreeWords = wordArray.slice(0,3).join(" ");
+        const remainingWords = wordArray.slice(3,wordArray.length).join(" ").replace("–", " – ");
+        return([firstThreeWords, remainingWords]);
+      }
+
       return (
             
             <Paper elevation={2} style={{marginLeft:'16px' , height:height, overflowY:'auto'}}>
@@ -30,7 +37,10 @@ const SectionList = ( props ) =>{
                                                                   <div style={{display:'flex', flexDirection:'column'}}>
                                                                         <Link   to={selectUrl} >
                                                                               <Typography variant="body1" style={{wordWrap:'break-word'}}>
-                                                                                    {s.englishTitle}
+                                                                                    {titleDisplay(s.englishTitle)[0]}
+                                                                              </Typography>
+                                                                              <Typography variant="body1" style={{wordWrap:'break-word'}}>
+                                                                                    {titleDisplay(s.englishTitle)[1]}
                                                                               </Typography>
                                                                         </Link>
                                                                   
