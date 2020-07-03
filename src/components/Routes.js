@@ -22,7 +22,7 @@ const Routes = ( props)=>{
       const viewport = useWindowSize();
       const {sections, witnesses, manuscripts} = props;
 
-   
+
 
       const [searchTerm, setSearchTerm ] = useState('');
       const [translationDictionary, setTranslationDictionary] = useState([]);
@@ -65,7 +65,7 @@ const Routes = ( props)=>{
                         setMapFeatures(data)
                   })
             }
-      },[])
+      }, [])
 
       useEffect(()=>{
             if(locationLookup.length===0){
@@ -101,13 +101,13 @@ const Routes = ( props)=>{
                                     <EditionLanding   sections={sections} onSearch={setSearchTerm}  />
                               </Route>
                               <Route path="/About" >
-                                    <AboutPage onSearch={setSearchTerm} /> 
+                                    <AboutPage onSearch={setSearchTerm} />
                               </Route>
                               <Route path="/Methods" >
-                                    <MethodsPage onSearch={setSearchTerm} /> 
+                                    <MethodsPage onSearch={setSearchTerm} />
                               </Route>
                               <Route path="/Manuscripts" >
-                                    <ManuscriptPage onSearch={setSearchTerm}   /> 
+                                    <ManuscriptPage onSearch={setSearchTerm}   />
                               </Route>
                               {/*
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
@@ -117,9 +117,9 @@ const Routes = ( props)=>{
                               */}
                               <Route path="/Home" exact>
                                     <HomePage sections={sections} onSearch={setSearchTerm} />
-                              </Route> 
+                              </Route>
                               <Route path="/Search" exact>
-                                    <SearchResults 
+                                    <SearchResults
                                           sections={sections}
                                           translationDictionary={translationDictionary} translationIndex={translationIndex}
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}

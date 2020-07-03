@@ -24,7 +24,7 @@ async function GenerateLocationData () {
       }
 
       async function fetchData(){
-           
+
             const geoRequests=[];
             const places = await getPlaces()
 
@@ -48,7 +48,6 @@ async function GenerateLocationData () {
             try {
               const all = await Promise.all(geoRequests);
             } catch(error) { console.log(error.message) }
-            console.log('continuing onto writeLocationFile')
             writeLocationFile();
       }
 
@@ -157,11 +156,11 @@ async function GenerateLocationData () {
             if( ! fs.existsSync('public') )
                    fs.mkdirSync('public', {recursive:true});
             if(!fs.existsSync('public/data'))
-                  fs.mkdirSync('public/data', {recursive:true});    
+                  fs.mkdirSync('public/data', {recursive:true});
       }
 
       function writeFile(fileName, contents){
-            fs.writeFileSync( fileName, contents )  
+            fs.writeFileSync( fileName, contents )
       }
 
 }
