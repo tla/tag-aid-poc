@@ -39,9 +39,6 @@ const EditionLanding = ( props)=>{
                                                  / And therefore I, Mattʿēos Uṙhayecʿi, a monk, have reckoned as nothing my work of labour, but I leave this record for those who love chronicles, so that when they enter into an examination of past times, they will easily be able to find the times and the epochs. And they might learn of the fulfilment of wrath over the eras, and having pondered that, they might remember the severe divine wrath which we received from the righteous judge, God, in return for our sins.
 
                                                 </Typography>
-                                                <Typography variant="body2" style={{float:'right', margin:"6px"}}>
-                                                     Download the Armenian text as JSON or TEI
-                                                </Typography>
                                           </Grid>
                                         
                                         
