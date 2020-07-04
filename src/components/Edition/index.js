@@ -20,7 +20,7 @@ const Edition = ( props)=>{
 
       let {sectionID} = useParams();
       let {witnessID} = useParams();
-    
+
 
       const [selectedNode, setSelectedNode]=useState(null);
       const [selectedSentence, setSelectedSentence] = useState({});
@@ -55,11 +55,11 @@ const Edition = ( props)=>{
                               return 1;
                         if(parseInt(a.rank) < parseInt(b.rank))
                               return -1
-                        else 
+                        else
                               return 0;
                   })
                  nodelist.forEach( (node)=>{
-                       const value = 
+                       const value =
                        {
                               id: node.id,
                               rank:node.rank,
@@ -81,7 +81,7 @@ const Edition = ( props)=>{
             else
                   setPersonList([])
        },[personsVisible, sectionID])
- 
+
        useEffect(()=>{
             if(placesVisible)
                   DataApi.getPlaces(sectionID, (list)=>{
@@ -104,24 +104,24 @@ const Edition = ( props)=>{
             if( !props.searchTerm)
                   return;
       },[props.searchTerm])
-  
+
       let textContainerStyle={
-            overflowY:'auto', 
+            overflowY:'auto',
             height: graphVisible ? `${viewport.height * .30 -84}px`:`${viewport.height - 254}px`,
       }
 
       return (
-            
+
             <Grid container spacing={0} >
 
                    <Grid id="edition-header" item xs={12} style={{backgrounColor:'red', height:'114px'}} >
                               <EditionHeader onSearch={onSearch} />
-                  </Grid>  
-                      
+                  </Grid>
+
                   <Hidden smDown>
                         <Grid item id="sideBar" md={2} >
-                              <div style={{marginTop:'40px',position:'relative', display:'flex', flexDirection:'column', minWidth:'160px',}}>
-                                     <ViewOptions 
+                              <div style={{marginTop:'12px',position:'relative', display:'flex', flexDirection:'column', minWidth:'160px',}}>
+                                     <ViewOptions
                                           viewport={viewport}
                                           witnesses = {witnesses}
                                           manuscripts = {manuscripts}
@@ -140,24 +140,24 @@ const Edition = ( props)=>{
                                           isExpanded = { isExpanded }
                                           setIsExpanded = { setIsExpanded }
                                     />
-                              
-                                    <SectionList 
+
+                                    <SectionList
                                           height={isExpanded ? ` ${viewport.height - 590 > 0 ? viewport.height - 590 : 0}px` : ` ${viewport.height - 228}px`}
                                           sectionId={sectionID}
                                           witnessId={witnessID}
                                           list ={sections}
-                                    />  
-                              </div>      
+                                    />
+                              </div>
                         </Grid>
-                  </Hidden> 
+                  </Hidden>
 
-                  <Grid id="mainContent" item xs={12} md={10}> 
+                  <Grid id="mainContent" item xs={12} md={10}>
                         <div style={{display:'flex', flexDirection:'column', }}>
                               {sectionID && graphVisible &&
                                     <div>
                                           <div >
                                                <Paper  style={{margin:'12px',overflowX:'hidden', overflowY:'hidden',height:`${viewport.height *.30}px`}}>
-                                                       <SvgGraph 
+                                                       <SvgGraph
                                                             viewport={viewport}
                                                             sectionId={sectionID}
                                                             highlightedNode={selectedNode}
@@ -170,19 +170,19 @@ const Edition = ( props)=>{
                                                             dates = { dateList}
                                                             onSelectNode={handleSelectNode}
                                                             onSelectSentence={handleSelectSentence}
-                                                      /> 
+                                                      />
                                                 </Paper>
                                           </div>
-                                          <div > 
+                                          <div >
                                                 <Paper style={{margin:'12px',overflowX:'hidden', overflowY:'hidden', position:'relative'}}>
-                                                      <RankDisonance 
+                                                      <RankDisonance
                                                             viewport = { viewport }
                                                             sectionId={sectionID}
                                                             highlightedNode = { selectedNode}
                                                             selectedSentence={selectedSentence}
                                                             selectedRank = { selectedRank}
                                                             onSelectRank = {handleSelectRank}
-                                                      /> 
+                                                      />
                                                 </Paper>
                                           </div>
                                     </div>
@@ -191,7 +191,7 @@ const Edition = ( props)=>{
                               {sectionID &&
                                   <React.Fragment>
                                     <div style={{display:'flex', justifyContent:'center', height:'84px',marginTop:'20px'}}>
-                                          <PreviousNext 
+                                          <PreviousNext
                                                 onPrevious ={ previousSection}
                                                 onNext = { nextSection}
                                                 sections = { sections}
@@ -201,7 +201,7 @@ const Edition = ( props)=>{
                                     <div style={textContainerStyle}>
                                           <Grid container  spacing={0}>
                                                 <Grid item xs={12} md={6}>
-                                                      <TextPane 
+                                                      <TextPane
                                                             nodeHash={nodeHash}
                                                             manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
@@ -222,7 +222,7 @@ const Edition = ( props)=>{
                                                 </Grid>
 
                                                 <Grid item xs={12} md={6}>
-                                                      <TextPane 
+                                                      <TextPane
                                                             nodeHash={nodeHash}
                                                             manuscripts = {manuscripts}
                                                             searchTerm={searchTerm}
@@ -242,13 +242,13 @@ const Edition = ( props)=>{
                                           </Grid>
                                     </div>
                                     </React.Fragment>
-                              } 
+                              }
 
                         </div>
-                  </Grid> 
+                  </Grid>
 
-            
-                    
+
+
             </Grid>
       )
 
@@ -275,10 +275,10 @@ const Edition = ( props)=>{
                         return;
                   }
             }
-            
+
             setSelectedSentence({
                   'startRank': startRank,
-                  'startId': startNodeId, 
+                  'startId': startNodeId,
                   endRank: endRank,
                   'endId': endNodeId,
            } );
