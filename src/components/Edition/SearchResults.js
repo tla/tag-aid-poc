@@ -51,8 +51,18 @@ const SearchResults=(props)=>{
                   idx = lunr.Index.load(armenianIndex);
                   setDataDictionary(armenianDictionary)
             }
-      
-            let hopingFor = idx.search(searchTerm);
+
+            let hopingFor = idx.query(function (q) {
+              // look for an exact match and apply a large positive boost
+              q.term(searchTerm, { usePipeline: true, boost: 100 })
+
+              // look for terms that match the beginning of this queryTerm and apply a medium boost
+              q.term(searchTerm, {
+                      wildcard: lunr.Query.wildcard.LEADING | lunr.Query.wildcard.TRAILING,
+                      usePipeline: false,
+                      boost: 10 }
+                    );
+            });
             groupSearchResults(hopingFor);
 
       },[searchTerm])
