@@ -29,7 +29,7 @@ const ViewOptions =(props)=>{
                                 expandIcon={<ExpandMoreIcon />}
                         >
                               <Typography variant="h6" >
-                                    {'Options'}
+                                    {'View Options'}
                               </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{display:'flex', flexDirection:'column',alignItems:'center' }}>
