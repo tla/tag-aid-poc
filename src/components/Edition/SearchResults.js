@@ -52,12 +52,12 @@ const SearchResults=(props)=>{
                   setDataDictionary(armenianDictionary)
             }
 
-            let hopingFor = idx.query(function (q) {
+            let hopingFor = idx.query((q) => {
               // look for an exact match and apply a large positive boost
-              q.term(searchTerm, { usePipeline: true, boost: 100 })
+              q.term(searchTerm.toLowerCase(), { usePipeline: true, boost: 100 })
 
               // look for terms that match the beginning of this queryTerm and apply a medium boost
-              q.term(searchTerm, {
+              q.term(searchTerm.toLowerCase(), {
                       wildcard: lunr.Query.wildcard.LEADING | lunr.Query.wildcard.TRAILING,
                       usePipeline: false,
                       boost: 10 }
