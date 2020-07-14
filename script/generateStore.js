@@ -344,8 +344,8 @@ async function generateStore() {
             const sectFile = `${outdir}/sections.json`;
             // fyi - sectionIds have nothing to do with it, they are not sequential
             validSections.sort( (a,b)=>{
-                  const aYear = a.englishTitle.substr(9,3);
-                  const bYear = b.englishTitle.substr(9,3);
+                  const aYear = a.englishTitle.match(/(\d+)/)[0];
+                  const bYear = b.englishTitle.match(/(\d+)/)[0];
                   return ( parseInt(aYear) - parseInt(bYear))
             })
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
