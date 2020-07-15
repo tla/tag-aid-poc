@@ -21,7 +21,7 @@ def collect_tradition_data(options, auth=None):
     for sect in r.json():
         ## See if there is lemma text
         url = "%s/section/%s/lemmatext" % (baseurl, sect.get('id'))
-        r = requests.get(url, params={'final': 'true'}, auth=auth)
+        r = requests.get(url, auth=auth)
         r.raise_for_status()
         answer = r.json()
         if answer.get('text', '') != '':
@@ -54,7 +54,7 @@ def collect_section_data(options, section, outdir, auth=None):
     dotresult.check_returncode()
     with open('%s/graph.svg' % sectiondir, 'w', encoding='utf-8') as svg:
         svg.write(dotresult.stdout)
-   
+
 
 
 if __name__ == '__main__':
