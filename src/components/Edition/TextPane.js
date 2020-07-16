@@ -75,7 +75,7 @@ const TextPane =(props) => {
                   setTextHTML(parsed)
             });
             lookupManuscriptName(props.reading)
-      },[props.sectionId, props.reading])
+      },[props])
 
 
       // this seems redundant - was it supposed to be removed?
