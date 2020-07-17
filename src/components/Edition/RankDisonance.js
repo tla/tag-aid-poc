@@ -111,7 +111,20 @@ const RankDisonance = (props)=> {
                                                                         if( key !== selectedRank )
                                                                         return [{
                                                                               mutation: (props) => {
-                                                                                    return  {style: {fill: "#550C18"}};
+                                                                                let color;
+                                                                                const keyInt = parseInt(key);
+                                                                                const rangeStart = selectedSentence ?  parseInt(selectedSentence.startRank) : null;
+                                                                                const rangeEnd = selectedSentence ?  parseInt(selectedSentence.endRank) : null;
+                                                                                
+                                                                                if (
+                                                                                  highlightedNode && keyInt === highlightedNode.rank) {
+                                                                                    color = "#D4FCA4";
+                                                                                } else if (selectedSentence && keyInt >= rangeStart && keyInt <= rangeEnd) {
+                                                                              color = "#F2F19C";
+                                                                                } else {
+                                                                                  color = "#550C18";
+                                                                                }
+                                                                                return { style: { fill: color } }
                                                                               }
                                                                         }];
                                                                   },

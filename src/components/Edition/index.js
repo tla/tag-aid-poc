@@ -45,6 +45,13 @@ const Edition = ( props)=>{
             setSelectedRank(null);
        },[sectionID])
 
+      useEffect(()=>{
+        if (graphVisible => graphVisible === false) {
+          setSelectedNode(null);
+          setSelectedRank(null);
+        }
+      },[graphVisible])
+
        useEffect(()=>{
             let hash={};
             const list = [];

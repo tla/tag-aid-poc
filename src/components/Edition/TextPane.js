@@ -37,7 +37,7 @@ const TextPane =(props) => {
                                     let isSearchTerm = searchTerm? children[0].data === searchTerm ? true: false : false;
                                     if( isSearchTerm)
                                           onSelectNode(nodeId);
-                                    let atRank = props.selectedRank? props.selectedRank === rank : false;
+                                    let atRank = props.selectedRank? props.selectedRank === parseInt(rank) : false;
                                     let selected= props.selectedNode ? props.selectedNode.nodeId === nodeId : false;
                                     let person =persons? persons.find( p=>{return isWithinRange(p.begin, p.end, nodeId) }) : false ;
                                     let place = places? places.find( p=>{return isWithinRange(p.begin, p.end, nodeId) }) : false ;
