@@ -38,7 +38,8 @@ svg  g.node.disonance ellipse{
       fill: #D4FCA4 ;
 }
 svg  g.node.disonance.active ellipse{
-      stroke: black;
+      stroke: red;
+      stroke-width: 3;
       fill:#D4FCA4;
 }
 
