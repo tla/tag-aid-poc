@@ -81,8 +81,8 @@ const ViewOptions =(props)=>{
                                     </div>
 
                                     <FormControl >
-                                          <InputLabel style={{fontSize:'16px', }}>Left Text Pane</InputLabel>
-                                                <Select style={{width:viewport.width * .12}}
+                                          <InputLabel style={{fontSize:'16px', paddingLeft: 10}}>Left Text Pane</InputLabel>
+                                                <Select style={{width:viewport.width * .14, fontSize: '12pt', paddingLeft: 10}}
                                                       value={leftReading}
                                                       onChange={(e,v)=>{onSelectLeftReading(e.target.value)} }
                                                 >
@@ -98,16 +98,17 @@ const ViewOptions =(props)=>{
                              
                                     <div style={{height:'8px'}}></div>
                              
-                                    <FormControl >
-                                          <InputLabel style={{fontSize:'16px', }}>Right Text Pane </InputLabel>
-                                                <Select style={{width:viewport.width * .12,marginBottom:'16px'}}
+                                    <FormControl>
+                                          <InputLabel style={{fontSize:'16px', paddingLeft: 10}}>Right Text Pane </InputLabel>
+                                                <Select style={{width:viewport.width * .14, marginBottom:'16px', fontSize: '12pt', paddingLeft: 10}}
                                                       value={rightReading}
                                                       onChange={(e,v)=>{onSelectRightReading(e.target.value)}}
                                                 >
                                                       {
                                                              witnesses.map(witness=>{
                                                                   let msDescription = manuscripts.find( m=>{return m.id === witness.sigil})
-                                                                  let descText = msDescription? ` MS ${msDescription.idno} (sigil: ${witness.sigil})`:`sigil: ${witness.sigil}`
+                                                                  let sigilLabel = witness.sigil === "Translation" ? "Lemma Translation" : witness.sigil
+                                                                  let descText = msDescription? ` MS ${msDescription.idno} (sigil: ${sigilLabel})`:`sigil: ${sigilLabel}`
                                                                   return <MenuItem key={witness.id} value={witness.sigil}>{descText}</MenuItem>
                                                             })
                                                       }

@@ -144,8 +144,9 @@ console.log("begin end targets were reversed in section"+ sectionId )
       }
 
       function lookupManuscriptName(sigil){
-            let msDescription = manuscripts? manuscripts.find( m=>{return m.id === sigil}):null;
-            let descText = msDescription? ` MS ${msDescription.idno}  (sigil: ${sigil})`:`sigil: ${sigil} `
+            let sigilLabel = sigil === "Translation" ? "Lemma Translation" : sigil;
+            let msDescription = manuscripts? manuscripts.find( m=>{return m.id === sigilLabel}):null;
+            let descText = msDescription? ` MS ${msDescription.idno}  (sigil: ${sigilLabel})`:`sigil: ${sigilLabel} `
             let placeDate = msDescription? `${msDescription.settlement} ${msDescription.origPlace?msDescription.origPlace:''} ${msDescription.origDate?msDescription.origDate:''}`:''
             setManuscriptName(descText )
             setManuscriptPlaceDate(placeDate)
