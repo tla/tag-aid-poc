@@ -47,20 +47,23 @@ const RankDisonance = (props)=> {
             ticks: { stroke: "transparent" },
             tickLabels: {fill:"none"},
       };
+      
+      const containerHeight = viewport.height * .12;
+      const chartHeight = containerHeight * .85;
 
       return (
-            <div style={{ height:viewport.height * .12, display:'flex', flexDirection:'column', justifyContent:'center'}}>
+            <div style={{ height: containerHeight, display:'flex', flexDirection:'column', justifyContent:'center'}}>
             {
                   chartData &&
 
-                          <div   style={{height:'100'}}>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: containerHeight}}>
                         <VictoryChart
                               title="Rank Disonance"
                               domainPadding={{ x: 6 }}
-                              padding={{ top: 6, bottom: 3, left: 34, right: 12 }}
+                              padding={{ top: 6, bottom: 3, left: 12, right: 12 }}
                               containerComponent={<VictoryContainer responsive={false} 
                               /> }
-                               height={70}
+                               height={chartHeight}
                                width={viewport.width > 960 ? viewport.width * .80: viewport.width * .96}
                                scale={{ x: "linear", y: "linear" }}
                               >
