@@ -125,7 +125,9 @@ return (
                                                 groupedResults.map( (r) => {
                                                       let value;
                                                       let section = r.witnesses[0].sectionId;
-                                                      value = dataDictionary.find(d => { return d.sectionId === section }).text;
+                                                      let dataResult = dataDictionary.find(d => { return d.sectionId === section });
+                                                      if (!dataResult) { return }
+                                                      value = dataResult.text;
                                                       let  title = sections.find(s=>{return s.sectionId === section}).englishTitle
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
@@ -165,6 +167,7 @@ function groupSearchResults(lunrSearch){
              let header =  sections.find( s =>{
                    return s.sectionId === sectionId;
              });
+             if (!header) { return; }
              let year = parseInt(header.englishTitle.substring(9,12));
  
             let yearGroup = groupedYears.find( gr=>{return gr.year === year });
