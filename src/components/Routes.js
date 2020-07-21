@@ -5,7 +5,7 @@ import ManuscriptPage from './Manuscript';
 import Edition from './Edition/index';
 import HomePage from './HomePage';
 import EditionLanding from './EditionLanding';
-// import ManuscriptView from './Manuscript/ManuscriptView';
+import ManuscriptView from './Manuscript/ManuscriptView';
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
@@ -98,11 +98,9 @@ const Routes = ( props)=>{
                               <Route path="/Manuscripts" >
                                     <ManuscriptPage onSearch={setSearchTerm}   /> 
                               </Route>
-                              {/*
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
                                     <ManuscriptView onSearch={setSearchTerm}   />
                               </Route>
-                              */} 
                               <Route path="/Home" exact>
                                     <HomePage sections={sections} onSearch={setSearchTerm} />
                               </Route> 
