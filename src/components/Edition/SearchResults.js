@@ -98,7 +98,7 @@ return (
                                                       <div key={r.year} style={{marginBottom:'16px'}}>
                                                                    <ExpansionPanel>
                                                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
-                                                                              <Typography variant="h5"> {`Year ${r.year} ${r.witnesses.length} Witnesses`}</Typography>
+                                                                              <Typography variant="h5"> {`Year ${ r.year === 1 ? "Unavailable" : r.year} -  ${r.witnesses.length} ${r.witnesses.length === 1 ? `Witness`: `Witnesses`}`}</Typography>
                                                                         </ExpansionPanelSummary>
                                                                         <ExpansionPanelDetails style={{display:'flex', flexDirection:'column'}}>
                                                                               { r.witnesses.map( w=>{
@@ -167,10 +167,10 @@ function groupSearchResults(lunrSearch){
              let header =  sections.find( s =>{
                    return s.sectionId === sectionId;
              });
-             if (!header) { return; }
-             let year = parseInt(header.englishTitle.substring(9,12));
- 
-            let yearGroup = groupedYears.find( gr=>{return gr.year === year });
+
+             let year = header ? parseInt(header.englishTitle.match(/(\d+)/)[0]) : 1;
+             let yearGroup = year ? groupedYears.find( gr=>{return gr.year === year }) : null;
+
              if ( yearGroup )
              {
                    yearGroup.witnesses.push( {sectionId:sectionId, witness:witness, year:year, text:result.text, header: header});// denormalized redundant year I know 
