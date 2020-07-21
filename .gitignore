@@ -34,8 +34,6 @@ src/components/Manuscript/ManuscriptView copy.js
 
 src/components/Manuscript/text.html
 
-src/components/Manuscript/ManuscriptView.js
-
 script/generateManuscripts.js
 
 build.zip
