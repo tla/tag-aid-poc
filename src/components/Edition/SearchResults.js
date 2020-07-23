@@ -93,12 +93,13 @@ return (
                                                 isArmenian ?
 
                                                 groupedResults.map( (r) => {
+                                                  const label = r.year > 1 ?`Year ${r.year}` : r.header && r.header.englishTitle ? r.header.englishTitle : "Untitled"
                                                 return(
                                                     
                                                       <div key={r.year} style={{marginBottom:'16px'}}>
                                                                    <ExpansionPanel>
                                                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
-                                                                              <Typography variant="h5"> {`Year ${ r.year === 1 ? "Unavailable" : r.year} -  ${r.witnesses.length} ${r.witnesses.length === 1 ? `Witness`: `Witnesses`}`}</Typography>
+                                                                              <Typography variant="h5"> {label} -  {r.witnesses.length} {r.witnesses.length === 1 ? `Witness`: `Witnesses`}</Typography>
                                                                         </ExpansionPanelSummary>
                                                                         <ExpansionPanelDetails style={{display:'flex', flexDirection:'column'}}>
                                                                               { r.witnesses.map( w=>{
@@ -192,12 +193,7 @@ function groupSearchResults(lunrSearch){
        });
  
        groupedYears.sort( ( a, b)=>{
-             if(a.year > b.year )
-                   return 1;
-             else if ( a.year < b.year)
-                   return -1;
-             else  
-                   return 0;
+             return b.witnesses.length - a.witnesses.length;
        })
  
        setGroupedResults(groupedYears)
