@@ -128,12 +128,13 @@ return (
                                                       let dataResult = dataDictionary.find(d => { return d.sectionId === section });
                                                       if (!dataResult) { return }
                                                       value = dataResult.text;
-                                                      let  title = sections.find(s=>{return s.sectionId === section}).englishTitle
+                                                      let  foundSection = sections.find(s=>{return s.sectionId === section});
+                                                      let label = foundSection ? foundSection.englishTitle : "Untitled";
                                                       return (
                                                             <div key={r.ref} style={{marginBottom:'16px'}}>
                                                                         <Button size="large" component={Link} to={`/Edition/${section}`} color="secondary">
                                                                         <Typography variant="h6">
-                                                                              {` ${title}` }
+                                                                              {label}
                                                                         </Typography>
                                                                   </Button>
                                                                   
