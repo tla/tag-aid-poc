@@ -106,6 +106,10 @@
       margin-top: .5em;
       margin-bottom: .5em;
       text-align: justify;
+      margin-left: 110px;
+    }
+    tei-milestone a {
+      margin-left: -115px;
     }
     tei-tei {
       font-family: Georgia, 'Times New Roman', Times, serif;
