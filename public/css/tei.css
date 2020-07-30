@@ -8,6 +8,9 @@
     tei-text{
           max-width:98%;
           overflow-wrap:break-word;
+          margin: auto;
+          margin-left: 110px;
+          display: block;
     }
 
       tei-pb img {
@@ -107,14 +110,12 @@
       margin-bottom: .5em;
       text-align: justify;
     }
+    tei-milestone a {
+      margin-left: -115px;
+    }
     tei-tei {
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-size:24px;
-    }
-    tei-text {
-      display: block;
-      width: 900px;
-      margin: auto;
     }
     tei-titlepage {
       display: block;

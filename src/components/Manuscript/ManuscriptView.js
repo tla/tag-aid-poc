@@ -58,7 +58,7 @@ const ManuscriptView = ( props ) =>{
                   </Grid>
 
                   <Grid item xs={12} md={6}>
-                              <Typography id="textContainer" variant="h6" style={{margin:"12px", overflowWrap:'break-word'}}>
+                              <Typography id="textContainer" variant="h6" style={{margin: 12, marginLeft: 20, overflowWrap:'break-word'}}>
                               </Typography>
                   </Grid>
                   <Hidden xsDown >
