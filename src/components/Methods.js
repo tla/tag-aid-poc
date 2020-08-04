@@ -3,13 +3,15 @@ import Header from './Header';
 
 const MethodsPage = ( props ) =>{
 
-const dejaVuStyle={
-      fontFamily: 'Menlo, Consolas, DejaVu Sans Mono monospace'
-}
+      const { onSearch } = props;
+
+      const dejaVuStyle={
+            fontFamily: 'Menlo, Consolas, DejaVu Sans Mono monospace'
+      }
 
 return (
       <Fragment>
-      <Header />
+      <Header onSearch = { onSearch} />
       <div className="container content">
     
       <div className="row">

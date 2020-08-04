@@ -3,9 +3,6 @@ const axios = require('axios');
 const moment = require('moment')
 //const CETEI = require('./../utils/CETEI')
 const lunr = require('lunr');    
-//https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
-// inspired by fast async await example - everything in parallel when possible - 
-// do add error handling please
 
 
 async function generateLunrSource() { 
@@ -19,10 +16,6 @@ async function generateLunrSource() {
       const lunrIndex = [];
       const lunrArmenian = [];
       const lunrArmenianIndex = [];
-
-
-     // const ridiculous = await getAllReadings();// the size of this array is 73,106 1/22/20
-     // console.log('testing')
 
       await fetchData(baseURL,auth);
       const endTime= moment();
@@ -65,7 +58,7 @@ async function generateLunrSource() {
 
       async function getSectionData( sectionId ){
             let lemmaTextFinal = await getLemmaText(sectionId);
-           
+            
             if( lemmaTextFinal.text ) {
                  
                   let allReadings = new Promise( (resolve )=>{
@@ -73,12 +66,14 @@ async function generateLunrSource() {
                         .then( readings=>{
                             
                               prepareLemmaDataIndex( readings, sectionId); 
+
+                              
                            
                               getTranslation(sectionId)
                                     .then( translation=>{
                                           prepareTranslationDataIndex(translation, sectionId, readings)
                                           resolve();
-                                    });
+                              });
                         });
 
                   });
@@ -130,8 +125,8 @@ async function generateLunrSource() {
           
       };
 
-      function prepareLemmaDataIndex(reading,sectionId){
-            let rawLemma = parseWitnessReading("Lemma text", reading);
+      function prepareLemmaDataIndex(allReadings,sectionId){
+            let reading = parseWitnessReading("Lemma text", allReadings);
             if( reading.length === 0 )
             return;
             let textElements = [] ;
@@ -139,6 +134,9 @@ async function generateLunrSource() {
             for (let i=0; i< reading.length; i++ ) {
                   let entry = reading[i];
                   const text = entry.normal_form ? entry.normal_form : entry.text
+                  if(text==="#START#" || text === "#END#")
+                  return;
+
                   if (i > 0 && !reading[i-1].join_next && ! entry.join_prior) {
                         textElements.push(' ')
                   }
@@ -159,10 +157,7 @@ async function generateLunrSource() {
                   : (r) => r.witnesses.includes(sigil) && !r.is_start && !r.is_end;
             const witReadings = readings.filter(filterCondition);
             witReadings.sort((first, second) => { return first.rank - second.rank  })
-            return {
-                  sigil: sigil,
-                  readings: witReadings
-            };
+             return witReadings
       }
   
       function writeTranslationDataIndexFiles( ){
@@ -186,7 +181,6 @@ async function generateLunrSource() {
 
       function writeLemmaDataIndexFiles( ){
             var idx = lunr(function () {
-
                   this.pipeline.remove(lunr.trimmer)
                   this.pipeline.remove(lunr.stemmer)
                   this.pipeline.remove(lunr.stopWordFilter)

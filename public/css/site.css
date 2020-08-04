@@ -3,8 +3,7 @@ body {
       background-color: rgb(255, 250, 245);
     }
     
-  
-    
+ 
     a {
       color: #550C18;
     }
@@ -12,6 +11,11 @@ body {
     a:hover {
       color: #A4243B;
     }
+
+     /* a:hover {
+      color: #0e8a79;
+    } 
+     */
     
     code {
       color: #212529;
@@ -53,11 +57,19 @@ body {
     .footer {
       border-top: 1px solid black;
       margin-top: 20px;
+      margin-bottom: 20px;
       padding-top: 20px;
     }
     
     #banner-logo {
       width: 80%;
       margin: 50px;
+    }
+
+    #manuscript-container img {
+          object-fit:cover !important;
+         max-height:250px !important;
+          overflow-y:hidden !important;
+          max-height:250 !important;
     }
     

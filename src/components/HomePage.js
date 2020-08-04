@@ -7,12 +7,12 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 const HomePage = (props)=> {
-      const {sections} = props;
+      const {sections, onSearch} = props;
 
     return (
 
       <Fragment>
-      <Header />
+      <Header onSearch={onSearch} />
         <div id="home-page">
             
             <div id="introduction">

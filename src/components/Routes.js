@@ -6,19 +6,24 @@ import Edition from './Edition/index';
 import HomePage from './HomePage';
 import EditionLanding from './EditionLanding';
 import ManuscriptView from './Manuscript/ManuscriptView';
-import ManuscriptViewClientParse from './Manuscript/ManuscriptViewClientParse'
 import { Route, Switch } from 'react-router-dom';
 import useWindowSize from '../utils/Viewport';
 import ChronicleTheme from './Theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import SearchResults from './Edition/SearchResults';
 import * as DataApi from './../utils/Api';
-import MapView from './Visualizations/Map'
+import Visualizations from './Visualizations';
+import Timeline from './Visualizations/Timeline';
+import MapView from './Visualizations/Map';
+
 
 
 const Routes = ( props)=>{
       const viewport = useWindowSize();
-      const {sections, witnesses} = props;
+      const {sections, witnesses, manuscripts} = props;
+
+
+
       const [searchTerm, setSearchTerm ] = useState('');
       const [translationDictionary, setTranslationDictionary] = useState([]);
       const [translationIndex, setTranslationIndex] = useState();
@@ -26,6 +31,7 @@ const Routes = ( props)=>{
       const [armenianIndex, setArmenianIndex] = useState();
       const [mapFeatures,setMapFeatures] = useState([]);
       const [locationLookup, setLocationLookup]=useState([]);
+      const [timelineDates, setTimelineDates] = useState([]);
 
       useEffect(()=>{
             if( ! translationIndex )
@@ -59,7 +65,7 @@ const Routes = ( props)=>{
                         setMapFeatures(data)
                   })
             }
-      })
+      }, [])
 
       useEffect(()=>{
             if(locationLookup.length===0){
@@ -67,52 +73,73 @@ const Routes = ( props)=>{
                         setLocationLookup(data)
                   })
             }
-      })
+      }, [])
+
+      useEffect(() => {
+        if(timelineDates.length === 0) {
+          DataApi.getTimelineDates((data) => {
+            setTimelineDates(data);
+          });
+        }
+      }, []);
+
 
 
       return (
             <ThemeProvider  theme={ChronicleTheme}>
                         <Switch>
+                              <Route path="/Edition/:sectionID/:witnessID" exact>
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                              </Route>
+                              <Route path="/Edition/:sectionID/:witnessID/:milestone" exact>
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm} searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                              </Route>
                               <Route path="/Edition/:sectionID" exact>
-                                    <Edition onSearch={setSearchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
+                                    <Edition manuscripts = {manuscripts} onSearch={setSearchTerm}  searchTerm = {searchTerm} sections={sections}  viewport={viewport} witnesses = { witnesses} />
                               </Route>
                               <Route path="/Edition">
-                                    <EditionLanding   sections={sections}   />
-                                    {/* <CustomizedInputs     /> */}
+                                    <EditionLanding   sections={sections} onSearch={setSearchTerm}  />
                               </Route>
                               <Route path="/About" >
-                                    <AboutPage /> 
+                                    <AboutPage onSearch={setSearchTerm} />
                               </Route>
                               <Route path="/Methods" >
-                                    <MethodsPage /> 
+                                    <MethodsPage onSearch={setSearchTerm} />
                               </Route>
                               <Route path="/Manuscripts" >
-                                    <ManuscriptPage /> 
+                                    <ManuscriptPage onSearch={setSearchTerm}   />
                               </Route>
                                 <Route path="/ManuscriptView/:manuscriptId" exact>
-                                    <ManuscriptViewClientParse  viewport={viewport}  /> 
-                              </Route>   
-                             {/* <Route path="/ManuscriptView" >
-                                    <ManuscriptView  viewport={viewport}  /> 
-                              </Route>   */}
+                                    <ManuscriptView onSearch={setSearchTerm}   />
+                              </Route>
                               <Route path="/Home" exact>
-                                    <HomePage sections={sections} />
-                              </Route> 
+                                    <HomePage sections={sections} onSearch={setSearchTerm} />
+                              </Route>
                               <Route path="/Search" exact>
-                                    <SearchResults 
+                                    <SearchResults
+                                          sections={sections}
                                           translationDictionary={translationDictionary} translationIndex={translationIndex}
                                           armenianDictionary = {armenianDictionary} armenianIndex={armenianIndex}
                                           onSearch={setSearchTerm} searchTerm = {searchTerm} />
                               </Route>
-                              <Route path="/Map" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
+                              <Route path="/Visualizations/Map" exact>
+                                    <MapView  onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections} />
                               </Route>
-                              <Route path="/Map/:locationId" exact>
-                                    <MapView geoData= {mapFeatures} locationLookup = {locationLookup} />
+                              <Route path="/Visualizations/Map/:locationId" exact>
+                                    <MapView onSearch={setSearchTerm} geoData= {mapFeatures} locationLookup = {locationLookup} sections={sections}/>
+                              </Route>
+                              <Route path="/Visualizations/Timeline" exact>
+                                <Timeline
+                                  onSearch={setSearchTerm}
+                                  timelineData={timelineDates}
+                                />
+                              </Route>
+                              <Route path="/Visualizations" exact>
+                                    <Visualizations onSearch={setSearchTerm} />
                               </Route>
                                <Route path="/" exact>
-                                    <HomePage sections={sections} />
-                              </Route> 
+                                    <HomePage  onSearch={setSearchTerm} sections={sections} />
+                              </Route>
                         </Switch>
             </ThemeProvider>
       )

@@ -1,7 +1,5 @@
 @import "./chronicle-me.css";
-@import "./critical-edition.css";
-@import "./graph.css";
+@import "./site.css";
 @import "./svg.css";
 @import "./text-pane.css";
-@import "./heatmap.css";
-@import "./home-page.css";
+@import "./tei.css"

@@ -10,12 +10,12 @@ const ChronicleTheme = createMuiTheme({
       palette : {
 
             primary:{
-                  main: '#ff4400'
+                  main: '#AB5526'
             },
 
             secondary:{
                   
-                  main: '#6f42c1'
+                  main: '#A193AC'
             }
       }
      

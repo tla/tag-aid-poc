@@ -27,3 +27,15 @@ script/lemma-html/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/research/
+
+src/components/Manuscript/ManuscriptView copy.js
+
+src/components/Manuscript/text.html
+
+script/generateManuscripts.js
+
+build.zip
+
+script/generateManuscriptHtml copy.js

@@ -1,7 +1,8 @@
 const axios = require('axios');
 const fs = require('fs');
 const moment = require('moment');
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
+const sections = require('./../public/data/sections')// make sure you generated this first
 
 async function GenerateLocationData () {
       const startTime= moment();
@@ -23,7 +24,7 @@ async function GenerateLocationData () {
       }
 
       async function fetchData(){
-           
+
             const geoRequests=[];
             const places = await getPlaces()
 
@@ -44,28 +45,25 @@ async function GenerateLocationData () {
                       geoRequests.push(syriacGazetteerRequest)
                   }
             });
-
-            let allLocations = await Promise.all(geoRequests);
-            
+            try {
+              const all = await Promise.all(geoRequests);
+            } catch(error) { console.log(error.message) }
             writeLocationFile();
       }
 
       async function fetchKMLLocation(url, originalUrl, place){
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const record = openData.data
                         geoLocations.push({
                              // identifier:p.identifier, placeRef id
                               id: record.geonameId,
-                              title: record.name,
+                              title: place.properties.identifier,
                               provenance:'geonames.org',
                               geometry:[{
-                                    
                                     geometry: {
                                           type:"Point",
                                           coordinates:[record.lng,record.lat],
-                                          
                                     },
                                     properties:{
                                           snippet:`${record.fclName}, ${record.fcodeName}`,
@@ -75,68 +73,59 @@ async function GenerateLocationData () {
                               }],
                               links:place.links
                         });
-
-                        resolve();
                   })
-                  .catch( error =>{
+                  .catch( (error) =>{
                         console.log(error)
                   })
-                        
-            })
       }
 
       async function fetchSyriacLocation(url, place){
-
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const $ = cheerio.load(openData.data.trim())
                         let anchors = $('a');
                         let pleiadesUrl;
                         for( let i=0; i< anchors.length; i++){
-                              if(anchors[i].attribs.href.indexOf("pleiades") > -1){
+                              if(anchors[i].attribs.href !== undefined && anchors[i].attribs.href.indexOf("pleiades") > -1){
                                     pleiadesUrl=anchors[i].attribs.href;
                                     break;
                               }
-                        }  
-                        getGeoJson(pleiadesUrl)
-                        .then( openData =>{
-                              const record = openData.data
-                              geoLocations.push({
-                                    // identifier:p.identifier, placeRef id
-                                    id: record.id,
-                                    title: record.title,
-                                    provenance:'http://syriaca.org/',
-                                    representativePoint:record.reprPoint,
-                                    geometry:record.features,
-                                    links:place.links
-                              });
-                        resolve();
-                        });
+                        }
+                        if (pleiadesUrl) {
+                          getGeoJson(pleiadesUrl)
+                          .then( openData =>{
+                                const record = openData.data
+                                geoLocations.push({
+                                      // identifier:p.identifier, placeRef id
+                                      id: record.id,
+                                      title: place.properties.identifier,
+                                      provenance:'http://syriaca.org/',
+                                      representativePoint:record.reprPoint,
+                                      geometry:record.features,
+                                      links:place.links
+                                });
+                          });
+                        }
+                  })
+                  .catch((error) => console.log(error));
 
-                  });
+      }
 
-            });
-                  
-      }              
- 
       async function fetchGeoJsonLocation(url, place){
-            return geoData = await new Promise(resolve=>{
-                  getGeoJson(url)
+            return geoData = await Promise.resolve(getGeoJson(url))
                   .then( openData =>{
                         const record = openData.data
                         geoLocations.push({
                               // identifier:p.identifier, placeRef id
                               id: record.id,
-                              title: record.title,
+                              title: place.properties.identifier,
                               provenance:record.provenance,
                               representativePoint:record.reprPoint,
                               geometry:record.features,
                               links:place.links
                         });
-                        resolve();
-                  });
-            });
+                  })
+                  .catch((error) => console.log(error))
       }
 
       function writeLocationFile(){
@@ -149,14 +138,14 @@ async function GenerateLocationData () {
       async function getPlaces(){
            // https://api.editions.byzantini.st/ChronicleME/stemmarest/tradition/4aaf8973-7ac9-402a-8df9-19a2a050e364/annotations?label=PLACE
            try{
-                  const response = axios.get(`${baseURL}/annotations?label=PLACE`, {auth} )
+                  const response = await axios.get(`${baseURL}/annotations?label=PLACE`, {auth} )
                   return response;
 
            } catch( error ){
                   console.log(`error ${error.message}`)
             }
-             
-            
+
+
       }
 
       async function getGeoJson(url){
@@ -167,11 +156,11 @@ async function GenerateLocationData () {
             if( ! fs.existsSync('public') )
                    fs.mkdirSync('public', {recursive:true});
             if(!fs.existsSync('public/data'))
-                  fs.mkdirSync('public/data', {recursive:true});    
+                  fs.mkdirSync('public/data', {recursive:true});
       }
 
       function writeFile(fileName, contents){
-            fs.writeFileSync( fileName, contents )  
+            fs.writeFileSync( fileName, contents )
       }
 
 }

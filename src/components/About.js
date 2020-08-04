@@ -3,9 +3,11 @@ import Header from './Header'
 
 const AboutPage = ( props )=>{
 
+      const { onSearch } = props;
+
       return (
             <Fragment>
-            <Header />
+            <Header  onSearch = {onSearch} />
             <div className="container content">
        
 
