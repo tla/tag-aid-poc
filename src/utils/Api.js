@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-let host = window.location.hostname==='localhost'?'localhost:3000':'157.245.255.111'
-const  localUrl=`http://${host}/`;
+const localUrl = window.location.hostname==='localhost'?'http://localhost:3000/':`${process.env.PUBLIC_URL}/`
 //const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
 
 export const getSectionList = async ( onListReceived )=>{
