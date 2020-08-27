@@ -139,6 +139,9 @@ const Routes = ( props)=>{
                                <Route path="/" exact>
                                     <HomePage  onSearch={setSearchTerm} sections={sections} />
                               </Route>
+                               <Route path="/ChronicleME" exact>
+                                    <HomePage  onSearch={setSearchTerm} sections={sections} />
+                              </Route>
                         </Switch>
             </ThemeProvider>
       )
