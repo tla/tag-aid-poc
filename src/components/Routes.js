@@ -23,7 +23,6 @@ const Routes = ( props)=>{
       const {sections, witnesses, manuscripts} = props;
 
 
-      const homePath = window.location.hostname === 'localhost' ? '/' : '/ChronicleME'
       const [searchTerm, setSearchTerm ] = useState('');
       const [translationDictionary, setTranslationDictionary] = useState([]);
       const [translationIndex, setTranslationIndex] = useState();
@@ -137,7 +136,7 @@ const Routes = ( props)=>{
                               <Route path="/Visualizations" exact>
                                     <Visualizations onSearch={setSearchTerm} />
                               </Route>
-                               <Route path={homePath} exact>
+                               <Route path="/" exact>
                                     <HomePage  onSearch={setSearchTerm} sections={sections} />
                               </Route>
                         </Switch>
