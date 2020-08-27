@@ -20,8 +20,7 @@ npm install
   * Ex: `REACT_APP_MAPBOX_TOKEN=enter_token_here_with_no_spaces_or_quotes`
   * A Mapbox token can be obtained from the [Mapbox website](www.mapbox.com) - see the "Access tokens" section of your Mapbox account page.
 * **`REACT_APP_HOMEPATH`**
-  * Ex:   
-`REACT_APP_HOMEPATH=/ChronicleME/`
+  * Ex: `REACT_APP_HOMEPATH=/ChronicleME/`
 
 
 ### API Configuration
