@@ -3,7 +3,7 @@
 # data
 /public/data
 /script/lemma-html/lemma-html-config.json
-/script/lemma-html-config.json
+script/lemma-html-config.json
 
 # dependencies
 /node_modules
