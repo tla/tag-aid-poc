@@ -36,6 +36,7 @@ const Navigation= ( props)=>{
       const [tabIndex, setTabIndex]=useState(0)
       const [isExpanded, setIsExpanded]= useState(false);
       const [searchQuery, setSearchQuery] = useState('');
+      const homePath = window.location.hostname === 'localhost' ? '/' : '/ChronicleME';
 
       useEffect(()=>{
             let pageName = window.location.hash.split("/")[1]
@@ -107,7 +108,7 @@ const StyledTab = withStyles(theme => ({
                                                       <div style={{display:"flex", justifyContent:'flex-end',flexWrap:"wrap"}} >
                                                          
                                                                   <StyledTabs  variant="scrollable" value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
-                                                                        <StyledTab  label="Home"  href="/" value="#/" />
+                                                                        <StyledTab  label="Home"  href={homePath} value={`#${homePath}`} />
                                                                         <StyledTab label="About" href="#/About"  value="#/About"  />
                                                                         <StyledTab label="Methods"  href="#/Methods" value="#/Methods" />
                                                                         <StyledTab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
