@@ -108,7 +108,7 @@ const StyledTab = withStyles(theme => ({
                                                       <div style={{display:"flex", justifyContent:'flex-end',flexWrap:"wrap"}} >
                                                          
                                                                   <StyledTabs  variant="scrollable" value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
-                                                                        <StyledTab  label="Home"  href={homePath} value={`#${homePath}`} />
+                                                                        <StyledTab  label="Home"  href={`${homePath}#/home`} value={`#/home`} />
                                                                         <StyledTab label="About" href="#/About"  value="#/About"  />
                                                                         <StyledTab label="Methods"  href="#/Methods" value="#/Methods" />
                                                                         <StyledTab label="Manuscripts" href="#/Manuscripts" value="#/Manuscripts" />
