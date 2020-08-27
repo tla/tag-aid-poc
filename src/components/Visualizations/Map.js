@@ -6,8 +6,7 @@ import { useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-mapboxgl.accessToken='pk.eyJ1IjoiYWNhcHNpcyIsImEiOiJjazdhb3AydDkwM2c0M21tZ2NyZmVoMzh4In0.GIgGl88fQo1H8s4CmUAf_A'
-
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const MapView = ( props)=>{
 
