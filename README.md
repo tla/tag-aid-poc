@@ -13,6 +13,7 @@ npm install
 
 ### Environment Variables
 1. Within the root directory, create a new file named `.env`. **It is highly recommended that this file be git-ignored in order to avoid committing sensitive data into version control.**
+
 2. In the newly created `.env` file, add the following environment variables:
 * **`PUBLIC_URL`**
   * Ex: `PUBLIC_URL=enter_url_here_with_no_spaces_or_quotes`
