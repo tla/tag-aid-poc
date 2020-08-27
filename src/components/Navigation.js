@@ -14,7 +14,7 @@ import { Grid } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
 import {makeStyles,} from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom' 
+import { withRouter } from 'react-router-dom'
 import SearchInput from './SearchInupt'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
             marginRight:'16px'
       }
 }));
-      
+
 const Navigation= ( props)=>{
 
       const {onSearch} = props;
@@ -36,7 +36,7 @@ const Navigation= ( props)=>{
       const [tabIndex, setTabIndex]=useState(0)
       const [isExpanded, setIsExpanded]= useState(false);
       const [searchQuery, setSearchQuery] = useState('');
-      const homePath = window.location.hostname === 'localhost' ? '/' : '/ChronicleME';
+      const homePath = window.location.hostname === 'localhost' ? '/' : process.env.REACT_APP_HOMEPATH;
 
       useEffect(()=>{
             let pageName = window.location.hash.split("/")[1]
@@ -74,9 +74,9 @@ const StyledTab = withStyles(theme => ({
 
 
       return (
-          
+
       <Grid container spacing={0} style={{maxHeight:'112px', width:'100%',}} justify="flex-end">
-                  
+
                    <Hidden mdUp>
                          <Grid item>
                               <Toolbar variant="dense" style={{backgroundColor:'#f8f9fa', zIndex:'9999'}}>
@@ -102,11 +102,11 @@ const StyledTab = withStyles(theme => ({
                         </Grid>
                   </Hidden>
 
-                  
+
                   <Hidden smDown>
                                                       <AppBar  style={{backgroundColor:'#f8f9fa', }} position="static" justify="flex-end">
                                                       <div style={{display:"flex", justifyContent:'flex-end',flexWrap:"wrap"}} >
-                                                         
+
                                                                   <StyledTabs  variant="scrollable" value={tabIndex} style={{ color:'black'}} onChange={handleTabChange} >
                                                                         <StyledTab  label="Home"  href={`${homePath}#/home`} value={`#/home`} />
                                                                         <StyledTab label="About" href="#/About"  value="#/About"  />
@@ -115,22 +115,22 @@ const StyledTab = withStyles(theme => ({
                                                                         <StyledTab label="Edition" href="#/Edition"    value="#/Edition"   />
                                                                         <StyledTab label="Visualizations" href="#/Visualizations" value="#/Visualizations" />
                                                                   </StyledTabs>
-                                                          
+
                                                                   <div style={{ margin:'8px 2px'}}>
-                                                                        <SearchInput  
+                                                                        <SearchInput
                                                                               onPressEnter={handlePressEnter}
-                                                                              onChange={handleChange} 
+                                                                              onChange={handleChange}
                                                                               searchQuery={searchQuery}
                                                                         />
                                                                   </div>
-                                                         
+
                                                       </div>
 
 
-                                                </AppBar> 
-                  </Hidden>  
+                                                </AppBar>
+                  </Hidden>
       </Grid>
-      
+
       )
 
       function handleChange(e){
@@ -147,9 +147,9 @@ const StyledTab = withStyles(theme => ({
             setTabIndex(value)
       }
 
-      
 
-      
+
+
 
 }
 export default withRouter(Navigation)

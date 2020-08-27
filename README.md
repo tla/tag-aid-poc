@@ -13,11 +13,16 @@ npm install
 
 ### Environment Variables
 1. Within the root directory, create a new file named `.env`. **It is highly recommended that this file be git-ignored in order to avoid committing sensitive data into version control.**
-2. In the newly created `.env` file, add an environment variable for `PUBLIC_URL`
-  1. Ex: `PUBLIC_URL=enter_url_here_with_no_spaces_or_quotes`
-2. In the newly created `.env` file, add an environment variable for `REACT_APP_MAPBOX_TOKEN`
-  1. Ex: `REACT_APP_MAPBOX_TOKEN=enter_token_here_with_no_spaces_or_quotes`
-  2. A Mapbox token can be obtained from the [Mapbox website](www.mapbox.com) - see the "Access tokens" section of your Mapbox account page.
+2. In the newly created `.env` file, add the following environment variables:
+* **`PUBLIC_URL`**
+  * Ex: `PUBLIC_URL=enter_url_here_with_no_spaces_or_quotes`
+* **`REACT_APP_MAPBOX_TOKEN`**
+  * Ex: `REACT_APP_MAPBOX_TOKEN=enter_token_here_with_no_spaces_or_quotes`
+  * A Mapbox token can be obtained from the [Mapbox website](www.mapbox.com) - see the "Access tokens" section of your Mapbox account page.
+* **`REACT_APP_HOMEPATH`**
+  * Ex:   
+`REACT_APP_HOMEPATH=/ChronicleME/`
+
 
 ### API Configuration
 1. Within the `/script` directory, create a new file named `lemma-html-config.json`.  **It is highly recommended that this file be git-ignored in order to avoid committing sensitive data into version control** - this is why we provide an example file (`lemma-html-config.json.example`), rather than the file itself, on GitHub.

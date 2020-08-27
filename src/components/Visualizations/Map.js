@@ -12,9 +12,10 @@ const MapView = ( props)=>{
 
       const mapRef=useRef()
       const { geoData, locationLookup, sections, onSearch} = props;
+      const homePath = window.location.hostname === "localhost" ? "/" : process.env.REACT_APP_HOMEPATH;
       let {locationId} = useParams()
 
-     
+
 
       useEffect( ()=>{
             const Edessa = [37.1747759,38.7708186];
@@ -38,7 +39,7 @@ const MapView = ( props)=>{
                   maxZoom:11
             });
 
-          
+
 
             mapInstance.on('load', ()=>{
                   const pointData = parsePoints();
@@ -70,14 +71,14 @@ const MapView = ( props)=>{
                   mapInstance.on('click', 'cities', function(e) {
                         var coordinates = e.features[0].geometry.coordinates.slice();
                         var description = e.features[0].properties.description;
-                         
+
                         // Ensure that if the map is zoomed out such that multiple
                         // copies of the feature are visible, the popup appears
                         // over the copy being pointed to.
                         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                         }
-                         
+
                         new mapboxgl.Popup()
                         .setLngLat(coordinates)
                         .setHTML(description)
@@ -87,7 +88,7 @@ const MapView = ( props)=>{
                   mapInstance.on('mouseenter', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = 'pointer';
                   });
-                         
+
                   mapInstance.on('mouseleave', 'cities', function() {
                         mapInstance.getCanvas().style.cursor = '';
                   });
@@ -96,7 +97,7 @@ const MapView = ( props)=>{
                   const polygons = parsePolygons();
                   polygons.forEach( p =>{
                   try{
-       
+
                         let stupid = Math.random();
                         mapInstance.addSource(`${p.title}-${stupid.toString()}`, {
                               'type': 'geojson',
@@ -118,7 +119,7 @@ const MapView = ( props)=>{
                                     'type': 'symbol',
                                     'source': `${p.title}-${stupid.toString()}`,
                                     'layout': {
-                                         
+
                                           'text-field': ['get', 'title'],
                                           'text-size':26,
                                           'text-font': ['Open Sans Bold'],
@@ -133,35 +134,35 @@ const MapView = ( props)=>{
                         mapInstance.on('click', `${p.title}-${stupid.toString()}`, function(e) {
                               var coordinates = e.lngLat;
                               var description = e.features[0].properties.description;
-                               
+
                               // Ensure that if the map is zoomed out such that multiple
                               // copies of the feature are visible, the popup appears
                               // over the copy being pointed to.
                               while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                               coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                               }
-                               
+
                               new mapboxgl.Popup()
                               .setLngLat(coordinates)
                               .setHTML(description)
                               .addTo(mapInstance);
                         });
-      
+
                         mapInstance.on('mouseenter', `${p.title}-${stupid.toString()}`, function() {
                               mapInstance.getCanvas().style.cursor = 'pointer';
                         });
-                               
+
                         mapInstance.on('mouseleave', `${p.title}-${stupid.toString()}`, function() {
                               mapInstance.getCanvas().style.cursor = '';
                         });
-                      
+
                   }catch(error){
                         console.log(error)
                   }
 
                   })// end for each poly
 
-            
+
             })// end on load handler
 
       })
@@ -171,7 +172,7 @@ const MapView = ( props)=>{
       <React.Fragment>
                   <EditionHeader  onSearch = {onSearch} />
                   <div ref={mapRef} style={{position:'absolute',bottom:0,top:'0px', width:'100%'}}>
-                  
+
                   </div>
                   <Paper elevation={2} style={{display:'flex', flexDirection:'column', justifyContent:'center',width:'400px',
                         textAlign:'center', position:'relative',top:'64px',left:'32px',backgroundColor:'rgb(255, 250, 245)',padding:'12px'}}>
@@ -184,25 +185,25 @@ const MapView = ( props)=>{
                         <Typography variant="h6">
                               {'2 April 952 CE - 8 February 1163 CE'}
                         </Typography>
-                       
+
                   </Paper>
       </React.Fragment>
-            
+
       )
 
-     
+
 
       function parsePoints(){
            let pointData = {
                  'type':'FeatureCollection',
            }
            const pointArray=[];
-         
+
            geoData.forEach( f =>{
                   const g = f.geometry[0];
-                 
+
                   if(g && g.geometry && g.geometry.type === "Point"){
-                       
+
                         let feature = f;
                         let geometry = g;
                         const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
@@ -229,7 +230,7 @@ const MapView = ( props)=>{
                         }
                        pointArray.push(pointFeature)
                   }// end if feature is a point
-                 
+
            })// end for each in geo Data
            pointData.features = pointArray;
            return pointData;
@@ -241,12 +242,12 @@ const MapView = ( props)=>{
             let innerHtml = '';
             links.forEach( link =>{
                   const lookup = locationLookup.find( l=> l.placeRefId.toString() === link.target.toString() );
-                 
+
                   if(lookup){
                         let titles = sections.find(s => s.sectionId === lookup.sectionId)
                         const sectionId = lookup.sectionId;
-                        const yearTitle = 
-                        innerHtml +=`<li><a href='/#/Edition/${sectionId}'>${titles.englishTitle.substring(0,12)}</a></li>`     
+                        const yearTitle =
+                        innerHtml +=`<li><a href='${homePath}#/Edition/${sectionId}'>${titles.englishTitle.substring(0,12)}</a></li>`
                   }
             })
             return innerHtml;
@@ -256,7 +257,7 @@ const MapView = ( props)=>{
             const polygonArray=[];
             geoData.forEach( f =>{
                   const g = f.geometry[0];
-                 
+
                   if(g && g.geometry && g.geometry.type === "Polygon"){
 
                         const linkText = g.properties.link.indexOf('pleiades') > -1? "Pleiades": g.properties.link.indexOf("geonames" )>-1?"Geonames":"Other"
