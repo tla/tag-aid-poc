@@ -3,6 +3,7 @@
 # data
 /public/data
 /script/lemma-html/lemma-html-config.json
+script/lemma-html-config.json
 
 # dependencies
 /node_modules
@@ -18,6 +19,7 @@ script/lemma-html/node_modules
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -27,3 +29,15 @@ script/lemma-html/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/research/
+
+src/components/Manuscript/ManuscriptView copy.js
+
+src/components/Manuscript/text.html
+
+script/generateManuscripts.js
+
+build.zip
+
+script/generateManuscriptHtml copy.js

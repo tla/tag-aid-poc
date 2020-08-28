@@ -24,7 +24,6 @@ async function generateStore() {
 
 
       function loadConfig() {
-          
             const configJSON = fs.readFileSync(`script/lemma-html-config.json`, "utf8");
             return JSON.parse(configJSON);
       }
@@ -51,21 +50,21 @@ async function generateStore() {
             const sectionPromises = [];
             const validSections = [];
             sections.forEach( section =>{
+                  console.log("fetching manuscripts with section", section.id);
                   sectionData = getSectionData(section.id, witnesses, validSections);
                   sectionPromises.push(sectionData);
             });
             sectionStore = await Promise.all(sectionPromises);
+            validSections.sort( (a,b)=>{a.milestone - b.milestone})
             writeSectionFile( validSections);
             writeLunrIndex();
             writeLocationLookup()
       }
 
       async function getSectionData( sectionId, witnesses, validSections ){
-            let lemmaTextFinal = await getLemmaText(sectionId);
-           
-            if( lemmaTextFinal.text ) {
-                 
-                  let allReadings = new Promise( (resolve )=>{
+            let lemmaTextFinal = await getLemmaText(sectionId);   
+                  
+            let allReadings = new Promise( (resolve )=>{
                         getReadings(sectionId)
                         .then( readings=>{
                               writeReadingLookup(readings, sectionId);
@@ -83,15 +82,21 @@ async function generateStore() {
                   let titleArray = new Promise( (resolve) =>{ 
                         getTitle(sectionId)
                         .then( titles =>{
-                              const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
-                              const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
-
-                               let validSection = {
-                                     sectionId: sectionId,
-                                     englishTitle: englishTitle,
-                                     armenianTitle: armenianTitle
-                               }
-                              validSections.push(validSection);
+                              if(titles.length === 0)
+                                    console.log('no title for section: ', sectionId);
+                              else {
+                                    const englishTitle = titles[0].properties.language === "en" ? titles[0].properties.text : titles[1].properties.text;
+                                    const armenianTitle= titles[1].properties.language === "hy" ? titles[1].properties.text : titles[0].properties.text;
+                                    const milestone = armenianTitle.substr(0,3);
+                                    console.log('milestone', milestone)
+                                    let validSection = {
+                                          sectionId: sectionId,
+                                          englishTitle: englishTitle,
+                                          armenianTitle: armenianTitle,
+                                          milestone: milestone
+                                    }
+                                    validSections.push(validSection);
+                              }
                               resolve();
                         });
 
@@ -124,11 +129,8 @@ async function generateStore() {
                               resolve();
                         })
                   });
-
-                
                  return data =  await Promise.all( [allReadings,titleArray,personArray,placeArray] )
-                 // etc for person place and date - although this will just be used for text highlights
-            }
+
       }
 
       async function getLemmaText(sectionId){
@@ -342,8 +344,8 @@ async function generateStore() {
             const sectFile = `${outdir}/sections.json`;
             // fyi - sectionIds have nothing to do with it, they are not sequential
             validSections.sort( (a,b)=>{
-                  const aYear = a.englishTitle.substr(9,3);
-                  const bYear = b.englishTitle.substr(9,3);
+                  const aYear = a.englishTitle.match(/(\d+)/)[0];
+                  const bYear = b.englishTitle.match(/(\d+)/)[0];
                   return ( parseInt(aYear) - parseInt(bYear))
             })
             fs.writeFileSync( sectFile, JSON.stringify(validSections) )
@@ -362,7 +364,7 @@ async function generateStore() {
             const refs = [];
             annotations.forEach( anno =>{
                   const beginNodeId = anno.links[0].type==="BEGIN"? anno.links[0].target : anno.links[1].target;
-                  const endNodeId = anno.links[1].type==="BEGIN"? anno.links[1].target : anno.links[0].target;
+                  const endNodeId = anno.links[1].type==="END"? anno.links[1].target : anno.links[0].target;
                   let ref = {
                         annotationId: anno.id,
                         begin: beginNodeId,

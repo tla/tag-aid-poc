@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-let host = window.location.hostname==='localhost'?'localhost:3000':'157.245.255.111'
-const  localUrl=`http://${host}/`;
+const localUrl = window.location.hostname==='localhost'?'http://localhost:3000/':`${process.env.PUBLIC_URL}/`
 //const sectionListURL = `${process.env.PUBLIC_URL}/data/sections.json`;
 
 export const getSectionList = async ( onListReceived )=>{
@@ -74,6 +73,16 @@ export const getDates = async ( sectionId, onListReceived )=>{
       }
 }
 
+export const getTimelineDates = async (onListReceived) => {
+  const timelineListURL = `${localUrl}data/chronicleDates.json`;
+  try {
+    const result = await axios.get(timelineListURL);
+    onListReceived(result.data);
+  } catch(error) {
+    console.log(error);
+  }
+};
+
 
 export const getReading = async ( sectionId, reading, onTextReceived )=>{
       reading = reading === "Lemma Text" ? "lemma": reading;
@@ -88,7 +97,7 @@ export const getReading = async ( sectionId, reading, onTextReceived )=>{
 }
 
 export const getManuscript = async ( manuscriptId, onTextReceived )=>{
-      const manuscriptFile = `${localUrl}dist/content/${manuscriptId}.tei.xml`;    
+      const manuscriptFile = `${localUrl}/images/mss/${manuscriptId}/${manuscriptId}.html`;    
       try{
             const result = await axios.get(manuscriptFile);
             onTextReceived(result.data)
@@ -161,6 +170,26 @@ export const getLocationLookup = async( onDataReceived)=>{
             console.log(error)
       }
 
+}
+
+export const getManuscriptLookup = async( onDataReceived)=>{
+      const dataFile = `${localUrl}data/sigilLookup.json`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
+}
+
+export const getManuscriptImage = async( dirName,onDataReceived)=>{
+      const dataFile = `${localUrl}images/mss/${dirName}/${dirName}.tei.images.html`;
+      try{
+            const result = await axios.get(dataFile);
+            onDataReceived(result.data)
+      } catch( error ) {
+            console.log(error)
+      }
 }
 
 

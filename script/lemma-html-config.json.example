@@ -1,0 +1,10 @@
+{
+    "options": {
+        "repository": "repository URL goes inside these quotes",
+        "tradition_id": "tradition ID goes inside these quotes"
+    },
+    "auth": {
+        "username": "API auth username goes inside these quotes",
+        "password": "API auth password goes inside these quotes"
+    }
+}
