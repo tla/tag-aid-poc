@@ -2,9 +2,11 @@
 
 # data
 /public/data
+/script/lemma-html/lemma-html-config.json
 
 # dependencies
 /node_modules
+script/lemma-html/node_modules
 /.pnp
 .pnp.js
 
@@ -20,6 +22,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 
 npm-debug.log*
 yarn-debug.log*

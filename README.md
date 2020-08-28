@@ -20,6 +20,35 @@ In the project directory, you can run:
 
 Generates the data necessary for the interface, from a running [Stemmarest](https://github.com/DHUniWien/tradition_repo) instance.
 
+
+generate_data.py has been translated to js and enhanced  to generate the witness readings and annotations for person, place and date
+
+instead run 
+
+### `script/createStore.js` 
+
+to generate the data files and create directories
+afterwards  run generate_svgs.py - to generate the svg graph images
+
+the dot program which generates images from a graph database, is not translated to javascript - so just the image processing routine from generate_data.py has been kept in generate_svgs.py
+
+
+To run the python script to generate the images use:
+
+### Python3.8 generate_svgs.py -r "https://api.editions.byzantini.st/ChronicleME/stemmarest" -u "demo" -p "StemmarestDemo" -t 4aaf8973-7ac9-402a-8df9-19a2a050e364 -v
+
+
+Its important to use the new version of python - not 2.7 - which the Mac is defaulting to for whatever reason, 2.7 will not find the requests module, and wont be able to install it either because of an md5 complaint.  Python 3 behaves properly but must be specifically invoked
+
+This is not a particularly fast script allow at least 10 minutes.
+
+
+* values returned from stemmarest annotationLabel='PLACE'
+contain a links array of objects with a "target" property
+this target value refers to an annotation id and can be used to find another annotation where annotationLabel ='PlaceRef'.  We are using placeRefs, to generate the list of places in each section, so that they may be highlighted - PlaceRefs - include the nodeId in the lemma text where they are mentioned,  Places contain, information about where to lookup the geoCoordinates for that location ( for example pleiades )  - we need both Places - ( for coordinates to show on the map ) and PlaceRefs - to find that place in the text
+
+
+
 ### `npm start`
 
 Runs the app in the development mode.<br>

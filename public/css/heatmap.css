@@ -1,0 +1,22 @@
+/* .heatmap {
+      width:600px;
+      position: relative;
+      height: 300px;
+}
+.heatmap.top-aligned {
+  top: 10%;
+} */
+.heatmap svg rect,
+.heatmap svg polygon {
+  fill: #c4c4c4;
+  stroke: rgba(196,196,196,0.5);
+  stroke-width: 0.2px;
+  cursor: pointer;
+}
+.heatmap svg rect:hover,
+.heatmap svg polygon:hover,
+.heatmap svg rect.highlighted,
+.heatmap svg polygon.highlighted {
+  fill: #00a600;
+  stroke: #00b900;
+}
